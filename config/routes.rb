@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
+
+  root to: "login#show"
 end
