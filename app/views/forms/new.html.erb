@@ -1,0 +1,24 @@
+<% provide(:title, 'CIS Form') %>
+
+<h1> CIS Form </h1>
+
+<div>
+		<%= bootstrap_form_for(@form) do |f| %>
+			<%= f.text_field :name %>
+
+			<%= f.number_field :studentID, label: "Student ID #" %>
+
+			<%= f.text_field :currentDorm, label: "Current Dorm" %>
+
+			<%= f.text_field :currentRoom, label: "Current Room" %>
+
+		<%= f.form_group :wifiStrength, label: { text: "How good is the wifi connection in your room?" } do %>
+  		<%= f.radio_button :wifiStrength, 1, label: "1 (worst)", checked: true %>
+  		<%= f.radio_button :wifiStrength, 2, label: "2" %>
+ 		 <%= f.radio_button :wifiStrength, 3, label: "3" %>
+ 		 <%= f.radio_button :wifiStrength, 4,label: "4" %>
+ 		 <%= f.radio_button :wifiStrength, 5,label: "5 (best)" %>
+			<% end %>
+		<%= f.submit %>
+		<% end %>
+</div>
