@@ -1,0 +1,17 @@
+<%= form_with(model: suite, local: true) do |form| %>
+  <% if suite.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(suite.errors.count, "error") %> prohibited this suite from being saved:</h2>
+
+      <ul>
+      <% suite.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

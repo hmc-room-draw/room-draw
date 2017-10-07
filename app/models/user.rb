@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_one :student
+
   def self.from_omniauth(auth)
     where(email: auth.info.email).take do |user|
       user.oauth_token = auth.credentials.token
