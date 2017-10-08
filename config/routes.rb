@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
 
+  resources :users, :rooms, :suites, :dorms
+
   root to: "login#show"
 end
