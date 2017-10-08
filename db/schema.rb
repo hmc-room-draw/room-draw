@@ -27,4 +27,11 @@ ActiveRecord::Schema.define(version: 20171006175512) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end

@@ -1,4 +1,5 @@
 require_relative 'boot'
+require 'csv'
 
 require 'rails/all'
 
@@ -16,6 +17,6 @@ module RoomDraw
     # -- all .rb files in that directory are automatically loaded.
 
     # set up delayed_job adapter
-    #config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :delayed_job
   end
 end
