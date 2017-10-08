@@ -2,7 +2,7 @@ class AdminpageController < ApplicationController
   def reminder()
   end
 
-  # Function called when the user clicks the "Send Reminder Email" button on 
+  # Function called when the user clicks the "Send Reminder Email" button on
   # the /adminpage/reminder page.
   # It emails all students who have not yet participated in room draw.
   def clicked()
@@ -16,9 +16,14 @@ class AdminpageController < ApplicationController
       GeneralMailer.reminder_email(user).deliver_later
     end
 
+    # Run at scheduled time
+    User.all.each do |user|
+      GeneralMailer.delay(queue:"reminder", run_at: 3.minutes.from_now).reminder_email(user)
+    end
+
     # TODO: Once the DB models have been implemented, uncomment the code below
     # and remove the code above.
-    # Also, in reminder.html.erb and reminder.txt.erb remember to replace 
+    # Also, in reminder.html.erb and reminder.txt.erb remember to replace
     # @user.name with @user.first_name and @user.last_name.
     # Student.all.each do |student|
     #   if student.has_participated == false
@@ -32,7 +37,7 @@ class AdminpageController < ApplicationController
 
   #Src: http://imnithin.in/asynchronously_synchronous.html
   #https://apidock.com/rails/ActionController/Streaming/send_data
-  
+
 # NOTE: This is solely used to test the csv-downloading functionality
 # We probably don't need this function in the actual app, and if we do,
 # then we'd have to replace users with students, and replace user.name with
@@ -60,9 +65,9 @@ class AdminpageController < ApplicationController
           user = student.user
           room = student.room
           dorm = student.room.dorm.name #TODO - check if dorm name is being stored
-          csv << [user.first_name, 
-                  user.last_name, 
-                  student.class, 
+          csv << [user.first_name,
+                  user.last_name,
+                  student.class,
                   student.room_draw_number,
                   dorm,
                   room.room_num]
@@ -81,11 +86,11 @@ class AdminpageController < ApplicationController
       csv << ["First", "Last", "ID", "Class", "Number", "Email"]
       Student.where(has_participated: false).find_each do |student|
         user = Student.user
-        csv << [user.first_name, 
-                user.last_name, 
-                student.id, 
-                student.class, 
-                student.room_draw_number, 
+        csv << [user.first_name,
+                user.last_name,
+                student.id,
+                student.class,
+                student.room_draw_number,
                 user.email]
       end
     end
@@ -94,5 +99,5 @@ class AdminpageController < ApplicationController
       :filename => 'non_participants.csv',
       :disposition => 'attachment'
   end
- 
+
 end
