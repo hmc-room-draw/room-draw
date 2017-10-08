@@ -26,6 +26,16 @@
     <%= form.text_field :email, id: :user_email %>
   </div>
 
+  <div class="field">
+    <%= form.label :is_ashmc_admin %>
+    <%= form.check_box :is_ashmc_admin, id: :user_is_ashmc_admin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_super_admin %>
+    <%= form.check_box :is_super_admin, id: :user_is_super_admin %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

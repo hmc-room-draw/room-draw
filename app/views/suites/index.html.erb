@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <th>Name</th>
+      <th>Dorm</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,6 +14,8 @@
   <tbody>
     <% @suites.each do |suite| %>
       <tr>
+        <td><%= suite.name %></td>
+        <td><%= suite.dorm %></td>
         <td><%= link_to 'Show', suite %></td>
         <td><%= link_to 'Edit', edit_suite_path(suite) %></td>
         <td><%= link_to 'Destroy', suite, method: :delete, data: { confirm: 'Are you sure?' } %></td>

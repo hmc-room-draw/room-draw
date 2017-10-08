@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Load env vars from .env
 gem 'dotenv-rails', groups: [:development, :test]
 
 # Google OAuth support for OmniAuth

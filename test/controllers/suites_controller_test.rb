@@ -17,7 +17,7 @@ class SuitesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create suite" do
     assert_difference('Suite.count') do
-      post suites_url, params: { suite: {  } }
+      post suites_url, params: { suite: { dorm_id: @suite.dorm_id, name: @suite.name } }
     end
 
     assert_redirected_to suite_url(Suite.last)
@@ -34,7 +34,7 @@ class SuitesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update suite" do
-    patch suite_url(@suite), params: { suite: {  } }
+    patch suite_url(@suite), params: { suite: { dorm_id: @suite.dorm_id, name: @suite.name } }
     assert_redirected_to suite_url(@suite)
   end
 

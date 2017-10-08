@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  floor: 
-  number: 
-  capacity: 
+  floor: 1
+  number: MyString
+  capacity: 1
+  dorm: one
+  suite: one
 
 two:
-  floor: 
-  number: 
-  capacity: 
+  floor: 1
+  number: MyString
+  capacity: 1
+  dorm: two
+  suite: two

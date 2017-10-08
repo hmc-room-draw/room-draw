@@ -69,6 +69,6 @@ class SuitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def suite_params
-      params.fetch(:suite, {})
+      params.require(:suite).permit(:name, :dorm_id)
     end
 end

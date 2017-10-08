@@ -26,6 +26,16 @@
     <%= form.number_field :capacity, id: :room_capacity %>
   </div>
 
+  <div class="field">
+    <%= form.label :dorm_id %>
+    <%= form.text_field :dorm_id, id: :room_dorm_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :suite_id %>
+    <%= form.text_field :suite_id, id: :room_suite_id %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

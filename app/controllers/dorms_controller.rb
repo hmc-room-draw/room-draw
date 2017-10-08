@@ -69,6 +69,6 @@ class DormsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dorm_params
-      params.fetch(:dorm, {})
+      params.require(:dorm).permit(:name)
     end
 end

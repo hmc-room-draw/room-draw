@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171007213713) do
+ActiveRecord::Schema.define(version: 20171008231606) do
 
   create_table "dorms", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -21,19 +22,28 @@ ActiveRecord::Schema.define(version: 20171007213713) do
     t.integer "floor"
     t.string "number"
     t.integer "capacity"
+    t.integer "dorm_id"
+    t.integer "suite_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["dorm_id"], name: "index_rooms_on_dorm_id"
+    t.index ["suite_id"], name: "index_rooms_on_suite_id"
   end
 
   create_table "students", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "room_id"
     t.integer "class"
     t.integer "room_draw_number"
     t.boolean "has_participated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_students_on_room_id"
+    t.index ["user_id"], name: "index_students_on_user_id"
   end
 
   create_table "suites", force: :cascade do |t|
+    t.string "name"
     t.integer "dorm_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,7 +54,8 @@ ActiveRecord::Schema.define(version: 20171007213713) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "role"
+    t.boolean "is_ashmc_admin"
+    t.boolean "is_super_admin"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false

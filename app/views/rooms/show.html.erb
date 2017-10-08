@@ -15,5 +15,15 @@
   <%= @room.capacity %>
 </p>
 
+<p>
+  <strong>Dorm:</strong>
+  <%= @room.dorm %>
+</p>
+
+<p>
+  <strong>Suite:</strong>
+  <%= @room.suite %>
+</p>
+
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>
