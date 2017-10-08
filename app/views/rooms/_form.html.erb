@@ -11,6 +11,21 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :floor %>
+    <%= form.number_field :floor, id: :room_floor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.text_field :number, id: :room_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity, id: :room_capacity %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
