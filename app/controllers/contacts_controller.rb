@@ -5,6 +5,7 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(params[:contact])
+    @contact.message = @contact.message << "\nDO NOT REPLY TO THIS EMAIL\n"
     @contact.request = request
     if @contact.deliver
       flash.now[:error] = nil
