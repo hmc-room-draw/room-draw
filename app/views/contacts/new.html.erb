@@ -3,7 +3,6 @@
 
   <%= simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f| %>
     <%= f.input :name, :required => true, :placeholder => 'Name of Student'%>
-    <%= f.input :email, :required => true, :placeholder => 'Obsolete' %>
     <%= f.input :subject, :required => true, :placeholder => 'Regarding Your Room Draw', input_html: {value: f.object.subject || 'Regarding Your Room Draw'}%>
     
     
