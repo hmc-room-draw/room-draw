@@ -17,6 +17,9 @@ class AdminpageController < ApplicationController
     end
 
     # Run at scheduled time
+    time = @schedule_time["send"]
+    puts "NOOOO"
+    puts time
     User.all.each do |user|
       GeneralMailer.delay(queue:"reminder", run_at: 3.minutes.from_now).reminder_email(user)
     end
