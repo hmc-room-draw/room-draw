@@ -1,0 +1,14 @@
+<div align="center">
+  <h3>Student Contact Form</h3>
+
+  <%= simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f| %>
+    <%= f.input :name, :required => true, :placeholder => 'Name of Student'%>
+    <%= f.input :email, :required => true, :placeholder => 'Obsolete' %>
+    <%= f.input :subject, :required => true, :placeholder => 'Regarding Your Room Draw', input_html: {value: f.object.subject || 'Regarding Your Room Draw'}%>
+    <%= f.input :message, :as => :text, :required => true, :placeholder => 'Restyle'%>
+    <div>
+      </br>
+      <%= f.button :submit, 'Send message', :class=> "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
