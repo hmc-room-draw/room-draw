@@ -60,4 +60,8 @@ gem 'bootstrap-sass'
 gem 'mail_form'
 group :development do
   gem 'letter_opener_web'
+
+#rich text editor
+gem 'ckeditor', '~>4.1'
+
 end
