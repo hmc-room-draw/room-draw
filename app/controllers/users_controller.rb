@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  # Enforce that all endpoints call `authorize`
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 

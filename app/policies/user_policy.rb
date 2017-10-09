@@ -1,3 +1,4 @@
+# See https://github.com/elabs/pundit/ for an explanation of the code below
 class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
