@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Authorization policy; see https://github.com/elabs/pundit
+gem 'pundit'
+
 # Load env vars from .env
 gem 'dotenv-rails', groups: [:development, :test]
 
