@@ -4,7 +4,8 @@ one:
   first_name: MyString
   last_name: MyString
   email: MyString
-  role: MyString
+  is_ashmc_admin: true
+  is_super_admin: true
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34
 
@@ -12,6 +13,7 @@ two:
   first_name: MyString
   last_name: MyString
   email: MyString
-  role: MyString
+  is_ashmc_admin: false
+  is_super_admin: false
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34

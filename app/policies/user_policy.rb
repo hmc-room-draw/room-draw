@@ -19,7 +19,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user == record
+    user == record || user.is_ashmc_admin || user.is_super_admin
   end
 
   def destroy?
