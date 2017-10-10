@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Google OAuth login
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This app uses Google OAuth for login. You need a secret key for the Google Apps
+API, which the app will load automatically from a file named `.env` in the root
+directory. We can't commit the keys to GitHub. I sent out the contents of
+`.env` on the Slack `#general` channel. -- Spencer
