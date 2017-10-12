@@ -1,0 +1,3 @@
+class DrawPeriod < ApplicationRecord
+    
+end
