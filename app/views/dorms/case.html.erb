@@ -1,0 +1,167 @@
+<h1>Dorms#case</h1>
+<p>Find me in app/views/dorms/case.html.erb</p>
+<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+<script>
+var w = 1000;
+var h = 750;
+ dataset = [
+{x : '80', y : '110', roomNum : '101', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '170', roomNum : '102', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '230', roomNum : '103', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '290', roomNum : '104', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '350', roomNum : '105', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '400', roomNum : '106', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '450', roomNum : '107', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '500', roomNum : '108', status: "empty", type: "S", orient: "L"},
+
+{x : '170', y : '560', roomNum : '118', status: "empty", type: "S", orient: "D"},
+{x : '220', y : '560', roomNum : '119', status: "empty", type: "S", orient: "D"},
+{x : '270', y : '560', roomNum : '120', status: "empty", type: "S", orient: "D"},
+{x : '320', y : '560', roomNum : '121', status: "empty", type: "S", orient: "D"},
+{x : '370', y : '560', roomNum : '122', status: "empty", type: "D", orient: "D"},
+{x : '430', y : '560', roomNum : '123', status: "empty", type: "D", orient: "D"},
+{x : '490', y : '560', roomNum : '124', status: "empty", type: "D", orient: "D"},
+{x : '550', y : '560', roomNum : '125', status: "empty", type: "D", orient: "D"},
+
+{x : '700', y : '480', roomNum : '140', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '420', roomNum : '141', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '360', roomNum : '142', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '300', roomNum : '143', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '250', roomNum : '144', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '200', roomNum : '145', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '150', roomNum : '146', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '100', roomNum : '147', status: "empty", type: "S", orient: "R"},
+
+{x : '620', y : '30', roomNum : '148', status: "empty", type: "S", orient: "U"},
+{x : '570', y : '30', roomNum : '149', status: "empty", type: "S", orient: "U"},
+{x : '520', y : '30', roomNum : '150', status: "empty", type: "S", orient: "U"},
+{x : '470', y : '30', roomNum : '151', status: "empty", type: "S", orient: "U"},
+{x : '410', y : '30', roomNum : '152', status: "empty", type: "D", orient: "U"},
+{x : '350', y : '30', roomNum : '153', status: "empty", type: "D", orient: "U"},
+{x : '290', y : '30', roomNum : '154', status: "empty", type: "D", orient: "U"},
+{x : '230', y : '30', roomNum : '155', status: "empty", type: "D", orient: "U"},
+]
+	var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+	svg.selectAll("text")
+	   .data(dataset)
+	   .enter()
+	   .append("text")
+	   .text(function(d) {
+	        return d.roomNum + '(' + d.type + ')';
+	   })
+	   .attr("x", function(d, i){
+		    switch (d.orient){
+		    	case "L":
+			   		return Number(d.x)-50;
+			   	case "D":
+			 		return Number(d.x) + 5;
+			 	case "R":
+			 		if (d.type == "S"){
+		    			return Number(d.x) + 80;
+			   		}
+			   		else{
+			   			return Number(d.x) + 110;	
+			   		}
+			   	case "U":
+			   		return Number(d.x) + 5;
+		    }
+		   })
+	   .attr("y", function(d, i){
+			switch(d.orient){
+				case "L":
+			   		return Number(d.y) + 20;
+			   	case "D":
+			   		if (d.type == "S"){
+		    			return Number(d.y) + 90;
+			   		}
+			   		else{
+			   			return Number(d.y) + 120;	
+			   		}
+			   	case "R":
+			   		return Number(d.y) + 20;
+			   	case "U":
+			   		return d.y - 10;
+		    }
+		})
+	   	.attr("font-family", "sans-serif")
+		.attr("font-size", "14px")
+	svg.selectAll("rect")
+	   .data(dataset)
+	   .enter()
+	   .append("rect")
+	   .attr("x", function(d, i){
+	   	return d.x;
+	   })
+	   .attr("y", function(d, i){
+	   	return d.y;
+	   })
+	   .attr('fill', "white")
+	   .attr('stroke', 'black')
+	   .attr("width", function(d){
+		   	switch (d.orient){
+		   		case "L":
+				   	 if(d.type == "S")
+				   	 	return 70
+				   	 else{
+				   	 	return 100
+				   	 }
+			   	case "D":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+			   	 }
+			   	case "R":
+			   	 	if(d.type == "S")
+				   	 	return 70
+				   	else{
+				   	 	return 100
+				   	}
+				case "U":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+					}
+		   	}
+	   })
+	   .attr("height", function(d){
+		   	switch(d.orient){
+				case "L":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+	 				}
+				case "D":
+					if(d.type == "S")
+						return 70
+					else{
+						return 100
+					}
+				case "R":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+	 				}	
+	 			case "U":
+					if(d.type == "S")
+						return 70
+					else{
+						return 100
+					}
+			}
+		})
+	   .on("mouseover", function(d, i){
+	   		d3.select(this).attr("fill", "lightgray");
+	   })
+	   .on("mouseout", function(d, i){
+	   		d3.select(this).attr("fill", "white");
+	   });
+
+</script>
