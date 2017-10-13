@@ -4,6 +4,7 @@ class CreateRoomAssignments < ActiveRecord::Migration[5.1]
       t.references :student, foreign_key: true
       t.references :pull, foreign_key: true
       t.references :room, foreign_key: true
+      t.integer :assignment_type
 
       t.timestamps
     end

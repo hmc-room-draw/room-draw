@@ -7,4 +7,6 @@ class Student < ApplicationRecord
   has_one :room_assignment
   has_one :pull, through: :room_assignment
   has_one :pull
+
+  enum class_rank: [:freshman, :sophomore, :junior, :senior]
 end
