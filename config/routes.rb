@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
   get 'dorms/linde2'
 
   get 'dorms/linde'
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
 
   get 'dorms/case2'
 
+=======
+>>>>>>> added case dorm
   get 'dorms/case'
 
   resources :users
