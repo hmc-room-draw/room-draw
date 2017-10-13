@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
 
+  get 'dorms/case'
   resources :users
   resources :dorms
   resources :rooms
