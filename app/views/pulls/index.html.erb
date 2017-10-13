@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pulls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>Student</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pulls.each do |pull| %>
+      <tr>
+        <td><%= pull.message %></td>
+        <td><%= pull.student %></td>
+        <td><%= link_to 'Show', pull %></td>
+        <td><%= link_to 'Edit', edit_pull_path(pull) %></td>
+        <td><%= link_to 'Destroy', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pull', new_pull_path %>

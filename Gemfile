@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Generate entity-relationship diagrams
+gem 'rails-erd', require: false, group: :development
+
 # Authorization policy; see https://github.com/elabs/pundit
 gem 'pundit'
 

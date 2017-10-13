@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @room_assignment.student %>
+</p>
+
+<p>
+  <strong>Pull:</strong>
+  <%= @room_assignment.pull %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @room_assignment.room %>
+</p>
+
+<%= link_to 'Edit', edit_room_assignment_path(@room_assignment) %> |
+<%= link_to 'Back', room_assignments_path %>
