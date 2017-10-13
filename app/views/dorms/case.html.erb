@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   <h1>Dorms#case</h1>
 <p>Find me in app/views/dorms/case.html.erb</p>
 <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
@@ -106,10 +107,17 @@
 
 </body>
 
+=======
+<h1>Dorms#case</h1>
+<p>Find me in app/views/dorms/case.html.erb</p>
+<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+>>>>>>> added case dorm
 <script>
 var w = 1000;
 var h = 750;
  dataset = [
+<<<<<<< HEAD
 {roomNum : '101', status: "empty", type: "D", orient: "L"},
 {roomNum : '102', status: "empty", type: "D", orient: "L"},
 {roomNum : '103', status: "empty", type: "D", orient: "L"},
@@ -213,6 +221,49 @@ for (var num = 24; num < 32; num++){
             .attr("height", h);
 
 	svg.selectAll("text") //
+=======
+{x : '80', y : '110', roomNum : '101', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '170', roomNum : '102', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '230', roomNum : '103', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '290', roomNum : '104', status: "empty", type: "D", orient: "L"},
+{x : '80', y : '350', roomNum : '105', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '400', roomNum : '106', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '450', roomNum : '107', status: "empty", type: "S", orient: "L"},
+{x : '80', y : '500', roomNum : '108', status: "empty", type: "S", orient: "L"},
+
+{x : '170', y : '560', roomNum : '118', status: "empty", type: "S", orient: "D"},
+{x : '220', y : '560', roomNum : '119', status: "empty", type: "S", orient: "D"},
+{x : '270', y : '560', roomNum : '120', status: "empty", type: "S", orient: "D"},
+{x : '320', y : '560', roomNum : '121', status: "empty", type: "S", orient: "D"},
+{x : '370', y : '560', roomNum : '122', status: "empty", type: "D", orient: "D"},
+{x : '430', y : '560', roomNum : '123', status: "empty", type: "D", orient: "D"},
+{x : '490', y : '560', roomNum : '124', status: "empty", type: "D", orient: "D"},
+{x : '550', y : '560', roomNum : '125', status: "empty", type: "D", orient: "D"},
+
+{x : '700', y : '480', roomNum : '140', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '420', roomNum : '141', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '360', roomNum : '142', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '300', roomNum : '143', status: "empty", type: "D", orient: "R"},
+{x : '700', y : '250', roomNum : '144', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '200', roomNum : '145', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '150', roomNum : '146', status: "empty", type: "S", orient: "R"},
+{x : '700', y : '100', roomNum : '147', status: "empty", type: "S", orient: "R"},
+
+{x : '620', y : '30', roomNum : '148', status: "empty", type: "S", orient: "U"},
+{x : '570', y : '30', roomNum : '149', status: "empty", type: "S", orient: "U"},
+{x : '520', y : '30', roomNum : '150', status: "empty", type: "S", orient: "U"},
+{x : '470', y : '30', roomNum : '151', status: "empty", type: "S", orient: "U"},
+{x : '410', y : '30', roomNum : '152', status: "empty", type: "D", orient: "U"},
+{x : '350', y : '30', roomNum : '153', status: "empty", type: "D", orient: "U"},
+{x : '290', y : '30', roomNum : '154', status: "empty", type: "D", orient: "U"},
+{x : '230', y : '30', roomNum : '155', status: "empty", type: "D", orient: "U"},
+]
+	var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+	svg.selectAll("text")
+>>>>>>> added case dorm
 	   .data(dataset)
 	   .enter()
 	   .append("text")
@@ -228,9 +279,15 @@ for (var num = 24; num < 32; num++){
 			 	case "R":
 			 		if (d.type == "S"){
 		    			return Number(d.x) + 80;
+<<<<<<< HEAD
 			   		}			   		
 			   		else{
 			   			return Number(d.x) + 110;
+=======
+			   		}
+			   		else{
+			   			return Number(d.x) + 110;	
+>>>>>>> added case dorm
 			   		}
 			   	case "U":
 			   		return Number(d.x) + 5;
@@ -245,7 +302,11 @@ for (var num = 24; num < 32; num++){
 		    			return Number(d.y) + 90;
 			   		}
 			   		else{
+<<<<<<< HEAD
 			   			return Number(d.y) + 120;
+=======
+			   			return Number(d.y) + 120;	
+>>>>>>> added case dorm
 			   		}
 			   	case "R":
 			   		return Number(d.y) + 20;
@@ -255,7 +316,10 @@ for (var num = 24; num < 32; num++){
 		})
 	   	.attr("font-family", "sans-serif")
 		.attr("font-size", "14px")
+<<<<<<< HEAD
 
+=======
+>>>>>>> added case dorm
 	svg.selectAll("rect")
 	   .data(dataset)
 	   .enter()
@@ -272,6 +336,7 @@ for (var num = 24; num < 32; num++){
 		   	switch (d.orient){
 		   		case "L":
 				   	 if(d.type == "S")
+<<<<<<< HEAD
 				   	 	return singleLength
 				   	 else if(d.type == "Q")
 				   	 	return quadWidth
@@ -298,12 +363,37 @@ for (var num = 24; num < 32; num++){
 					else{
 						return doubleWidth
 					}									
+=======
+				   	 	return 70
+				   	 else{
+				   	 	return 100
+				   	 }
+			   	case "D":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+			   	 }
+			   	case "R":
+			   	 	if(d.type == "S")
+				   	 	return 70
+				   	else{
+				   	 	return 100
+				   	}
+				case "U":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+					}
+>>>>>>> added case dorm
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
 					if(d.type == "S")
+<<<<<<< HEAD
 						return singleWidth
 					else if(d.type == "Q")
 				   	 	return quadLength
@@ -329,6 +419,29 @@ for (var num = 24; num < 32; num++){
 						return singleLength
 					else{
 						return doubleLength
+=======
+						return 50
+					else{
+						return 60
+	 				}
+				case "D":
+					if(d.type == "S")
+						return 70
+					else{
+						return 100
+					}
+				case "R":
+					if(d.type == "S")
+						return 50
+					else{
+						return 60
+	 				}	
+	 			case "U":
+					if(d.type == "S")
+						return 70
+					else{
+						return 100
+>>>>>>> added case dorm
 					}
 			}
 		})
@@ -337,6 +450,7 @@ for (var num = 24; num < 32; num++){
 	   })
 	   .on("mouseout", function(d, i){
 	   		d3.select(this).attr("fill", "white");
+<<<<<<< HEAD
 	   })
      .on("click", function(d, i){
        modal.style.display = "block";
@@ -361,5 +475,8 @@ window.onclick = function(event) {
 }
 
 	   
+=======
+	   });
+>>>>>>> added case dorm
 
 </script>
