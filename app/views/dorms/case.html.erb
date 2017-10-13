@@ -105,6 +105,12 @@
 
 </body>
 
+=======
+<h1>Dorms#case</h1>
+<p>Find me in app/views/dorms/case.html.erb</p>
+<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+>>>>>>> added case dorm
 <script>
 var w = 1000;
 var h = 750;
@@ -205,6 +211,7 @@ for (var num = 24; num < 32; num++){
 	dataset[num].y = y
 }
 
+
 	var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
@@ -230,7 +237,7 @@ for (var num = 24; num < 32; num++){
 			   			return Number(d.x) + 110;
 			   		}
 			   	case "U":
-			   		return Number(d.x) + 5;			   	
+			   		return Number(d.x) + 5;
 		    }
 		   })
 	   .attr("y", function(d, i){
@@ -294,7 +301,7 @@ for (var num = 24; num < 32; num++){
 						return singleWidth
 					else{
 						return doubleWidth
-					}				
+					}									
 		   	}
 	   })
 	   .attr("height", function(d){
@@ -356,5 +363,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+	   
 
 </script>
