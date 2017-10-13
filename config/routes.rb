@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'dorms/case'
+
   resources :users
   resources :dorms
   resources :rooms
