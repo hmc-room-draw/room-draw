@@ -1,0 +1,2 @@
+module DrawPeriodHelper
+end
