@@ -9,16 +9,25 @@
   </head>
 
   <body>
-    <div>
-      <% if current_user %>
-        Signed in as <strong><%= current_user.first_name %> <%= current_user.last_name %></strong>!
-        <%= link_to "Logout", logout_path, id: "sign_out" %>
-      <% else %>
-        <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-      <% end %>
+  <nav class="navbar navbar-default">
+    <div class = "container">
+        <div class = "navbar-header">
+        <%= link_to "Home", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class= "nav navbar-nav">
+            <li><% if current_user %>
+                Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>!
+                  <%= link_to "Logout", logout_path, id: "sign_out" %>
+                <% else %>
+                     <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
+                 <% end %></li>
+        </ul>
     </div>
-    <div>
+  </nav>
+
+    <p class = "notice"><%= notice %></p>
+    <p class = "alert"><%= alert %></p>
+
     <%= yield %>
-    </div>
   </body>
 </html>
