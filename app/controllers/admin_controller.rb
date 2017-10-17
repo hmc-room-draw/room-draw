@@ -39,7 +39,7 @@ class AdminController < ApplicationController
 
   def get_room(dorm, room_num)
     dorm_id = Dorm.find_by name: dorm
-    room_id = Room.find_by dorm_id: dorm_id, number: room_num
+    room_id = Room.find_by dorm: dorm_id, number: room_num
     
     if room_id.nil?
       return nil
