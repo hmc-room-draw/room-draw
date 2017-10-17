@@ -3,4 +3,4 @@ rvm:
  - 2.4
  # - jruby
  # - rbx-3
-script: rails test :model
+# script: rails test :model
