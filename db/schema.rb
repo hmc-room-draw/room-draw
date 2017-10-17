@@ -51,13 +51,8 @@ ActiveRecord::Schema.define(version: 20171008231606) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "name"
     t.string "email"
-    t.boolean "is_ashmc_admin"
-    t.boolean "is_super_admin"
-    t.string "oauth_token"
-    t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

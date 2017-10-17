@@ -1,0 +1,42 @@
+<h1>Admin Map</h1>
+<h3>This will later contain pretty much the same UI as the pulling UI.</h3>
+<button type="button" class="btn" data-toggle="modal" data-target="#preplaced">Mark Room as Pullable/Unpullable</button>
+
+<div id="preplaced" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <%= form_tag("/admin/map", method: "edit_mark", :id => "yolo") do |f| %>
+          <%= select(:dorm_name, :value, [
+              ["Atwood", "atwood"],
+              ["Case", "case"],
+              ["Drinkward", "drinkward"],
+              ["East", "east"],
+              ["Linde", "linde"],
+              ["North", "north"],
+              ["Sontag", "sontag"],
+              ["South", "south"],
+              ["West", "west"],
+              ]) %><br/>
+          <%= text_field_tag(:room) %><br/>
+          <%= radio_button_tag(:mark_type, 0) %>
+          <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
+          <%= radio_button_tag(:mark_type, 1) %>
+          <%= label_tag(:preplaced_offline, "Offline") %><br/>
+          <%= radio_button_tag(:mark_type, 2) %>
+          <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
+          <%= radio_button_tag(:mark_type, "Other") %>
+          <%= label_tag(:preplaced_other, "Other") %><br/>
+          <%= label_tag(:description, "Description") %><br/>
+          <%= text_area_tag(:description) %><br/>
+          <%= submit_tag("Delete Mark (make pullable)") %><br/>
+          <button type="submit" data-dismiss="modal">Cancel</button><br/>
+          <%= submit_tag("Mark Unpullable") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
