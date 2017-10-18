@@ -1,9 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  first_name: MyString
+  last_name: MyString
   email: MyString
+  is_ashmc_admin: true
+  is_super_admin: true
+  oauth_token: MyString
+  oauth_expires_at: 2017-10-07 13:26:34
 
 two:
-  name: MyString
+  first_name: MyString
+  last_name: MyString
   email: MyString
+  is_ashmc_admin: false
+  is_super_admin: false
+  oauth_token: MyString
+  oauth_expires_at: 2017-10-07 13:26:34
