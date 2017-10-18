@@ -1,0 +1,9 @@
+<h1>Emails#new</h1>
+<p>Find me in app/views/emails/new.html.erb</p>
+
+<%= form_for @email, html: { multipart: true } do |f| %>
+  <%= f.text_area :description %>
+  <%= f.datetime_select :created_at %>
+  <br>
+  <%= f.submit "Send Email"%>
+<% end %>

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :emails
+  get 'emails/new'
+
+  get 'emails/index'
+
+  get 'emails/show'
+
+  get 'emails/create'
+
   resources :users
   #match '/reminder' => 'adminpage#reminder', :via => [:get]
   get 'adminpage/reminder'
