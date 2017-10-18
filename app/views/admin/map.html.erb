@@ -11,15 +11,15 @@
       <div class="modal-body">
         <%= form_tag("/admin/map", method: "edit_mark", :id => "yolo") do |f| %>
           <%= select(:dorm_name, :value, [
-              ["Atwood", "atwood"],
-              ["Case", "case"],
-              ["Drinkward", "drinkward"],
-              ["East", "east"],
-              ["Linde", "linde"],
-              ["North", "north"],
-              ["Sontag", "sontag"],
-              ["South", "south"],
-              ["West", "west"],
+              ["Atwood", "Atwood"],
+              ["Case", "Case"],
+              ["Drinkward", "Drinkward"],
+              ["East", "East"],
+              ["Linde", "Linde"],
+              ["North", "North"],
+              ["Sontag", "Sontag"],
+              ["South", "South"],
+              ["West", "West"],
               ]) %><br/>
           <%= text_field_tag(:room) %><br/>
           <%= radio_button_tag(:mark_type, 0) %>
