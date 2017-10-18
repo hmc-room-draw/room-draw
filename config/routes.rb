@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'dorms/atwood'
+
+  get 'dorms/case2'
+
+  get 'dorms/case'
 
   get 'login/show'
 
@@ -14,7 +19,6 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
 
-  get 'dorms/case'
   resources :users
   resources :dorms
   resources :rooms
