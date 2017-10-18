@@ -1,5 +1,6 @@
-  <h1>Dorms#case</h1>
-<p>Find me in app/views/dorms/case.html.erb</p>
+<h1>Dorms#case2</h1>
+<p>Find me in app/views/dorms/case2.html.erb</p>
+
 <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
  <style type="text/css">
@@ -109,44 +110,44 @@
 var w = 1000;
 var h = 750;
  dataset = [
-{roomNum : '101', status: "empty", type: "D", orient: "L"},
-{roomNum : '102', status: "empty", type: "D", orient: "L"},
-{roomNum : '103', status: "empty", type: "D", orient: "L"},
-{roomNum : '104', status: "empty", type: "D", orient: "L"},
-{roomNum : '105', status: "empty", type: "S", orient: "L"},
-{roomNum : '106', status: "empty", type: "S", orient: "L"},
-{roomNum : '107', status: "empty", type: "S", orient: "L"},
-{roomNum : '108', status: "empty", type: "S", orient: "L"},
+{roomNum : '201', status: "empty", type: "D", orient: "L"},
+{roomNum : '202', status: "empty", type: "D", orient: "L"},
+{roomNum : '203', status: "empty", type: "D", orient: "L"},
+{roomNum : '204', status: "empty", type: "D", orient: "L"},
+{roomNum : '205', status: "empty", type: "S", orient: "L"},
+{roomNum : '206', status: "empty", type: "S", orient: "L"},
+{roomNum : '207', status: "empty", type: "S", orient: "L"},
+{roomNum : '208', status: "empty", type: "S", orient: "L"},
 
-{roomNum : '118', status: "empty", type: "S", orient: "D"},
-{roomNum : '119', status: "empty", type: "S", orient: "D"},
-{roomNum : '120', status: "empty", type: "S", orient: "D"},
-{roomNum : '121', status: "empty", type: "S", orient: "D"},
-{roomNum : '122', status: "empty", type: "D", orient: "D"},
-{roomNum : '123', status: "empty", type: "D", orient: "D"},
-{roomNum : '124', status: "empty", type: "D", orient: "D"},
-{roomNum : '125', status: "empty", type: "D", orient: "D"},
+{roomNum : '218', status: "empty", type: "S", orient: "D"},
+{roomNum : '219', status: "empty", type: "S", orient: "D"},
+{roomNum : '220', status: "empty", type: "S", orient: "D"},
+{roomNum : '221', status: "empty", type: "S", orient: "D"},
+{roomNum : '222', status: "empty", type: "D", orient: "D"},
+{roomNum : '223', status: "empty", type: "D", orient: "D"},
+{roomNum : '224', status: "empty", type: "D", orient: "D"},
+{roomNum : '225', status: "empty", type: "D", orient: "D"},
 
-{roomNum : '140', status: "empty", type: "D", orient: "R"},
-{roomNum : '141', status: "empty", type: "D", orient: "R"},
-{roomNum : '142', status: "empty", type: "D", orient: "R"},
-{roomNum : '143', status: "empty", type: "D", orient: "R"},
-{roomNum : '144', status: "empty", type: "S", orient: "R"},
-{roomNum : '145', status: "empty", type: "S", orient: "R"},
-{roomNum : '146', status: "empty", type: "S", orient: "R"},
-{roomNum : '147', status: "empty", type: "S", orient: "R"},
+{roomNum : '240', status: "empty", type: "D", orient: "R"},
+{roomNum : '241', status: "empty", type: "D", orient: "R"},
+{roomNum : '242', status: "empty", type: "D", orient: "R"},
+{roomNum : '243', status: "empty", type: "D", orient: "R"},
+{roomNum : '244', status: "empty", type: "S", orient: "R"},
+{roomNum : '245', status: "empty", type: "S", orient: "R"},
+{roomNum : '246', status: "empty", type: "S", orient: "R"},
+{roomNum : '247', status: "empty", type: "S", orient: "R"},
 
-{roomNum : '148', status: "empty", type: "S", orient: "U"},
-{roomNum : '149', status: "empty", type: "S", orient: "U"},
-{roomNum : '150', status: "empty", type: "S", orient: "U"},
-{roomNum : '151', status: "empty", type: "S", orient: "U"},
-{roomNum : '152', status: "empty", type: "D", orient: "U"},
-{roomNum : '153', status: "empty", type: "D", orient: "U"},
-{roomNum : '154', status: "empty", type: "D", orient: "U"},
-{roomNum : '155', status: "empty", type: "D", orient: "U"},
+{roomNum : '248', status: "empty", type: "S", orient: "U"},
+{roomNum : '249', status: "empty", type: "S", orient: "U"},
+{roomNum : '250', status: "empty", type: "S", orient: "U"},
+{roomNum : '251', status: "empty", type: "S", orient: "U"},
+{roomNum : '252', status: "empty", type: "D", orient: "U"},
+{roomNum : '253', status: "empty", type: "D", orient: "U"},
+{roomNum : '254', status: "empty", type: "D", orient: "U"},
+{roomNum : '255', status: "empty", type: "D", orient: "U"},
 
-{x : '220', y : '280', roomNum : '1D', status: "empty", type: "Q", orient: "R"},
-{x : '560', y : '240', roomNum : '1B', status: "empty", type: "Q", orient: "L"},
+{x : '310', y : '420', roomNum : '2C', status: "empty", type: "Q", orient: "U"},
+{x : '560', y : '240', roomNum : '2B', status: "empty", type: "Q", orient: "L"},
 
 ]
 
@@ -157,7 +158,8 @@ var doubleLength = 100
 var quadLength = 150
 var quadWidth = 100 
 
-var x = 80 //starting positions for left side 
+
+var x = 80  //starting positions for left side 
 var y = 110
 
 for (var num = 0; num < 8; num++){	
@@ -193,8 +195,9 @@ for (var num = 16; num < 24; num++){
 	dataset[num].x = x 
 	dataset[num].y = y
 }
-x = 690 //starting positions for upper side 
+x = 690 //starting positions for upper side  
 y = 30
+
 for (var num = 24; num < 32; num++){	
 	if (dataset[num].type =="D"){
 		x -= doubleWidth
@@ -284,14 +287,14 @@ for (var num = 24; num < 32; num++){
 			   	case "R":
 			   	 	if(d.type == "S")
 				   	 	return singleLength
-				   	else if(d.type == "Q")
-				   	 	return quadWidth
 				   	else{
 				   	 	return doubleLength
 				   	}
 				case "U":
 					if(d.type == "S")
 						return singleWidth
+				   	else if(d.type == "Q")
+				   	 	return quadLength
 					else{
 						return doubleWidth
 					}				
@@ -316,16 +319,16 @@ for (var num = 24; num < 32; num++){
 				case "R":
 					if(d.type == "S")
 						return singleWidth
-					else if(d.type == "Q")
-				   	 	return quadLength					
 					else{
 						return doubleWidth
 	 				}
 	 			case "U":
 					if(d.type == "S")
 						return singleLength
-					else{
-						return doubleLength
+					else if(d.type == "Q")
+				   	 	return quadWidth					
+					else{	
+						return doubleLength	
 					}
 			}
 		})
