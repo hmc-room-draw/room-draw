@@ -10,12 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008231606) do
+ActiveRecord::Schema.define(version: 20171017081045) do
 
   create_table "dorms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "room_assignments", force: :cascade do |t|
+    t.integer "assignment_type"
+    t.string "description"
+    t.integer "student_id"
+    t.integer "pull_id"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_room_assignments_on_pull_id"
+    t.index ["room_id"], name: "index_room_assignments_on_room_id"
+    t.index ["student_id"], name: "index_room_assignments_on_student_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -48,13 +61,6 @@ ActiveRecord::Schema.define(version: 20171008231606) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dorm_id"], name: "index_suites_on_dorm_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

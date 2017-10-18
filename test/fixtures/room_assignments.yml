@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assignment_type: 1
+  description: MyText
+  student: one
+  pull: one
+  room: one
+
+two:
+  assignment_type: 1
+  description: MyText
+  student: two
+  pull: two
+  room: two

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :room_assignments
   resources :users
   resources :dorms
   resources :rooms

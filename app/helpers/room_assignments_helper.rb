@@ -1,0 +1,2 @@
+module RoomAssignmentsHelper
+end
