@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'dorms/atwood'
+
+  get 'dorms/case2'
+
   get 'dorms/case'
 
   resources :users
