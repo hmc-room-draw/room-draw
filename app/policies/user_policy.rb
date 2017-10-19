@@ -7,7 +7,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def new?
-    user.is_ashmc_admin || user.is_super_admin
+    user.is_admin
   end
 
   def show?
@@ -15,14 +15,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_ashmc_admin || user.is_super_admin
+    user.is_admin
   end
 
   def update?
-    user == record || user.is_ashmc_admin || user.is_super_admin
+    user == record || user.is_admin
   end
 
   def destroy?
-    user.is_ashmc_admin || user.is_super_admin
+    user.is_admin
   end
 end
