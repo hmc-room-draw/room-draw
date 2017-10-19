@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  resources :users
-  resources :dorms
-  resources :rooms
-  resources :suites
+
+  resources :pulls
+  resources :room_assignments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -12,7 +11,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
 
-  resources :users, :rooms, :suites, :dorms
+  resources :users
+  resources :dorms
+  resources :rooms
+  resources :suites
 
   root to: "login#show"
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012205846) do
+ActiveRecord::Schema.define(version: 20171013184122) do
 
   create_table "dorms", force: :cascade do |t|
     t.string "name"
@@ -23,6 +23,25 @@ ActiveRecord::Schema.define(version: 20171012205846) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  create_table "pulls", force: :cascade do |t|
+    t.string "message"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_pulls_on_student_id"
+  end
+
+  create_table "room_assignments", force: :cascade do |t|
+    t.integer "student_id"
+    t.integer "pull_id"
+    t.integer "room_id"
+    t.integer "assignment_type"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_room_assignments_on_pull_id"
+    t.index ["room_id"], name: "index_room_assignments_on_room_id"
+    t.index ["student_id"], name: "index_room_assignments_on_student_id"
   end
 
   create_table "rooms", force: :cascade do |t|
