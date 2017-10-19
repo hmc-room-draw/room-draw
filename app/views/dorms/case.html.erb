@@ -56,7 +56,7 @@
 					</button>
 
 					<ul class="dropdown-menu">
-				  	<li><a href="#">Atwood</a></li>
+				  	<li><a href="/dorms/atwood">Atwood</a></li>
 				  	<li><a href=/dorms/case>Case</a></li>
 				  	<li><a href="#">Drinkward</a></li>
 				  	<li><a href="#">East</a></li>
@@ -207,11 +207,12 @@ for (var num = 24; num < 32; num++){
 }
 
 
-	var svg = d3.select("body")
+	var svg = d3.select("body") //creates the canvas 
             .append("svg")
             .attr("width", w)
             .attr("height", h);
-	svg.selectAll("text")
+
+	svg.selectAll("text") //
 	   .data(dataset)
 	   .enter()
 	   .append("text")
