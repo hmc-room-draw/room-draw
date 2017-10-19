@@ -6,13 +6,14 @@ git_source(:github) do |repo_name|
 end
 
 # Generate entity-relationship diagrams
-gem 'rails-erd', require: false, group: :development
+group :development, :test do
+  gem 'rails-erd', require: false
+  gem 'rspec-rails'
+  gem 'dotenv-rails', groups: [:development, :test]
+end
 
 # Authorization policy; see https://github.com/elabs/pundit
 gem 'pundit'
-
-# Load env vars from .env
-gem 'dotenv-rails', groups: [:development, :test]
 
 # Google OAuth support for OmniAuth
 gem 'omniauth-google-oauth2'
