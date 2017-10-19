@@ -22,5 +22,7 @@ module RoomDraw
 
     # set up delayed_job adapter
     config.active_job.queue_adapter = :delayed_job
+    config.active_record.default_timezone = :local
+    config.time_zone = "Pacific Time (US & Canada)"
   end
 end

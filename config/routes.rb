@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :emails
+  get 'emails/new'
+
+  get 'emails/index'
+
+  get 'emails/show'
+
+  get 'emails/create'
+
   resources :users
   resources :dorms
   resources :rooms

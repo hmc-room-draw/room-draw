@@ -1,25 +1,4 @@
 <h1>Warn people about impending doom and droppage!</h1>
 <%= button_to 'Send reminder email!', adminpage_clicked_path, method: :post %>
 <%= datetime_field("schedule_time", "send")%>
-<%= select_date Date.today, prefix: :start_date %>
-<%= check_box_tag("platforms[]","Linux") %> Linux
-
-
-<% form_tag(:action => "clicked") do %>
-
-  <p>Name:
-  <%= text_field_tag("name","Web Programmer") %></p>
-
-  <p>Tools:
-  <% opts = ["Perl", "Python", "Ruby"].map do |o|
-    "<option>#{o}</option>"
-  end.to_s  %>
-  <%= select_tag("tools[]", opts, :multiple => "true") %></p>
-
-  <p>Platforms:
-  <%= check_box_tag("platforms[]","Linux") %> Linux
-  <%= check_box_tag("platforms[]","Mac OSX") %> Mac OSX
-  <%= check_box_tag("platforms[]","Windows") %> Windows</p>
-
-  <%= submit_tag("Save Data") %>
-<% end %>
+<%= f.datetime_select(:send_at) %>
