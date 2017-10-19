@@ -24,3 +24,5 @@
 
 # Don't commit secret keys!
 .env
+
+erd.pdf
