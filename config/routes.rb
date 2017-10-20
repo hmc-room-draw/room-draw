@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
+
   get 'dorms/linde2'
 
   get 'dorms/linde'
@@ -10,11 +10,25 @@ Rails.application.routes.draw do
 
   get 'dorms/atwood'
 
+  get 'dorms/case'
+
   get 'dorms/case2'
 
-=======
->>>>>>> added case dorm
-  get 'dorms/case'
+  get 'dorms/east2'
+
+  get 'dorms/west2'
+
+  get 'dorms/west'
+
+  get 'dorms/east'
+
+  get 'dorms/south2'
+
+  get 'dorms/south'
+
+  get 'dorms/north2'
+
+  get 'dorms/north'
 
   resources :users
   resources :dorms
