@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20171013184122) do
     t.integer "pull_id"
     t.integer "room_id"
     t.integer "assignment_type"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pull_id"], name: "index_room_assignments_on_pull_id"
@@ -52,11 +53,13 @@ ActiveRecord::Schema.define(version: 20171013184122) do
 
   create_table "students", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "class_rank"
+    t.integer "room_id"
+    t.integer "class"
     t.integer "room_draw_number"
     t.boolean "has_participated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_students_on_room_id"
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 
@@ -72,8 +75,8 @@ ActiveRecord::Schema.define(version: 20171013184122) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.boolean "is_admin"
-    t.boolean "has_completed_form"
+    t.boolean "is_ashmc_admin"
+    t.boolean "is_super_admin"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
