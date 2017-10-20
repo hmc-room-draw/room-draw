@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20171013184122) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.boolean "is_admin"
-    t.boolean "has_completed_form"
+    t.boolean "is_ashmc_admin"
+    t.boolean "is_super_admin"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
