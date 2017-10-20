@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :draw_periods
   resources :pulls
   resources :room_assignments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -10,7 +11,6 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
-
   resources :users
   resources :dorms
   resources :rooms

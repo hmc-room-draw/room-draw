@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Draw Periods</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Last Updated By</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @draw_periods.each do |draw_period| %>
+      <tr>
+        <td><%= draw_period.start %></td>
+        <td><%= draw_period.end %></td>
+        <td><%= draw_period.last_updated_by %></td>
+
+        <td><%= link_to 'Show', draw_period %></td>
+        <td><%= link_to 'Edit', edit_draw_period_path(draw_period) %></td>
+        <td><%= link_to 'Cancel', draw_period, method: :destroy, data: { confirm: 'Are you sure you want to cancel this draw period?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Draw Period', new_draw_period_path %>
