@@ -1,30 +1,23 @@
 class AdminpageController < ApplicationController
 
-  
+
   def reminder()
   end
 
-  # Function called when the user clicks the "Send Reminder Email" button on
-  # the /adminpage/reminder page.
-  # It emails all students who have not yet participated in room draw.
+  # Function called when the user clicks the "Send Email" button on the admin
+  # reminder page.
+  # The button will redirect admin to a email-customization page
+  # MVP: emails all students who have not yet participated in room draw.
   def clicked()
-    # TODO: Make this function called automatically on a schedule.
-
 
     # NOTE: The current un-commented code sends an email to all instances of the
     # temporary "User" model.
     # This function works and can be used to verify that mailing works.
-    User.all.each do |user|
-      GeneralMailer.reminder_email(user).deliver_later
-    end
 
-    # Run at scheduled time
-    puts "NOOOO"
-    date = params
-    puts date
-    User.all.each do |user|
-      GeneralMailer.delay(queue:"reminder", run_at: 3.minutes.from_now).reminder_email(user)
-    end
+
+    # TODO: redirect to new email page, to be tested 
+
+    # redirect 'emails/new'
 
     # TODO: Once the DB models have been implemented, uncomment the code below
     # and remove the code above.

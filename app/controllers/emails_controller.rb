@@ -10,6 +10,7 @@ class EmailsController < ApplicationController
   end
 
   def create
+    # fetch newly created email
     email = params["email"]
 
     # convert information in datetime_select form to Ruby date:
@@ -23,12 +24,15 @@ class EmailsController < ApplicationController
                         email["created_at(3i)"].to_i,
                         email["created_at(4i)"].to_i,
                         email["created_at(5i)"].to_i)
-    #puts send_date
 
+    # Run bin/delayed_job start to process all jobs
+
+    # delayed job
     User.all.each do |user|
       GeneralMailer.reminder_email(user).deliver_later
     end
 
+    # send at scheduled date time by admin
     User.all.each do |user|
       GeneralMailer.delay(queue:"reminder", run_at: send_date).reminder_email(user)
     end

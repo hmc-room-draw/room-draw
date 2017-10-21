@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  #resources for mailing 
   resources :emails
   get 'emails/new'
 
