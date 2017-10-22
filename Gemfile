@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+
+# Use time_diff to handle time difference calculation
+gem 'time_diff', '~> 0.3.0'
 # Use daemons to handle backend scripts
 gem 'daemons'
 # User delayed_job to handle asynchronous scheduled mailing

@@ -1,3 +1,4 @@
+require('date')
 class EmailsController < ApplicationController
   def new
     @email = Email.new
@@ -28,13 +29,16 @@ class EmailsController < ApplicationController
     # Run bin/delayed_job start to process all jobs
 
     # delayed job
+
+
+    diffM = (send_date-DateTime.now)/1.hours
+    puts diffM
     User.all.each do |user|
       GeneralMailer.reminder_email(user).deliver_later
     end
-
     # send at scheduled date time by admin
     User.all.each do |user|
-      GeneralMailer.delay(queue:"reminder", run_at: send_date).reminder_email(user)
+      GeneralMailer.delay(queue:"reminder", run_at: 10.minutes.from_now).reminder_email(user)
     end
   end
 end
