@@ -9,6 +9,16 @@ end
 gem 'daemons'
 # User delayed_job to handle asynchronous scheduled mailing
 gem 'delayed_job_active_record'
+
+# Authorization policy; see https://github.com/elabs/pundit
+gem 'pundit'
+
+# Load env vars from .env
+gem 'dotenv-rails', groups: [:development, :test]
+
+# Google OAuth support for OmniAuth
+gem 'omniauth-google-oauth2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use sqlite3 as the database for Active Record

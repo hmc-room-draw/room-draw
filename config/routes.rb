@@ -11,9 +11,26 @@ Rails.application.routes.draw do
   get 'emails/create'
 
   resources :users
+  resources :dorms
+  resources :rooms
+  resources :suites
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # Admin page actions
   #match '/reminder' => 'adminpage#reminder', :via => [:get]
   get 'adminpage/reminder'
   post 'adminpage/clicked'
   post 'adminpage/download_users'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+
+  resources :sessions, only: [:create, :destroy]
+  resource :login, only: [:show]
+
+  resources :users, :rooms, :suites, :dorms
+
+  root to: "login#show"
 end

@@ -12,8 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name %>
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, id: :user_first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :user_last_name %>
   </div>
 
   <div class="field">
@@ -21,6 +26,16 @@
     <%= form.text_field :email, id: :user_email %>
   </div>
 
+  <div class="field">
+    <%= form.label :is_ashmc_admin %>
+    <%= form.check_box :is_ashmc_admin, id: :user_is_ashmc_admin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_super_admin %>
+    <%= form.check_box :is_super_admin, id: :user_is_super_admin %>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>
