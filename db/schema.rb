@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20171013184122) do
     t.index ["student_id"], name: "index_pulls_on_student_id"
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "room_assignments", force: :cascade do |t|
     t.integer "student_id"
     t.integer "pull_id"

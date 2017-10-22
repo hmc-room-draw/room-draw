@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'admin', to: 'admins#dashboard'
+
+  post 'admin/uploadRoster', to: 'admins#uploadRoster'
+  post 'admin/downloadStudents', to: 'admins#downloadStudents'
+  post 'admin/downloadPulls', to: 'admins#downloadPulls'
 
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
