@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
   get 'emails/create'
 
-  resources :users
+  resources :users do
+    collection { post :import }
+  end
+  
   resources :dorms
   resources :rooms
   resources :suites
@@ -22,6 +25,8 @@ Rails.application.routes.draw do
   get 'adminpage/reminder'
   post 'adminpage/clicked'
   post 'adminpage/download_users'
+
+  get 'adminpage/upload'
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')

@@ -2,16 +2,25 @@ class UsersController < ApplicationController
 
   include Pundit
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  # before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # Enforce that all endpoints call `authorize`
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  # # Enforce that all endpoints call `authorize`
+  # after_action :verify_authorized, except: :index
+  # after_action :verify_policy_scoped, only: :index
 
   # GET /users
   # GET /users.json
   def index
     @users = policy_scope(User)
+  end
+
+  def import()
+    begin
+      User.import(params[:file])
+      redirect_to adminpage_upload_url, notice: "Users imported."
+    rescue
+      redirect_to adminpage_upload_url, notice: "Invalid CSV file format."
+    end
   end
 
   # GET /users/1

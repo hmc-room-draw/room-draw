@@ -31,4 +31,9 @@ class AdminpageController < ApplicationController
     # end
 
   end
+
+  def upload()
+    @users = User.all
+  end
+
 end
