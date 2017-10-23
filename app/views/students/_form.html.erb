@@ -26,6 +26,11 @@
     <%= form.check_box :has_participated, id: :student_has_participated %>
   </div>
 
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, id: :student_user_id %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
