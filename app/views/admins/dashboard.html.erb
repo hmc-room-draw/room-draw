@@ -1,3 +1,12 @@
-<%= button_to "Upload Roster", action: "uploadRoster" %>
-<%= button_to "Download Students", action: "downloadStudents" %>
-<%= button_to "Download Pulls", action: "downloadPulls" %>
+<h1>Admin Dashboard</h1>
+
+<%= button_to "Upload Roster", {action: "uploadRoster"}, {class: 'dashboard-button'} %>
+<%= button_to "Download Students", {action: "downloadStudents"}, {class: 'dashboard-button'} %>
+<%= button_to "Download Pulls", {action: "downloadPulls"}, {class: 'dashboard-button'} %>
+
+<div >
+	<%= link_to "Maps", {}, {class: 'dashboard-link'} %>
+	<%= link_to "Pulls", {}, {class: 'dashboard-link'} %>
+	<%= link_to "Students", {}, {class: 'dashboard-link'} %>
+	<%= link_to "Send emails", {}, {class: 'dashboard-link'} %>
+</div>
