@@ -9,11 +9,14 @@ end
 group :development, :test do
   gem 'rails-erd', require: false
   gem 'rspec-rails'
-  gem 'dotenv-rails', groups: [:development, :test]
 end
+
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 # Authorization policy; see https://github.com/elabs/pundit
 gem 'pundit'
+
+gem 'unicorn'
 
 # Google OAuth support for OmniAuth
 gem 'omniauth-google-oauth2'
