@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :class %>
-    <%= form.text_field :class, id: :student_class %>
+    <%= form.label :class_rank %>
+    <%= form.text_field :class_rank, id: :student_class_rank %>
   </div>
 
   <div class="field">
@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :has_participated %>
-    <%= form.text_field :has_participated, id: :student_has_participated %>
+    <%= form.check_box :has_participated, id: :student_has_participated %>
   </div>
 
   <div class="actions">

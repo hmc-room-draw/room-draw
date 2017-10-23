@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :dorms
   resources :rooms
   resources :suites
+  resources :students
 
   root "sessions#new"
 end
