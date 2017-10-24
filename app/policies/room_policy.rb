@@ -1,6 +1,5 @@
 # See https://github.com/elabs/pundit/ for an explanation of the code below
-class SuitePolicy < ApplicationPolicy
-
+class RoomPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
