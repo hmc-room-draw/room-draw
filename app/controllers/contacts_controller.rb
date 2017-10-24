@@ -5,13 +5,13 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(params[:contact])
-    @contact.message = @contact.message << "\nDO NOT REPLY TO THIS EMAIL\n"
+    @contact.message = @contact.message << @contact.footer
     @contact.request = request
     if @contact.deliver
       flash.now[:error] = nil
-      flash.now[:notice] = 'Thank you for your message!'
+      flash.now[:notice] = 'Email has been sent!'
     else
-      flash.now[:error] = 'Cannot send message.'
+      flash.now[:error] = 'Cannot send email. Please try again.'
       render :new
     end
   end
