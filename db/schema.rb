@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 20171023000808) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "draw_periods", force: :cascade do |t|
+    t.datetime "start"
+    t.datetime "end"
+    t.string "last_updated_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pulls", force: :cascade do |t|
     t.string "message"
     t.integer "student_id"

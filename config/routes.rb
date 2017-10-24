@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
+  resources :draw_periods
   resources :pulls
   resources :room_assignments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   resources :sessions, only: [:create, :destroy]
-
   resources :users
   resources :dorms
   resources :rooms

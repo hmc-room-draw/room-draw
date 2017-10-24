@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user
+  helper_method :current_user, :current_draw_period
 
   # TODO: Uncomment these to enable form/login redirect
   #before_action :check_login, :check_form

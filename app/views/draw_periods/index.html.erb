@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Draw Periods</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Last Updated By</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @draw_periods.each do |draw_period| %>
+      <tr>
+        <td><%= getStatus(draw_period) %></td>
+        <td><%= draw_period.start %></td>
+        <td><%= draw_period.end %></td>
+        <td><%= draw_period.last_updated_by %></td>
+
+        <td><%= link_to 'Show', draw_period %></td>
+        <% if getStatus(draw_period) == 'Complete' %>
+          <td><%= link_to 'Edit', edit_draw_period_path(draw_period), :read_only => true %></td>
+        <% else %>
+          <td><%= link_to 'Edit', edit_draw_period_path(draw_period) %></td>
+        <% end %>
+        <td><%= link_to 'Delete', draw_period, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Draw Period', new_draw_period_path %>
