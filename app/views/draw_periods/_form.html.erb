@@ -14,7 +14,12 @@
     <% Time.use_zone(Time.zone) do %>
     <div class="field">
     <%= form.label :start %>
+    <% if draw_period != current_draw_period %>
     <%= form.datetime_select :start, id: :start %>
+    <% else %>
+    <%= form.datetime_select :start, id: :start, :readonly => true, onclick: 'alert("You cannot edit the start time of a current draw period.")' %>
+
+    <% end %>
     </div>
 
     <div class="field">
@@ -22,6 +27,8 @@
     <%= form.datetime_select :end, id: :end %>
     </div>
     <% end %>
+
+    <%= form.hidden_field :last_updated_by, :value => current_user %>
 
     <div class="actions">
     <%= form.submit %>

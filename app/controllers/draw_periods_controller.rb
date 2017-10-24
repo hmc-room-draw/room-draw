@@ -1,10 +1,11 @@
 class DrawPeriodsController < ApplicationController
-    before_action :set_draw_period, only: [:show, :edit, :update, :delete]
-    
+    before_action :set_draw_period, only: [:show, :edit, :update, :destroy]
+    helper DrawPeriodHelper
+
     def index
         @draw_periods = DrawPeriod.all
     end
-
+    
     def show
         @draw_period = DrawPeriod.find(params[:id])
     end
@@ -18,7 +19,7 @@ class DrawPeriodsController < ApplicationController
         
         respond_to do |format|
             if @draw_period.save
-                format.html { redirect_to @draw_period, notice: 'Draw Period was successfully scheduled.' }
+                format.html { redirect_to root_path, notice: 'Draw Period was successfully scheduled.' }
                 format.json { render :show, status: :created, location: @draw_period }
             else
                 format.html { render :new }
@@ -34,7 +35,7 @@ class DrawPeriodsController < ApplicationController
     def update
         respond_to do |format|
             if @draw_period.update(draw_period_params)
-                format.html { redirect_to @draw_period, notice: 'Draw Period was successfully updated.' }
+                format.html { redirect_to root_path, notice: 'Draw Period was successfully updated.' }
                 format.json { render :show, status: :ok, location: @draw_period }
             else
                 format.html { render :edit }
@@ -43,11 +44,11 @@ class DrawPeriodsController < ApplicationController
         end
     end
 
-    def delete
+    def destroy
         @draw_period.destroy
         respond_to do |format|
-          format.html { redirect_to 'index', notice: 'Draw Period was successfully destroyed.' }
-          format.json { head :no_content }
+            format.html { redirect_to draw_periods_url, notice: 'Draw Period was successfully canceled.' }
+            format.json { head :no_content }
         end
     end
 
@@ -57,6 +58,6 @@ class DrawPeriodsController < ApplicationController
         end
         
         def draw_period_params
-            params.require(:draw_period).permit(:start, :end).merge(last_updated_by: current_user)
+            params.require(:draw_period).permit(:start, :end, :last_updated_by)
         end
 end

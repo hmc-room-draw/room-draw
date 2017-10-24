@@ -15,6 +15,6 @@
   <%= @draw_period.last_updated_by %>
 </p>
 
-
+<%= link_to 'Cancel', @draw_period, method: :destroy, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Edit', edit_draw_period_path(@draw_period) %> |
 <%= link_to 'Back', draw_periods_path %>
