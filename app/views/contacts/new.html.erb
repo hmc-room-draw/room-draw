@@ -2,13 +2,25 @@
   <h3>Student Contact Form</h3>
 
   <%= simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f| %>
-    <%= f.input :name, :required => true, :placeholder => 'Name of Student'%>
     <%= f.input :subject, :required => true, :placeholder => 'Regarding Your Room Draw', input_html: {value: f.object.subject || 'Regarding Your Room Draw'}%>
-    
-    
+        
     <div class="form-group-3">
       <%= f.input :message, :as => :ckeditor, input_html: {:ckeditor => {:toolbar => 'FULL'}}, class: "form-control" %>
     </div>
+
+    <label class="checkbox">
+      <input class="boolean optional" id="Students who have not logged in" name="user[remember_me]" type="checkbox" value="1">
+    </label>
+
+    <label class="checkbox">
+      <input class="boolean optional" id="Students who are ready to pull" name="user[remember_me]" type="checkbox" value="1">
+    </label>
+
+    <label class="checkbox">
+      <input class="boolean optional" id="Students currently in a room" name="user[remember_me]" type="checkbox" value="1">
+    </label>
+
+    <%= f.input :message,     as: :radio_buttons %>
 
     <div>
       </br>
