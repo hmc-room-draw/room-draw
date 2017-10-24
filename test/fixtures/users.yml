@@ -3,7 +3,7 @@
 one:
   first_name: MyString
   last_name: MyString
-  email: MyString
+  email: email@emailaddress.com
   is_admin: true
   has_completed_form: true
   oauth_token: MyString
@@ -12,7 +12,7 @@ one:
 two:
   first_name: MyString
   last_name: MyString
-  email: MyString
+  email: email@emailaddress.com
   is_admin: false
   has_completed_form: false
   oauth_token: MyString
