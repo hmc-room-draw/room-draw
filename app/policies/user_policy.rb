@@ -26,6 +26,10 @@ class UserPolicy < ApplicationPolicy
     user == record || user.is_ashmc_admin || user.is_super_admin
   end
 
+  def edit?
+    user.is_ashmic_admin || user.is_super_admin
+  end
+
   def destroy?
     user.is_ashmc_admin || user.is_super_admin
   end
