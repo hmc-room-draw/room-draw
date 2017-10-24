@@ -6,6 +6,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    true
+  end
+
   def new?
     user.is_ashmc_admin || user.is_super_admin
   end
