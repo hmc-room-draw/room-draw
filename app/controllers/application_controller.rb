@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
   end
 
+  def current_draw_period
+    @current_draw_period ||= DrawPeriod.find_by('start < ? AND ? < end', Time.now, Time.now)
+  end
+
   def check_login
     if not current_user
       flash[:alert] =  'Please log in.'
