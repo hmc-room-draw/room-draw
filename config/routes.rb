@@ -29,21 +29,25 @@ Rails.application.routes.draw do
   get 'dorms/north2'
 
   get 'dorms/north'
+  get 'login/show'
+
+  resources :pulls
+  resources :room_assignments
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+
+  get    '/login',   to: 'sessions#new'
+  delete '/logout',  to: 'sessions#destroy'
+
+  resources :sessions, only: [:create, :destroy]
 
   resources :users
   resources :dorms
   resources :rooms
   resources :suites
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :students
 
-  get 'auth/:provider/callback', to: 'sessions#create'
-  get 'auth/failure', to: redirect('/')
-  get 'logout', to: 'sessions#destroy', as: 'logout'
-
-  resources :sessions, only: [:create, :destroy]
-  resource :login, only: [:show]
-
-  resources :users, :rooms, :suites, :dorms
-
-  root to: "login#show"
-end
+  root "sessions#new"
+ end
