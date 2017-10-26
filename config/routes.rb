@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'dorms/linde2'
+
+  get 'dorms/linde'
+
+  get 'dorms/atwood3'
+
+  get 'dorms/atwood2'
+
   get 'dorms/atwood'
 
   get 'dorms/case2'
