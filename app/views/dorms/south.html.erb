@@ -1,5 +1,6 @@
-  <h1>Dorms#case</h1>
-<p>Find me in app/views/dorms/case.html.erb</p>
+<h1>Dorms#south</h1>
+<p>Find me in app/views/dorms/south.html.erb</p>
+
 <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
  <style type="text/css">
@@ -45,7 +46,7 @@
 <!--  <h2 style="text-align:center">
 	Case Dorm
  	  </h2> -->
-	<div class="container">
+		<div class="container">
 		<div class="row">
 			<div class="col-md-2">
 				<a href=/dorms><span style="font-size:2.5em;" class="glyphicon glyphicon-circle-arrow-left"></span> Go back</a>			</div>
@@ -57,22 +58,27 @@
 
 					<ul class="dropdown-menu">
 				  	<li><a href="#">Atwood</a></li>
-				  	<li class = "active"><a href=/dorms/case>Case</a></li>
+				  	<li><a href=/dorms/case>Case</a></li>
 				  	<li><a href=/dorms/east>East</a></li>
 				  	<li><a href="#">Drinkward</a></li>
 				  	<li><a href="#">Linde</a></li>
 				  	<li><a href=/dorms/north>North</a></li>
-				  	<li><a href=/dorms/south>South</a></li>
+				  	<li class="active"><a href=/dorms/south>South</a></li>
 				    <li><a href=/dorms/west>West</a></li>
 					</ul>
 			    </div>
 			</div>
 
 			<div class="col-md-3">
-				<ul class="dropdown-menu">
-			  	<li class = "active"><a href=/dorms/case>First Floor</a></li>
-			  	<li><a href=/dorms/case2>Second Floor</a></li>
-				</ul>
+				<div class="btn-group">
+					<button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Switch Floor <span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu">
+				  	<li class = "active"><a href=/dorms/south>First Floor</a></li>
+				  	<li><a href=/dorms/south2>Second Floor</a></li>
+					</ul>
+			    </div>
 			</div>
 
 			<h1><br></h1>
@@ -114,41 +120,25 @@
 var w = 1000;
 var h = 750;
  dataset = [
-{x : '80', y : '110', roomNum : '101', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '170', roomNum : '102', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '230', roomNum : '103', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '290', roomNum : '104', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '350', roomNum : '105', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '400', roomNum : '106', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '450', roomNum : '107', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '500', roomNum : '108', status: "empty", type: "S", orient: "L"},
+{x : '100', y : '40', roomNum : '307', status: "empty", type: "Q", orient: "L"},
+{x : '100', y : '200', roomNum : '305', status: "empty", type: "T", orient: "L"},
+{x : '100', y : '310', roomNum : '303', status: "empty", type: "T", orient: "L"},
+{x : '100', y : '420', roomNum : '301', status: "empty", type: "Q", orient: "L"},
 
-{x : '170', y : '560', roomNum : '118', status: "empty", type: "S", orient: "D"},
-{x : '220', y : '560', roomNum : '119', status: "empty", type: "S", orient: "D"},
-{x : '270', y : '560', roomNum : '120', status: "empty", type: "S", orient: "D"},
-{x : '320', y : '560', roomNum : '121', status: "empty", type: "S", orient: "D"},
-{x : '370', y : '560', roomNum : '122', status: "empty", type: "D", orient: "D"},
-{x : '430', y : '560', roomNum : '123', status: "empty", type: "D", orient: "D"},
-{x : '490', y : '560', roomNum : '124', status: "empty", type: "D", orient: "D"},
-{x : '550', y : '560', roomNum : '125', status: "empty", type: "D", orient: "D"},
+// {x : '500', y : '160', roomNum : '308', status: "empty", type: "D", orient: "D"},
+// {x : '560', y : '160', roomNum : '306', status: "empty", type: "D", orient: "D"},
+// {x : '260', y : '180', roomNum : '304', status: "empty", type: "S", orient: "D"},
+// {x : '320', y : '180', roomNum : '302', status: "empty", type: "S", orient: "D"},
 
-{x : '700', y : '480', roomNum : '140', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '420', roomNum : '141', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '360', roomNum : '142', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '300', roomNum : '143', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '250', roomNum : '144', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '200', roomNum : '145', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '150', roomNum : '146', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '100', roomNum : '147', status: "empty", type: "S", orient: "R"},
+{x : '680', y : '40', roomNum : '307', status: "empty", type: "Q", orient: "R"},
+{x : '680', y : '200', roomNum : '305', status: "empty", type: "T", orient: "R"},
+{x : '680', y : '310', roomNum : '303', status: "empty", type: "T", orient: "R"},
+{x : '680', y : '420', roomNum : '301', status: "empty", type: "Q", orient: "R"},
 
-{x : '620', y : '30', roomNum : '148', status: "empty", type: "S", orient: "U"},
-{x : '570', y : '30', roomNum : '149', status: "empty", type: "S", orient: "U"},
-{x : '520', y : '30', roomNum : '150', status: "empty", type: "S", orient: "U"},
-{x : '470', y : '30', roomNum : '151', status: "empty", type: "S", orient: "U"},
-{x : '410', y : '30', roomNum : '152', status: "empty", type: "D", orient: "U"},
-{x : '350', y : '30', roomNum : '153', status: "empty", type: "D", orient: "U"},
-{x : '290', y : '30', roomNum : '154', status: "empty", type: "D", orient: "U"},
-{x : '230', y : '30', roomNum : '155', status: "empty", type: "D", orient: "U"},
+{x : '520', y : '80', roomNum : '310', status: "empty", type: "S", orient: "U"},
+{x : '440', y : '80', roomNum : '312', status: "empty", type: "S", orient: "U"},
+{x : '360', y : '80', roomNum : '311', status: "empty", type: "S", orient: "U"},
+{x : '280', y : '80', roomNum : '309', status: "empty", type: "S", orient: "U"},
 ]
 	var svg = d3.select("body")
             .append("svg")
@@ -166,7 +156,7 @@ var h = 750;
 		    	case "L":
 			   		return Number(d.x)-50;
 			   	case "D":
-			 		return Number(d.x) + 5;
+			 		return Number(d.x) + 15;
 			 	case "R":
 			 		if (d.type == "S"){
 		    			return Number(d.x) + 80;
@@ -175,22 +165,32 @@ var h = 750;
 			   			return Number(d.x) + 110;
 			   		}
 			   	case "U":
-			   		return Number(d.x) + 5;
+			   		return Number(d.x) + 15;
 		    }
 		   })
 	   .attr("y", function(d, i){
 			switch(d.orient){
 				case "L":
-			   		return Number(d.y) + 20;
+			   		if (d.type == "Q"){
+		    			return Number(d.y) + 80;
+			   		}
+			   		else{
+			   			return Number(d.y) + 50;
+			   		}
 			   	case "D":
 			   		if (d.type == "S"){
-		    			return Number(d.y) + 90;
+		    			return Number(d.y) + 100;
 			   		}
 			   		else{
 			   			return Number(d.y) + 120;
 			   		}
 			   	case "R":
-			   		return Number(d.y) + 20;
+			   		if (d.type == "Q"){
+		    			return Number(d.y) + 80;
+			   		}
+			   		else{
+			   			return Number(d.y) + 50;
+			   		}
 			   	case "U":
 			   		return d.y - 10;
 		    }
@@ -212,38 +212,22 @@ var h = 750;
 	   .attr("width", function(d){
 		   	switch (d.orient){
 		   		case "L":
-				   	 if(d.type == "S")
-				   	 	return 70
-				   	 else{
-				   	 	return 100
-				   	 }
+				   	return 100
 			   	case "D":
-					if(d.type == "S")
-						return 50
-					else{
-						return 60
-			   	 }
+					return 80
 			   	case "R":
-			   	 	if(d.type == "S")
-				   	 	return 70
-				   	else{
-				   	 	return 100
-				   	}
+			   	 	return 100
 				case "U":
-					if(d.type == "S")
-						return 50
-					else{
-						return 60
-					}
+					return 80
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
-					if(d.type == "S")
-						return 50
+					if(d.type == "T")
+						return 110
 					else{
-						return 60
+						return 160
 	 				}
 				case "D":
 					if(d.type == "S")
@@ -252,10 +236,10 @@ var h = 750;
 						return 100
 					}
 				case "R":
-					if(d.type == "S")
-						return 50
+					if(d.type == "T")
+						return 110
 					else{
-						return 60
+						return 160
 	 				}
 	 			case "U":
 					if(d.type == "S")
