@@ -150,6 +150,7 @@ var h = 750;
 {x : '320', y : '30', roomNum : '124', status: "empty", type: "S", orient: "U"},
 {x : '260', y : '30', roomNum : '120', status: "empty", type: "S", orient: "U"},
 ]
+
 	var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
@@ -197,6 +198,7 @@ var h = 750;
 		})
 	   	.attr("font-family", "sans-serif")
 		.attr("font-size", "14px")
+
 	svg.selectAll("rect")
 	   .data(dataset)
 	   .enter()
@@ -218,11 +220,7 @@ var h = 750;
 				   	 	return 100
 				   	 }
 			   	case "D":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-			   	 }
+					 return 60
 			   	case "R":
 			   	 	if(d.type == "S")
 				   	 	return 70
@@ -230,21 +228,14 @@ var h = 750;
 				   	 	return 100
 				   	}
 				case "U":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-					}
+					 return 60
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-	 				}
+					 return 60
+					 
 				case "D":
 					if(d.type == "S")
 						return 80
@@ -252,11 +243,8 @@ var h = 750;
 						return 100
 					}
 				case "R":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-	 				}
+					 return 60
+
 	 			case "U":
 					if(d.type == "S")
 						return 80
