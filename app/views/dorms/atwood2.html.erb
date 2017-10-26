@@ -1,5 +1,5 @@
-<h1>Dorms#atwood</h1>
-<p>Find me in app/views/dorms/atwood.html.erb</p>
+<h1>Dorms#atwood2</h1>
+<p>Find me in app/views/dorms/atwood2.html.erb</p>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
  <style type="text/css">
@@ -73,11 +73,11 @@
 			<div class="row">
 				<div class="col-md-9"></div>
 				<div class="col-md-1">
-					<a href="/dorms/atwood2"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-top"></span><br>Go Up</a>
+					<a href="/dorms/atwood3"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-top"></span><br>Go Up</a>
 				</div>
-		<!-- 		<div class="col-md-2">
-					<a href="#"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-bottom"></span><br>Go Down</a>
-				</div> -->
+				<div class="col-md-2">
+					<a href="/dorms/atwood"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-bottom"></span><br>Go Down</a>
+				</div>
 			</div>
 	</div>
 
@@ -105,43 +105,41 @@
 
 </body>
 
-
-
 <script>
 var w = 1000;
 var h = 750;
  dataset = [
-{roomNum : '107', status: "empty", type: "D", orient: "UL"},
-{roomNum : '105', status: "empty", type: "S", orient: "L"},
-{roomNum : '103', status: "empty", type: "S", orient: "L"},
-{roomNum : '101', status: "empty", type: "D", orient: "L"},
-{roomNum : '100', status: "empty", type: "D", orient: "L"},
-{roomNum : '102', status: "empty", type: "S", orient: "L"},
-{roomNum : '104', status: "empty", type: "S", orient: "L"},
+{roomNum : '207', status: "empty", type: "D", orient: "UL"},
+{roomNum : '205', status: "empty", type: "S", orient: "L"},
+{roomNum : '203', status: "empty", type: "S", orient: "L"},
+{roomNum : '201', status: "empty", type: "D", orient: "L"},
+{roomNum : '200', status: "empty", type: "D", orient: "L"},
+{roomNum : '202', status: "empty", type: "S", orient: "L"},
+{roomNum : '204', status: "empty", type: "S", orient: "L"},
 
-{roomNum : '106', status: "empty", type: "D", orient: "DL"},
-{roomNum : '108', status: "empty", type: "S", orient: "D"},
-{roomNum : '110', status: "empty", type: "S", orient: "D"},
-{roomNum : '112', status: "empty", type: "D", orient: "D"},
-{roomNum : '114', status: "empty", type: "D", orient: "D"},
-{roomNum : '116', status: "empty", type: "S", orient: "D"},
-{roomNum : '118', status: "empty", type: "S", orient: "D"},
+{roomNum : '206', status: "empty", type: "D", orient: "DL"},
+{roomNum : '208', status: "empty", type: "S", orient: "D"},
+{roomNum : '210', status: "empty", type: "S", orient: "D"},
+{roomNum : '212', status: "empty", type: "D", orient: "D"},
+{roomNum : '214', status: "empty", type: "D", orient: "D"},
+{roomNum : '216', status: "empty", type: "S", orient: "D"},
+{roomNum : '218', status: "empty", type: "S", orient: "D"},
 
-{roomNum : '120', status: "empty", type: "D", orient: "DR"},
-{roomNum : '122', status: "empty", type: "S", orient: "R"},
-{roomNum : '124', status: "empty", type: "S", orient: "R"},
-{roomNum : '126', status: "empty", type: "D", orient: "R"},
-{roomNum : '127', status: "empty", type: "D", orient: "R"},
-{roomNum : '125', status: "empty", type: "S", orient: "R"},
-{roomNum : '123', status: "empty", type: "S", orient: "R"},
+{roomNum : '220', status: "empty", type: "D", orient: "DR"},
+{roomNum : '222', status: "empty", type: "S", orient: "R"},
+{roomNum : '224', status: "empty", type: "S", orient: "R"},
+{roomNum : '226', status: "empty", type: "D", orient: "R"},
+{roomNum : '227', status: "empty", type: "D", orient: "R"},
+{roomNum : '225', status: "empty", type: "S", orient: "R"},
+{roomNum : '223', status: "empty", type: "S", orient: "R"},
 
-{roomNum : '121', status: "empty", type: "D", orient: "UR"},
-{roomNum : '119', status: "empty", type: "S", orient: "U"},
-{roomNum : '117', status: "empty", type: "S", orient: "U"},
-{roomNum : '115', status: "empty", type: "D", orient: "U"},
-{roomNum : '113', status: "empty", type: "D", orient: "U"},
-{roomNum : '111', status: "empty", type: "S", orient: "U"},
-{roomNum : '109', status: "empty", type: "S", orient: "U"},
+{roomNum : '221', status: "empty", type: "D", orient: "UR"},
+{roomNum : '219', status: "empty", type: "S", orient: "U"},
+{roomNum : '217', status: "empty", type: "S", orient: "U"},
+{roomNum : '215', status: "empty", type: "D", orient: "U"},
+{roomNum : '213', status: "empty", type: "D", orient: "U"},
+{roomNum : '211', status: "empty", type: "S", orient: "U"},
+{roomNum : '209', status: "empty", type: "S", orient: "U"},
 
 
 
@@ -240,7 +238,7 @@ for (var num = 22; num < 28; num++){
 	   .text(function(d) {
 	        return d.roomNum + '(' + d.type + ')';
 	   })
-	   .attr("x", function(d, i){
+	  	   .attr("x", function(d, i){
 		    switch (d.orient){
 		    	case "L":
 			   	case "UL": 
@@ -471,5 +469,3 @@ window.onclick = function(event) {
 }
 
 </script>
-
-
