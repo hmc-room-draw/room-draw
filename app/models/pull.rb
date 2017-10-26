@@ -13,7 +13,7 @@ class Pull < ApplicationRecord
   # Returns a list of Pulls conflicting with this one
   def get_conflicting_pulls
     room_ids = self.room_assignments.map{ |ra| ra.room_id }
-    conflicting_assignments = RoomAssignment.where(room_id: room_ids)
+    conflicting_assignments = RoomAssignment.where(room_id: room_ids).where.not(id: self.id)
     conflicting_assignments.map{ |asn| asn.pull }
   end
 
