@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'dorms/atwood'
+
+  get 'dorms/case2'
+
+  get 'dorms/case'
+
+  get 'login/show'
 
   resources :pulls
   resources :room_assignments
@@ -6,15 +13,17 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+
+  get    '/login',   to: 'sessions#new'
+  delete '/logout',  to: 'sessions#destroy'
 
   resources :sessions, only: [:create, :destroy]
-  resource :login, only: [:show]
 
   resources :users
   resources :dorms
   resources :rooms
   resources :suites
+  resources :students
 
-  root to: "login#show"
+  root "sessions#new"
 end

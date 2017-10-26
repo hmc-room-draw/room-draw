@@ -69,6 +69,6 @@ class RoomAssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_assignment_params
-      params.require(:room_assignment).permit(:student_id, :pull_id, :room_id)
+      params.require(:room_assignment).permit(:student_id, :pull_id, :room_id, :assignment_type)
     end
 end
