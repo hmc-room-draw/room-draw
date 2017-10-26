@@ -1,7 +1,8 @@
 class Room < ApplicationRecord
 
-  validates :dorm, presence: true
-  validates :suite, presence: true
+  validates :capacity, presence: true
+  validates :floor, presence: true
+  validates :number, presence: true
 
   belongs_to :dorm
   belongs_to :suite
