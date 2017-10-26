@@ -217,11 +217,8 @@ var h = 750;
 				   	 	return 100
 				   	 }
 			   	case "D":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-			   	 }
+					return 60
+
 			   	case "R":
 			   	 	if(d.type == "S")
 				   	 	return 70
@@ -229,21 +226,14 @@ var h = 750;
 				   	 	return 100
 				   	}
 				case "U":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-					}
+					return 60
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-	 				}
+					return 60
+
 				case "D":
 					if(d.type == "S")
 						return 80
@@ -251,11 +241,8 @@ var h = 750;
 						return 100
 					}
 				case "R":
-					if(d.type == "S")
-						return 60
-					else{
-						return 60
-	 				}
+					return 60
+					
 	 			case "U":
 					if(d.type == "S")
 						return 80

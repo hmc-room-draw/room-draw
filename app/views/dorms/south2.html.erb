@@ -211,29 +211,13 @@ var h = 750;
 	   .attr("width", function(d){
 		   	switch (d.orient){
 		   		case "L":
-				   	 if(d.type == "T")
-				   	 	return 100
-				   	 else{
-				   	 	return 100
-				   	 }
+				   	 return 100
 			   	case "D":
-					if(d.type == "S")
-						return 80
-					else{
-						return 80
-			   	 }
+					return 80
 			   	case "R":
-			   	 	if(d.type == "T")
-				   	 	return 100
-				   	else{
-				   	 	return 100
-				   	}
+			   	 	return 100
 				case "U":
-					if(d.type == "S")
-						return 80
-					else{
-						return 80
-					}
+					return 80
 		   	}
 	   })
 	   .attr("height", function(d){
