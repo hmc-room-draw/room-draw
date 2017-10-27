@@ -5,12 +5,11 @@ class StudentTest < ActiveSupport::TestCase
   def setup
     @user = users(:one)
     @s = students(:one)
-    # @s = Student.new(class_rank: "junior", room_draw_number: 53)
   end
 
 
   test "should be valid" do
-    assert @s.valid?, @s.errors.full_messages
+    assert @s.valid?
   end
 
   test "class_rank should be present" do
