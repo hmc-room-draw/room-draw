@@ -3,6 +3,8 @@ class Pull < ApplicationRecord
   has_many :students, through: :room_assignments
   belongs_to :student
 
+  accepts_nested_attributes_for :room_assignments, allow_destroy: true
+
   # Checks if self can overwrite another pull
   # @param other_pull
   #			Pull to be checked
