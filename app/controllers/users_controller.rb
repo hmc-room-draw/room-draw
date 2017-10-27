@@ -11,6 +11,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = policy_scope(User)
+    if params[:search]
+    @users = @users.search(params[:search])
+    end
+
+    @users.order("last_name DESC").order("first_name DESC").order("email DESC")
   end
 
   # GET /users/1
