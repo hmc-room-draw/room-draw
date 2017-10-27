@@ -17,7 +17,7 @@
         <td><%= getStatus(draw_period) %></td>
         <td><%= draw_period.start %></td>
         <td><%= draw_period.end %></td>
-        <td><%= draw_period.last_updated_by %></td>
+        <td><%= getLastUpdater(draw_period).first_name getLastUpdater(draw_period).last_name %></td>
 
         <td><%= link_to 'Show', draw_period %></td>
         <% if getStatus(draw_period) == 'Complete' %>

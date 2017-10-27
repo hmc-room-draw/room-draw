@@ -1,5 +1,5 @@
 class DrawPeriod < ApplicationRecord
-    #validates_presence_of :start, :end, :last_updated_by
+    validates_presence_of :start, :end, :last_updated_by
     validates_uniqueness_of :start, :end
     
     validate :startBeforeEnd
@@ -18,6 +18,8 @@ class DrawPeriod < ApplicationRecord
 
     def noTimeConflicts
         @draw_periods = DrawPeriod.all
-        errors.add_to_base("This time range conflicts with another draw period.") if @draw_periods.any? {|draw_period| draw_period.time_range.overlaps? time_range}
+        if @draw_periods.any? {|draw_period| draw_period.time_range.overlaps?(time_range)}
+            errors.add_to_base("This time range conflicts with another draw period.")
+        end
     end
 end

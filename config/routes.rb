@@ -7,9 +7,6 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
-  resources :draw_periods
-  resources :pulls
-  resources :room_assignments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -18,12 +15,18 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
 
-  resources :sessions, only: [:create, :destroy]
-  resources :users
+  resources :draw_periods
+
   resources :dorms
+  resources :pulls
   resources :rooms
   resources :suites
+
+  resources :room_assignments
   resources :students
+
+  resources :users
+  resources :sessions, only: [:create, :destroy]
 
   root "sessions#new"
 end

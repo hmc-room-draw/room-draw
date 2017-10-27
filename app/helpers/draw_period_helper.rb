@@ -8,4 +8,8 @@ module DrawPeriodHelper
             @status = "Scheduled"
         end
     end
+
+    def getLastUpdater(draw_period)
+        @last_updater = User.where(id: draw_period.last_updated_by).first
+    end
 end
