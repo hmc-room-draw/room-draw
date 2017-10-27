@@ -1,4 +1,4 @@
-  <h1>Dorms#case</h1>
+<h1>Dorms#case</h1>
 <p>Find me in app/views/dorms/case.html.erb</p>
 <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
@@ -97,21 +97,15 @@
         </div>
         <div class="modal-body">
           <p>You have begun a pull request for this room</p>
-          <p>The following form must be filled out in order to pull a room:</p>
-                <div class="form-group">
-                <label for="usr">roomNum</label>
-                <input type="text" class="form-control" id="usr">
-                </div>
-
-
-                <div class="form-group">
-                <label for="roommate">Roommate:</label>
-                <input type="password" class="form-control" id="pwd">
-                </div>
+          <p>The following form </p>
+        </div>
+        <div class="modal-footer">
+          <h3>Pull request form</h3>
         </div>
       </div>
 
     </div>
+
 
 
 </body>
@@ -120,47 +114,96 @@
 var w = 1000;
 var h = 750;
  dataset = [
-{x : '80', y : '110', roomNum : '101', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '170', roomNum : '102', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '230', roomNum : '103', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '290', roomNum : '104', status: "empty", type: "D", orient: "L"},
-{x : '80', y : '350', roomNum : '105', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '400', roomNum : '106', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '450', roomNum : '107', status: "empty", type: "S", orient: "L"},
-{x : '80', y : '500', roomNum : '108', status: "empty", type: "S", orient: "L"},
-
-{x : '170', y : '560', roomNum : '118', status: "empty", type: "S", orient: "D"},
-{x : '220', y : '560', roomNum : '119', status: "empty", type: "S", orient: "D"},
-{x : '270', y : '560', roomNum : '120', status: "empty", type: "S", orient: "D"},
-{x : '320', y : '560', roomNum : '121', status: "empty", type: "S", orient: "D"},
-{x : '370', y : '560', roomNum : '122', status: "empty", type: "D", orient: "D"},
-{x : '430', y : '560', roomNum : '123', status: "empty", type: "D", orient: "D"},
-{x : '490', y : '560', roomNum : '124', status: "empty", type: "D", orient: "D"},
-{x : '550', y : '560', roomNum : '125', status: "empty", type: "D", orient: "D"},
-
-{x : '700', y : '480', roomNum : '140', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '420', roomNum : '141', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '360', roomNum : '142', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '300', roomNum : '143', status: "empty", type: "D", orient: "R"},
-{x : '700', y : '250', roomNum : '144', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '200', roomNum : '145', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '150', roomNum : '146', status: "empty", type: "S", orient: "R"},
-{x : '700', y : '100', roomNum : '147', status: "empty", type: "S", orient: "R"},
-
-{x : '620', y : '30', roomNum : '148', status: "empty", type: "S", orient: "U"},
-{x : '570', y : '30', roomNum : '149', status: "empty", type: "S", orient: "U"},
-{x : '520', y : '30', roomNum : '150', status: "empty", type: "S", orient: "U"},
-{x : '470', y : '30', roomNum : '151', status: "empty", type: "S", orient: "U"},
-{x : '410', y : '30', roomNum : '152', status: "empty", type: "D", orient: "U"},
-{x : '350', y : '30', roomNum : '153', status: "empty", type: "D", orient: "U"},
-{x : '290', y : '30', roomNum : '154', status: "empty", type: "D", orient: "U"},
-{x : '230', y : '30', roomNum : '155', status: "empty", type: "D", orient: "U"},
+{roomNum : '101', status: "empty", type: "D", orient: "L"},
+{roomNum : '102', status: "empty", type: "D", orient: "L"},
+{roomNum : '103', status: "empty", type: "D", orient: "L"},
+{roomNum : '104', status: "empty", type: "D", orient: "L"},
+{roomNum : '105', status: "empty", type: "S", orient: "L"},
+{roomNum : '106', status: "empty", type: "S", orient: "L"},
+{roomNum : '107', status: "empty", type: "S", orient: "L"},
+{roomNum : '108', status: "empty", type: "S", orient: "L"},
+{roomNum : '118', status: "empty", type: "S", orient: "D"},
+{roomNum : '119', status: "empty", type: "S", orient: "D"},
+{roomNum : '120', status: "empty", type: "S", orient: "D"},
+{roomNum : '121', status: "empty", type: "S", orient: "D"},
+{roomNum : '122', status: "empty", type: "D", orient: "D"},
+{roomNum : '123', status: "empty", type: "D", orient: "D"},
+{roomNum : '124', status: "empty", type: "D", orient: "D"},
+{roomNum : '125', status: "empty", type: "D", orient: "D"},
+{roomNum : '140', status: "empty", type: "D", orient: "R"},
+{roomNum : '141', status: "empty", type: "D", orient: "R"},
+{roomNum : '142', status: "empty", type: "D", orient: "R"},
+{roomNum : '143', status: "empty", type: "D", orient: "R"},
+{roomNum : '144', status: "empty", type: "S", orient: "R"},
+{roomNum : '145', status: "empty", type: "S", orient: "R"},
+{roomNum : '146', status: "empty", type: "S", orient: "R"},
+{roomNum : '147', status: "empty", type: "S", orient: "R"},
+{roomNum : '148', status: "empty", type: "S", orient: "U"},
+{roomNum : '149', status: "empty", type: "S", orient: "U"},
+{roomNum : '150', status: "empty", type: "S", orient: "U"},
+{roomNum : '151', status: "empty", type: "S", orient: "U"},
+{roomNum : '152', status: "empty", type: "D", orient: "U"},
+{roomNum : '153', status: "empty", type: "D", orient: "U"},
+{roomNum : '154', status: "empty", type: "D", orient: "U"},
+{roomNum : '155', status: "empty", type: "D", orient: "U"},
+{x : '220', y : '280', roomNum : '1D', status: "empty", type: "Q", orient: "R"},
+{x : '560', y : '240', roomNum : '1B', status: "empty", type: "Q", orient: "L"},
 ]
-	var svg = d3.select("body")
+var singleWidth = 50 
+var doubleWidth = 60
+var singleLength = 70
+var doubleLength = 100
+var quadLength = 150
+var quadWidth = 100 
+var x = 80 //starting positions for left side 
+var y = 110
+for (var num = 0; num < 8; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	if (dataset[num].type =="D"){
+		y += doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y += singleWidth 
+}
+x = 170 //starting positions for lower side 
+y = 560
+for (var num = 8; num < 16; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	if (dataset[num].type =="D"){
+		x += doubleWidth
+	}
+	if (dataset[num].type =="S")
+		x += singleWidth 
+}
+x = 700 //starting positions for right side 
+y = 540
+for (var num = 16; num < 24; num++){	
+	if (dataset[num].type =="D"){
+		y -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+x = 690 //starting positions for upper side 
+y = 30
+for (var num = 24; num < 32; num++){	
+	if (dataset[num].type =="D"){
+		x -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		x -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+	var svg = d3.select("body") //creates the canvas 
             .append("svg")
             .attr("width", w)
             .attr("height", h);
-	svg.selectAll("text")
+	svg.selectAll("text") //
 	   .data(dataset)
 	   .enter()
 	   .append("text")
@@ -176,7 +219,7 @@ var h = 750;
 			 	case "R":
 			 		if (d.type == "S"){
 		    			return Number(d.x) + 80;
-			   		}
+			   		}			   		
 			   		else{
 			   			return Number(d.x) + 110;
 			   		}
@@ -219,55 +262,63 @@ var h = 750;
 		   	switch (d.orient){
 		   		case "L":
 				   	 if(d.type == "S")
-				   	 	return 70
+				   	 	return singleLength
+				   	 else if(d.type == "Q")
+				   	 	return quadWidth
 				   	 else{
-				   	 	return 100
+				   	 	return doubleLength
 				   	 }
 			   	case "D":
 					if(d.type == "S")
-						return 50
+						return singleWidth
 					else{
-						return 60
+						return doubleWidth
 			   	 }
 			   	case "R":
 			   	 	if(d.type == "S")
-				   	 	return 70
+				   	 	return singleLength
+				   	else if(d.type == "Q")
+				   	 	return quadWidth
 				   	else{
-				   	 	return 100
+				   	 	return doubleLength
 				   	}
 				case "U":
 					if(d.type == "S")
-						return 50
+						return singleWidth
 					else{
-						return 60
-					}
+						return doubleWidth
+					}									
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
 					if(d.type == "S")
-						return 50
+						return singleWidth
+					else if(d.type == "Q")
+				   	 	return quadLength
 					else{
-						return 60
+						return doubleWidth
 	 				}
 				case "D":
 					if(d.type == "S")
-						return 70
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 				case "R":
 					if(d.type == "S")
-						return 50
+						return singleWidth
+					else if(d.type == "Q")
+				   	 	return quadLength					
 					else{
-						return 60
+						return doubleWidth
 	 				}
 	 			case "U":
 					if(d.type == "S")
-						return 70
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 			}
 		})
@@ -280,7 +331,6 @@ var h = 750;
      .on("click", function(d, i){
        modal.style.display = "block";
     })
-
     ;
 // Get the modal
 var modal = document.getElementById('myModal');
@@ -298,5 +348,5 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
+	   
 </script>
