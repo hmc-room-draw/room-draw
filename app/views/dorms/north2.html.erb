@@ -101,7 +101,7 @@
           <p>The following form must be filled out in order to pull a room:</p>
                 <div class="form-group">
                 <label for="usr">roomNum</label>
-                <input type="text" class="form-control" id="usr">
+                <input type="text" class="form-control" id="usr" required>
                 </div>
 
 
@@ -109,6 +109,12 @@
                 <label for="roommate">Roommate:</label>
                 <input type="password" class="form-control" id="pwd">
                 </div>
+
+
+                
+                <div class="form-group">
+				<input type="submit" class="submit-btn">
+				</div>
         </div>
       </div>
 
@@ -330,6 +336,11 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+window.onkeyup = function(event) {
+	if (event.keyCode == 27) {
+		modal.style.display = "none";
+	}
 }
 
 </script>

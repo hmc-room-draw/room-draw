@@ -84,7 +84,7 @@
 	</div>
 
 
-    <!-- The Modal -->
+        <!-- The Modal -->
     <div id="myModal" class="modal">
 
       <!-- Modal content -->
@@ -95,10 +95,23 @@
         </div>
         <div class="modal-body">
           <p>You have begun a pull request for this room</p>
-          <p>The following form </p>
-        </div>
-        <div class="modal-footer">
-          <h3>Pull request form</h3>
+          <p>The following form must be filled out in order to pull a room:</p>
+                <div class="form-group">
+                <label for="usr">roomNum</label>
+                <input type="text" class="form-control" id="usr" required>
+                </div>
+
+
+                <div class="form-group">
+                <label for="roommate">Roommate:</label>
+                <input type="password" class="form-control" id="pwd">
+                </div>
+
+
+                
+                <div class="form-group">
+				<input type="submit" class="submit-btn">
+				</div>
         </div>
       </div>
 
@@ -468,6 +481,11 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+window.onkeyup = function(event) {
+	if (event.keyCode == 27) {
+		modal.style.display = "none";
+	}
 }
 
 </script>
