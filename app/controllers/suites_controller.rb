@@ -10,20 +10,25 @@ class SuitesController < ApplicationController
   # GET /suites/1
   # GET /suites/1.json
   def show
+    authorize @suite
   end
 
   # GET /suites/new
   def new
+    authorize Suite  
     @suite = Suite.new
   end
 
   # GET /suites/1/edit
   def edit
+    authorize @suite 
   end
 
   # POST /suites
   # POST /suites.json
   def create
+    authorize Suite
+
     @suite = Suite.new(suite_params)
 
     respond_to do |format|
@@ -40,6 +45,7 @@ class SuitesController < ApplicationController
   # PATCH/PUT /suites/1
   # PATCH/PUT /suites/1.json
   def update
+    authorize @suite
     respond_to do |format|
       if @suite.update(suite_params)
         format.html { redirect_to @suite, notice: 'Suite was successfully updated.' }
@@ -54,6 +60,7 @@ class SuitesController < ApplicationController
   # DELETE /suites/1
   # DELETE /suites/1.json
   def destroy
+    authorize @suite
     @suite.destroy
     respond_to do |format|
       format.html { redirect_to suites_url, notice: 'Suite was successfully destroyed.' }
