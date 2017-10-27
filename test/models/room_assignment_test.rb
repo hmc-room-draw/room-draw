@@ -4,7 +4,7 @@ class RoomAssignmentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
-  def method_name
+  def setup
       @ra = room_assignments(:one)
   end
 
