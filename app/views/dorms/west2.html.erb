@@ -122,36 +122,91 @@
 var w = 1000;
 var h = 750;
  dataset = [
-{x : '100', y : '90', roomNum : '466', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '150', roomNum : '464', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '210', roomNum : '462', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '270', roomNum : '460', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '330', roomNum : '458', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '390', roomNum : '456', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '450', roomNum : '454', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '510', roomNum : '452', status: "empty", type: "D", orient: "L"},
+{roomNum : '466', status: "empty", type: "D", orient: "L"},
+{roomNum : '464', status: "empty", type: "D", orient: "L"},
+{roomNum : '462', status: "empty", type: "D", orient: "L"},
+{roomNum : '460', status: "empty", type: "D", orient: "L"},
+{roomNum : '458', status: "empty", type: "D", orient: "L"},
+{roomNum : '456', status: "empty", type: "D", orient: "L"},
+{roomNum : '454', status: "empty", type: "D", orient: "L"},
+{roomNum : '452', status: "empty", type: "D", orient: "L"},
+{roomNum : '471', status: "empty", type: "D", orient: "D"},
+{roomNum : '475', status: "empty", type: "D", orient: "D"},
+{roomNum : '476', status: "empty", type: "S", orient: "D"},
+{roomNum : '472', status: "empty", type: "S", orient: "D"},
 
-{x : '260', y : '160', roomNum : '471', status: "empty", type: "D", orient: "D"},
-{x : '320', y : '160', roomNum : '475', status: "empty", type: "D", orient: "D"},
-{x : '500', y : '180', roomNum : '476', status: "empty", type: "S", orient: "D"},
-{x : '560', y : '180', roomNum : '472', status: "empty", type: "S", orient: "D"},
+{roomNum : '465', status: "empty", type: "D", orient: "R"},
+{roomNum : '463', status: "empty", type: "D", orient: "R"},
+{roomNum : '461', status: "empty", type: "D", orient: "R"},
+{roomNum : '459', status: "empty", type: "D", orient: "R"},
+{roomNum : '457', status: "empty", type: "D", orient: "R"},
+{roomNum : '455', status: "empty", type: "D", orient: "R"},
+{roomNum : '453', status: "empty", type: "D", orient: "R"},
+{roomNum : '451', status: "empty", type: "D", orient: "R"},
 
-{x : '680', y : '510', roomNum : '465', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '450', roomNum : '463', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '390', roomNum : '461', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '330', roomNum : '459', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '270', roomNum : '457', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '210', roomNum : '455', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '150', roomNum : '453', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '90', roomNum : '451', status: "empty", type: "D", orient: "R"},
-
-{x : '560', y : '30', roomNum : '469', status: "empty", type: "S", orient: "U"},
-{x : '500', y : '30', roomNum : '473', status: "empty", type: "S", orient: "U"},
-{x : '440', y : '30', roomNum : '477', status: "empty", type: "S", orient: "U"},
-{x : '380', y : '30', roomNum : '478', status: "empty", type: "S", orient: "U"},
-{x : '320', y : '30', roomNum : '474', status: "empty", type: "S", orient: "U"},
-{x : '260', y : '30', roomNum : '470', status: "empty", type: "S", orient: "U"},
+{roomNum : '469', status: "empty", type: "S", orient: "U"},
+{roomNum : '473', status: "empty", type: "S", orient: "U"},
+{roomNum : '477', status: "empty", type: "S", orient: "U"},
+{roomNum : '478', status: "empty", type: "S", orient: "U"},
+{roomNum : '474', status: "empty", type: "S", orient: "U"},
+{roomNum : '470', status: "empty", type: "S", orient: "U"},
 ]
+
+
+var singleWidth = 60 
+var doubleWidth = 60
+var singleLength = 80
+var doubleLength = 100
+
+var x = 100 //starting positions for left side 
+var y = 90
+for (var num = 0; num < 8; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	if (dataset[num].type =="D"){
+		y += doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y += singleWidth 
+}
+x = 260 //starting positions for lower side, doubles
+y = 160
+for (var num = 8; num < 10; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x += doubleWidth
+}
+x = 500 //starting positions for lower side, singles
+y = 180
+for (var num = 10; num < 12; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x += singleWidth 
+}
+x = 680 //starting positions for right side 
+y = 570
+for (var num = 12; num < 20; num++){	
+	if (dataset[num].type =="D"){
+		y -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+x = 620 //starting positions for upper side 
+y = 30
+for (var num = 20; num < 26; num++){	
+	if (dataset[num].type =="D"){
+		x -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		x -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+
+
 	var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
@@ -166,18 +221,18 @@ var h = 750;
 	   .attr("x", function(d, i){
 		    switch (d.orient){
 		    	case "L":
-			   		return Number(d.x)-50;
+			   		return Number(d.x) - 50;
 			   	case "D":
-			 		return Number(d.x) + 5;
-			 	case "R":
-			 		if (d.type == "S"){
-		    			return Number(d.x) + 80;
+			   	if (d.type == "S"){
+		    			return Number(d.x) + 10;
 			   		}
 			   		else{
-			   			return Number(d.x) + 110;
+			   			return Number(d.x) + 5;
 			   		}
+			 	case "R":
+			   		return Number(d.x) + 110;
 			   	case "U":
-			   		return Number(d.x) + 5;
+			   		return Number(d.x) + 10;
 		    }
 		   })
 	   .attr("y", function(d, i){
@@ -214,43 +269,39 @@ var h = 750;
 	   .attr("width", function(d){
 		   	switch (d.orient){
 		   		case "L":
-				   	 if(d.type == "S")
-				   	 	return 70
-				   	 else{
-				   	 	return 100
-				   	 }
+				   	return doubleLength  // because of the orientation the width on the left and right is really the length
 			   	case "D":
-					return 60
+					return singleWidth
 
 			   	case "R":
-			   	 	if(d.type == "S")
-				   	 	return 70
-				   	else{
-				   	 	return 100
-				   	}
+				   	return doubleLength
 				case "U":
-					return 60
+					if(d.type == "S")
+						return singleWidth
+					else{
+						return doubleWidth
+					}
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
-					return 60
-					
+					return doubleWidth
+
 				case "D":
 					if(d.type == "S")
-						return 80
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 				case "R":
-					return 60
-
+					return doubleWidth
+					
 	 			case "U":
 					if(d.type == "S")
-						return 80
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 			}
 		})

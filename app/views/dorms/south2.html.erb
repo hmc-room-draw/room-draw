@@ -143,6 +143,56 @@ var h = 750;
 {x : '360', y : '80', roomNum : '364', status: "empty", type: "S", orient: "U"},
 {x : '280', y : '80', roomNum : '366', status: "empty", type: "S", orient: "U"},
 ]
+
+var singleWidth = 80 
+var doubleWidth = 80
+var tripleWidth = 100
+var quadWidth = 100
+
+var singleLength = 70
+var doubleLength = 90
+var tripleLength = 110
+var quadLength = 160
+
+var x = 100 //starting positions for left side 
+var y = 40
+for (var num = 0; num < 4; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	if (dataset[num].type =="T"){
+		y += tripleLength
+	}
+	if (dataset[num].type =="Q"){
+		y += quadLength
+	}
+}
+x = 270 //starting positions for lower side
+y = 210
+for (var num = 4; num < 8; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x += doubleWidth
+}
+x = 670 //starting positions for right side 
+y = 580
+for (var num = 8; num < 12; num++){	
+	if (dataset[num].type =="T"){
+		y -= tripleLength 
+	}
+	if (dataset[num].type =="Q"){
+		y -= quadLength
+	}
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+x = 510 //starting positions for upper side 
+y = 80
+for (var num = 12; num < 16; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x -= singleWidth
+}
+
 	var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
@@ -213,41 +263,43 @@ var h = 750;
 	   .attr("width", function(d){
 		   	switch (d.orient){
 		   		case "L":
-				   	 return 100
+					if(d.type == "T")
+						 // because of the orientation the width on the left and right is really the length
+						return tripleWidth
+					else{
+						return quadWidth
+					}
 			   	case "D":
-					return 80
+					return doubleWidth
 			   	case "R":
-			   	 	return 100
+					if(d.type == "T")
+						return tripleWidth
+					else{
+						return quadWidth
+					}
 				case "U":
-					return 80
+					return singleWidth
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
 					if(d.type == "T")
-						return 110
+						return tripleLength
 					else{
-						return 160
-	 				}
-				case "D":
-					if(d.type == "S")
-						return 70
-					else{
-						return 100
+						return quadLength
 					}
+				case "D":
+					return doubleLength
 				case "R":
 					if(d.type == "T")
-						return 110
+						return tripleLength
 					else{
-						return 160
-	 				}
-	 			case "U":
-					if(d.type == "S")
-						return 70
-					else{
-						return 100
+						return quadLength
 					}
+					
+	 			case "U":
+					return singleLength
 			}
 		})
 	   .on("mouseover", function(d, i){
