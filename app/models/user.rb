@@ -1,7 +1,11 @@
 class User < ApplicationRecord
+  has_one :student
+
   # Name and email must be non-nil
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  accepts_nested_attributes_for :student, allow_destroy: true
 
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
@@ -10,8 +14,6 @@ class User < ApplicationRecord
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
     #uniqueness: { case_sensitive: false }
   before_save { self.email = email.downcase  }
-
-  has_one :student
 
   def self.from_omniauth(auth)
     where(email: auth.info.email).take do |user|
