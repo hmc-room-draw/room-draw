@@ -1,8 +1,18 @@
 require 'test_helper'
+include Warden::Test::Helpers 
+Warden.test_mode!
 
 class DrawPeriodControllerTest < ActionDispatch::IntegrationTest
   setup do
     @draw_period = draw_periods(:one)
+    @user = User.create(
+            :first_name => "Bob", 
+            :last_name => "Testerson", 
+            :email => "ashmc@g.hmc.edu", 
+            :is_admin => true, 
+            :has_completed_form => true
+            )
+    login_as(@user)
   end
 
   test "should get index" do
@@ -19,9 +29,9 @@ class DrawPeriodControllerTest < ActionDispatch::IntegrationTest
     assert_difference('DrawPeriod.count') do
       post draw_periods_url, 
           params: { draw_period: { 
-            start: @draw_period.start, 
-            end: @draw_period.end, 
-            last_updated_by: @draw_period.last_updated_by 
+            start_datetime: @draw_period.start_datetime, 
+            end_datetime: @draw_period.end_datetime, 
+            last_updated_by: @draw_period.last_updated_by
             }
           }
     end
@@ -41,8 +51,8 @@ class DrawPeriodControllerTest < ActionDispatch::IntegrationTest
   test "should update draw period" do
     patch draw_period_url(@draw_period), 
           params: { draw_period: { 
-            start: @draw_period.start, 
-            end: @draw_period.end, 
+            start_datetime: @draw_period.start_datetime, 
+            end_datetime: @draw_period.end_datetime, 
             last_updated_by: @draw_period.last_updated_by 
             }
           }

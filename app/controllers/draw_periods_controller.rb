@@ -58,6 +58,6 @@ class DrawPeriodsController < ApplicationController
         end
         
         def draw_period_params
-            params.require(:draw_period).permit(:start, :end, :last_updated_by)
+            params.require(:draw_period).permit(:start_datetime, :end_datetime).merge(last_updated_by: current_user.id)
         end
 end

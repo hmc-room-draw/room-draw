@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  start: 2017-10-12 13:58:46
-  end: 2017-10-12 13:58:47
-  last_updated_by: "Jess"
+  start_datetime: 2017-10-12 13:58:46
+  end_datetime: 2017-10-12 13:58:47
+  last_updated_by: 1
 
 two:
-  start: 2017-10-12 13:58:46
-  end: 2017-10-12 13:58:47
-  last_updated_by: "Jess"
+  start_datetime: 2017-10-12 13:58:46
+  end_datetime: 2017-10-12 13:58:47
+  last_updated_by: 1

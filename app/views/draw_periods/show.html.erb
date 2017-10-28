@@ -7,12 +7,12 @@
 
 <p>
   <strong>Start Time:</strong>
-  <%= @draw_period.start.to_formatted_s(:rfc822) %>
+  <%= @draw_period.start_datetime.to_formatted_s(:rfc822) %>
 </p>
 
 <p>
   <strong>End Time:</strong>
-  <%= @draw_period.end.to_formatted_s(:rfc822) %>
+  <%= @draw_period.end_datetime.to_formatted_s(:rfc822) %>
 </p>
 
 <p>

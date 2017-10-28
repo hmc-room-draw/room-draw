@@ -15,9 +15,9 @@
     <% @draw_periods.each do |draw_period| %>
       <tr>
         <td><%= getStatus(draw_period) %></td>
-        <td><%= draw_period.start %></td>
-        <td><%= draw_period.end %></td>
-        <td><%= getLastUpdater(draw_period).first_name getLastUpdater(draw_period).last_name %></td>
+        <td><%= draw_period.start_datetime %></td>
+        <td><%= draw_period.end_datetime %></td>
+        <td><%= getLastUpdater(draw_period) %></td>
 
         <td><%= link_to 'Show', draw_period %></td>
         <% if getStatus(draw_period) == 'Complete' %>

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_draw_period
-    @current_draw_period ||= DrawPeriod.find_by('start < ? AND ? < end', Time.now, Time.now)
+    @current_draw_period ||= DrawPeriod.find_by('start_datetime < ? AND ? < end_datetime', Time.now, Time.now)
   end
 
   def check_login
