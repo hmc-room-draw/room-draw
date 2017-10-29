@@ -3,9 +3,9 @@
 one:
   start_datetime: 2017-10-12 13:58:46
   end_datetime: 2017-10-12 13:58:47
-  last_updated_by: 1
+  last_updated_by: one
 
 two:
   start_datetime: 2017-10-12 13:58:46
   end_datetime: 2017-10-12 13:58:47
-  last_updated_by: 1
+  last_updated_by: one
