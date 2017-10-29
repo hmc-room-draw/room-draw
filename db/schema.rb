@@ -10,12 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008231606) do
+ActiveRecord::Schema.define(version: 20171023000808) do
 
   create_table "dorms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pulls", force: :cascade do |t|
+    t.string "message"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_pulls_on_student_id"
+  end
+
+  create_table "room_assignments", force: :cascade do |t|
+    t.integer "student_id"
+    t.integer "pull_id"
+    t.integer "room_id"
+    t.integer "assignment_type"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_id"], name: "index_room_assignments_on_pull_id"
+    t.index ["room_id"], name: "index_room_assignments_on_room_id"
+    t.index ["student_id"], name: "index_room_assignments_on_student_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -32,13 +53,11 @@ ActiveRecord::Schema.define(version: 20171008231606) do
 
   create_table "students", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "room_id"
-    t.integer "class"
+    t.integer "class_rank"
     t.integer "room_draw_number"
     t.boolean "has_participated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_students_on_room_id"
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 
@@ -54,8 +73,8 @@ ActiveRecord::Schema.define(version: 20171008231606) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.boolean "is_ashmc_admin"
-    t.boolean "is_super_admin"
+    t.boolean "is_admin"
+    t.boolean "has_completed_form"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false

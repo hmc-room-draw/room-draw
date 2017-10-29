@@ -1,0 +1,37 @@
+<%= form_with(model: room_assignment, local: true) do |form| %>
+  <% if room_assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(room_assignment.errors.count, "error") %> prohibited this room_assignment from being saved:</h2>
+
+      <ul>
+      <% room_assignment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :student_id %>
+    <%= form.text_field :student_id, id: :room_assignment_student_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pull_id %>
+    <%= form.text_field :pull_id, id: :room_assignment_pull_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :room_id %>
+    <%= form.text_field :room_id, id: :room_assignment_room_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assignment_type %>
+    <%= form.text_field :assignment_type, id: :room_assignment_assignment_type %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

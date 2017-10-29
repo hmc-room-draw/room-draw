@@ -16,13 +16,13 @@
 </p>
 
 <p>
-  <strong>Is ashmc admin:</strong>
-  <%= @user.is_ashmc_admin %>
+  <strong>Is admin:</strong>
+  <%= @user.is_admin %>
 </p>
 
 <p>
-  <strong>Is super admin:</strong>
-  <%= @user.is_super_admin %>
+  <strong>Has completed form:</strong>
+  <%= @user.has_completed_form %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
