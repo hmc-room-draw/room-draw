@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  first_name: MyString
-  last_name: MyString
-  email: email@emailaddress.com
+  first_name: "Stu"
+  last_name: "Dent"
+  email: tudent@g.hmc.edu
   is_admin: true
   has_completed_form: true
   oauth_token: MyString
@@ -17,3 +17,4 @@ two:
   has_completed_form: false
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34
+
