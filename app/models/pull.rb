@@ -1,10 +1,11 @@
 class Pull < ApplicationRecord
-
-  has_many :room_assignments
+  has_many :room_assignments, dependent: :destroy
   has_many :students, through: :room_assignments
   belongs_to :student
 
-  accepts_nested_attributes_for :room_assignments, allow_destroy: true
+  accepts_nested_attributes_for :room_assignments
+
+  validates :room_assignments, :presence => true
 
   # Checks if self can overwrite another pull
   # @param other_pull

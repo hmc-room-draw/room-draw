@@ -1,11 +1,11 @@
 class User < ApplicationRecord
-  has_one :student
+  has_one :student, dependent: :destroy
 
   # Name and email must be non-nil
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  accepts_nested_attributes_for :student, allow_destroy: true
+  accepts_nested_attributes_for :student
 
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
