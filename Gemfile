@@ -16,7 +16,7 @@ gem 'dotenv-rails', :require => 'dotenv/rails-now'
 # Authorization policy; see https://github.com/elabs/pundit
 gem 'pundit'
 
-# gem 'unicorn'
+gem 'unicorn'
 
 # Google OAuth support for OmniAuth
 gem 'omniauth-google-oauth2'
