@@ -1,3 +1,20 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.dorms {
+	position:absolute;
+	z-index:20000;
+	top: 0px;
+	left: 0px;
+	display: none;
+	background: white;
+	font-size: 250%;
+
+}
+
+.test {
+	color: blue;
+}
