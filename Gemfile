@@ -9,6 +9,11 @@ gem 'wdm', '>= 0.1.0'
 
 gem 'bootstrap-sass', '3.2.0.2'
 
+gem 'jquery-rails', '~> 4.3'
+
+# Adding tooltipster gem, which allows us to add tooltips to the image map
+gem 'tooltipster-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use sqlite3 as the database for Active Record
