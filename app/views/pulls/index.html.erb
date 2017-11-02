@@ -24,9 +24,14 @@
   <tbody>
     <% @pulls.each do |pull| %>
       <tr>
-        <td><%= pull.student.room_draw_number %></td>
-        <td><%= pull.students %></td>
-        <td><%= pull.room_assignments %></td>
+        <td><%= pull.student.room_draw_number %></td> 
+        <% @pull.students.each do |student| %>
+          <td><%= student.user.first_name %></td>
+          <td><%= student.user.last_name %></td>
+        <% end %>
+        <% @pull.room_assignments.each do |room_assignment|%>
+          <td><%= student_name(room_assignment) %></td>
+        <% end %>
         <td><%= pull.message %></td>
         <td><%= link_to 'Show', pull %></td>
         <td><%= link_to 'Edit', edit_pull_path(pull) %></td>
