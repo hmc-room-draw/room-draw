@@ -17,8 +17,7 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'admins#uploadRoster'
   post 'admin/downloadStudents', to: 'admins#downloadStudents'
   post 'admin/downloadPulls', to: 'admins#downloadPulls'
-  post 'admin/setStart', to: 'admins#setStart'
-  post 'admin/setEnd', to: 'admins#setEnd'
+  post 'admin/setStartEndDates', to: 'admins#setStartEndDates'
 
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]
