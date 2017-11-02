@@ -12,12 +12,12 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'logout', to: 'sessions#destroy', as: 'logout'
-  get 'admin', to: 'admins#dashboard'
+  get 'admin/home', to: 'admin_landing_pages#index'
 
-  post 'admin/uploadRoster', to: 'admins#uploadRoster'
-  post 'admin/downloadStudents', to: 'admins#downloadStudents'
-  post 'admin/downloadPulls', to: 'admins#downloadPulls'
-  post 'admin/setStartEndDates', to: 'admins#setStartEndDates'
+  post 'admin/uploadRoster', to: 'admin_landing_pages#uploadRoster'
+  post 'admin/downloadStudents', to: 'admin_landing_pages#downloadStudents'
+  post 'admin/downloadPulls', to: 'admin_landing_pages#downloadPulls'
+  post 'admin/setStartEndDates', to: 'admin_landing_pages#setStartEndDates'
 
   resources :sessions, only: [:create, :destroy]
   resource :login, only: [:show]

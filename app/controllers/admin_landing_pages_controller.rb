@@ -1,4 +1,4 @@
-class AdminsController < ApplicationController
+class AdminLandingPagesController < ApplicationController
   
 
   def dashboard
