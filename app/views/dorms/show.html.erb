@@ -114,6 +114,10 @@
 
 </div>  <!-- End of modal -->
 
+
+
+<%= image_tag("case.png", :id => "floor") %> 
+
 <script type="text/javascript">
 var data = {
   "room_0": {
@@ -424,6 +428,15 @@ var data = {
   }
 };
 
+
+var img = document.getElementById('floor');  
+var width = img.clientWidth;
+var height = img.clientHeight;
+var ratio = height/width;
+var w = 940; 
+
+img.style.display = "none";
+
 // Get the modal
 var modal = document.getElementById('myModal');
 // Get the button that opens the modal
@@ -439,8 +452,8 @@ var fakeDorm = $('<div>').css({
     position: 'absolute',
     left: 90,
     top: 170,
-    width: 940,
-    height: 730,
+    width: w,
+    height: w*ratio,
     'background-image': "url(<%= asset_path 'case.png' %>)",
     'background-size':  'contain',
     border: '5px solid black',
