@@ -4,7 +4,7 @@ function popCase(e) {
 
 	var thing = document.getElementById("case");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#case").toggle();
 
@@ -15,7 +15,7 @@ function popLinde(e) {
 
 	var thing = document.getElementById("linde");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#linde").toggle();
 
@@ -26,7 +26,7 @@ function popSontag(e) {
 
 	var thing = document.getElementById("sontag");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#sontag").toggle();
 
@@ -37,7 +37,7 @@ function popDrinkward(e) {
 
 	var thing = document.getElementById("drinkward");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#drinkward").toggle();
 
@@ -48,7 +48,7 @@ function popAtwood(e) {
 
 	var thing = document.getElementById("atwood");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#atwood").toggle();
 
@@ -58,7 +58,7 @@ function popAtwood(e) {
 
 	var thing = document.getElementById("south");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#south").toggle();
 
@@ -68,7 +68,7 @@ function popAtwood(e) {
 
 	var thing = document.getElementById("north");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#north").toggle();
 
@@ -78,7 +78,7 @@ function popAtwood(e) {
 
 	var thing = document.getElementById("east");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#east").toggle();
 
@@ -88,7 +88,7 @@ function popAtwood(e) {
 
 	var thing = document.getElementById("west");
 
-	thing.style.left = e.clientX + 'px';
+	thing.style.left = (e.clientX + 600) + 'px';
 	thing.style.top = e.clientY + 'px';
 	$("#west").toggle();
 
