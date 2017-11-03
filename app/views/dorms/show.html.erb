@@ -50,29 +50,69 @@
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
+    <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
       <h2>Pull request initiated</h2>
     </div>
+
     <div class="modal-body">
-      <p>You have begun a pull request for this room</p>
-      <p>The following form must be filled out in order to pull a room:</p>
-            <div class="form-group">
-            <label for="usr">roomNum</label>
-            <input type="text" class="form-control" id="usr">
-            </div>
+    <p>You have begun a pull request for this room</p>
+    <p>The following form must be filled out in order to pull a room:</p>
+      <div class="form-group">
+        <label for="usr">Room number</label>
+        <input type="text" class="form-control" id="usr" required>
+      </div>
+
+      <div class="form-group">
+        <span>How many people are you pulling in?</br></span>
+        <label for="0-roommates"> <input type="radio" id="0-roommates" name="roommate-nums" value="0" required> 0 </label>
+        <label for="1-roommates"> <input class="require-if-active" type="radio" id="1-roommates" name="roommate-nums" value="1" data-require-pair="#roommate-1"> 1 </label>
+        <label for="2-roommates"> <input class="require-if-active" type="radio" id="2-roommates" name="roommate-nums" value="2" data-require-pair="#roommate-2"> 2 </label>
+        <label for="3-roommates"> <input class="require-if-active" type="radio" id="3-roommates" name="roommate-nums" value="3" data-require-pair="#roommate-3"> 3 </label>
+        <label for="4-roommates"> <input class="require-if-active" type="radio" id="4-roommates" name="roommate-nums" value="4" data-require-pair="#roommate-4"> 4 </label>
+        <label for="5-roommates"> <input class="require-if-active" type="radio" id="5-roommates" name="roommate-nums" value="5" data-require-pair="#roommate-5"> 5 </label>
+
+        <div id="roommate-1" style="display: none">
+          Roommate's Name: <input type="text" id="name">
+        </div>
+
+        <div id="roommate-2" style="display: none">
+          Roommate 1: <input type="text" id="name">
+          Roommate 2: <input type="text" id="name">
+        </div>
+
+        <div id="roommate-3" style="display: none">
+          Roommate 1: <input type="text" id="name">
+          Roommate 2: <input type="text" id="name">
+          Roommate 3: <input type="text" id="name">
+        </div>
+
+        <div id="roommate-4" style="display: none">
+          Roommate 1: <input type="text" id="name">
+          Roommate 2: <input type="text" id="name">
+          Roommate 3: <input type="text" id="name">
+          Roommate 4: <input type="text" id="name">
+        </div>
+
+        <div id="roommate-5" style="display: none">
+          Roommate 1: <input type="text" id="name">
+          Roommate 2: <input type="text" id="name">
+          Roommate 3: <input type="text" id="name">
+          Roommate 4: <input type="text" id="name">
+          Roommate 5: <input type="text" id="name">
+        </div>
+      </div>
 
 
-            <div class="form-group">
-            <label for="roommate">Roommate:</label>
-            <input type="password" class="form-control" id="pwd">
-            </div>
+      <div class="form-group">
+        <input type="submit" class="submit-btn">
+      </div>
     </div>
-  </div>
+  </div>  <!-- End of modal content -->
 
-</div>
+</div>  <!-- End of modal -->
 
 <script type="text/javascript">
 var data = {
@@ -442,5 +482,47 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
+window.onkeyup = function(event) {
+  if (event.keyCode == 27) {
+    modal.style.display = "none";
+  }
+}
 </script>
+
+<!-- Script for using radio buttons to show input field on the pull request
+  General code structure adapted from: https://www.aspsnippets.com/Articles/Show-Hide-DIV-with-TextBox-based-on-RadioButton-selection-checked-unchecked-using-JavaScript-and-jQuery.aspx 
+
+  "require-if active" from: https://css-tricks.com/exposing-form-fields-radio-button-css/ !-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='roommate-nums']").click(function () {
+            if ($("#1-roommates").is(":checked")) {
+                $("#roommate-1").show(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#2-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").show(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#3-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").show(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#4-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").show(); $("#roommate-5").hide();
+            } else if ($("#5-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").show();
+            } else {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();            
+            } 
+        });
+      // find each input that may be hidden or not
+      $(".require-if-active").each(function() {
+        var el = $(this);
+        // find the pairing radio or checkbox
+        if ($(el.data("require-pair")).is(":checked")) {
+          // if its checked, the field should be required
+          el.prop("required", true);
+        } else {
+          // otherwise it should not
+          el.prop("required", false);
+        }
+      });
+    });
+</script>
+
