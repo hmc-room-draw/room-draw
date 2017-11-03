@@ -13,11 +13,19 @@
   <nav class="navbar navbar-default">
     <div class = "container">
         <div class = "navbar-header">
+        <% if current_page?("/launch") %>
+        <%= link_to "Home", "/launch", class: "navbar-brand" %>
+        <% else %>
         <%= link_to "Home", root_path, class: "navbar-brand" %>
+        <% end %>
         </div>
         <ul class= "nav navbar-nav">
-            <li> <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-</li>
+            <li> 
+            <% if current_page?("/launch") %>
+            <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %> 
+            <% else %>
+            <%= link_to "Logout", "/launch" %></li>
+            <% end %>
         </ul>
     </div>
   </nav>
