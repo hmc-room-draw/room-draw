@@ -5,21 +5,14 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Generate entity-relationship diagrams
-group :development, :test do
-  gem 'rails-erd', require: false
-  gem 'rspec-rails'
-end
+gem 'wdm', '>= 0.1.0'
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'bootstrap-sass', '3.2.0.2'
 
-# Authorization policy; see https://github.com/elabs/pundit
-gem 'pundit'
+gem 'jquery-rails', '~> 4.3'
 
-gem 'unicorn'
-
-# Google OAuth support for OmniAuth
-gem 'omniauth-google-oauth2'
+# Adding tooltipster gem, which allows us to add tooltips to the image map
+gem 'tooltipster-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
@@ -27,18 +20,12 @@ gem 'rails', '~> 5.1.4'
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-gem 'simple_form', '~> 3.5'
-gem 'devise', '~> 4.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
-# gems for bootstrap
-gem 'bootstrap-sass', '~> 3.3.6'
-gem 'jquery-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

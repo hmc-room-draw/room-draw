@@ -1,19 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  first_name: MyString
-  last_name: MyString
-  email: email@emailaddress.com
-  is_admin: true
-  has_completed_form: true
-  oauth_token: MyString
-  oauth_expires_at: 2017-10-07 13:26:34
+  name: MyString
+  email: MyString
+  userID: 1
+  roomDrawNumber: 1
 
 two:
-  first_name: MyString
-  last_name: MyString
-  email: email@emailaddress.com
-  is_admin: false
-  has_completed_form: false
-  oauth_token: MyString
-  oauth_expires_at: 2017-10-07 13:26:34
+  name: MyString
+  email: MyString
+  userID: 1
+  roomDrawNumber: 1

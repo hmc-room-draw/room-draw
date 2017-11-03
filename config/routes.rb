@@ -1,38 +1,14 @@
 Rails.application.routes.draw do
-
-  get 'dorms/linde2'
-
-  get 'dorms/linde'
-
-  get 'dorms/atwood3'
-
-  get 'dorms/atwood2'
+	root 'static_pages#home'
 
   get 'dorms/atwood'
 
-  get 'dorms/case'
-
   get 'dorms/case2'
 
-  get 'dorms/east2'
+  get 'dorms/case'
 
-  get 'dorms/west2'
-
-  get 'dorms/west'
-
-  get 'dorms/east'
-
-  get 'dorms/south2'
-
-  get 'dorms/south'
-
-  get 'dorms/north2'
-
-  get 'dorms/north'
   get 'login/show'
 
-  resources :pulls
-  resources :room_assignments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -41,13 +17,18 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
 
-  resources :sessions, only: [:create, :destroy]
+  resources :draw_periods
 
-  resources :users
   resources :dorms
+  resources :pulls
   resources :rooms
   resources :suites
+
+  resources :room_assignments
   resources :students
 
+  resources :users
+  resources :sessions, only: [:create, :destroy]
+
   root "sessions#new"
- end
+end
