@@ -1,81 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<style type="text/css">
-/*Following Modal was taken from https://www.w3schools.com/howto/howto_css_modals.asp */
-/* The Modal (background) */
-.modal {
-   display: none; /* Hidden by default */
-   position: fixed; /* Stay in place */
-   z-index: 1; /* Sit on top */
-   padding-top: 100px; /* Location of the box */
-   left: 0;
-   top: 0;
-   width: 100%; /* Full width */
-   height: 100%; /* Full height */
-   overflow: auto; /* Enable scroll if needed */
-   background-color: rgb(0,0,0); /* Fallback color */
-   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-/* Modal Content */
-.modal-content {
-   background-color: #fefefe;
-   margin: auto;
-   padding: 20px;
-   border: 1px solid #888;
-   width: 80%;
-}
-/* The Close Button */
-.close {
-   color: #aaaaaa;
-   float: right;
-   font-size: 28px;
-   font-weight: bold;
-}
-.close:hover,
-.close:focus {
-   color: #000;
-   text-decoration: none;
-   cursor: pointer;
-}
-</style>
-
-<p>
-  <strong>Name:</strong>
-  <%= @dorm.name %>
-</p>
-
-<%= link_to 'Edit', edit_dorm_path(@dorm) %> |
-<%= link_to 'Back', dorms_path %>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2>Pull request initiated</h2>
-    </div>
-    <div class="modal-body">
-      <p>You have begun a pull request for this room</p>
-      <p>The following form must be filled out in order to pull a room:</p>
-            <div class="form-group">
-            <label for="usr">roomNum</label>
-            <input type="text" class="form-control" id="usr">
-            </div>
-
-
-            <div class="form-group">
-            <label for="roommate">Roommate:</label>
-            <input type="password" class="form-control" id="pwd">
-            </div>
-    </div>
-  </div>
-
-</div>
-
-<script type="text/javascript">
-var data = {
+{
   "room_0": {
     "bounding_box": [
       0.1603,
@@ -182,7 +105,7 @@ var data = {
       0.04576,
       0.08471
   ],
-  "num":"121",
+  "num":1"21,"
   },
   "room_12": {
     "bounding_box": [
@@ -382,65 +305,4 @@ var data = {
   ],
   "num": "Q1D"
   }
-};
-
-// Get the modal
-var modal = document.getElementById('myModal');
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
 }
-
-var fakeDorm = $('<div>').css({
-    position: 'absolute',
-    left: 90,
-    top: 170,
-    width: 940,
-    height: 730,
-    'background-image': "url(<%= asset_path 'case.png' %>)",
-    'background-size':  'contain',
-    border: '5px solid black',
-}).appendTo('body');
-
-var room, val;
-for (var key in data) {
-    if (data.hasOwnProperty(key)) {
-      val = data[key];
-      var room = $('<div>').css({
-          position: 'absolute',
-          left: ''+100*(val.bounding_box[0])+'%',
-          top: 100*(val.bounding_box[1])+'%',
-          height: 100*(val.bounding_box[3])+'%',
-          width: 100*(val.bounding_box[2])+'%',
-      }).appendTo(fakeDorm);
-      
-      room.on('mouseenter', function(){
-         $(this).css({
-             background: 'grey',
-         }); 
-      });
-      
-      room.on('mouseleave', function(){
-         $(this).css({
-             background: 'none',
-         }); 
-      });
-      
-      room.on('click', function(){
-         modal.style.display = "block";
-      });
-      
-    }
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-</script>
