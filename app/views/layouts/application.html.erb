@@ -1,13 +1,27 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-<%= javascript_include_tag "application" %>
+  <head>
+    <title>RoomDraw</title>
+    <%= csrf_meta_tags %>
 
-</head>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
   <body>
-    <div class="container">
-      <%= yield %>
-
+  <nav class="navbar navbar-default">
+    <div class = "container">
+        <div class = "navbar-header">
+        <%= link_to "Home", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class= "nav navbar-nav">
+            <li> <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
+</li>
+        </ul>
     </div>
+  </nav>
+
+    <%= yield %>
   </body>
 </html>
