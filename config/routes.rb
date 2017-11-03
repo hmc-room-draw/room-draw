@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get  '/contact', to: 'static_pages#contact'
     get  '/signup',  to: 'users#new'
 
+    get '/launch', to: 'static_pages#launch'
+
     # dorm pages to redirect to from campus map
     get '/south', to: 'static_pages#south'
     get '/north', to: 'static_pages#north'
