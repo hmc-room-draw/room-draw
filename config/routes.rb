@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'adminpage/clicked'
   post 'adminpage/download_users'
   post 'adminpage/download_non_participants'
+  post 'adminpage/download_placements'
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')

@@ -54,7 +54,25 @@ class AdminpageController < ApplicationController
   end
 
   def download_placements()
-
+    '''
+    Download all placements
+    '''
+    user_csv = CSV.generate do |csv|
+      csv << ["Pull ID", "First", "Last", "Room ID"]
+      # Pull.all.each do |pull|
+      #   # Use user_id to trace the first name, last name and email of user_id
+      #   # uncomment and test this block when database code is ready
+      #   #student = Student.find_by(student_id: pull.student_id)
+      #   #user = User.find_by(user_id: student.user_id)
+      #   #room = RoomAssignment.find_by(student_id:pull.student_id)
+      #   #csv << [user.first_name, user.last_name,
+      #   # student.class_rank,user.email, room.room_id]
+      # end
+    end
+    send_data user_csv,
+      :type => 'text/csv',
+      :filename => 'pulls.csv',
+      :disposition => 'attachment'
   end
 
   def download_non_participants()
@@ -75,9 +93,8 @@ class AdminpageController < ApplicationController
     end
     send_data user_csv,
       :type => 'text/csv',
-      :filename => 'users.csv',
+      :filename => 'non_participants.csv',
       :disposition => 'attachment'
   end
 
-  
 end
