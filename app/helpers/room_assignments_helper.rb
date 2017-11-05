@@ -3,6 +3,7 @@ module RoomAssignmentsHelper
         student = Student.find(room_assignment.student_id)
         user = User.find(room_assignment.student.id)
         @student_name = user.first_name + " " + user.last_name
+        @student_name = User.find(student.user_id).pluck(:first_name, :last_name)
     end
 
     def student_number(pull)
