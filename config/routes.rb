@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  #resources for mailing 
+  #resources for mailing
   resources :emails
   get 'emails/new'
 
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'adminpage/reminder'
   post 'adminpage/clicked'
   post 'adminpage/download_users'
+  post 'adminpage/download_non_participants'
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')

@@ -15,7 +15,7 @@ class AdminpageController < ApplicationController
     # This function works and can be used to verify that mailing works.
 
 
-    # TODO: redirect to new email page, to be tested 
+    # TODO: redirect to new email page, to be tested
 
     # redirect 'emails/new'
 
@@ -31,4 +31,53 @@ class AdminpageController < ApplicationController
     # end
 
   end
+
+
+  def download_users()
+    '''
+    Download all users with attributes of name and email in
+    the format of csv.
+    '''
+
+    # The attributes should be first name and last name
+    # But the implementation is different from the UML
+    user_csv = CSV.generate do |csv|
+      csv << ["Name", "Email"]
+      User.all.each do |user|
+        csv << [user.name, user.email]
+      end
+    end
+    send_data user_csv,
+      :type => 'text/csv',
+      :filename => 'users.csv',
+      :disposition => 'attachment'
+  end
+
+  def download_placements()
+
+  end
+
+  def download_non_participants()
+    '''
+    Download all students who have not participated in room draw
+    '''
+    user_csv = CSV.generate do |csv|
+      csv << ["User_Id", "Class"]
+      Student.all.each do |student|
+        if student.has_participated == false
+          # Use user_id to trace the first name, last name and email of user_id
+          # uncomment and test this block when database code is ready
+          #user = User.find_by(user_id: student.user_id)
+          #csv << [user.first_name, user.last_name, student.class_rank,user.email]
+          csv << [student.user_id, user.class_rank]
+        end
+      end
+    end
+    send_data user_csv,
+      :type => 'text/csv',
+      :filename => 'users.csv',
+      :disposition => 'attachment'
+  end
+
+  
 end
