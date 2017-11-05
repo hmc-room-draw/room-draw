@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
 
+  get 'pulls/:id/add_student', to: 'room_assignments#new_from_pull', as: :add_student_to_pull
+  
   resources :draw_periods
 
   resources :dorms
