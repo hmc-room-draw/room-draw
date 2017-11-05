@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :has_completed_form %>
+    <%= form.check_box :has_completed_form, id: :student_has_completed_form %>
+  </div>
+
+  <div class="field">
     <%= form.label :user_id %>
     <%= form.text_field :user_id, id: :student_user_id %>
   </div>
