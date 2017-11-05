@@ -1,5 +1,6 @@
 class RoomAssignmentsController < ApplicationController
   before_action :set_room_assignment, only: [:show, :edit, :update, :destroy]
+  include RoomAssignmentsHelper
 
   # GET /room_assignments
   # GET /room_assignments.json
@@ -17,6 +18,10 @@ class RoomAssignmentsController < ApplicationController
     @room_assignment = RoomAssignment.new
   end
 
+  def new_from_pull
+    @room_assignment = RoomAssignment.new
+  end
+
   # GET /room_assignments/1/edit
   def edit
   end
@@ -27,6 +32,7 @@ class RoomAssignmentsController < ApplicationController
     @room_assignment = RoomAssignment.new(room_assignment_params)
 
     respond_to do |format|
+      # TO DO: redirect for new_from_pull
       if @room_assignment.save
         format.html { redirect_to @room_assignment, notice: 'Room assignment was successfully created.' }
         format.json { render :show, status: :created, location: @room_assignment }
