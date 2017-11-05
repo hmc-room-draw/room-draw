@@ -1,12 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-
   class_rank: junior
   room_draw_number: 53
   has_participated: true
+  user: one
 
 two:
   class_rank: sophomore
   room_draw_number: 27
   has_participated: false
+  user: two

@@ -2,7 +2,7 @@
 
 one:
   floor: 1
-  number: room1
+  number: 5
   capacity: 1
   dorm: one
   suite: one

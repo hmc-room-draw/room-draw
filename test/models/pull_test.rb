@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class PullTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   def setup
       @p = pulls(:one)
   end
@@ -12,4 +9,8 @@ class PullTest < ActiveSupport::TestCase
     assert @p.valid?
   end
 
+  test "must belong to a student" do
+  	@p.student = nil
+    assert_not @p.valid?
+  end
 end

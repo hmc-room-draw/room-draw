@@ -2,6 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
+   # @user = User.new
     @user = users(:one)
   end
 
@@ -30,7 +31,7 @@ class UserTest < ActiveSupport::TestCase
         first.last@foo.jp alice+bob@baz.cn]
     valid_addresses.each do |valid_address|
       @user.email = valid_address
-      assert @user.valid?, "#{valid_address.inspect} should be valid"
+      assert @user.valid?, "#{valid_address.inspect} @user.email should be valid"
     end
   end
 
