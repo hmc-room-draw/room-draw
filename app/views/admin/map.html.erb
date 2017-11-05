@@ -20,7 +20,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <%= form_tag("/admin/map", method: "edit_mark", :id => "yolo") do |f| %>
+        <%= form_tag("/admin/map", method: "edit_mark") do |f| %>
           <%= select(:dorm_name, :value, [
               ["Atwood", "Atwood"],
               ["Case", "Case"],

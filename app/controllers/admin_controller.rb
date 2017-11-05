@@ -28,7 +28,7 @@ class AdminController < ApplicationController
   def delete_mark(params)
     # Look up the room with the corresponding room ID
     room_id = get_room(params[:dorm_name][:value], params[:room])
-    if room_id.nil
+    if room_id.nil?
       flash[:success] = "Error - room not found."
     else
       # Delete all rooms with this room_id
