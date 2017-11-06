@@ -20,7 +20,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <%= form_tag("/admin/map", method: "edit_mark") do |f| %>
+        <%= form_for("/admin/map", method: "edit_mark") do |f| %>
           <%= select(:dorm_name, :value, [
               ["Atwood", "Atwood"],
               ["Case", "Case"],
@@ -33,17 +33,17 @@
               ["West", "West"],
               ]) %><br/>
           <%= text_field_tag(:room) %><br/>
-          <%= radio_button_tag(:mark_type, 0) %>
+          <%= radio_button_tag(:mark_type, "freshman") %>
           <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
-          <%= radio_button_tag(:mark_type, 1) %>
+          <%= radio_button_tag(:mark_type, "unavailable") %>
           <%= label_tag(:preplaced_offline, "Offline") %><br/>
-          <%= radio_button_tag(:mark_type, 2) %>
+          <%= radio_button_tag(:mark_type, "preplaced") %>
           <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
-          <%= radio_button_tag(:mark_type, "Other") %>
+          <%= radio_button_tag(:mark_type, "other") %>
           <%= label_tag(:preplaced_other, "Other") %><br/>
           <%= label_tag(:description, "Description") %><br/>
           <%= text_area_tag(:description) %><br/>
-          <%= submit_tag("Delete Mark (make pullable)") %><br/>
+          <%= f.submit "Delete Mark (make pullable)", name: "delete" %><br/>
           <button type="submit" data-dismiss="modal">Cancel</button><br/>
           <%= submit_tag("Mark Unpullable") %>
         <% end %>
@@ -52,5 +52,5 @@
   </div>
 </div>
 <script>
-  $(".alert").fadeOut(5000);
+  $(".alert").fadeOut(8000);
 </script>

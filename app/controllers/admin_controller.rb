@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   end
 
   def edit_mark
-    if params[:commit] == "Delete Mark (make pullable)"
+    if params[:delete]
       delete_mark(params)
     else
       add_mark(params)
@@ -14,7 +14,7 @@ class AdminController < ApplicationController
 
   def add_mark(params)
     @marked_room = RoomAssignment.new
-    @marked_room.assignment_type = params[:mark_type].to_i
+    @marked_room.assignment_type = params[:mark_type]
     @marked_room.room_id = get_room(params[:dorm_name][:value], params[:room])
     #@marked_room.description = params[:description] - I believe this will be implemented later.
     
