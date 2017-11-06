@@ -20,10 +20,14 @@ class RoomAssignmentsController < ApplicationController
 
   def new_from_pull
     @room_assignment = RoomAssignment.new
+    @pull = params[:id]
   end
 
   # GET /room_assignments/1/edit
   def edit
+    if params[:id]
+      redirect_to new_from_pull, id: params[:id]
+    end
   end
 
   # POST /room_assignments
