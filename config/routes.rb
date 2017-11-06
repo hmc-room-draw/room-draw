@@ -36,7 +36,10 @@ Rails.application.routes.draw do
   resources :room_assignments
   resources :students
 
-  resources :users
+  resources :users do
+    collection { post :import }
+  end
+  
   resources :sessions, only: [:create, :destroy]
 
   root "sessions#new"
