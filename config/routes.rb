@@ -35,9 +35,7 @@ Rails.application.routes.draw do
   resources :suites
 
   resources :room_assignments
-  resources :students do
-    collection { post :import }
-  end
+  resources :students
 
   resources :users do
     collection { post :import }
