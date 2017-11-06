@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_form
-    unless current_user.has_completed_form then
+    unless current_user.student.has_completed_form then
       redirect_to Rails.application.config.form_url
     end
   end
