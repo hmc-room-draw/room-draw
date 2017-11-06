@@ -7,8 +7,3 @@ one:
 two:
   message: MyString
   student: two
-
-three:
-  message: Testing
-  student: two
-  
