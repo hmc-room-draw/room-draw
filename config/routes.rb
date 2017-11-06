@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'dorms/atwood'
 
+  get '/dormLookup', to: 'static_pages#dormLookup'
+
   get 'dorms/case2'
 
   get 'dorms/case'
