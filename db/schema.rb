@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20171023000808) do
     t.integer "class_rank"
     t.integer "room_draw_number"
     t.boolean "has_participated"
+    t.boolean "has_completed_form"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_students_on_user_id"
@@ -82,7 +83,6 @@ ActiveRecord::Schema.define(version: 20171023000808) do
     t.string "last_name"
     t.string "email"
     t.boolean "is_admin"
-    t.boolean "has_completed_form"
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
