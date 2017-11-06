@@ -33,9 +33,37 @@ class User < ApplicationRecord
       user = User.where(email: user_hash["email"])
 
       if user.count == 1
-        user.first.update_attributes(user_hash)
+        user.first.update_attributes(user_hash.except("class", "room_draw_number"))
+#        user.first.student.update_attributes(:class => user_hash[:class],
+#          :room_draw_number => user_hash[:room_draw_number])
       else
-        User.create!(user_hash)
+        currentUser = User.create!(user_hash.except("class", "room_draw_number"))
+
+        # puts "going to student.new"
+        # currentStudent = Student.new(user_hash["class"], user_hash["room_draw_number"])
+
+        # puts "printing student"
+        # currentStudent.printStudent()
+
+        # puts "trying to print user"
+        # puts currentUser.attributes['id']
+
+
+        # puts "setting user id for belongs to"
+        # currentStudent.user_id = currentUser.attributes['id']
+
+        # puts "going to save"
+        # currentStudent.save!
+
+        # puts currentUser.email
+        # puts "CLASSSSS"
+        # puts currentStudent.class
+        # puts currentStudent.room_draw_number
+        # #currentUser.update_attributes(:student => currentStudent)
+
+        # currentUser.student = currentStudent.attributes['id']
+        # currentUser.save!
+
       end # end if !user.nil?
 
     end # end CSV.foreach
