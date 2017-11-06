@@ -3,13 +3,13 @@
 
 <% if current_user.is_admin? %>
 
-<%= render 'adminForm', pull: @pull %>
+    <%= redirect_to @pull %>
 
 <% else %>
 
-<%= render 'form', pull: @pull %>
+    <%= render 'form', pull: @pull %>
 
-<%= link_to 'Show', @pull %> |
-<%= link_to 'Back', pulls_path %>
+    <%= link_to 'Show', @pull %> |
+    <%= link_to 'Back', pulls_path %>
 
 <% end %>

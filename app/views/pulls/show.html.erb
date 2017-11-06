@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.is_admin? %>
-<h1>Create/Edit Pull</h1>
+<h1>Create/Edit Pull <%= @pull.id %></h1>
 
 <%= link_to 'Add', add_student_to_pull_path %>
 
@@ -34,7 +34,8 @@
 
 <%= link_to 'Back', pulls_path %>
 
-<% else %> <!-- TO DO: ensure this separation is desired? -->
+<% else %>
+<!-- TO DO: Can admin and reg. student show be combined?-->
 <p>
   <strong>Message:</strong>
   <%= @pull.message %>

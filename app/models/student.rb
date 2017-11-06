@@ -9,4 +9,6 @@ class Student < ApplicationRecord
   has_one :pull
 
   enum class_rank: [:freshman, :sophomore, :junior, :senior]
+
+  scope :by_last_name, -> { joins(:user).order('users.last_name') }
 end

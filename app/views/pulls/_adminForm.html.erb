@@ -17,8 +17,7 @@
 
   <div class="field">
     <%= form.label :pull_number %>
-    <!-- TO DO: get best pull number based on students -->
-    <%= form.text_field :pull_number, id: :pull_number %>
+    <%= form.select :room_draw_number, pull.students.collect{|student| [student.room_draw_number]}  %>   
   </div>
 
   <!-- TO DO: Senior round -->
