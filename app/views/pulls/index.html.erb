@@ -1,24 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pulls</h1>
+<h1>Pull List</h1>
 
+<div class="center">
+  <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
+  <%= button_to 'Create', new_pull_path, :class => "button", :method => :get  %>
+</div>
+
+<br>
+</br>
 <table>
   <thead>
     <tr>
-      <th>Message</th>
-      <th>Student</th>
-      <th colspan="3"></th>
+      <th>Number</th>
+      <th>Names</th>
+      <th>Rooms</th>
+      <th>Message</th>  
+      <th>Actions</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @pulls.each do |pull| %>
       <tr>
+        <td><%= pull.student.room_draw_number %></td> 
+        <% pull.room_assignments.each do |room_assignment| %>
+          <td><%= student_name(room_assignment) %></td> 
+          <td><%= room_assignment.room.number %></td>
+        <% end %>
         <td><%= pull.message %></td>
-        <td><%= pull.student %></td>
         <td><%= link_to 'Show', pull %></td>
         <td><%= link_to 'Edit', edit_pull_path(pull) %></td>
-        <td><%= link_to 'Destroy', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +40,3 @@
 
 <br>
 
-<%= link_to 'New Pull', new_pull_path %>
