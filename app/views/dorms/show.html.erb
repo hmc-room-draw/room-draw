@@ -799,6 +799,12 @@ window.onclick = function(event) {
     }
 }
 
+window.onkeyup = function(event) {
+  if (event.keyCode == 27) {
+    modal.style.display = "none";
+  }
+}
+
 </script>
 
 <!-- Script for using radio buttons to show input field on the pull request
