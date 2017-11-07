@@ -17,7 +17,9 @@
         <ul class= "nav navbar-nav">
             <li><% if current_user %>
                 Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>!
+
                 <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
+
                 <% else %>
                   <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
                 <% end %></li>
