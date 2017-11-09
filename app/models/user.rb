@@ -54,4 +54,8 @@ class User < ApplicationRecord
 
     end # end CSV.foreach
   end # end self.import(file)
+
+  def has_student?
+    !self.student.nil?
+  end
 end
