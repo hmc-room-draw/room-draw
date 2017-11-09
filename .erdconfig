@@ -1,6 +1,7 @@
 attributes:
   - content
   - foreign_key
+  - primary_key
   - inheritance
 disconnected: true
 filename: erd

@@ -10,20 +10,25 @@ class PullsController < ApplicationController
   # GET /pulls/1
   # GET /pulls/1.json
   def show
+    authorize @pull
   end
 
   # GET /pulls/new
   def new
+    authorize Pull
     @pull = Pull.new
   end
 
   # GET /pulls/1/edit
   def edit
+    authorize @pull
   end
 
   # POST /pulls
   # POST /pulls.json
   def create
+    authorize Pull
+
     @pull = Pull.new(pull_params)
 
     respond_to do |format|
@@ -40,6 +45,8 @@ class PullsController < ApplicationController
   # PATCH/PUT /pulls/1
   # PATCH/PUT /pulls/1.json
   def update
+    authorize @pull
+
     respond_to do |format|
       if @pull.update(pull_params)
         format.html { redirect_to @pull, notice: 'Pull was successfully updated.' }
@@ -54,6 +61,8 @@ class PullsController < ApplicationController
   # DELETE /pulls/1
   # DELETE /pulls/1.json
   def destroy
+    authorize @pull
+
     @pull.destroy
     respond_to do |format|
       format.html { redirect_to pulls_url, notice: 'Pull was successfully destroyed.' }
