@@ -25,6 +25,6 @@
 		<%= render partial: 'shared/dateTimeInput', locals: {id: 'endDate', placeholder: 'End Date', paramID: 'endDate'}%>	
 	</div>
 	<div class='col-sm-3'>	
-		<%= button_to "Submit"%>
+		<%= button_to "Submit", {action: "setStartEndDate"}%>
 	</div>
 </div>
