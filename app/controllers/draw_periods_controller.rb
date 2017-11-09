@@ -74,6 +74,11 @@ class DrawPeriodsController < ApplicationController
 =======
 >>>>>>> adding landing page
     end
+    
+    #TODO
+    def setStartEndDate
+        render html: "<script>alert('setStartEndDate Called')</script>".html_safe
+    end
 
     private
         def set_draw_period
