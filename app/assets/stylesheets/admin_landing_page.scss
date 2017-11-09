@@ -1,0 +1,19 @@
+// Place all the styles related to the admins controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'bootstrap';
+@import 'bootstrap-datetimepicker';
+
+.dashboard-button {
+	float: right;
+}
+
+.dashboard-link {
+    width: 200px;
+	display: block;
+}
+
+.top-buffer { 
+	margin-top:20px; 
+}

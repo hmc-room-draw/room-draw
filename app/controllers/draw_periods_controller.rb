@@ -50,6 +50,21 @@ class DrawPeriodsController < ApplicationController
             format.html { redirect_to draw_periods_url, notice: 'Draw Period was successfully canceled.' }
             format.json { head :no_content }
         end
+    end 
+
+    #TODO
+    def uploadRoster
+        render html: "<script>alert('Upload Roster Called')</script>".html_safe
+    end
+    
+    #TODO
+    def downloadStudents
+        render html: "<script>alert('Download Students Called')</script>".html_safe
+    end
+    
+    #TODO
+    def downloadPulls
+        render html: "<script>alert('Download Pulls Called')</script>".html_safe
     end
 
     private

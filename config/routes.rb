@@ -19,6 +19,14 @@ Rails.application.routes.draw do
 
   post 'admin/map', to: 'admin#edit_mark'
 
+  get 'admin/home', to: 'draw_periods#admin_landing'
+
+  post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
+  post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
+  post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
+
+
+
   resources :draw_periods
 
   resources :dorms
