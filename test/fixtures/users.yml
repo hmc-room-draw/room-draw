@@ -1,13 +1,41 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
-  userID: 1
-  roomDrawNumber: 1
+  first_name: "Stu"
+  last_name: "Dent"
+  email: tudent@g.hmc.edu
+  is_admin: true
+  oauth_token: MyString
+  oauth_expires_at: 2017-10-07 13:26:34
 
 two:
-  name: MyString
-  email: MyString
-  userID: 1
-  roomDrawNumber: 1
+  first_name: MyString
+  last_name: MyString
+  email: email@emailaddress.com
+  is_admin: false
+  oauth_token: MyString
+  oauth_expires_at: 2017-10-07 13:26:34
+
+three:
+  first_name: Admin
+  last_name: Admin
+  email: hyobinyou@gmail.com
+  is_admin: true
+  oauth_token: Something
+  oauth_expires_at: 2017-11-10 13:26:34
+
+four:
+  first_name: Student
+  last_name: Student
+  email: student@gmail.com
+  is_admin: false
+  oauth_token: Something
+  oauth_expires_at: 2017-11-10 13:26:34
+
+five:
+  first_name: Student2
+  last_name: Student2
+  email: student2@gmail.com
+  is_admin: false
+  oauth_token: Something
+  oauth_expires_at: 2017-11-10 13:26:34

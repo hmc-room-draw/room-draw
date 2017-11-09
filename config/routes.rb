@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-	root 'static_pages#home'
-
   get 'dorms/atwood'
 
   get 'dorms/case2'
