@@ -65,11 +65,14 @@ class DrawPeriodsController < ApplicationController
     #TODO
     def downloadPulls
         render html: "<script>alert('Download Pulls Called')</script>".html_safe
+<<<<<<< HEAD
     end
     
     #TODO
     def setStartEndDate
         render html: "<script>alert('setStartEndDate Called')</script>".html_safe
+=======
+>>>>>>> adding landing page
     end
 
     private
