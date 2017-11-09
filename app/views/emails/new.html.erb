@@ -1,0 +1,9 @@
+<h1>Send Reminder Email!</h1>
+<p>Send Email </p>
+
+<%= form_for @email, html: { multipart: true } do |f| %>
+  <%= f.text_area :description %>
+  <%= f.datetime_select :created_at %>
+  <br>
+  <%= f.submit "Send Email"%>
+<% end %>

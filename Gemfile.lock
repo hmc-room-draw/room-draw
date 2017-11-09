@@ -85,6 +85,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+<<<<<<< HEAD
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -92,6 +93,14 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+=======
+    daemons (1.2.4)
+    delayed_job (4.1.3)
+      activesupport (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.2)
+      activerecord (>= 3.0, < 5.2)
+      delayed_job (>= 3.0, < 5)
+>>>>>>> origin/admin-email
     dotenv (2.2.1)
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
@@ -289,6 +298,9 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    time_diff (0.3.0)
+      activesupport
+      i18n
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
@@ -329,7 +341,12 @@ DEPENDENCIES
   capybara (~> 2.13)
   ckeditor (~> 4.1)
   coffee-rails (~> 4.2)
+<<<<<<< HEAD
   devise (~> 4.3)
+=======
+  daemons
+  delayed_job_active_record
+>>>>>>> origin/admin-email
   dotenv-rails
   jbuilder (~> 2.5)
 <<<<<<< HEAD
@@ -357,6 +374,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+  time_diff (~> 0.3.0)
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)

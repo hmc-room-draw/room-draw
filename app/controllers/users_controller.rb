@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   include Pundit
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
