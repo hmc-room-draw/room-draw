@@ -20,5 +20,20 @@ class Student < ApplicationRecord
 
   def senior?
     class_rank == :senior
+
+  def format_status
+    if room_assignment.nil?
+      if has_participated
+        "Participated, but not in room"
+      else
+        if has_completed_form
+          "Never pulled room"
+        else
+          "Never logged in"
+        end
+      end
+    else
+      room_assignment.room.number
+    end
   end
 end
