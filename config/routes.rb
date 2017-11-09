@@ -21,7 +21,6 @@ Rails.application.routes.draw do
 
   get 'admin/home', to: 'draw_periods#admin_landing_page'
 
-
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
   post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
