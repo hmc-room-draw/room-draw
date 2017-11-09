@@ -17,10 +17,10 @@
 
   <div class="field">
     <%= form.label :pull_number %>
-    <%= form.select :room_draw_number, pull.students.collect{|student| [student.room_draw_number]}  %>   
+    <%= form.collection_select :student_id, pull.students, :id, :room_draw_number %>
   </div>
 
-  <!-- TO DO: Senior round -->
+  <!-- TO DO: Senior rounds -->
 
   <div class="field">
     <%= form.label :message %>

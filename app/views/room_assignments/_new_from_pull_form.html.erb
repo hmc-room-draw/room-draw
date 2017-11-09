@@ -19,7 +19,7 @@
 
   <div class="field">
     <%= form.label :room_id %>
-    <%= form.select :room_id, Room.all, id: :room_assignment_room_id %>
+    <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
   </div>
 
 
