@@ -66,6 +66,11 @@ class DrawPeriodsController < ApplicationController
     def downloadPulls
         render html: "<script>alert('Download Pulls Called')</script>".html_safe
     end
+    
+    #TODO
+    def setStartEndDate
+        render html: "<script>alert('setStartEndDate Called')</script>".html_safe
+    end
 
     private
         def set_draw_period
