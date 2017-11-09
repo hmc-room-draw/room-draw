@@ -1,0 +1,22 @@
+<div align="center">
+  <h3>Student Contact Form</h3>
+
+  <%= simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f| %>
+    <%= f.input :subject, :required => true, :placeholder => 'Regarding Your Room Draw', input_html: {value: f.object.subject || 'Regarding Your Room Draw'}%>
+        
+    <div class="form-group-1">
+      <%= f.input :message, :as => :ckeditor, input_html: {:ckeditor => {:toolbar => 'FULL'}}, class: "form-control" %>
+    </div>
+
+    <%= f.input :footer, :required => true, :placeholder => 'DO NOT RESPOND TO THIS EMAIL', as: :text%>
+
+    <%= f.input :Students_not_logged_in, :as => :boolean, input_html: {checked: false} %>
+    <%= f.input :Students_ready_to_pull, :as => :boolean, input_html: {checked: false} %>
+    <%= f.input :Students_in_room, :as => :boolean, input_html: {checked: false} %>
+
+    <div>
+      </br>
+      <%= f.button :submit, 'Send message', :class=> "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171023000808) do
 
   create_table "dorms", force: :cascade do |t|
@@ -80,5 +81,8 @@ ActiveRecord::Schema.define(version: 20171023000808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+=======
+ActiveRecord::Schema.define(version: 0) do
+>>>>>>> hyobinyou
 
 end

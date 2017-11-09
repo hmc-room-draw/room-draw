@@ -75,3 +75,16 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#gems for emailer
+gem 'simple_form'
+gem 'slim-rails'
+gem 'bootstrap-sass'
+gem 'mail_form'
+group :development do
+  gem 'letter_opener_web'
+
+#rich text editor
+gem 'ckeditor', '~>4.1'
+
+end
