@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   post 'admin/map', to: 'admin#edit_mark'
 
-  get 'admin/home', to: 'draw_periods#admin_landing'
+  get 'admin/home', to: 'draw_periods#admin_landing_page'
 
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
