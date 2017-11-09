@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :student_id %>
-    <%= form.select :student_id, Student.by_last_name.collect {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
+    <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
   </div>
 
 
