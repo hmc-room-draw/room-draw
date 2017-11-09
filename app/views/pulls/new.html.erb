@@ -2,7 +2,6 @@
 
 <% if current_user.is_admin? %>
 
-    <%= link_to 'Add Student', add_student_to_pull_path %>
     <%= render 'adminForm', pull: @pull %>
     
 <% else %>

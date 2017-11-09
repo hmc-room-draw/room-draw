@@ -3,7 +3,7 @@
 <% if current_user.is_admin? %>
 <h1>Create/Edit Pull <%= @pull.id %></h1>
 
-<%= link_to 'Add', add_student_to_pull_path %>
+<%= link_to 'Add', add_student_to_pull_path(:pull_id => @pull.id) %>
 
 <table>
   <thead>

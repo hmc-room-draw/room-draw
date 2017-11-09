@@ -20,14 +20,11 @@ class RoomAssignmentsController < ApplicationController
 
   def new_from_pull
     @room_assignment = RoomAssignment.new
-    @pull = params[:id]
+    @pull_id = params[:pull_id]
   end
 
   # GET /room_assignments/1/edit
   def edit
-    if params[:id]
-      redirect_to new_from_pull, id: params[:id]
-    end
   end
 
   # POST /room_assignments
@@ -36,12 +33,15 @@ class RoomAssignmentsController < ApplicationController
     @room_assignment = RoomAssignment.new(room_assignment_params)
 
     respond_to do |format|
-      # TO DO: redirect for new_from_pull
       if @room_assignment.save
-        format.html { redirect_to @room_assignment, notice: 'Room assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @room_assignment }
+        format.html { redirect_to Pull.find(params[:pull_id]), notice: 'Room assignment was successfully created.' }
+        format.json { render :show, status: :created, location: Pull.find(params[:pull_id]) }
       else
-        format.html { render :new }
+        if params[:id]
+          format.html { render :new_from_pull }
+        else
+          format.html { render :new }
+        end
         format.json { render json: @room_assignment.errors, status: :unprocessable_entity }
       end
     end
