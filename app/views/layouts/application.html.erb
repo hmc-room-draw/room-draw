@@ -20,6 +20,14 @@
                 <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
                 <% else %>
                   <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
+                <!--   <h1>Welcome to Room Draw</h1>
+ 
+                  <h2>Instructions:</h2>
+                  <p>1) Make sure you are an authenticated User (student).<br/>
+                     2) Login with your HMC google account.  You will then be redirected to a page where you can fill out the required CIS form.<br/>
+                     3) Fill out the CIS form.<br/>
+                     4) Select a room.  You will not be able to pull into a room until you have logged in and filled out the CIS form.<br/>
+                  </p> -->
                 <% end %></li>
         </ul>
     </div>
