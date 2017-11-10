@@ -31,6 +31,18 @@ class PullsController < ApplicationController
 
     @pull = Pull.new(pull_params)
 
+    cps = pull.get_conflicting_pulls
+    can_pull = all? { |cp| pull.can_override(cp) }
+
+    format.json { render json: @pull, error: 'Could not pull.' } unless can_pull
+
+    if not cps.empty?
+      cps.forEach do |cp|
+        # TODO: email people from destroyed pulls
+        cp.destroy()
+      end
+    end
+
     respond_to do |format|
       if @pull.save
         format.html { redirect_to @pull, notice: 'Pull was successfully created.' }
