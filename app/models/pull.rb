@@ -8,7 +8,7 @@ class Pull < ApplicationRecord
   validates :room_assignments, :presence => true
   validates :student, :presence => true
 
-  # Checks if self can overwrite another pull
+  # Checks if self can override another pull
   # @param other_pull
   #     Pull to be checked
   def can_override(other_pull)
@@ -22,4 +22,6 @@ class Pull < ApplicationRecord
     conflicting_assignments.map{ |asn| asn.pull }
   end
 
+  #check student conflicts/ frosh/preplaced people check room assignments
+  #
 end
