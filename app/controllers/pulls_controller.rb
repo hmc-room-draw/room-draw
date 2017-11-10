@@ -4,7 +4,7 @@ class PullsController < ApplicationController
   # GET /pulls
   # GET /pulls.json
   def index
-    @pulls = Pull.all
+    @pulls = Pull.all.order(created_at: :desc)
   end
 
   # GET /pulls/1
