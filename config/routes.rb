@@ -36,13 +36,7 @@ Rails.application.routes.draw do
   resources :suites
 
   resources :room_assignments
-<<<<<<< HEAD
-  resources :students do
-    collection { post :import }
-  end
-=======
   resources :students
->>>>>>> Upload users from csv
 
   resources :users do
     collection { post :import }
