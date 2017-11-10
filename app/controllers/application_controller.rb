@@ -2,7 +2,7 @@ require './lib/google_api/drive.rb'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user
+  helper_method :current_user, :current_draw_period
 
   # TODO: Uncomment the line below to enable form/login redirect. Make sure also
   # to uncomment the corresponding line in `app/controllers/sessions_controller.rb`!
@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
+  end
+
+  def current_draw_period
+    @current_draw_period ||= DrawPeriod.find_by('start_datetime < ? AND ? < end_datetime', Time.now, Time.now)
   end
 
   def check_login
@@ -20,11 +24,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_form
-    puts "HELLO"
     unless current_user.has_completed_form then
-      puts "hi"
       ss_key = Rails.application.config.responses_spreadsheet_key
-      if email_in_spreadsheet(ss_key, current_user.email) then
+      if email_in_spreadsheet?(ss_key, current_user.email) then
         current_user.has_completed_form = true
         current_user.save!
       else
@@ -40,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def email_in_spreadsheet(key, email)
+    def email_in_spreadsheet?(key, email)
       ss = GoogleDriveApi.read_spreadsheet(key)
       ws = ss.worksheets.first
       replies = ws.rows.drop(1)

@@ -10,9 +10,9 @@ class User < ApplicationRecord
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
   # From https://www.railstutorial.org/book/modeling_users
-  validates :email, presence: true,
-    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-    #uniqueness: { case_sensitive: false }
+  validates :email, presence: true, 
+    format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+    
   before_save { self.email = email.downcase  }
 
   def self.from_omniauth(auth)

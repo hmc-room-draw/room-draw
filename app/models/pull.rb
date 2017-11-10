@@ -6,6 +6,7 @@ class Pull < ApplicationRecord
   accepts_nested_attributes_for :room_assignments
 
   validates :room_assignments, :presence => true
+  validates :student, :presence => true
 
   # Checks if self can overwrite another pull
   # @param other_pull

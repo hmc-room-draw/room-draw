@@ -6,6 +6,7 @@ class CreateStudents < ActiveRecord::Migration[5.1]
       t.integer :class_rank
       t.integer :room_draw_number
       t.boolean :has_participated
+      t.boolean :has_completed_form
 
       t.timestamps
     end

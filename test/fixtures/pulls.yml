@@ -3,6 +3,7 @@
 one:
   message: MyString
   student: one
+  # room_assignment: one
 
 two:
   message: MyString

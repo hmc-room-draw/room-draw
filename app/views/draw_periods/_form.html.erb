@@ -1,0 +1,31 @@
+<%= form_with(model: draw_period, local: true) do |form| %>
+    <% if draw_period.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(draw_period.errors.count, "error") %> prohibited this draw period from being saved:</h2>
+
+        <ul>
+        <% draw_period.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+        </ul>
+    </div>
+    <% end %>
+
+    <div class="field">
+    <%= form.label :start_datetime %>
+    <% if draw_period != current_draw_period %>
+    <%= form.datetime_select :start_datetime, id: :start %>
+    <% else %>
+    <%= form.datetime_select :start_datetime, id: :start, :readonly => true, onclick: 'alert("You cannot edit the start time of a current draw period.")' %>
+    <% end %>
+    </div>
+
+    <div class="field">
+    <%= form.label :end_datetime %>
+    <%= form.datetime_select :end_datetime, id: :end %>
+    </div>
+
+    <div class="actions">
+    <%= form.submit %>
+    </div>
+<% end %>
