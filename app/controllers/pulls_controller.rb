@@ -1,4 +1,6 @@
 class PullsController < ApplicationController
+  include Pundit
+
   before_action :set_pull, only: [:show, :edit, :update, :destroy]
 
   # GET /pulls
@@ -31,11 +33,11 @@ class PullsController < ApplicationController
 
     @pull = Pull.new(pull_params)
 
-    cps = pull.get_conflicting_pulls
-    unoverridable = cps.select { |cp| not pull can_override(cp) }
+    cps = @pull.get_conflicting_pulls
+    cannot_override = cps.select { |cp| not pull can_override(cp) }
 
-    if not unoverridable.empty?
-      format.html { render :new, error: "Can't pull! Conflicts with pulls #{unoverridable.join(', ')}." }
+    if not cannot_override.empty?
+      format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
     end
 
     if not cps.empty?
