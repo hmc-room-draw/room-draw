@@ -2,7 +2,6 @@
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
       <% user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,27 +9,45 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :first_name %>
     <%= form.text_field :first_name, id: :user_first_name %>
   </div>
-
   <div class="field">
     <%= form.label :last_name %>
     <%= form.text_field :last_name, id: :user_last_name %>
   </div>
-
   <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email, id: :user_email %>
   </div>
-
   <div class="field">
     <%= form.label :is_admin %>
     <%= form.check_box :is_admin, id: :user_is_admin %>
   </div>
-
+  <div>
+    <%= field_set_tag 'Student Information' do %>
+      <%= form.fields_for :student_attributes do |student| %>
+        <div class="field">
+          <%= student.label :has_completed_form %>
+          <%= student.check_box :has_completed_form, id: :student_has_completed_form %>
+        </div>
+        <div class="field">
+          <%= student.label :class_rank %>
+          <%= student.text_field :class_rank, id: :student_class_rank %>
+        </div>
+        <div class="field">
+          <%= student.label :room_draw_number %>
+          <%= student.text_field :room_draw_number, id: :student_room_draw_number %>
+        </div>
+        <div class="field">
+          <%= student.label :has_participated %>
+          <%= student.check_box :has_participated, id: :student_has_participated %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>

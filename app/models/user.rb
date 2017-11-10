@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  accepts_nested_attributes_for :student
+  accepts_nested_attributes_for :student, reject_if: proc { |attributes| attributes['room_draw_number'].blank? or attributes['class_rank'].blank?}
 
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
