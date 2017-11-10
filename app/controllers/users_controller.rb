@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   end
 
   def import
-
     begin
       authorize User.import(params[:file])
       redirect_to users_url, notice: "Users imported."
