@@ -6,4 +6,13 @@ class Dorm < ApplicationRecord
   accepts_nested_attributes_for :suites, allow_destroy: true
 
   validates :name, :presence => true
+
+	def unassigned_rooms
+		self.rooms.select { |r| !r.room_assignment.exists? }
+	end
+
+	def unassigned_rooms_number
+		ur = self.unassigned_rooms
+		ur.length
+	end
 end
