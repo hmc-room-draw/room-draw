@@ -11,7 +11,7 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-gem 'google-api-client'
+gem 'google_drive'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 

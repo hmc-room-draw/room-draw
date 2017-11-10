@@ -1,9 +1,11 @@
+require './lib/google_api/drive.rb'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
 
   # TODO: Uncomment these to enable form/login redirect
-  #before_action :check_login, :check_form
+  before_action :check_login, :check_form
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
@@ -17,8 +19,16 @@ class ApplicationController < ActionController::Base
   end
 
   def check_form
+    puts "HELLO"
     unless current_user.has_completed_form then
-      redirect_to Rails.application.config.form_url
+      puts "hi"
+      ss_key = Rails.application.config.responses_spreadsheet_key
+      if email_in_spreadsheet(ss_key, current_user.email) then
+        current_user.has_completed_form = true
+        current_user.save!
+      else
+        redirect_to Rails.application.config.form_url
+      end
     end
   end
 
@@ -27,4 +37,12 @@ class ApplicationController < ActionController::Base
       check_form
     end
   end
+
+  private
+    def email_in_spreadsheet(key, email)
+      ss = GoogleDriveApi.read_spreadsheet(key)
+      ws = ss.worksheets.first
+      replies = ws.rows.drop(1)
+      replies.any? {|row| row.last == email}
+    end
 end
