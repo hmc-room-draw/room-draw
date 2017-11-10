@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
 
-  # TODO: Uncomment these to enable form/login redirect
-  before_action :check_login, :check_form
+  # TODO: Uncomment the line below to enable form/login redirect. Make sure also
+  # to uncomment the corresponding line in `app/controllers/sessions_controller.rb`!
+  #before_action :check_login, :check_form
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
