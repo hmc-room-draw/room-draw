@@ -146,6 +146,8 @@
 
 </div>  <!-- End of modal -->
 
+<%= image_tag("case.png", :id => "floor") %>
+
 
 <script type="text/javascript">
 
@@ -749,12 +751,33 @@ span.onclick = function() {
     modal.style.display = "none";
 }
 
+var img = document.getElementById('floor');  
+var width = img.clientWidth; //get width and height of original image to stay consistent
+var height = img.clientHeight;
+var ratio = height/width;
+var w = 940; 
+
+
+img.style.display = "none";
+
+// Get the modal
+var modal = document.getElementById('myModal');
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+
 var fakeDorm = $('<div>').css({
     position: 'absolute',
     left: 90,
     top: 250,
-    width: 877,
-    height: 680,
+    width: w,
+    height: w*ratio,
     'background-image': "url(<%= asset_path 'case.png' %>)",
     'background-size':  'contain',
     border: '5px solid black',
