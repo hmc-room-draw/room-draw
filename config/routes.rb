@@ -7,24 +7,25 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
+  get 'admin/map'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
 
   get    '/login',   to: 'sessions#new'
+  get 'admin/home', to: 'draw_periods#admin_landing_page'
   delete '/logout',  to: 'sessions#destroy'
 
 
+  post 'admin/map', to: 'admin#edit_mark'
 
-  get 'admin/home', to: 'draw_periods#admin_landing_page'
-
+  #actions for admin landing page
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
   post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
   post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
-
-
 
   resources :draw_periods
 
