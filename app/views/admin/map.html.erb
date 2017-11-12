@@ -1,10 +1,3 @@
-<% if @success_message %>
-  <div id="success-message" class="alert alert-success"><%= @success_message %></div>
-<% end %>
-<% if @fail_message %>
-  <div id="fail-message" class="alert alert-danger"><%= @fail_message %></div>
-<% end %>
-
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>

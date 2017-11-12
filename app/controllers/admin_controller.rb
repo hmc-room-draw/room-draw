@@ -1,5 +1,9 @@
 class AdminController < ApplicationController
+
+  # MAP PAGE
+
   def map
+    puts "MAP!!!!!"
   end
 
   def edit_mark
@@ -16,7 +20,7 @@ class AdminController < ApplicationController
     @marked_room = RoomAssignment.new
     @marked_room.assignment_type = params[:mark_type]
     @marked_room.room_id = get_room(params[:dorm_name][:value], params[:room])
-    #@marked_room.description = params[:description] - I believe this will be implemented later.
+    @marked_room.description = params[:description]
     
     if @marked_room.save
       flash[:success] = "Room successfully marked unpullable."
@@ -45,5 +49,6 @@ class AdminController < ApplicationController
     end
     return room.attributes['id']
   end
+
 
 end
