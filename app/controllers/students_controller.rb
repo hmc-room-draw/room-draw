@@ -7,15 +7,6 @@ class StudentsController < ApplicationController
     @students = Student.all
   end
 
-  def import
-    begin
-      authorize Student.import(params[:file])
-      redirect_to students_url, notice: "Students imported."
-    rescue
-      redirect_to students_url, notice: "Invalid CSV file format."
-    end
-  end
-
   # GET /students/1
   # GET /students/1.json
   def show
