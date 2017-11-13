@@ -29,13 +29,24 @@ class User < ApplicationRecord
   # it will attempt to update the user. If not, it will create a new user.
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      user_hash = row.to_hash
+      full_hash = row.to_hash
+      
+      student_hash = {"class_rank" => full_hash["class_rank"],
+        "room_draw_number" => full_hash["room_draw_number"]}
+
+      user_hash = {"first_name" => full_hash["first_name"],
+        "last_name" => full_hash["last_name"],
+        "email" => full_hash["email"],
+        "student_attributes" => student_hash}
 
       user = User.where(email: user_hash["email"])
 
       if user.count == 1
         user.first.update_attributes(user_hash)
       else
+        student_hash["has_participated"] = false
+        student_hash["has_completed_form"] = false
+        user_hash["is_admin"] = false
         User.create!(user_hash)
       end # end if !user.nil?
 
