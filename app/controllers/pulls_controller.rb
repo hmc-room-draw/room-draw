@@ -69,7 +69,7 @@ class PullsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pull_params
-      params.fetch(:pull, {}).permit(:message, :student_id, room_assignment_attributes: [:student_id, :pull_id, :room_id])
+      params.fetch(:pull, {}).permit(:message, :student_id, room_assignments_attributes: [:student_id, :pull_id, :room_id])
     end
 
 end

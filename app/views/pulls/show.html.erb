@@ -1,84 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.is_admin? %>
-<h1>Create/Edit Pull <%= @pull.id %></h1>
+<h1>Pull <%= @pull.id %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Student</th>
-      <th>Number</th>
-      <th>Room</th>
-      <th>Actions</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= render 'currentList', pull: @pull %>
 
-  <tbody>
-    <% @pull.room_assignments.each do |room_assignment| %>
-      <tr>
-        <td><%= student_name(room_assignment) %></td>
-        <td><%= student_number(room_assignment) %></td>
-        <td><%= room_assignment.room_id %></td>
-        <td><%= link_to 'Delete', room_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-
-  </tbody>
-</table>
-
-<%= form_with(model: @pull, local: true) do |form| %>
-
-
-  <%= form.fields_for :room_assignment_attributes do |room_assignment| %>
-
-            <%= room_assignment.label :student_id %>
-            <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
-
-            <%= room_assignment.label :room_id %>
-            <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
-
-
-            <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
-            <!--TO DO: Room assignment type?-->
-            <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
-
-  <% end %>
-
-  <% if @pull.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
-
-      <ul>
-      <% pull.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    
-  </div>
-
-  <div class="field">
-    <%= form.label :pull_number %>
-    <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
-  </div>
-
-  <!-- TO DO: Senior rounds -->
-
-  <div class="field">
-    <%= form.label :message %>
-    <%= form.text_field :message, id: :pull_message %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-
+<%= link_to 'Edit', edit_pull_path(@pull) %>
 <%= link_to 'Back', pulls_path %>
 
 <% end %>

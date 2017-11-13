@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Number</th>
+      <th>Room</th>
+      <th>Actions</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pull.room_assignments.each do |room_assignment| %>
+      <tr>
+        <td><%= student_name(room_assignment) %></td>
+        <td><%= student_number(room_assignment) %></td>
+        <td><%= room_assignment.room_id %></td>
+        <td><%= link_to 'Delete', room_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
