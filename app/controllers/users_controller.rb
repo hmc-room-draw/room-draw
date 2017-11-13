@@ -13,6 +13,16 @@ class UsersController < ApplicationController
     @users = policy_scope(User)
   end
 
+  def import
+
+    begin
+      authorize User.import(params[:file])
+      redirect_to users_url, notice: "Users imported."
+    rescue
+      redirect_to users_url, notice: "Invalid CSV file format."
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
