@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  
+  get 'emails/new'
+
+  get 'emails/index'
+
+  get 'emails/show'
+
+  get 'emails/create'
+
+  get 'emails/destory'
+
   get 'dorms/atwood'
 
   get 'dorms/case2'
