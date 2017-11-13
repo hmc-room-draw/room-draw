@@ -18,6 +18,7 @@ module RoomDraw
     config.active_job.queue_adapter = :delayed_job
     
     # Set time zone to PT
+    config.active_record.default_timezone = 'Central Time (US & Canada)'
     config.time_zone = 'Pacific Time (US & Canada)'
     
     # Settings in config/environments/* take precedence over those specified here.

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :emails
   get 'emails/new'
 
   get 'emails/index'
