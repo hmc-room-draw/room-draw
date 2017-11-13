@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
+  get 'admin/map'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -14,6 +16,8 @@ Rails.application.routes.draw do
 
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
+
+  post 'admin/map', to: 'admin#edit_mark'
 
   resources :draw_periods
 
