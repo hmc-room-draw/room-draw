@@ -1,5 +1,8 @@
 class User < ApplicationRecord
+<<<<<<< HEAD
   has_one :student, dependent: :destroy
+=======
+>>>>>>> 7801b9749dfb76602ed854c1bbecd2aaac0f7420
   require 'CSV'
 
   # Name and email must be non-nil
@@ -47,6 +50,7 @@ class User < ApplicationRecord
         student_hash["has_participated"] = false
         student_hash["has_completed_form"] = false
         user_hash["is_admin"] = false
+        
         User.create!(user_hash)
       end # end if !user.nil?
 
