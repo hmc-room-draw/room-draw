@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   get 'emails/destory'
 
+  # temporary route of landing page
+  post 'emails/download_non_participants'
+
   get 'dorms/atwood'
 
   get 'dorms/case2'
