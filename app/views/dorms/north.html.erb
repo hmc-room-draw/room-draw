@@ -1,4 +1,4 @@
-  <h1>Dorms#north</h1>
+<h1>Dorms#north</h1>
 <p>Find me in app/views/dorms/north.html.erb</p>
 <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
@@ -26,6 +26,7 @@
     border: 1px solid #888;
     width: 80%;
 }
+
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -39,12 +40,11 @@
     text-decoration: none;
     cursor: pointer;
 }
+
 </style>
 
- <body>
-<!--  <h2 style="text-align:center">
-	Case Dorm
- 	  </h2> -->
+<body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2">
@@ -84,71 +84,168 @@
 		</div>
 	</div>
 
-
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
       <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Pull request initiated</h2>
-        </div>
-        <div class="modal-body">
-          <p>You have begun a pull request for this room</p>
-          <p>The following form must be filled out in order to pull a room:</p>
-                <div class="form-group">
-                <label for="usr">roomNum</label>
-                <input type="text" class="form-control" id="usr">
-                </div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<h2>Pull request initiated</h2>
+			</div>
+
+			<div class="modal-body">
+			<p>You have begun a pull request for this room</p>
+			<p>The following form must be filled out in order to pull a room:</p>
+				<div class="form-group">
+					<label for="usr">Room number</label>
+					<input type="text" class="form-control" id="usr" required>
+				</div>
 
 
-                <div class="form-group">
-                <label for="roommate">Roommate:</label>
-                <input type="password" class="form-control" id="pwd">
-                </div>
-        </div>
-      </div>
 
-    </div>
+				<div class="form-group">
+					<span>How many people are you pulling in?</span>
+					<label for="0-roommates"> <input type="radio" id="0-roommates" name="roommate-nums" /> 0 </label>
+					<label for="1-roommates"> <input class="require-if-active" type="radio" id="1-roommates" name="roommate-nums" data-require-pair="#roommate-1" /> 1 </label>
+					<label for="2-roommates"> <input class="require-if-active" type="radio" id="2-roommates" name="roommate-nums" data-require-pair="#roommate-2" /> 2 </label>
+					<label for="3-roommates"> <input class="require-if-active" type="radio" id="3-roommates" name="roommate-nums" data-require-pair="#roommate-3" /> 3 </label>
+					<label for="4-roommates"> <input class="require-if-active" type="radio" id="4-roommates" name="roommate-nums" data-require-pair="#roommate-4" /> 4 </label>
+					<label for="5-roommates"> <input class="require-if-active" type="radio" id="5-roommates" name="roommate-nums" data-require-pair="#roommate-5" /> 5 </label>
+
+					<div id="roommate-1" style="display: none">
+						Roommate's Name: <input type="text" id="name"/>
+					</div>
+
+					<div id="roommate-2" style="display: none">
+						Roommate 1: <input type="text" id="name"/>
+						Roommate 2: <input type="text" id="name"/>
+					</div>
+
+					<div id="roommate-3" style="display: none">
+						Roommate 1: <input type="text" id="name"/>
+						Roommate 2: <input type="text" id="name"/>
+						Roommate 3: <input type="text" id="name"/>
+					</div>
+
+					<div id="roommate-4" style="display: none">
+						Roommate 1: <input type="text" id="name"/>
+						Roommate 2: <input type="text" id="name"/>
+						Roommate 3: <input type="text" id="name"/>
+						Roommate 4: <input type="text" id="name"/>
+					</div>
+
+					<div id="roommate-5" style="display: none">
+						Roommate 1: <input type="text" id="name"/>
+						Roommate 2: <input type="text" id="name"/>
+						Roommate 3: <input type="text" id="name"/>
+						Roommate 4: <input type="text" id="name"/>
+						Roommate 5: <input type="text" id="name"/>
+					</div>
+				</div>
 
 
+
+
+				<div class="form-group">
+					<input type="submit" class="submit-btn">
+				</div>
+			</div>
+		</div>  <!-- End of modal content -->
+
+	</div>  <!-- End of modal -->
 </body>
+
 
 <script>
 var w = 1000;
 var h = 750;
  dataset = [
-{x : '100', y : '90', roomNum : '215', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '150', roomNum : '213', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '210', roomNum : '211', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '270', roomNum : '209', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '330', roomNum : '207', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '390', roomNum : '205', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '450', roomNum : '203', status: "empty", type: "D", orient: "L"},
-{x : '100', y : '510', roomNum : '201', status: "empty", type: "D", orient: "L"},
+{roomNum : '215', status: "empty", type: "D", orient: "L"},
+{roomNum : '213', status: "empty", type: "D", orient: "L"},
+{roomNum : '211', status: "empty", type: "D", orient: "L"},
+{roomNum : '209', status: "empty", type: "D", orient: "L"},
+{roomNum : '207', status: "empty", type: "D", orient: "L"},
+{roomNum : '205', status: "empty", type: "D", orient: "L"},
+{roomNum : '203', status: "empty", type: "D", orient: "L"},
+{roomNum : '201', status: "empty", type: "D", orient: "L"},
 
-{x : '260', y : '160', roomNum : '221', status: "empty", type: "D", orient: "D"},
-{x : '320', y : '160', roomNum : '225', status: "empty", type: "D", orient: "D"},
-{x : '500', y : '180', roomNum : '226', status: "empty", type: "S", orient: "D"},
-{x : '560', y : '180', roomNum : '222', status: "empty", type: "S", orient: "D"},
+{roomNum : '221', status: "empty", type: "D", orient: "D"},
+{roomNum : '225', status: "empty", type: "D", orient: "D"},
+{roomNum : '226', status: "empty", type: "S", orient: "D"},
+{roomNum : '222', status: "empty", type: "S", orient: "D"},
 
-{x : '680', y : '510', roomNum : '216', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '450', roomNum : '214', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '390', roomNum : '212', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '330', roomNum : '210', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '270', roomNum : '208', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '210', roomNum : '206', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '150', roomNum : '204', status: "empty", type: "D", orient: "R"},
-{x : '680', y : '90', roomNum : '202', status: "empty", type: "D", orient: "R"},
+{roomNum : '216', status: "empty", type: "D", orient: "R"},
+{roomNum : '214', status: "empty", type: "D", orient: "R"},
+{roomNum : '212', status: "empty", type: "D", orient: "R"},
+{roomNum : '210', status: "empty", type: "D", orient: "R"},
+{roomNum : '208', status: "empty", type: "D", orient: "R"},
+{roomNum : '206', status: "empty", type: "D", orient: "R"},
+{roomNum : '204', status: "empty", type: "D", orient: "R"},
+{roomNum : '202', status: "empty", type: "D", orient: "R"},
 
-{x : '560', y : '30', roomNum : '220', status: "empty", type: "S", orient: "U"},
-{x : '500', y : '30', roomNum : '224', status: "empty", type: "S", orient: "U"},
-{x : '440', y : '30', roomNum : '228', status: "empty", type: "S", orient: "U"},
-{x : '380', y : '30', roomNum : '227', status: "empty", type: "S", orient: "U"},
-{x : '320', y : '30', roomNum : '223', status: "empty", type: "S", orient: "U"},
-{x : '260', y : '30', roomNum : '219', status: "empty", type: "S", orient: "U"},
+{roomNum : '220', status: "empty", type: "S", orient: "U"},
+{roomNum : '224', status: "empty", type: "S", orient: "U"},
+{roomNum : '228', status: "empty", type: "S", orient: "U"},
+{roomNum : '227', status: "empty", type: "S", orient: "U"},
+{roomNum : '223', status: "empty", type: "S", orient: "U"},
+{roomNum : '219', status: "empty", type: "S", orient: "U"},
 ]
+
+var singleWidth = 60 
+var doubleWidth = 60
+var singleLength = 80
+var doubleLength = 100
+
+var x = 100 //starting positions for left side 
+var y = 90
+for (var num = 0; num < 8; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	if (dataset[num].type =="D"){
+		y += doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y += singleWidth 
+}
+x = 260 //starting positions for lower side, doubles
+y = 160
+for (var num = 8; num < 10; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x += doubleWidth
+}
+x = 500 //starting positions for lower side, singles
+y = 180
+for (var num = 10; num < 12; num++){	
+	dataset[num].x = x 
+	dataset[num].y = y
+	x += singleWidth 
+}
+x = 680 //starting positions for right side 
+y = 570
+for (var num = 12; num < 20; num++){	
+	if (dataset[num].type =="D"){
+		y -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		y -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+x = 620 //starting positions for upper side 
+y = 30
+for (var num = 20; num < 26; num++){	
+	if (dataset[num].type =="D"){
+		x -= doubleWidth
+	}
+	if (dataset[num].type =="S")
+		x -= singleWidth 
+	dataset[num].x = x 
+	dataset[num].y = y
+}
+
+
 	var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
@@ -160,21 +257,21 @@ var h = 750;
 	   .text(function(d) {
 	        return d.roomNum + '(' + d.type + ')';
 	   })
-	   .attr("x", function(d, i){
+	   	   .attr("x", function(d, i){
 		    switch (d.orient){
 		    	case "L":
-			   		return Number(d.x)-50;
+			   		return Number(d.x) - 50;
 			   	case "D":
-			 		return Number(d.x) + 5;
-			 	case "R":
-			 		if (d.type == "S"){
-		    			return Number(d.x) + 80;
+			   	if (d.type == "S"){
+		    			return Number(d.x) + 10;
 			   		}
 			   		else{
-			   			return Number(d.x) + 110;
+			   			return Number(d.x) + 5;
 			   		}
+			 	case "R":
+			   		return Number(d.x) + 110;
 			   	case "U":
-			   		return Number(d.x) + 5;
+			   		return Number(d.x) + 10;
 		    }
 		   })
 	   .attr("y", function(d, i){
@@ -211,43 +308,39 @@ var h = 750;
 	   .attr("width", function(d){
 		   	switch (d.orient){
 		   		case "L":
-				   	 if(d.type == "S")
-				   	 	return 70
-				   	 else{
-				   	 	return 100
-				   	 }
+				   	return doubleLength  // because of the orientation the width on the left and right is really the length
 			   	case "D":
-					return 60
+					return singleWidth
 
 			   	case "R":
-			   	 	if(d.type == "S")
-				   	 	return 70
-				   	else{
-				   	 	return 100
-				   	}
+				   	return doubleLength
 				case "U":
-					return 60
+					if(d.type == "S")
+						return singleWidth
+					else{
+						return doubleWidth
+					}
 		   	}
 	   })
 	   .attr("height", function(d){
 		   	switch(d.orient){
 				case "L":
-					return 60
+					return doubleWidth
 
 				case "D":
 					if(d.type == "S")
-						return 80
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 				case "R":
-					return 60
+					return doubleWidth
 					
 	 			case "U":
 					if(d.type == "S")
-						return 80
+						return singleLength
 					else{
-						return 100
+						return doubleLength
 					}
 			}
 		})
@@ -278,5 +371,47 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+window.onkeyup = function(event) {
+	if (event.keyCode == 27) {
+		modal.style.display = "none";
+	}
+}
+</script>
 
+
+<!-- Script for using radio buttons to show input field on the pull request
+	General code structure adapted from: https://www.aspsnippets.com/Articles/Show-Hide-DIV-with-TextBox-based-on-RadioButton-selection-checked-unchecked-using-JavaScript-and-jQuery.aspx 
+
+	"require-if active" from: https://css-tricks.com/exposing-form-fields-radio-button-css/ !-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='roommate-nums']").click(function () {
+            if ($("#1-roommates").is(":checked")) {
+                $("#roommate-1").show(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#2-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").show(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#3-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").show(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#4-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").show(); $("#roommate-5").hide();
+            } else if ($("#5-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").show();
+            } else {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();            
+            } 
+        });
+	    // find each input that may be hidden or not
+	    $(".require-if-active").each(function() {
+	      var el = $(this);
+	      // find the pairing radio or checkbox
+	      if ($(el.data("require-pair")).is(":checked")) {
+	        // if its checked, the field should be required
+	        el.prop("required", true);
+	      } else {
+	        // otherwise it should not
+	        el.prop("required", false);
+	      }
+	    });
+    });
 </script>
