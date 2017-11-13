@@ -46,4 +46,27 @@ class EmailsController < ApplicationController
 
   def destory
   end
+
+  def download_non_participants()
+    '''
+    Download all students who have not participated in room draw
+    '''
+    user_csv = CSV.generate do |csv|
+      csv << ["Room Draw Number", "Class Rank"]
+      Student.all.each do |student|
+        if student.has_participated == false
+          # Use user_id to trace the first name, last name and email of user_id
+          # uncomment and test this block when database code is ready
+          #user = User.find_by(user_id: student.user_id)
+          #csv << [user.first_name, user.last_name, student.class_rank,user.email]
+          csv << [student.room_draw_number, student.class_rank]
+        end
+      end
+    end
+    send_data user_csv,
+      :type => 'text/csv',
+      :filename => 'non_participants.csv',
+      :disposition => 'attachment'
+  end
+
 end
