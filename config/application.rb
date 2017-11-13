@@ -13,8 +13,12 @@ module RoomDraw
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+
+    # set up delayed_job adapter
+    config.active_job.queue_adapter = :delayed_job
     
     # Set time zone to PT
+    config.active_record.default_timezone = 'Central Time (US & Canada)'
     config.time_zone = 'Pacific Time (US & Canada)'
     
     # Settings in config/environments/* take precedence over those specified here.
