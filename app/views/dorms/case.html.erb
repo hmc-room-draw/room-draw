@@ -361,10 +361,19 @@ for (var num = 24; num < 32; num++){
         console.log("THIS", this);
         console.log(d);
         console.log(i);
+        currentRoom = d;
         modal.style.display = "block";
+        jQuery.ajax({
+          data: d,
+          type: "post",
+          url: "/admin_controller/testFunc"
+        })
     })
 
     ;
+
+// Will store room information when a room is clicked.
+var currentRoom = null;
 // Popup
 var modal = document.getElementById('myModal');
 // Create Pull button

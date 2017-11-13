@@ -54,6 +54,10 @@ class AdminController < ApplicationController
 
   # INDIIVDUAL DORM MAPS
 
+  def testFunc
+    puts "AWWWW YEAH!"
+  end
+
   def case
     puts "CASE IS THE PLACE"
     @admin = true
