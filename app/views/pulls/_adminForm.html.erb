@@ -12,12 +12,13 @@
   <% end %>
 
   <div class="field">
-    
+    <%= form.label :student_id %>
+    <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :student_id %>
   </div>
 
   <div class="field">
-    <%= form.label :pull_number %>
-    <%= form.collection_select :student_id, pull.students, :id, :room_draw_number %>
+    <%= form.label :room_id %>
+    <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_id %>
   </div>
 
   <!-- TO DO: Senior rounds -->
