@@ -9,3 +9,8 @@ two:
   class_rank: sophomore
   room_draw_number: 27
   has_participated: false
+
+three: 
+  class_rank: junior
+  room_draw_number: 1
+  has_participated: true

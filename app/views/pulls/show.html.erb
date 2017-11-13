@@ -3,8 +3,6 @@
 <% if current_user.is_admin? %>
 <h1>Create/Edit Pull <%= @pull.id %></h1>
 
-<%= link_to 'Add', add_student_to_pull_path(:pull_id => @pull.id) %>
-
 <table>
   <thead>
     <tr>
@@ -25,33 +23,81 @@
         <td><%= link_to 'Delete', room_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+
+<!-- -->
+<%= form_with(model: @room_assignment, local: true) do |form| %>
+  <tr>
+  <td>
+  <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
+  </td>
+
+  <td></td>
+
+  <td>
+  <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
+  </td>
+  </tr>
+
+    <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
+    <!--TO DO: Room assignment type?-->
+    <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
+
+  <div class="actions">
+    <%= form.submit  %>
+  </div>
+<% end %>
+
+<!-- -->
+
+
+
+  <%= simple_form_for(@pull) do |f|%>
+    <div class="form-group-3">
+      <%= f.input :message %>
+    </div>
+  <% end %>
+
   </tbody>
 </table>
 
 <br>
 
-<%= render 'adminForm', pull: @pull %>
+<%= form_with(model: @pull, local: true) do |form| %>
+  <% if @pull.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
+
+      <ul>
+      <% pull.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    
+  </div>
+
+  <div class="field">
+    <%= form.label :pull_number %>
+    <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
+  </div>
+
+  <!-- TO DO: Senior rounds -->
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_field :message, id: :pull_message %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
 
 <%= link_to 'Back', pulls_path %>
 
-<% else %>
-<!-- TO DO: Can admin and reg. student show be combined?-->
-<p>
-  <strong>Message:</strong>
-  <%= @pull.message %>
-</p>
-
-<p>
-  <strong>Senior Round:</strong>
-  <%= @pull.round %>
-</p>
-
-
-<p>
-  <strong>Student:</strong>
-  <%= @pull.student %>
-</p>
-
-<%= link_to 'Edit', edit_pull_path(@pull) %> |
-<%= link_to 'Back', pulls_path %>
 <% end %>
