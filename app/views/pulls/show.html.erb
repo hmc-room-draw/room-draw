@@ -24,45 +24,27 @@
       </tr>
     <% end %>
 
-<!-- -->
-<%= form_with(model: @room_assignment, local: true) do |form| %>
-  <tr>
-  <td>
-  <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
-  </td>
-
-  <td></td>
-
-  <td>
-  <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
-  </td>
-  </tr>
-
-    <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
-    <!--TO DO: Room assignment type?-->
-    <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
-
-  <div class="actions">
-    <%= form.submit  %>
-  </div>
-<% end %>
-
-<!-- -->
-
-
-
-  <%= simple_form_for(@pull) do |f|%>
-    <div class="form-group-3">
-      <%= f.input :message %>
-    </div>
-  <% end %>
-
   </tbody>
 </table>
 
-<br>
-
 <%= form_with(model: @pull, local: true) do |form| %>
+
+
+  <%= form.fields_for :room_assignment_attributes do |room_assignment| %>
+
+            <%= room_assignment.label :student_id %>
+            <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
+
+            <%= room_assignment.label :room_id %>
+            <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
+
+
+            <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
+            <!--TO DO: Room assignment type?-->
+            <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
+
+  <% end %>
+
   <% if @pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
