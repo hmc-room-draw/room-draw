@@ -47,7 +47,7 @@ class User < ApplicationRecord
         student_hash["has_participated"] = false
         student_hash["has_completed_form"] = false
         user_hash["is_admin"] = false
-
+        
         User.create!(user_hash)
       end # end if !user.nil?
 
