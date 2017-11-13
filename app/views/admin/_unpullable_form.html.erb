@@ -1,0 +1,27 @@
+<%= form_for("/admin/map", method: "edit_mark") do |f| %>
+  <%= select(:dorm_name, :value, [
+      ["Atwood", "Atwood"],
+      ["Case", "Case"],
+      ["Drinkward", "Drinkward"],
+      ["East", "East"],
+      ["Linde", "Linde"],
+      ["North", "North"],
+      ["Sontag", "Sontag"],
+      ["South", "South"],
+      ["West", "West"],
+      ]) %><br/>
+  <%= text_field_tag(:room) %><br/>
+  <%= radio_button_tag(:mark_type, "freshman") %>
+  <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
+  <%= radio_button_tag(:mark_type, "unavailable") %>
+  <%= label_tag(:preplaced_offline, "Offline") %><br/>
+  <%= radio_button_tag(:mark_type, "preplaced") %>
+  <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
+  <%= radio_button_tag(:mark_type, "other") %>
+  <%= label_tag(:preplaced_other, "Other") %><br/>
+  <%= label_tag(:description, "Description") %><br/>
+  <%= text_area_tag(:description) %><br/>
+  <%= f.submit "Delete Mark (make pullable)", name: "delete" %><br/>
+  <button type="submit" data-dismiss="modal">Cancel</button><br/>
+  <%= submit_tag("Mark Unpullable") %>
+<% end %>

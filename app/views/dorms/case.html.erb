@@ -85,24 +85,46 @@
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Pull request initiated</h2>
-        </div>
-        <div class="modal-body">
-          <p>You have begun a pull request for this room</p>
-          <p>The following form </p>
-        </div>
-        <div class="modal-footer">
-          <h3>Pull request form</h3>
-        </div>
-      </div>
+      <% if @admin %>
 
+        <!-- Admin modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Room Options</h2>
+          </div>
+          <div class="modal-body">
+            <div id="admin_buttons" class="collapse in">
+              <button id="createPull" class="btn btn-block">Create Pull</button>
+              <button id="editPull" class="btn btn-block">Edit/Delete Pull</button>
+              <button id="markPullable" href="#unpullable_form" class="btn btn-block" data-toggle="collapse">Mark Room Pullable/Unpullable</button>
+            </div>
+            <div class="collapse" id="unpullable_form">
+              <br>
+              <%= render 'admin/unpullable_form' %>
+              <br>
+            </div>
+          </div>
+        </div>
+
+      <% else %>
+
+        <!-- Student modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Pull request initiated</h2>
+          </div>
+          <div class="modal-body">
+            <p>You have begun a pull request for this room</p>
+            <p>The following form </p>
+          </div>
+          <div class="modal-footer">
+            <h3>Pull request form</h3>
+          </div>
+        </div>
+      <% end %>
     </div>
-
-
 </body>
 
 <script>
@@ -336,12 +358,25 @@ for (var num = 24; num < 32; num++){
 	   		d3.select(this).attr("fill", "white");
 	   })
      .on("click", function(d, i){
-       modal.style.display = "block";
+        console.log("THIS", this);
+        console.log(d);
+        console.log(i);
+        modal.style.display = "block";
     })
 
     ;
-// Get the modal
+// Popup
 var modal = document.getElementById('myModal');
+// Create Pull button
+var createPull = document.getElementById('createPull');
+createPull.onclick = function() {
+    alert("Not implemented yet.")
+}
+// Edit Pull button
+var editPull = document.getElementById('editPull');
+editPull.onclick = function() {
+    alert("Not implemented yet.")
+}
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal

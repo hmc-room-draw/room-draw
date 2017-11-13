@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'login/show'
 
   get 'admin/map'
+  get 'admin/case'
+  post 'admin/case', to: 'admin#edit_mark'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

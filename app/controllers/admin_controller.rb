@@ -7,12 +7,14 @@ class AdminController < ApplicationController
   end
 
   def edit_mark
+    puts "editing mark"
     if params[:delete]
       delete_mark(params)
     else
       add_mark(params)
     end
     # Refresh the page so the form can be used again.
+    puts "LOC", root_path
     redirect_back fallback_location: root_path, success_message: "hello world"
   end
 
@@ -50,5 +52,12 @@ class AdminController < ApplicationController
     return room.attributes['id']
   end
 
+  # INDIIVDUAL DORM MAPS
+
+  def case
+    puts "CASE IS THE PLACE"
+    @admin = true
+    render "dorms/case"
+  end # TODO: GET RID OF THIS?
 
 end
