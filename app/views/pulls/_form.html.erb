@@ -2,15 +2,16 @@
 
 
   <%= form.fields_for :room_assignment_attributes do |room_assignment| %>
-
+    <div>
     <%= room_assignment.label :student_id %>
     <%= room_assignment.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
+    </div>
+    <div>
+      <%= room_assignment.label :room_id %>
+      <%= room_assignment.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
+    </div>
 
-    <%= room_assignment.label :room_id %>
-    <%= room_assignment.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
-
-
-    <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
+    <%= form.hidden_field @pull, id: :room_assignment_pull_id %> 
     <!--TO DO: Room assignment type?-->
     <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
 
@@ -32,9 +33,10 @@
     
   </div>
 
+
   <div class="field">
     <%= form.label :pull_number %>
-    <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
+    <%= form.collection_select :student_id, @students, :id, :room_draw_number %>
   </div>
 
   <!-- TO DO: Senior rounds -->

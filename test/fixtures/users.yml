@@ -3,7 +3,7 @@
 one:
   first_name: MyString
   last_name: MyString
-  email: email@emailaddress.com
+  email: shotayasunaga1996@gmail.com
   is_admin: true
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34
