@@ -1,4 +1,19 @@
 Rails.application.routes.draw do
+  
+  resources :emails
+  get 'emails/new'
+
+  get 'emails/index'
+
+  get 'emails/show'
+
+  get 'emails/create'
+
+  get 'emails/destory'
+
+  # temporary route of landing page
+  post 'emails/download_non_participants'
+
   get 'dorms/atwood'
 
   get 'dorms/case2'
@@ -7,6 +22,8 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
+  get 'admin/map'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -14,6 +31,8 @@ Rails.application.routes.draw do
 
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
+
+  post 'admin/map', to: 'admin#edit_mark'
 
   resources :draw_periods
 

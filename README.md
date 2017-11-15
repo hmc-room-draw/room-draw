@@ -19,7 +19,7 @@ in case anyone still has keys in it.
 Users will only be allowed to login if a user with a corresponding email already
 exists. Right now **you will need to manually create a user with your own email**
 via `rails console`; enter `User.create :first_name => "First", :last_name => "Last",
-:email => "your_email@g.hmc.edu", :is_admin => true, :has_completed_form => true`.
+:email => "your_email@g.hmc.edu", :is_admin => true`.
 This will let you access `/users/new` and create other users.
 
 -- Spencer
