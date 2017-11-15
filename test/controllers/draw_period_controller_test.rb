@@ -11,7 +11,6 @@ class DrawPeriodControllerTest < ActionDispatch::IntegrationTest
             :last_name => "Testerson", 
             :email => "ashmc@g.hmc.edu", 
             :is_admin => true, 
-            :has_completed_form => true
             )
     login_as(@user)
     # assert.equal(current_user, @user)
