@@ -14,9 +14,14 @@ class DormsController < ApplicationController
       @pull = Pull.new
       3.times {@pull.room_assignments.build}
       #TODO: Get only the necessary information
-      @students = Student.all
+      # @students = Student.all
+      @users = User.all
       @rooms = Room.all
       @dorms = Dorm.all
+
+      #join tables
+      @students = Student.joins(:user).
+      select('users.first_name, users.last_name, users.email, students.*')
   end
 
   # GET /dorms/new

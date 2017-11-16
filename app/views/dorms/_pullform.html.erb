@@ -35,7 +35,7 @@
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>
