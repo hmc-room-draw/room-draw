@@ -1,5 +1,4 @@
 <%= stylesheet_link_tag 'static_pages' %>
-<%= javascript_include_tag 'static_pages.js', "data-turbolinks-track" => "reload", debug: true %>
 <%= javascript_include_tag 'static_pagesTest' %>
 
 
@@ -23,40 +22,111 @@
 <!-- Hidden popup div goes here
 	Shows up when hovering over dorms -->
 <div id= "case" class= "dorms">
-	There are approximately 10 empty rooms in Case. </br>
+	There are approximately <% dorm = Dorm.find_by_name("Case") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
     With a room draw number of 12, you can pull into approximately 25 rooms.
 </div>
 
 <div id= "linde" class = "dorms">
-This is Linde
+This is Linde </br>
+There are approximately <% dorm = Dorm.find_by_name("Linde") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id= "sontag" class = "dorms">
-This is Sontag
+This is Sontag </br>
+There are approximately <% dorm = Dorm.find_by_name("Sontag") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id= "drinkward" class = "dorms">
-This is Drinkward
+This is Drinkward </br>
+There are approximately <% dorm = Dorm.find_by_name("Drinkward") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id= "atwood" class = "dorms">
-This is Atwood
+This is Atwood </br>
+There are approximately <% dorm = Dorm.find_by_name("Atwood") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id= "south" class = "dorms">
-This is South
+This is South </br>
+There are approximately <% dorm = Dorm.find_by_name("South") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
  
 <div id= "north" class = "dorms">
-This is North
+This is North </br>
+There are approximately <% dorm = Dorm.find_by_name("North") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id= "east" class = "dorms">
-This is East
+This is East </br>
+There are approximately <% dorm = Dorm.find_by_name("East") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
 
 <div id = "west" class = "dorms">
-This is West
+This is West </br>
+There are approximately <% dorm = Dorm.find_by_name("West") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
 </div>
+
+<table style="width:100%">
+<tr>
+<th>Dorm Name</th>
+<th>Number of Empty Rooms</th>
+</tr>
+<tr>
+  <td>Case</td>
+  <td> <% dorm = Dorm.find_by_name("Case") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>Linde</td>
+  <td> <% dorm = Dorm.find_by_name("Linde") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>Sontag</td>
+  <td> <% dorm = Dorm.find_by_name("Sontag") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>Drinkward</td>
+  <td> <% dorm = Dorm.find_by_name("Drinkward") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>Atwood</td>
+  <td> <% dorm = Dorm.find_by_name("Atwood") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>South</td>
+  <td> <% dorm = Dorm.find_by_name("South") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>North</td>
+  <td> <% dorm = Dorm.find_by_name("North") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>East</td>
+  <td> <% dorm = Dorm.find_by_name("East") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+<tr>
+  <td>West</td>
+  <td> <% dorm = Dorm.find_by_name("West") %>
+       <%= dorm.unassigned_rooms_number %> </td>
+</tr>
+</table>
+
+
 
 
