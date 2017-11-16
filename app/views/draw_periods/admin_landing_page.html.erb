@@ -18,13 +18,15 @@
 	</div>
 </div>
 <div class="row">
-	<div class='col-sm-3'>
-		<%= datetime_local_field() %>
-	</div>
-	<div class='col-sm-3'>
-		<%= datetime_local_field() %>	
-	</div>
-	<div class='col-sm-3'>	
-		<%= button_to "Submit", {action: "setStartEndDate"}%>
-	</div>
+	<%= form_tag("/admin/setStartEndDate", action: "setStartEndDate") do%>
+		<div class='col-sm-3'>
+			<%= select_datetime @start_datetime, prefix: :start_datetime%>
+		</div>
+		<div class='col-sm-3'>
+			<%= select_datetime @end_datetime, prefix: :end_datetime%>
+		</div>
+		<div class='col-sm-3'>	
+			<%= submit_tag "Submit"%>
+		</div>
+	<% end %>
 </div>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
     #actions for admin landing page
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
+  post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
   post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
   post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
