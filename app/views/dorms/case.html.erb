@@ -91,7 +91,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <span class="close">&times;</span>
-            <h2>Room Options</h2>
+            <h2>Room <%= @admin %><%= @room_num %></h2>
           </div>
           <div class="modal-body">
             <div id="admin_buttons" class="collapse in">
@@ -101,7 +101,9 @@
             </div>
             <div class="collapse" id="unpullable_form">
               <br>
-              <%= render 'admin/unpullable_form' %>
+              <div id="plzwork">
+                
+              </div>
               <br>
             </div>
           </div>
@@ -361,14 +363,19 @@ for (var num = 24; num < 32; num++){
         console.log("THIS", this);
         console.log(d);
         console.log(i);
+        d["dorm"] = "Case";
         currentRoom = d;
         modal.style.display = "block";
         jQuery.ajax({
           data: d,
           type: "post",
-          url: "/admin_controller/testFunc"
+          url: "/admin/choose_room"
         })
+        $('#plzwork').html("<%= escape_javascript(render(:partial => 'admin/unpullable_form', locals: {image: @admin}, :admin => "adminsrock", :room => "yolo!!!")).html_safe %>");
     })
+
+
+     //CURRENT STATUS: WE CAN PASS VARIABLES TO THE EXTERNAL FORM.  WE CAN (SORTA) PASS VARIABLES TO THE CONTROLLER, BUT THEY DISAPPEAR INTO THE ETHER.
 
     ;
 
@@ -400,5 +407,4 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
 </script>

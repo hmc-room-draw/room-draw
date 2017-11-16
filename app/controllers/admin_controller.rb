@@ -7,7 +7,8 @@ class AdminController < ApplicationController
   end
 
   def edit_mark
-    puts "editing mark"
+    puts "editing mark", @admin, "wat"
+    puts "DORM", @dorm
     if params[:delete]
       delete_mark(params)
     else
@@ -54,13 +55,21 @@ class AdminController < ApplicationController
 
   # INDIIVDUAL DORM MAPS
 
-  def testFunc
+  def choose_room
     puts "AWWWW YEAH!"
+    puts params
+    @room_num = params[:roomNum]
+    @status = params[:status]
+    @type = params[:type]
+    @dorm = params[:dorm]
+    puts "DORM", @dorm, @room_num
   end
 
   def case
     puts "CASE IS THE PLACE"
     @admin = true
+    @dorm = "dorm"
+    @room_num = "room_num"
     render "dorms/case"
   end # TODO: GET RID OF THIS?
 

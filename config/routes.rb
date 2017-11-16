@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'admin/map'
   get 'admin/case'
   post 'admin/case', to: 'admin#edit_mark'
-  post 'admin/case', to: 'admin#testFunc'
+  post 'admin/choose_room', to: 'admin#choose_room'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
