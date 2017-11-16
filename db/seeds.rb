@@ -134,7 +134,6 @@ Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 3)
 
 # #Drinkward
 
-
 Suite.create(name: 'A', dorm_id: 4)
 Suite.create(name: 'B', dorm_id: 4)
 Suite.create(name: 'C', dorm_id: 4)
@@ -154,7 +153,6 @@ Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 4)
 
 
 # #Linde
-
 
 Suite.create(name: 'A', dorm_id: 5)
 Suite.create(name: 'B', dorm_id: 5)
@@ -231,5 +229,4 @@ Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 8, suite_id: 38)
 Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 8, suite_id: 36)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 8, suite_id: 39)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 8)
-
 
