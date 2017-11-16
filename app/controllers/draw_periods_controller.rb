@@ -50,8 +50,47 @@ class DrawPeriodsController < ApplicationController
             format.html { redirect_to draw_periods_url, notice: 'Draw Period was successfully canceled.' }
             format.json { head :no_content }
         end
+    end 
+
+    # method for setting up datetime entry on landing page
+    def admin_landing_page
+        if(DrawPeriod.all == nil)
+            @draw_period = DrawPeriod.all[0]
+            @start_datetime = drawperiod.start_datetime
+            @end_datetime = drawperiod.start_datetime
+            puts "first"
+        else
+            new
+            @start_datetime = Time.now
+            @end_datetime = Time.now
+            @draw_period.start_datetime = @start_datetime
+            puts "second"
+        end
+        puts "start"
+        puts @draw_period.inspect
+        puts "end"
+    end
+    
+    #TODO
+    def setStartEndDate
+
+        render html: "<script>alert('Set Start/End Date Called')</script>".html_safe
     end
 
+
+    def uploadRoster
+        render html: "<script>alert('Upload Roster Called')</script>".html_safe
+    end
+    
+    #TODO
+    def downloadStudents
+        render html: "<script>alert('Download Students Called')</script>".html_safe
+    end
+    
+    #TODO
+    def downloadPulls
+        render html: "<script>alert('Download Pulls Called')</script>".html_safe
+    end
     private
         def set_draw_period
             @draw_period = DrawPeriod.find(params[:id])
