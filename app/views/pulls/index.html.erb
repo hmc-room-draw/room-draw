@@ -15,7 +15,7 @@
       <th>Number</th>
       <th>Names</th>
       <th>Rooms</th>
-      <th>Senior Round <th>
+      <th>Round</th>
       <th>Message</th>  
       <th>Actions</th>
       <th colspan="5"></th>
@@ -26,15 +26,24 @@
     <% @pulls.each do |pull| %>
       <tr>
         <td><%= pull.student.room_draw_number %></td> 
+        
+        <td>
         <% pull.room_assignments.each do |room_assignment| %>
-          <td><%= student_name(room_assignment) %></td> 
-          <td><%= room_assignment.room.number %></td>
+          <%= student_name(room_assignment) %>
         <% end %>
-        <td><%=pull.round%></td>
+        </td>
+
+        <td>
+        <% pull.room_assignments.each do |room_assignment| %>
+          <%= room_assignment.room.number %>
+        <% end %>
+        </td>
+        
+        <td>tbd</td>
         <td><%= pull.message %></td>
-        <td><%= link_to 'Show', pull %></td>
-        <td><%= link_to 'Edit', edit_pull_path(pull) %></td>
-        <td><%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', pull %>
+        <%= link_to 'Edit', edit_pull_path(pull) %>
+        <%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
