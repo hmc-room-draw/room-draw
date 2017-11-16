@@ -81,70 +81,46 @@
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
       <h2>Pull request initiated</h2>
     </div>
-
     <div class="modal-body">
     <p>You have begun a pull request for this room</p>
-    <p>The following form must be filled out in order to pull a room:</p>
-      <div class="form-group">
-        <label for="usr">Room number</label>
-        <input type="text" class="form-control" id="usr" required>
-      </div>
+      <p>The following form must be filled out in order to pull a room:</p>
+<!--         <%= form_for @pull, :url => new_pull_path do |form| %>   
+        <% if @pull.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
 
-      <div class="form-group">
-        <span>How many people are you pulling in?</br></span>
-        <label for="0-roommates"> <input type="radio" id="0-roommates" name="roommate-nums" value="0" required> 0 </label>
-        <label for="1-roommates"> <input class="require-if-active" type="radio" id="1-roommates" name="roommate-nums" value="1" data-require-pair="#roommate-1"> 1 </label>
-        <label for="2-roommates"> <input class="require-if-active" type="radio" id="2-roommates" name="roommate-nums" value="2" data-require-pair="#roommate-2"> 2 </label>
-        <label for="3-roommates"> <input class="require-if-active" type="radio" id="3-roommates" name="roommate-nums" value="3" data-require-pair="#roommate-3"> 3 </label>
-        <label for="4-roommates"> <input class="require-if-active" type="radio" id="4-roommates" name="roommate-nums" value="4" data-require-pair="#roommate-4"> 4 </label>
-        <label for="5-roommates"> <input class="require-if-active" type="radio" id="5-roommates" name="roommate-nums" value="5" data-require-pair="#roommate-5"> 5 </label>
+            <ul>
+            <% @pull.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-        <div id="roommate-1" style="display: none">
-          Roommate's Name: <input type="text" id="name">
+        <div class="field">
+          <%= form.label :message %>
+          <%= form.text_field :message, id: :pull_message %>
         </div>
 
-        <div id="roommate-2" style="display: none">
-          Roommate 1: <input type="text" id="name">
-          Roommate 2: <input type="text" id="name">
+        <div class="field">
+          <%= form.label :student_id %>
+          <%= form.text_field :student_id, id: :pull_student_id %>
         </div>
 
-        <div id="roommate-3" style="display: none">
-          Roommate 1: <input type="text" id="name">
-          Roommate 2: <input type="text" id="name">
-          Roommate 3: <input type="text" id="name">
+        <div class="actions">
+          <%= form.submit %>
         </div>
+      <% end %> -->
+      <%= render 'pullform', pull: @pull %>
 
-        <div id="roommate-4" style="display: none">
-          Roommate 1: <input type="text" id="name">
-          Roommate 2: <input type="text" id="name">
-          Roommate 3: <input type="text" id="name">
-          Roommate 4: <input type="text" id="name">
-        </div>
-
-        <div id="roommate-5" style="display: none">
-          Roommate 1: <input type="text" id="name">
-          Roommate 2: <input type="text" id="name">
-          Roommate 3: <input type="text" id="name">
-          Roommate 4: <input type="text" id="name">
-          Roommate 5: <input type="text" id="name">
-        </div>
-      </div>
-
-
-      <div class="form-group">
-        <input type="submit" class="submit-btn">
-      </div>
-    </div>
   </div>  <!-- End of modal content -->
-
-</div>  <!-- End of modal -->
+</div>  <!-- End of modal --> 
 
 
 <script type="text/javascript">
