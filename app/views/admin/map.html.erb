@@ -1,0 +1,56 @@
+<% if @success_message %>
+  <div id="success-message" class="alert alert-success"><%= @success_message %></div>
+<% end %>
+<% if @fail_message %>
+  <div id="fail-message" class="alert alert-danger"><%= @fail_message %></div>
+<% end %>
+
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<h1>Admin Map</h1>
+<h3>This will later contain pretty much the same UI as the pulling UI.</h3>
+<button type="button" class="btn" data-toggle="modal" data-target="#preplaced">Mark Room as Pullable/Unpullable</button>
+
+<div id="preplaced" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <%= form_for("/admin/map", method: "edit_mark") do |f| %>
+          <%= select(:dorm_name, :value, [
+              ["Atwood", "Atwood"],
+              ["Case", "Case"],
+              ["Drinkward", "Drinkward"],
+              ["East", "East"],
+              ["Linde", "Linde"],
+              ["North", "North"],
+              ["Sontag", "Sontag"],
+              ["South", "South"],
+              ["West", "West"],
+              ]) %><br/>
+          <%= text_field_tag(:room) %><br/>
+          <%= radio_button_tag(:mark_type, "freshman") %>
+          <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
+          <%= radio_button_tag(:mark_type, "unavailable") %>
+          <%= label_tag(:preplaced_offline, "Offline") %><br/>
+          <%= radio_button_tag(:mark_type, "preplaced") %>
+          <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
+          <%= radio_button_tag(:mark_type, "other") %>
+          <%= label_tag(:preplaced_other, "Other") %><br/>
+          <%= label_tag(:description, "Description") %><br/>
+          <%= text_area_tag(:description) %><br/>
+          <%= f.submit "Delete Mark (make pullable)", name: "delete" %><br/>
+          <button type="submit" data-dismiss="modal">Cancel</button><br/>
+          <%= submit_tag("Mark Unpullable") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".alert").fadeOut(8000);
+</script>

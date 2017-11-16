@@ -1,0 +1,18 @@
+<h1>Emails#new</h1>
+<p>Find me in app/views/emails/new.html.erb</p>
+<p>Send reminder emails to students who haven't participate. </p>
+
+
+<%= form_for @email, html: { multipart: true } do |f| %>
+  <p>Subject</p>
+  <%= f.text_field :subject, :required => true, :placeholder => 'Regarding Your Room Draw'%>
+  <br>
+  <p>Content</p>
+  <%= f.text_area :description, :required => true%>
+  <br>
+  <%= f.date_select :created_at %>
+  <br>
+  <%= f.submit "Send Email"%>
+<% end %>
+
+
