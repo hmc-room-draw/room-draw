@@ -26,11 +26,11 @@ User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admi
 
 #Students
 
-Student.create(user_id: 1, room_draw_number: 1)
-Student.create(user_id: 2, room_draw_number: 2)
-Student.create(user_id: 3, room_draw_number: 3)
-Student.create(user_id: 4, room_draw_number: 4)
-Student.create(user_id: 5, room_draw_number: 5)
+Student.create(user_id: 1, class_rank: :junior, room_draw_number: 1)
+Student.create(user_id: 2, class_rank: :sophomore, room_draw_number: 2)
+Student.create(user_id: 3, class_rank: :sophomore, room_draw_number: 3)
+Student.create(user_id: 4, class_rank: :senior, room_draw_number: 4)
+Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5)
 
 
 
@@ -48,16 +48,16 @@ Dorm.create([{ name: 'West'}])
 
 #Case
 
-Room.create(number: '219', dorm_id: 1)
-Room.create(number: '119', dorm_id: 1)
-Room.create(number: '129', dorm_id: 1)
-Room.create(number: '101', dorm_id: 1)
-Room.create(number: '213', dorm_id: 1)
-Room.create(number: '105', dorm_id: 1, suite_id: 1)
-Room.create(number: '212', dorm_id: 1, suite_id: 2)
-Room.create(number: '107', dorm_id: 1, suite_id: 3)
-Room.create(number: '234', dorm_id: 1)
-Room.create(number: '100', dorm_id: 1)
+Room.create(floor: 2, capacity: 2, number: '219', dorm_id: 1)
+Room.create(floor: 1, capacity: 2, number: '119', dorm_id: 1)
+Room.create(floor: 1, capacity: 4, number: '129', dorm_id: 1)
+Room.create(floor: 1, capacity: 2, number: '101', dorm_id: 1)
+Room.create(floor: 2, capacity: 1, number: '213', dorm_id: 1)
+Room.create(floor: 1, capacity: 1, number: '105', dorm_id: 1, suite_id: 1)
+Room.create(floor: 2, capacity: 1, number: '212', dorm_id: 1, suite_id: 2)
+Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 1, suite_id: 3)
+Room.create(floor: 2, capacity: 1, number: '234', dorm_id: 1)
+Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 1)
 
 Suite.create(name: 'A', dorm_id: 1)
 Suite.create(name: 'B', dorm_id: 1)
@@ -67,16 +67,16 @@ Suite.create(name: 'E', dorm_id: 1)
 
 #Atwood
 
-Room.create(number: '219', dorm_id: 2)
-Room.create(number: '119', dorm_id: 2)
-Room.create(number: '139', dorm_id: 2)
-Room.create(number: '101', dorm_id: 2)
-Room.create(number: '213', dorm_id: 2)
-Room.create(number: '145', dorm_id: 2)
-Room.create(number: '222', dorm_id: 2, suite_id: 6)
-Room.create(number: '107', dorm_id: 2, suite_id: 9)
-Room.create(number: '234', dorm_id: 2, suite_id: 8)
-Room.create(number: '100', dorm_id: 2)
+Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 2)
+Room.create(floor: 1, capacity: 1, number: '119', dorm_id: 2)
+Room.create(floor: 1, capacity: 1, number: '139', dorm_id: 2)
+Room.create(floor: 1, capacity: 1, number: '101', dorm_id: 2)
+Room.create(floor: 2, capacity: 1, number: '213', dorm_id: 2)
+Room.create(floor: 1, capacity: 2, number: '145', dorm_id: 2)
+Room.create(floor: 2, capacity: 2, number: '222', dorm_id: 2, suite_id: 6)
+Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 2, suite_id: 9)
+Room.create(floor: 2, capacity: 2, number: '234', dorm_id: 2, suite_id: 8)
+Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 2)
 
 Suite.create(name: 'A', dorm_id: 2)
 Suite.create(name: 'B', dorm_id: 2)
@@ -86,16 +86,16 @@ Suite.create(name: 'E', dorm_id: 2)
 
 #East
 
-Room.create(number: '219', dorm_id: 3)
-Room.create(number: '119', dorm_id: 3)
-Room.create(number: '129', dorm_id: 3)
-Room.create(number: '101', dorm_id: 3)
-Room.create(number: '213', dorm_id: 3)
-Room.create(number: '135', dorm_id: 3)
-Room.create(number: '232', dorm_id: 3, suite_id: 12)
-Room.create(number: '107', dorm_id: 3, suite_id: 14)
-Room.create(number: '235', dorm_id: 3, suite_id: 15)
-Room.create(number: '100', dorm_id: 3)
+Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 3)
+Room.create(floor: 1, capacity: 4, number: '119', dorm_id: 3)
+Room.create(floor: 1, capacity: 2, number: '129', dorm_id: 3)
+Room.create(floor: 1, capacity: 2, number: '101', dorm_id: 3)
+Room.create(floor: 2, capacity: 2, number: '213', dorm_id: 3)
+Room.create(floor: 1, capacity: 1, number: '135', dorm_id: 3)
+Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 3, suite_id: 12)
+Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 3, suite_id: 14)
+Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 3, suite_id: 15)
+Room.create(floor: 1, capacity: , number: '100', dorm_id: 3)
 
 Suite.create(name: 'A', dorm_id: 3)
 Suite.create(name: 'B', dorm_id: 3)
