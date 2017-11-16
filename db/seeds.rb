@@ -48,6 +48,12 @@ Dorm.create([{ name: 'West'}])
 
 #Case
 
+Suite.create(name: 'A', dorm_id: 1)
+Suite.create(name: 'B', dorm_id: 1)
+Suite.create(name: 'C', dorm_id: 1)
+Suite.create(name: 'D', dorm_id: 1)
+Suite.create(name: 'E', dorm_id: 1)
+
 Room.create(floor: 2, capacity: 2, number: '219', dorm_id: 1)
 Room.create(floor: 1, capacity: 2, number: '119', dorm_id: 1)
 Room.create(floor: 1, capacity: 4, number: '129', dorm_id: 1)
@@ -59,13 +65,14 @@ Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 1, suite_id: 3)
 Room.create(floor: 2, capacity: 1, number: '234', dorm_id: 1)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 1)
 
-Suite.create(name: 'A', dorm_id: 1)
-Suite.create(name: 'B', dorm_id: 1)
-Suite.create(name: 'C', dorm_id: 1)
-Suite.create(name: 'D', dorm_id: 1)
-Suite.create(name: 'E', dorm_id: 1)
-
 #Atwood
+
+
+Suite.create(name: 'A', dorm_id: 2)
+Suite.create(name: 'B', dorm_id: 2)
+Suite.create(name: 'C', dorm_id: 2)
+Suite.create(name: 'T', dorm_id: 2)
+Suite.create(name: 'E', dorm_id: 2)
 
 Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 2)
 Room.create(floor: 1, capacity: 1, number: '119', dorm_id: 2)
@@ -78,123 +85,146 @@ Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 2, suite_id: 9)
 Room.create(floor: 2, capacity: 2, number: '234', dorm_id: 2, suite_id: 8)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 2)
 
-Suite.create(name: 'A', dorm_id: 2)
-Suite.create(name: 'B', dorm_id: 2)
-Suite.create(name: 'C', dorm_id: 2)
-Suite.create(name: 'T', dorm_id: 2)
-Suite.create(name: 'E', dorm_id: 2)
 
-#East
+############## YOU CAN ADD PULLS LIKE THIS ##############
 
-Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 3)
-Room.create(floor: 1, capacity: 4, number: '119', dorm_id: 3)
-Room.create(floor: 1, capacity: 2, number: '129', dorm_id: 3)
-Room.create(floor: 1, capacity: 2, number: '101', dorm_id: 3)
-Room.create(floor: 2, capacity: 2, number: '213', dorm_id: 3)
-Room.create(floor: 1, capacity: 1, number: '135', dorm_id: 3)
-Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 3, suite_id: 12)
-Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 3, suite_id: 14)
-Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 3, suite_id: 15)
-Room.create(floor: 1, capacity: , number: '100', dorm_id: 3)
+@student1 = Student.find(1)
+@room1 = Room.find(1)
 
-Suite.create(name: 'A', dorm_id: 3)
-Suite.create(name: 'B', dorm_id: 3)
-Suite.create(name: 'C', dorm_id: 3)
-Suite.create(name: 'M', dorm_id: 3)
-Suite.create(name: 'E', dorm_id: 3)
+@pull1 = Pull.new
+@pull1.student_id = @student1.id
+@pull1.room_assignments.build(
+	student_id: @student1.id, 
+	room_id: @room1.id, 
+	assignment_type: :pulled)
 
-#Drinkward
+@pull1.save
 
-Room.create(number: '219', dorm_id: 4)
-Room.create(number: '117', dorm_id: 4)
-Room.create(number: '119', dorm_id: 4)
-Room.create(number: '101', dorm_id: 4, suite_id: 17)
-Room.create(number: '253', dorm_id: 4, suite_id: 18)
-Room.create(number: '135', dorm_id: 4, suite_id: 19)
-Room.create(number: '222', dorm_id: 4)
-Room.create(number: '107', dorm_id: 4)
-Room.create(number: '234', dorm_id: 4)
-Room.create(number: '100', dorm_id: 4)
 
-Suite.create(name: 'A', dorm_id: 4)
-Suite.create(name: 'B', dorm_id: 4)
-Suite.create(name: 'C', dorm_id: 4)
-Suite.create(name: 'L', dorm_id: 4)
-Suite.create(name: 'E', dorm_id: 4)
+@student2 = Student.find(2)
+@room2 = Room.find(2)
 
-#Linde
+@pull2 = Pull.new
+@pull2.student_id = @student2.id
+@pull2.room_assignments.build(
+	student_id: @student2.id, 
+	room_id: @room2.id, 
+	assignment_type: :pulled)
 
-Room.create(number: '219', dorm_id: 5)
-Room.create(number: '119', dorm_id: 5)
-Room.create(number: '129', dorm_id: 5)
-Room.create(number: '101', dorm_id: 5)
-Room.create(number: '213', dorm_id: 5, suite_id: 22)
-Room.create(number: '135', dorm_id: 5)
-Room.create(number: '222', dorm_id: 5, suite_id: 23)
-Room.create(number: '207', dorm_id: 5, suite_id: 25)
-Room.create(number: '234', dorm_id: 5)
-Room.create(number: '100', dorm_id: 5)
+@pull2.save
 
-Suite.create(name: 'A', dorm_id: 5)
-Suite.create(name: 'B', dorm_id: 5)
-Suite.create(name: 'C', dorm_id: 5)
-Suite.create(name: 'S', dorm_id: 5)
-Suite.create(name: 'E', dorm_id: 5)
 
-#North
+# #East
 
-Room.create(number: '219', dorm_id: 6, suite_id: 26)
-Room.create(number: '119', dorm_id: 6, suite_id: 27)
-Room.create(number: '129', dorm_id: 6, suite_id: 28)
-Room.create(number: '101', dorm_id: 6)
-Room.create(number: '213', dorm_id: 6)
-Room.create(number: '135', dorm_id: 6)
-Room.create(number: '222', dorm_id: 6)
-Room.create(number: '177', dorm_id: 6)
-Room.create(number: '234', dorm_id: 6)
-Room.create(number: '100', dorm_id: 6)
+# Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 3)
+# Room.create(floor: 1, capacity: 4, number: '119', dorm_id: 3)
+# Room.create(floor: 1, capacity: 2, number: '129', dorm_id: 3)
+# Room.create(floor: 1, capacity: 2, number: '101', dorm_id: 3)
+# Room.create(floor: 2, capacity: 2, number: '213', dorm_id: 3)
+# Room.create(floor: 1, capacity: 1, number: '135', dorm_id: 3)
+# Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 3, suite_id: 12)
+# Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 3, suite_id: 14)
+# Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 3, suite_id: 15)
+# Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 3)
 
-Suite.create(name: 'A', dorm_id: 6)
-Suite.create(name: 'B', dorm_id: 6)
-Suite.create(name: 'H', dorm_id: 6)
-Suite.create(name: 'D', dorm_id: 6)
-Suite.create(name: 'E', dorm_id: 6)
+# Suite.create(name: 'A', dorm_id: 3)
+# Suite.create(name: 'B', dorm_id: 3)
+# Suite.create(name: 'C', dorm_id: 3)
+# Suite.create(name: 'M', dorm_id: 3)
+# Suite.create(name: 'E', dorm_id: 3)
 
-#South
+# #Drinkward
 
-Room.create(number: '219', dorm_id: 7, suite_id: 31)
-Room.create(number: '119', dorm_id: 7, suite_id: 33)
-Room.create(number: '124', dorm_id: 7, suite_id: 35)
-Room.create(number: '101', dorm_id: 7)
-Room.create(number: '233', dorm_id: 7)
-Room.create(number: '135', dorm_id: 7)
-Room.create(number: '222', dorm_id: 7)
-Room.create(number: '107', dorm_id: 7)
-Room.create(number: '234', dorm_id: 7)
-Room.create(number: '100', dorm_id: 7)
+# Room.create(number: '219', dorm_id: 4)
+# Room.create(number: '117', dorm_id: 4)
+# Room.create(number: '119', dorm_id: 4)
+# Room.create(number: '101', dorm_id: 4, suite_id: 17)
+# Room.create(number: '253', dorm_id: 4, suite_id: 18)
+# Room.create(number: '135', dorm_id: 4, suite_id: 19)
+# Room.create(number: '222', dorm_id: 4)
+# Room.create(number: '107', dorm_id: 4)
+# Room.create(number: '234', dorm_id: 4)
+# Room.create(number: '100', dorm_id: 4)
 
-Suite.create(name: 'A', dorm_id: 7)
-Suite.create(name: 'B', dorm_id: 7)
-Suite.create(name: 'C', dorm_id: 7)
-Suite.create(name: 'L', dorm_id: 7)
-Suite.create(name: 'E', dorm_id: 7)
+# Suite.create(name: 'A', dorm_id: 4)
+# Suite.create(name: 'B', dorm_id: 4)
+# Suite.create(name: 'C', dorm_id: 4)
+# Suite.create(name: 'L', dorm_id: 4)
+# Suite.create(name: 'E', dorm_id: 4)
 
-#West
+# #Linde
 
-Room.create(number: '219', dorm_id: 8, suite_id: 38)
-Room.create(number: '119', dorm_id: 8, suite_id: 36)
-Room.create(number: '139', dorm_id: 8, suite_id: 39)
-Room.create(number: '111', dorm_id: 8)
-Room.create(number: '213', dorm_id: 8)
-Room.create(number: '135', dorm_id: 8)
-Room.create(number: '222', dorm_id: 8)
-Room.create(number: '107', dorm_id: 8)
-Room.create(number: '244', dorm_id: 8)
-Room.create(number: '100', dorm_id: 8)
+# Room.create(number: '219', dorm_id: 5)
+# Room.create(number: '119', dorm_id: 5)
+# Room.create(number: '129', dorm_id: 5)
+# Room.create(number: '101', dorm_id: 5)
+# Room.create(number: '213', dorm_id: 5, suite_id: 22)
+# Room.create(number: '135', dorm_id: 5)
+# Room.create(number: '222', dorm_id: 5, suite_id: 23)
+# Room.create(number: '207', dorm_id: 5, suite_id: 25)
+# Room.create(number: '234', dorm_id: 5)
+# Room.create(number: '100', dorm_id: 5)
 
-Suite.create(name: 'A', dorm_id: 8)
-Suite.create(name: 'F', dorm_id: 8)
-Suite.create(name: 'C', dorm_id: 8)
-Suite.create(name: 'D', dorm_id: 8)
-Suite.create(name: 'E', dorm_id: 8)
+# Suite.create(name: 'A', dorm_id: 5)
+# Suite.create(name: 'B', dorm_id: 5)
+# Suite.create(name: 'C', dorm_id: 5)
+# Suite.create(name: 'S', dorm_id: 5)
+# Suite.create(name: 'E', dorm_id: 5)
+
+# #North
+
+# Room.create(number: '219', dorm_id: 6, suite_id: 26)
+# Room.create(number: '119', dorm_id: 6, suite_id: 27)
+# Room.create(number: '129', dorm_id: 6, suite_id: 28)
+# Room.create(number: '101', dorm_id: 6)
+# Room.create(number: '213', dorm_id: 6)
+# Room.create(number: '135', dorm_id: 6)
+# Room.create(number: '222', dorm_id: 6)
+# Room.create(number: '177', dorm_id: 6)
+# Room.create(number: '234', dorm_id: 6)
+# Room.create(number: '100', dorm_id: 6)
+
+# Suite.create(name: 'A', dorm_id: 6)
+# Suite.create(name: 'B', dorm_id: 6)
+# Suite.create(name: 'H', dorm_id: 6)
+# Suite.create(name: 'D', dorm_id: 6)
+# Suite.create(name: 'E', dorm_id: 6)
+
+# #South
+
+# Room.create(number: '219', dorm_id: 7, suite_id: 31)
+# Room.create(number: '119', dorm_id: 7, suite_id: 33)
+# Room.create(number: '124', dorm_id: 7, suite_id: 35)
+# Room.create(number: '101', dorm_id: 7)
+# Room.create(number: '233', dorm_id: 7)
+# Room.create(number: '135', dorm_id: 7)
+# Room.create(number: '222', dorm_id: 7)
+# Room.create(number: '107', dorm_id: 7)
+# Room.create(number: '234', dorm_id: 7)
+# Room.create(number: '100', dorm_id: 7)
+
+# Suite.create(name: 'A', dorm_id: 7)
+# Suite.create(name: 'B', dorm_id: 7)
+# Suite.create(name: 'C', dorm_id: 7)
+# Suite.create(name: 'L', dorm_id: 7)
+# Suite.create(name: 'E', dorm_id: 7)
+
+# #West
+
+# Room.create(number: '219', dorm_id: 8, suite_id: 38)
+# Room.create(number: '119', dorm_id: 8, suite_id: 36)
+# Room.create(number: '139', dorm_id: 8, suite_id: 39)
+# Room.create(number: '111', dorm_id: 8)
+# Room.create(number: '213', dorm_id: 8)
+# Room.create(number: '135', dorm_id: 8)
+# Room.create(number: '222', dorm_id: 8)
+# Room.create(number: '107', dorm_id: 8)
+# Room.create(number: '244', dorm_id: 8)
+# Room.create(number: '100', dorm_id: 8)
+
+# Suite.create(name: 'A', dorm_id: 8)
+# Suite.create(name: 'F', dorm_id: 8)
+# Suite.create(name: 'C', dorm_id: 8)
+# Suite.create(name: 'D', dorm_id: 8)
+# Suite.create(name: 'E', dorm_id: 8)
 
