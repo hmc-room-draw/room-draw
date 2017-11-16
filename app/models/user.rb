@@ -29,8 +29,6 @@ class User < ApplicationRecord
   # Checks to see if the user exists in the database (compares email). If the user exists,
   # it will attempt to update the user. If not, it will create a new user.
   def self.import(file)
-    puts file
-    
     CSV.foreach(file.path, headers: true) do |row|
       full_hash = row.to_hash
       
