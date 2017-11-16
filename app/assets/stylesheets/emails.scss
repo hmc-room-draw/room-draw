@@ -1,3 +1,77 @@
 // Place all the styles related to the Emails controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// Reference: https://codepen.io/jhnwlsn/pen/vulgn?limit=all&page=7&q=email
+// https://www.w3schools.com/css/css_table.asp
+
+
+// For sending emails
+$black:       #1a1a1a;
+$blue:        #3498db;
+$gray:        #cbd0d3;
+$white:       #ffffff;
+
+body {
+  background: #5D6D7E;
+  color: $black;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.title {
+  background: #5D6D7E;
+  color: $black;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.subject {
+  border-radius: 5px;
+  background: $white;
+  height: 40px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  padding:  0.4em;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.message {
+  border-radius: 5px;
+  background: $white;
+  height: 300px;
+  text-align: left;
+  padding:  0.4em;
+  padding-bottom:250px;
+  width: 80%;
+  margin: auto;
+  font-size: 20px;
+  font-weight: 40;
+  overflow: hidden;
+}
+
+// For showing emails
+#emails {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#emails td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#emails tr:nth-child(even){background-color: #f2f2f2;}
+
+#emails tr:hover {background-color: #ddd;}
+
+#emails th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #5D6D7E;
+    color: white;
+}

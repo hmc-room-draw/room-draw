@@ -87,6 +87,28 @@ class DrawPeriodsController < ApplicationController
         render html: "<script>alert('Download Students Called')</script>".html_safe
     end
     
+
+    def downloadNonParticipants
+        '''
+        Download all students who have not participated in room draw
+        '''
+        user_csv = CSV.generate do |csv|
+          csv << ["Room Draw Number", "Class Rank"]
+          Student.all.each do |student|
+            if student.has_participated == false
+              # Use user_id to trace the first name, last name and email of user_id
+              # uncomment and test this block when database code is ready
+              #user = User.find_by(user_id: student.user_id)
+              #csv << [user.first_name, user.last_name, student.class_rank,user.email]
+              csv << [student.room_draw_number, student.class_rank]
+            end
+          end
+        end
+        send_data user_csv,
+          :type => 'text/csv',
+          :filename => 'non_participants.csv',
+          :disposition => 'attachment'
+    end
     #TODO
     def downloadPulls
         render html: "<script>alert('Download Pulls Called')</script>".html_safe

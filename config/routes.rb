@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
   
   resources :emails
-  get 'emails/new'
+  get 'emails/new', to: 'draw_periods#sendEmails'
 
   get 'emails/index'
 
-  get 'emails/show'
+  get 'emails/show', to: 'draw_periods#viewEmails'
 
   get 'emails/create'
-
-  get 'emails/destory'
 
   # temporary route of landing page
   post 'emails/download_non_participants'
@@ -38,6 +36,7 @@ Rails.application.routes.draw do
   get 'admin/home', to: 'draw_periods#admin_landing_page'
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
+  post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
   post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
   post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
 
