@@ -10,7 +10,8 @@ class RoomAssignment < ApplicationRecord
 
   validate :validate_room
 
-  def validate_room
-    errors.add(:room, "already full") if room.room_assignments.size == room.capacity
-  end
+  private
+    def validate_room
+      errors.add(:room, "already full") if room.room_assignments.size == room.capacity
+    end
 end

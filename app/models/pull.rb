@@ -8,6 +8,8 @@ class Pull < ApplicationRecord
   validates :room_assignments, :presence => true
   validates :student, :presence => true
 
+  validate :validate_student
+
   # Checks if self can override another pull
   # @param other_pull
   #     Pull to be checked
@@ -27,6 +29,11 @@ class Pull < ApplicationRecord
     conflicting_assignments = RoomAssignment.where(room_id: room_ids).where.not(id: self.id)
     conflicting_assignments.map{ |asn| asn.pull }
   end
+
+  private
+    def validate_student
+      errors.add(:student, "not in :students") if not students.include?(student)
+    end
 
   #check student conflicts/frosh/preplaced people check room assignments
   #
