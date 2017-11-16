@@ -10,6 +10,7 @@ class Student < ApplicationRecord
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true
   validates :user, :presence => true
+  validates :user_id, uniqueness: true
 
   # student A outranks student B means A can bump B
   def outranks(other)
