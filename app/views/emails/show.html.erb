@@ -1,0 +1,21 @@
+
+<h1 style="color: #5D6D7E">View all emails</h1>
+  <table id="emails">
+    <tr>
+      <th>Created At</th>
+      <th>Send Date</th>
+      <th>Subject</th>
+      <th>Message</th>
+    </tr>
+    <% emails = Email.all.reverse %>
+    <% emails.each do |email| %>
+      <tr>
+        <td><%= email.created_at %> </td>
+        <td><%= email.sendDate %> </td>
+        <td><%= email.subject %> </td>
+        <td><%= email.description %> </td>
+      </tr>
+    <% end %>
+
+
+  </table>

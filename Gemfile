@@ -11,6 +11,15 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
+
+# Use daemons to handle backend scripts
+gem 'daemons'
+
+# User delayed_job to handle asynchronous scheduled mailing
+gem 'delayed_job_active_record'
+
+gem 'google_drive'
+
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 # Authorization policy; see https://github.com/elabs/pundit
