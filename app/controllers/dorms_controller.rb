@@ -10,20 +10,24 @@ class DormsController < ApplicationController
   # GET /dorms/1
   # GET /dorms/1.json
   def show
+    authorize @dorm
   end
 
   # GET /dorms/new
   def new
+    authorize Dorm
     @dorm = Dorm.new
   end
 
   # GET /dorms/1/edit
   def edit
+    authorize @dorm
   end
 
   # POST /dorms
   # POST /dorms.json
   def create
+    authorize Dorm
     @dorm = Dorm.new(dorm_params)
 
     respond_to do |format|
@@ -40,6 +44,8 @@ class DormsController < ApplicationController
   # PATCH/PUT /dorms/1
   # PATCH/PUT /dorms/1.json
   def update
+    authorize @dorm
+
     respond_to do |format|
       if @dorm.update(dorm_params)
         format.html { redirect_to @dorm, notice: 'Dorm was successfully updated.' }
@@ -54,6 +60,8 @@ class DormsController < ApplicationController
   # DELETE /dorms/1
   # DELETE /dorms/1.json
   def destroy
+    authorize @dorm
+
     @dorm.destroy
     respond_to do |format|
       format.html { redirect_to dorms_url, notice: 'Dorm was successfully destroyed.' }
