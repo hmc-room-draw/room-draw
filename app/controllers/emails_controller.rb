@@ -27,6 +27,12 @@ class EmailsController < ApplicationController
     # extract content of the email
     content = email["description"]
 
+    @email = Email.new(subject: subject, description: content, send_date: send_date)
+    puts @email.subject
+    puts @email.description
+    puts @email.send_date
+    @email.save
+
 
     # Run bin/delayed_job start to process all jobs
 
@@ -35,6 +41,7 @@ class EmailsController < ApplicationController
     #user = User.all.first
     Student.all.each do |student|
       if student.has_participated == false
+        GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(subject, content)
         if student.user
           user = student.user
           #GeneralMailer.reminder_email(user, subject, content).deliver_now
