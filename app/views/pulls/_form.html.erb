@@ -15,8 +15,9 @@
       
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.input :assignment_type, as: :select, collection: @room_assignment.assignment_type.key, id: :room_assignment_assignment_type%>
-      </div>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+      </div> 
+
       
     <% end %>
   <% end %> 
