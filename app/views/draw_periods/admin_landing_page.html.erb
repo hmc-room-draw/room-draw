@@ -1,6 +1,5 @@
 <h1>Admin Settings</h1>
 
-<%= button_to "Upload Roster", {action: "uploadRoster"}, {class: 'dashboard-button'} %>
 <%= button_to "Download Students", {action: "downloadStudents"}, {class: 'dashboard-button'} %>
 <%= button_to "Download Pulls", {action: "downloadPulls"}, {class: 'dashboard-button'} %>
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants"}, {class: 'dashboard-button'} %>
@@ -11,6 +10,15 @@
 <%= link_to "Send emails", {action: "sendEmails"}, {class: 'dashboard-link'} %>
 <%= link_to "View emails", {action: "viewEmails"}, {class: 'dashboard-link'} %>
 
+<br>
+
+<div>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload Roster" %>
+  <% end %>
+</div> 
+
 <div class="row top-buffer">
 	<div class='col-sm-3'>
 		<span>Start Date:</span>
@@ -19,6 +27,7 @@
 		<span>End Date:</span>
 	</div>
 </div>
+
 <div class="row">
 	<%= form_tag("/admin/setStartEndDate", action: "setStartEndDate") do%>
 		<div class='col-sm-3'>
