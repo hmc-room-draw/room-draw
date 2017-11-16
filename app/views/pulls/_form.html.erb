@@ -12,9 +12,10 @@
         <%= room_assignment.label :room_id %>
         <%= room_assignment.grouped_collection_select :room_id, @dorms, :room, :name, :id,:number, id: :room_assignment_room_id %>
       </div>  
+      
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.text_field :assignment_type, id: :room_assignment_assignment_type %>
+        <%= room_assignment.input :assignment_type, as: :select, collection: @room_assignment.assignment_type.key, id: :room_assignment_assignment_type%>
       </div>
       
     <% end %>
