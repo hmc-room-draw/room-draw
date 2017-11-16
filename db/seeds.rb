@@ -99,6 +99,7 @@ Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 2)
 	assignment_type: :pulled)
 
 @pull1.save
+<<<<<<< Updated upstream
 
 
 @student2 = Student.find(2)
@@ -116,6 +117,25 @@ Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 2)
 
 # #East
 
+=======
+
+
+@student2 = Student.find(2)
+@room2 = Room.find(2)
+
+@pull2 = Pull.new
+@pull2.student_id = @student2.id
+@pull2.room_assignments.build(
+	student_id: @student2.id, 
+	room_id: @room2.id, 
+	assignment_type: :pulled)
+
+@pull2.save
+
+
+# #East
+
+>>>>>>> Stashed changes
 Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 3)
 Room.create(floor: 1, capacity: 4, number: '119', dorm_id: 3)
 Room.create(floor: 1, capacity: 2, number: '129', dorm_id: 3)
@@ -227,4 +247,3 @@ Suite.create(name: 'F', dorm_id: 8)
 Suite.create(name: 'C', dorm_id: 8)
 Suite.create(name: 'D', dorm_id: 8)
 Suite.create(name: 'E', dorm_id: 8)
-
