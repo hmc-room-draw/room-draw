@@ -19,11 +19,19 @@ class PullsController < ApplicationController
   def new
     authorize Pull
     @pull = Pull.new
+    3.times {@pull.room_assignments.build}
+    #TODO: Get only the necessary information
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
   end
 
   # GET /pulls/1/edit
   def edit
-    authorize @pull
+    #TODO: Get only the necessary information
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
   end
 
   # POST /pulls
@@ -94,6 +102,7 @@ class PullsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pull_params
-      params.require(:pull).permit(:message, :student_id)
+      params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id])
     end
+
 end
