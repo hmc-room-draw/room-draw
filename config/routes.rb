@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 	root 'static_pages#home'
 
+  get'/launch', to: 'static_pages#launch'
+
   get 'dorms/atwood'
+
+  get '/dormLookup', to: 'static_pages#dormLookup'
 
   get 'dorms/case2'
 

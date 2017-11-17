@@ -9,10 +9,11 @@
   </head>
 
   <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-inverse bg-inverse">
     <div class = "container">
         <div class = "navbar-header">
-        <%= link_to "Home", root_path, class: "navbar-brand" %>
+        <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
+        # => <a href="/"><img src="/assets/images/logo-HMC.png" ></a>
         </div>
         <ul class= "nav navbar-nav">
             <li><% if current_user %>

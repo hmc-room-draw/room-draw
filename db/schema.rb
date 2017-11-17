@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20171023000808) do
 
   create_table "dorms", force: :cascade do |t|
