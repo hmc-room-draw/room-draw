@@ -1,0 +1,58 @@
+<%= form_with(model: pull, local: true) do |form| %>
+  <% if pull.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
+
+      <ul>
+      <% pull.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :student_id %>
+    <!-- TODO: We don't wanna display room_draw_numner.
+         So, we need to join the table of student and user and get the email address -->
+    <%= form.collection_select :student_id, @students, :id, :email, id: :room_draw_number  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_field :message, id: :pull_message %>
+  </div>
+
+  <div class="field">
+    <%= form.label :senior_round %>
+    <%= form.number_field :round, id: :pull_round %> 
+    <p><i> If you are not a senior, please leave this field blank </i></p>
+  </div>
+
+  <!-- TO DO: Senior rounds -->
+  
+  <%= field_set_tag 'Room Assignments' do %>
+
+    <%= form.fields_for :room_assignments do |room_assignment| %>
+      <div>
+        <%= room_assignment.label :student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id %>
+      </div>
+      <div>
+        <%= room_assignment.label :room_id %>
+        <%= room_assignment.grouped_collection_select :room_id, @dorms, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
+      </div>
+          </br>
+<!--       <div>
+        <%= room_assignment.label :assignment_type %>
+        <%= room_assignment.text_field :assignment_type, id: :room_assignment_assignment_type %>
+      </div> -->
+      
+    <% end %>
+  <% end %> 
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

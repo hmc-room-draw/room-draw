@@ -1,5 +1,44 @@
 <p id="notice"><%= notice %></p>
 
+<style type="text/css">
+/*Following Modal was taken from https://www.w3schools.com/howto/howto_css_modals.asp */
+/* The Modal (background) */
+.modal {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   padding-top: 100px; /* Location of the box */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   overflow: auto; /* Enable scroll if needed */
+   background-color: rgb(0,0,0); /* Fallback color */
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+   background-color: #fefefe;
+   margin: auto;
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%;
+}
+/* The Close Button */
+.close {
+   color: #aaaaaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+}
+.close:hover,
+.close:focus {
+   color: #000;
+   text-decoration: none;
+   cursor: pointer;
+}
+</style>
+
 <p>
   <strong>Name:</strong>
   <%= @dorm.name %>
@@ -7,3 +46,326 @@
 
 <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
 <%= link_to 'Back', dorms_path %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="btn-group">
+                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                        <% @dorms.each do |dorm| %>
+                            <li><%= link_to dorm.name, dorm %></li>
+                        <% end %>
+                </ul>
+            </div>
+        </div>
+        <h1><br></h1>
+    </div>
+</div>
+
+       <!--  <div class="col-md-3">
+            <ul class="dropdown-menu">
+            <li class = "active"><a href=/dorms/case>First Floor</a></li>
+            <li><a href=/dorms/case2>Second Floor</a></li>
+            </ul>
+        </div>
+
+        <h1><br></h1>
+    </div>
+</div> -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Pull request initiated</h2>
+    </div>
+    <div class="modal-body">
+    <p>You have begun a pull request for this room</p>
+      <p>The following form must be filled out in order to pull a room:</p>
+<!--         <%= form_for @pull, :url => new_pull_path do |form| %>   
+        <% if @pull.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
+
+            <ul>
+            <% @pull.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= form.label :message %>
+          <%= form.text_field :message, id: :pull_message %>
+        </div>
+
+        <div class="field">
+          <%= form.label :student_id %>
+          <%= form.text_field :student_id, id: :pull_student_id %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit %>
+        </div>
+      <% end %> -->
+      <%= render 'pullform', pull: @pull %>
+
+  </div>  <!-- End of modal content -->
+</div>  <!-- End of modal --> 
+
+<!-- get dorm floor maps -->
+<% if !@floor1.nil?  %>
+  <%= image_tag(@floor1, :id => "floor1", :class => "map") %> 
+<% end %>
+<% if !@floor2.nil?  %>
+  <%= image_tag(@floor2, :id => "floor2", :class => "map") %> 
+<% end %>
+<% if !@floor3.nil?  %>
+  <%= image_tag(@floor3, :id => "floor3", :class => "map") %> 
+<% end %>
+
+<script type="text/javascript">
+
+console.log("<%= @rooms.to_json %>")
+
+// Get the modal
+var modal = document.getElementById('myModal');
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+var dormElements = [];
+
+$('.map').each(function(i) {
+    $('<div>').css({
+        position: 'absolute',
+        left: 500 + 100*i,
+        top: 150,
+        height: 80,
+        width: 40,
+        'font-size': '60px',
+        color: 'blue',
+        background: 'black'
+    }).text(i+1).appendTo('body')
+    .on('click', function(){
+        layout(i);
+    })
+    .on('mouseenter', function(){
+        $(this).css({
+            opacity: .5,
+        });
+    })
+    .on('mouseleave', function(){
+        $(this).css({
+            opacity: 1,
+        });
+    });
+});
+
+function layout(level){  
+    for (var i = 0; i < dormElements.length; i++) {
+        if (dormElements[i] !== undefined) {
+            dormElements[i].remove();
+        }
+    }
+    dormElements = [];
+    console.log(level); 
+    //get dorm room data
+    var roomData; 
+    switch (level) {
+        case 0:
+            roomData = <%= @level1 %>;
+            break;
+        case 1:
+            roomData = <%= @level2 %>;
+            break;
+        case 2:
+            roomData = <%= @level3 %>;
+            break;
+        default:
+            
+    }
+    var userDrawNum = <%= @curPullNum %>;
+    console.log(userDrawNum);
+    var room, val;
+    var layout = <%= @json %>;
+    console.log(layout);
+    //image map path
+    var map = layout.assets[level];
+    //speciifc floor layout coordinates
+    var floor = layout.floors[level+1];
+    console.log(floor);
+    var i = 0;
+    var x = 0;
+    var curRoomNum;
+    console.log(roomData);
+
+    //create image tag to size map correctly
+    var imgLev = level+1;
+    var img = document.getElementById('floor'+imgLev);  
+    var width = img.width;
+    var height = img.height;
+    var ratio = height/width;
+    var w = 940; 
+    $(".map").css({
+        display: 'none',
+    });
+
+    //create dorm map 
+    console.log(map);
+    var fakeDorm = $('<div>').css({
+        position: 'absolute',
+        left: 90,
+        top: 250,
+        width: 940,
+        height: 940*ratio,
+        'background-image': map,
+        'background-size':  'contain',
+        border: '5px solid black',
+    }).appendTo('body');
+    dormElements.push(fakeDorm);
+
+
+    //get keys so that you can traverse js by index
+    var keysbyindex = Object.keys(floor);
+    while (x < keysbyindex.length) {
+        
+        //get data for room
+          val = floor[keysbyindex[x]];
+          room = $('<div>').css({
+              position: 'absolute',
+              left: 100*(val.bounding_box.x)+'%',
+              top: 100*(val.bounding_box.y)+'%',
+              height: 100*(val.bounding_box.h)+'%',
+              width: 100*(val.bounding_box.w)+'%',
+              background: 'none',
+              color: 'black',
+          }).appendTo(fakeDorm);
+          dormElements.push(room);
+          
+          //get db info about room
+          if (roomData[i] !== undefined) {
+              room.info = roomData[i];
+              room.text(room.info.number);
+              
+              //check if your room draw number is lower or the roomo is not pulled at all
+              if (userDrawNum < roomData[i].room_draw_number || roomData[i].room_draw_number === null) {
+                  room.css({
+                      background: 'rgb(102, 168, 255)',
+                  });
+              }
+              //room is pulled by someone with higher number
+              else if(userDrawNum > roomData[i].room_draw_number) {
+                  room.css({
+                      background: 'rgb(136, 138, 139)',
+                  });
+              }
+              
+              //get names of students in room, possibly max of room draw numbers
+              room.curNames = [];
+              curRoomNum = roomData[i].number;
+              while (curRoomNum === roomData[i].number) {
+                  if (roomData[i].first_name !== null) {
+                      room.curNames.push(roomData[i].first_name+' '+roomData[i].last_name);  
+                  }
+                  i++;
+                  if (roomData[i] === undefined) {
+                      break;
+                  }
+              }
+              console.log(room.curNames);
+          }//if no db info on room ie undefined in roomData then just say its open
+          else {
+              room.css({
+                  background: 'rgb(102, 168, 255)',
+              });
+          }
+          
+          room.on('mouseenter', function(){
+             $(this).css({
+                 opacity: .5,
+             }); 
+          });
+          
+          room.on('mouseleave', function(){
+             $(this).css({
+                    opacity: 1,
+             }); 
+          });
+          
+          room.on('click', {info: room.info}, function(event){
+              if (event.data.info !== undefined) {
+                  //show room info and populate form with room number
+                  var info = event.data.info;
+                  console.log(info);
+                  $('#usr').val(info.number);
+              }
+              modal.style.display = "block";
+          });
+        x++;
+    }
+}
+
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+window.onkeyup = function(event) {
+  if (event.keyCode == 27) {
+    modal.style.display = "none";
+  }
+}
+
+layout(0);
+
+</script>
+
+<!-- Script for using radio buttons to show input field on the pull request
+  General code structure adapted from: https://www.aspsnippets.com/Articles/Show-Hide-DIV-with-TextBox-based-on-RadioButton-selection-checked-unchecked-using-JavaScript-and-jQuery.aspx 
+  "require-if active" from: https://css-tricks.com/exposing-form-fields-radio-button-css/ !-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='roommate-nums']").click(function () {
+            if ($("#1-roommates").is(":checked")) {
+                $("#roommate-1").show(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#2-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").show(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#3-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").show(); $("#roommate-4").hide(); $("#roommate-5").hide();
+            } else if ($("#4-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").show(); $("#roommate-5").hide();
+            } else if ($("#5-roommates").is(":checked")) {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").show();
+            } else {
+                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();            
+            } 
+        });
+      // find each input that may be hidden or not
+      $(".require-if-active").each(function() {
+        var el = $(this);
+        // find the pairing radio or checkbox
+        if ($(el.data("require-pair")).is(":checked")) {
+          // if its checked, the field should be required
+          el.prop("required", true);
+        } else {
+          // otherwise it should not
+          el.prop("required", false);
+        }
+      });
+    });
+</script>
+
