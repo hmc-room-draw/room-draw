@@ -10,6 +10,18 @@ class DormsController < ApplicationController
   # GET /dorms/1
   # GET /dorms/1.json
   def show
+      @rooms = @dorm.room
+      @pull = Pull.new
+      5.times {@pull.room_assignments.build}
+      #TODO: Get only the necessary information
+      # @students = Student.all
+      @users = User.all
+      @rooms = Room.all
+      @dorms = Dorm.all
+
+      #join tables
+      @students = Student.joins(:user).
+      select('users.first_name, users.last_name, users.email, students.*')
   end
 
   # GET /dorms/new
@@ -19,6 +31,9 @@ class DormsController < ApplicationController
 
   # GET /dorms/1/edit
   def edit
+      # @students = Student.all
+      # @rooms = Room.all
+      # @dorms = Dorm.all
   end
 
   # POST /dorms
@@ -70,5 +85,15 @@ class DormsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def dorm_params
       params.require(:dorm).permit(:name)
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_pull
+      @pull = Pull.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def pull_params
+      params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id])
     end
 end
