@@ -1,6 +1,17 @@
 
 <h1 style='color: #E5E7E9'> Send Reminder Email</h1>
 
+<br>
+<h4 style='color: #E5E7E9'> Recipients (students who haven't filled out the form):</h1>
+<% Student.all.each do |student| %>
+   <% if student.has_participated == false %>
+      <% if student.user%>
+         <h5 style='color: #E5E7E9'> <%= student.user.email%> </h5>
+      <% end %>
+    <% end %>
+<% end %>
+
+<br>
 
 <body class="title">
 

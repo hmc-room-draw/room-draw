@@ -17,7 +17,7 @@ class EmailsController < ApplicationController
     # https://stackoverflow.com/questions/5073756/where-is-the-
     # rails-method-that-converts-data-from-datetime-select-into-a-datet
 
-    # extract send datetime 
+    # extract send datetime
     send_date = Date.new(email["created_at(1i)"].to_i,
                         email["created_at(2i)"].to_i,
                         email["created_at(3i)"].to_i)
@@ -42,9 +42,10 @@ class EmailsController < ApplicationController
         #GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(subject, content)
         if student.user
           user = student.user
+          #puts user.email
           #GeneralMailer.reminder_email(user, subject, content).deliver_now
           GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(user, subject, content)
-        end 
+        end
       end
     end
   end
