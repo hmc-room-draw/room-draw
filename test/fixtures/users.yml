@@ -27,10 +27,10 @@ three:
 four:
   first_name: Student
   last_name: Student
-  email: student@gmail.com
+  email: ako@g.hmc.edu
   is_admin: false
   oauth_token: Something
-  oauth_expires_at: 2017-11-10 13:26:34
+  oauth_expires_at: 2018-11-10 13:26:34
 
 five:
   first_name: Student2
@@ -38,4 +38,4 @@ five:
   email: student2@gmail.com
   is_admin: false
   oauth_token: Something
-  oauth_expires_at: 2017-11-10 13:26:34
+  oauth_expires_at: 2018-11-10 13:26:34
