@@ -25,7 +25,8 @@
 
   <div class="field">
     <%= form.label :senior_round %>
-    <%= form.number_field :round, id: :pull_round %>
+    <%= form.number_field :round, id: :pull_round %> 
+    <p><i> If you are not a senior, please leave this field blank </i></p>
   </div>
 
   <!-- TO DO: Senior rounds -->
@@ -40,11 +41,12 @@
       <div>
         <%= room_assignment.label :room_id %>
         <%= room_assignment.grouped_collection_select :room_id, @dorms, :room, :name, :id,:number, id: :room_assignment_room_id %>
-      </div>  
-      <div>
+      </div>
+          </br>
+<!--       <div>
         <%= room_assignment.label :assignment_type %>
         <%= room_assignment.text_field :assignment_type, id: :room_assignment_assignment_type %>
-      </div>
+      </div> -->
       
     <% end %>
   <% end %> 
