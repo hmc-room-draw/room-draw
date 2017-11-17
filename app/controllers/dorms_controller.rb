@@ -24,11 +24,12 @@ class DormsController < ApplicationController
       select('users.first_name, users.last_name, users.email, students.*')
       
       if current_user
-        if current_user.student?
-            @curPullNum = current_user.student.room_draw_number        
-        else 
-            @curPullNum = 70
-        end
+        @curPullNum = 50
+        # if current_user.student?
+        #     @curPullNum = current_user.student.room_draw_number        
+        # else 
+        #     @curPullNum = 70
+        # end
     else 
         @curPullNum = 69
     end
@@ -75,7 +76,7 @@ class DormsController < ApplicationController
     end 
       
     @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*")
-    .joins(:room)
+    .joins(:rooms)
     .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
     .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
     .joins("LEFT OUTER JOIN users ON users.id = students.user_id")

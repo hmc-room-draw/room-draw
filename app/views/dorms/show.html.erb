@@ -49,26 +49,22 @@
 
 <div class="container">
     <div class="row">
-
         <div class="col-md-7">
             <div class="btn-group">
                 <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
                 </button>
-
                 <ul class="dropdown-menu">
-                <li><a href="#">Atwood</a></li>
-                <li class = "active"><a href=/dorms/case>Case</a></li>
-                <li><a href=/dorms/east>East</a></li>
-                <li><a href="#">Drinkward</a></li>
-                <li><a href="#">Linde</a></li>
-                <li><a href=/dorms/north>North</a></li>
-                <li><a href=/dorms/south>South</a></li>
-                <li><a href=/dorms/west>West</a></li>
+                        <% @dorms.each do |dorm| %>
+                            <li><%= link_to dorm.name, dorm %></li>
+                        <% end %>
                 </ul>
             </div>
         </div>
+        <h1><br></h1>
+    </div>
+</div>
 
-        <div class="col-md-3">
+       <!--  <div class="col-md-3">
             <ul class="dropdown-menu">
             <li class = "active"><a href=/dorms/case>First Floor</a></li>
             <li><a href=/dorms/case2>Second Floor</a></li>
@@ -77,7 +73,7 @@
 
         <h1><br></h1>
     </div>
-</div>
+</div> -->
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
