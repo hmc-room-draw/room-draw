@@ -10,10 +10,6 @@ class Student < ApplicationRecord
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true
-  validates :user, :presence => true
-<<<<<<< HEAD
-
-=======
   validates :user_id, uniqueness: true
 
   # student A outranks student B means A can bump B
@@ -25,5 +21,4 @@ class Student < ApplicationRecord
   def senior?
     class_rank == :senior
   end
->>>>>>> database
 end
