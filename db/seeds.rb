@@ -24,6 +24,7 @@ User.create(first_name:"Ad2", last_name:"Min2", email: "admin2@hmc.edu", is_admi
 User.create(first_name:"Ad3", last_name:"Min3", email: "admin3@hmc.edu", is_admin: true)
 User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
 
+
 #Students
 
 Student.create(user_id: 1, room_draw_number: 1)
