@@ -227,3 +227,22 @@ Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 8, suite_id: 38)
 Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 8, suite_id: 36)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 8, suite_id: 39)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 8)
+
+# #Sontag
+
+Suite.create(name: 'A', dorm_id: 9)
+Suite.create(name: 'F', dorm_id: 9)
+Suite.create(name: 'C', dorm_id: 9)
+Suite.create(name: 'D', dorm_id: 9)
+Suite.create(name: 'E', dorm_id: 9)
+
+Room.create(floor: 2, capacity: 1, number: '219', dorm_id: 9)
+Room.create(floor: 1, capacity: 4, number: '119', dorm_id: 9)
+Room.create(floor: 1, capacity: 2, number: '129', dorm_id: 9)
+Room.create(floor: 1, capacity: 2, number: '101', dorm_id: 9)
+Room.create(floor: 2, capacity: 2, number: '213', dorm_id: 9)
+Room.create(floor: 1, capacity: 1, number: '135', dorm_id: 9)
+Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 9, suite_id: 41)
+Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 9, suite_id: 43)
+Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 9, suite_id: 42)
+Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 9)
