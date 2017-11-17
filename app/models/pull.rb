@@ -7,8 +7,6 @@ class Pull < ApplicationRecord
 
   belongs_to :student
 
-end
-
   accepts_nested_attributes_for :room_assignments
 
   validates :room_assignments, :presence => true
