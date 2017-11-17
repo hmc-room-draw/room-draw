@@ -2,14 +2,47 @@
 
 one:
   floor: 1
-  number: MyString
+  number: "102"
+  capacity: 2
+  dorm: one
+  suite: one
+  
+two:
+    floor: 1
+    number: MyString
+    capacity: 2
+    dorm: two
+    suite: two
+
+three:
+  floor: 1
+  number: "103"
   capacity: 1
   dorm: one
   suite: one
-
-two:
+  
+four:
   floor: 1
-  number: MyString
+  number: "110"
   capacity: 1
-  dorm: two
-  suite: two
+  dorm: one
+  suite: one
+  
+five:
+  floor: 1
+  number: "Q1D"
+  capacity: 1
+  dorm: one
+  suite: one
+six:
+  floor: 2
+  number: "201"
+  capacity: 1
+  dorm: one
+  suite: one
+seven:
+  floor: 1
+  number: "101"
+  capacity: 1
+  dorm: one
+  suite: one

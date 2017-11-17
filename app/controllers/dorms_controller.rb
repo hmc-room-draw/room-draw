@@ -22,6 +22,81 @@ class DormsController < ApplicationController
       #join tables
       @students = Student.joins(:user).
       select('users.first_name, users.last_name, users.email, students.*')
+      
+      if current_user
+        if current_user.student?
+            @curPullNum = current_user.student.room_draw_number        
+        else 
+            @curPullNum = 70
+        end
+    else 
+        @curPullNum = 69
+    end
+    
+    case @dorm.name.downcase
+        when 'case'
+            @json = JSON.parse(File.read('app/assets/jsons/case.json')).to_json.html_safe
+            @floor1 = "case1.png"
+            @floor2 = "case2.png"
+        when 'atwood'
+            @json = JSON.parse(File.read('app/assets/jsons/atwood.json')).to_json.html_safe
+            @floor1 = "atwood1.png"
+            @floor2 = "atwood2.png"
+            @floor3 = "atwood3.png"
+        when 'drinkward'
+            @json = JSON.parse(File.read('app/assets/jsons/drinkward.json')).to_json.html_safe
+            @floor1 = "drinkward1.png"
+            @floor2 = "drinkward2.png"
+            @floor3 = "drinkward3.png"
+        when 'east'
+            @json = JSON.parse(File.read('app/assets/jsons/east.json')).to_json.html_safe
+            @floor1 = "east1.png"
+            @floor2 = "east2.png"
+        when 'linde'
+            @json = JSON.parse(File.read('app/assets/jsons/linde.json')).to_json.html_safe
+            @floor1 = "linde1.png"
+            @floor2 = "linde2.png"
+        when 'north'
+            @json = JSON.parse(File.read('app/assets/jsons/north.json')).to_json.html_safe
+            @floor1 = "north1.png"
+            @floor2 = "north2.png"
+        when 'sontag'
+            @json = JSON.parse(File.read('app/assets/jsons/sontag.json')).to_json.html_safe
+            @floor1 = "sontag1.png"
+            @floor2 = "sontag2.png"
+        when 'south'
+            @json = JSON.parse(File.read('app/assets/jsons/south.json')).to_json.html_safe
+            @floor1 = "south1.png"
+            @floor2 = "south2.png"
+        when 'west'
+            @json = JSON.parse(File.read('app/assets/jsons/west.json')).to_json.html_safe
+            @floor1 = "west1.png"
+            @floor2 = "west2.png"
+    end 
+      
+    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*")
+    .joins(:room)
+    .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
+    .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
+    .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+    
+    @level1 = @testDorm
+    .where("floor = ?", 1)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level2 = @testDorm
+    .where("floor = ?", 2)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level3 = @testDorm
+    .where("floor = ?", 3)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe  
   end
 
   # GET /dorms/new
