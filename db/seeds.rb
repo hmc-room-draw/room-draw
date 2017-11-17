@@ -33,8 +33,6 @@ Student.create(user_id: 4, class_rank: :senior, room_draw_number: 4)
 Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5)
 
 
-
-
 #Dorms
 
 Dorm.create([{name: 'Case'}])
@@ -151,7 +149,6 @@ Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 4, suite_id: 18)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 4, suite_id: 19)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 4)
 
-
 # #Linde
 
 Suite.create(name: 'A', dorm_id: 5)
@@ -170,7 +167,6 @@ Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 5, suite_id: 22)
 Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 5, suite_id: 23)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 5, suite_id: 25)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 5)
-
 
 # #North
 
@@ -210,7 +206,6 @@ Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 7, suite_id: 33)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 7, suite_id: 35)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 7)
 
-
 # #West
 
 Suite.create(name: 'A', dorm_id: 8)
@@ -229,4 +224,3 @@ Room.create(floor: 2, capacity: 3, number: '232', dorm_id: 8, suite_id: 38)
 Room.create(floor: 1, capacity: 2, number: '107', dorm_id: 8, suite_id: 36)
 Room.create(floor: 2, capacity: 2, number: '235', dorm_id: 8, suite_id: 39)
 Room.create(floor: 1, capacity: 1, number: '100', dorm_id: 8)
-
