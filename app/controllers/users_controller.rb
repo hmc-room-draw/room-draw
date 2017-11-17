@@ -13,6 +13,15 @@ class UsersController < ApplicationController
     @users = policy_scope(User)
   end
 
+  def import
+    begin
+      authorize User.import(params[:file])
+      redirect_to users_url
+    rescue
+      redirect_to users_url
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show

@@ -50,8 +50,69 @@ class DrawPeriodsController < ApplicationController
             format.html { redirect_to draw_periods_url, notice: 'Draw Period was successfully canceled.' }
             format.json { head :no_content }
         end
+    end 
+
+    # method for setting up datetime entry on landing page
+    def admin_landing_page
+        if(DrawPeriod.all == nil)
+            @draw_period = DrawPeriod.all[0]
+            @start_datetime = drawperiod.start_datetime
+            @end_datetime = drawperiod.start_datetime
+            puts "first"
+        else
+            new
+            @start_datetime = Time.now
+            @end_datetime = Time.now
+            @draw_period.start_datetime = @start_datetime
+            puts "second"
+        end
+        puts "start"
+        puts @draw_period.inspect
+        puts "end"
+    end
+    
+    #TODO
+    def setStartEndDate
+
+        render html: "<script>alert('Set Start/End Date Called')</script>".html_safe
     end
 
+
+    def uploadRoster
+        render html: "<script>alert('Upload Roster Called')</script>".html_safe
+    end
+    
+    #TODO
+    def downloadStudents
+        render html: "<script>alert('Download Students Called')</script>".html_safe
+    end
+    
+
+    def downloadNonParticipants
+        '''
+        Download all students who have not participated in room draw
+        '''
+        user_csv = CSV.generate do |csv|
+          csv << ["Room Draw Number", "Class Rank"]
+          Student.all.each do |student|
+            if student.has_participated == false
+              # Use user_id to trace the first name, last name and email of user_id
+              # uncomment and test this block when database code is ready
+              #user = User.find_by(user_id: student.user_id)
+              #csv << [user.first_name, user.last_name, student.class_rank,user.email]
+              csv << [student.room_draw_number, student.class_rank]
+            end
+          end
+        end
+        send_data user_csv,
+          :type => 'text/csv',
+          :filename => 'non_participants.csv',
+          :disposition => 'attachment'
+    end
+    #TODO
+    def downloadPulls
+        render html: "<script>alert('Download Pulls Called')</script>".html_safe
+    end
     private
         def set_draw_period
             @draw_period = DrawPeriod.find(params[:id])

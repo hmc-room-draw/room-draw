@@ -13,3 +13,10 @@ two:
   capacity: 1
   dorm: two
   suite: two
+
+three:
+  floor: 1
+  number: MyString2
+  capacity: 1
+  dorm: one
+  suite: one

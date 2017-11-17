@@ -4,7 +4,7 @@ class DrawPeriod < ApplicationRecord
     
     validate :startBeforeEnd
     validate :noTimeConflicts
-    
+
     def time_range
         start_datetime...end_datetime
     end

@@ -7,7 +7,9 @@ class Student < ApplicationRecord
 
   enum class_rank: [:freshman, :sophomore, :junior, :senior]
 
+  scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true
   validates :user, :presence => true
+
 end

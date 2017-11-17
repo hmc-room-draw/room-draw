@@ -1,6 +1,10 @@
 class Pull < ApplicationRecord
   has_many :room_assignments, dependent: :destroy
   has_many :students, through: :room_assignments
+
+  accepts_nested_attributes_for :room_assignments
+  #TODO: add rejection parameters for :room_assignments
+
   belongs_to :student
 
   accepts_nested_attributes_for :room_assignments
@@ -22,6 +26,4 @@ class Pull < ApplicationRecord
     conflicting_assignments.map{ |asn| asn.pull }
   end
 
-  #check student conflicts/ frosh/preplaced people check room assignments
-  #
 end
