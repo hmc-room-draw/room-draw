@@ -4,8 +4,8 @@ class Student < ApplicationRecord
   has_one :room_assignment
   has_one :pull, through: :room_assignment
   has_one :pull
-
-  enum class_rank: [:worst, :sophomore, :junior, :super_senior, :senior]
+  
+  enum class_rank: [:sophomore, :junior, :senior, :super_senior]
 
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
@@ -19,7 +19,8 @@ class Student < ApplicationRecord
   end
 
   def senior?
-    class_rank == :senior
+    class_rank == :senior or class_rank == :super_senior
+  end
 
   def format_status
     if room_assignment.nil?
