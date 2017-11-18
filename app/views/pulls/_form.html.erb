@@ -1,4 +1,27 @@
 <%= form_with(model: pull, local: true) do |form| %>
+
+
+  <%= field_set_tag 'Room Assignments' do %>
+
+    <%= form.fields_for :room_assignments do |room_assignment| %>
+      <div>
+        <%= room_assignment.label :student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+      </div>
+      <div>
+        <%= room_assignment.label :room_id %>
+        <%= room_assignment.grouped_collection_select :room_id, @dorms, :room, :name, :id,:number, id: :room_assignment_room_id %>
+      </div>  
+      
+      <div>
+        <%= room_assignment.label :assignment_type %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+      </div> 
+
+      
+    <% end %>
+  <% end %> 
+
   <% if pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
@@ -12,22 +35,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :message %>
-    <%= form.text_field :message, id: :pull_message %>
-  </div>
-
-  <div class = "field" >
-    <%= form.label :round %>
-    <%= form.number_field :round, id: :pull_number %>
+    
   </div>
 
   <div class="field">
-    <%= form.label :student_id %>
-    
-    <%= form.text_field :student_id, id: :pull_student_id %>
+    <%= form.label :pull_number %>
+    <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
+  </div>
+
+  <!-- TO DO: Senior rounds -->
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_field :message, id: :pull_message %>
   </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+

@@ -16,8 +16,8 @@ key = match[1]
 Rails.application.config.responses_spreadsheet_key = key
 
 begin
-  GoogleDriveApi.read_spreadsheet(key)
-rescue
-  email = GoogleDriveApi.service_account_email
-  raise "Failed to access form with key `#{key}`. Please ensure the form is shared with `#{email}`."
-end
+   GoogleDriveApi.read_spreadsheet(key)
+ rescue
+   email = GoogleDriveApi.service_account_email
+   raise "Failed to access form with key `#{key}`. Please ensure the form is shared with `#{email}`."
+ end

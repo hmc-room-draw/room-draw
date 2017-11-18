@@ -1,20 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Message:</strong>
-  <%= @pull.message %>
-</p>
+<% if current_user.is_admin? %>
+<h1>Pull <%= @pull.id %></h1>
 
-<p>
-  <strong>Senior Round:</strong>
-  <%= @pull.round %>
-</p>
+<%= render 'currentList', pull: @pull %>
 
-
-<p>
-  <strong>Student:</strong>
-  <%= @pull.student %>
-</p>
-
-<%= link_to 'Edit', edit_pull_path(@pull) %> |
+<%= link_to 'Edit', edit_pull_path(@pull) %>
 <%= link_to 'Back', pulls_path %>
+
+<% end %>

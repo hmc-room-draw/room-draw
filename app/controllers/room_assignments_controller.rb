@@ -1,5 +1,6 @@
 class RoomAssignmentsController < ApplicationController
   before_action :set_room_assignment, only: [:show, :edit, :update, :destroy]
+  include RoomAssignmentsHelper
 
   # GET /room_assignments
   # GET /room_assignments.json
@@ -17,6 +18,11 @@ class RoomAssignmentsController < ApplicationController
     @room_assignment = RoomAssignment.new
   end
 
+  def new_from_pull
+    @room_assignment = RoomAssignment.new
+    @pull_id = params[:pull_id]
+  end
+
   # GET /room_assignments/1/edit
   def edit
   end
@@ -28,10 +34,14 @@ class RoomAssignmentsController < ApplicationController
 
     respond_to do |format|
       if @room_assignment.save
-        format.html { redirect_to @room_assignment, notice: 'Room assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @room_assignment }
+        format.html { redirect_to Pull.find(params[:pull_id]), notice: 'Room assignment was successfully created.' }
+        format.json { render :show, status: :created, location: Pull.find(params[:pull_id]) }
       else
-        format.html { render :new }
+        if params[:id]
+          format.html { render :new_from_pull }
+        else
+          format.html { render :new }
+        end
         format.json { render json: @room_assignment.errors, status: :unprocessable_entity }
       end
     end

@@ -1,6 +1,11 @@
-<h1>Editing Pull</h1>
+<% if current_user.is_admin? %>
 
-<%= render 'form', pull: @pull %>
+<h1>Editing Pull <%= @pull.id %></h1>
 
-<%= link_to 'Show', @pull %> |
-<%= link_to 'Back', pulls_path %>
+	<%= render 'currentList', pull: @pull %>
+
+    <%= render 'form', pull: @pull %>
+
+    <%= link_to 'Back', pulls_path %>
+
+<% end %>
