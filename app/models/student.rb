@@ -22,19 +22,32 @@ class Student < ApplicationRecord
     class_rank == :senior or class_rank == :super_senior
   end
 
-  def format_status
+  def status_sort
     if room_assignment.nil?
       if has_participated
-        "Participated, but not in room"
+        2
       else
         if has_completed_form
-          "Never pulled room"
+          1
         else
-          "Never logged in"
+          0
         end
       end
     else
-      room_assignment.room.number
+      3
+    end
+  end
+
+  def format_status
+    case status_sort
+    when 0
+      "Never logged in"
+    when 1
+      "Never pulled room"
+    when 2
+      "Participated, but not in room"
+    when 3
+      room_assignment.room.name
     end
   end
 end
