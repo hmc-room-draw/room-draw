@@ -11,6 +11,10 @@ class Room < ApplicationRecord
 
   validate :validate_room_assignments
 
+  def name
+    dorm.name + " " + number
+  end
+
   private
     def validate_room_assignments
       errors.add(:room_assignments, "too many") if room_assignments.size > capacity
