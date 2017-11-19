@@ -9,7 +9,7 @@ class AdminStudentsController < ApplicationController
 
   # GET /admin_students
   def index
-    @users = User.select {|user| user.has_student?}.sort_by {|user| user.student.number_sort}
+    @users = User.select {|user| user.has_student?}
   end
 
   # GET /admin_students/1
