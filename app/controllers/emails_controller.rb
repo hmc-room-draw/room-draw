@@ -31,7 +31,7 @@ class EmailsController < ApplicationController
     @email.save
 
     # Run bin/delayed_job start to process all jobs
-    EmailApi.sendToNonParticipants(email)
+    GeneralMailer.reminder_email_to_non_participants(subject, content, send_date)
   end
 
   def destroy
