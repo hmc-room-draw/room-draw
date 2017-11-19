@@ -51,6 +51,14 @@ class PullsController < ApplicationController
     if not cps.empty?
       cps.forEach do |cp|
         # TODO: email people from destroyed pulls
+
+        cp.students.forEach { |student|
+          # TODO: Update these for more detail later
+          subject = "Pull bumped"
+          content = "Your pull has been bumped."
+          GeneralMailer.reminder_email(student.user, subject, content)
+        }
+
         cp.destroy()
       end
     end
