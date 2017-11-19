@@ -1,22 +1,18 @@
 <%= form_for("/admin/map", method: "edit_mark") do |f| %>
   <%= select(:dorm_name, :value, [
-      ["Atwood", "Atwood"],
-      ["Case", "Case"],
-      ["Drinkward", "Drinkward"],
-      ["East", "East"],
-      ["Linde", "Linde"],
-      ["North", "North"],
-      ["Sontag", "Sontag"],
-      ["South", "South"],
-      ["West", "West"],
-      ]) %><br/>
-<!--   <h3><%= @dorm %></h3> 
-  <h3><%= @admin %></h3> 
-  <h3><%= @room %></h3> 
-  <h3><%= image %></h3> 
-  <h3><%= params %></h3> -->
-  <%= text_field_tag(:room, value="hello") %><br/>
-  <%= radio_button_tag(:mark_type, "freshman") %>
+      ["Atwood", "atwood"],
+      ["Case", "case"],
+      ["Drinkward", "drinkward"],
+      ["East", "east"],
+      ["Linde", "linde"],
+      ["North", "north"],
+      ["Sontag", "sontag"],
+      ["South", "south"],
+      ["West", "west"],
+      ], {:selected => @dorm.name}, {:class => 'form-control btn'}) %><br/>
+  <br>
+  <%= text_field_tag(:room, value="hello", :id=>"unpullable-room-num", class: "form-control") %><br/>
+  <%= radio_button_tag(:mark_type, "freshman", true) %>
   <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
   <%= radio_button_tag(:mark_type, "unavailable") %>
   <%= label_tag(:preplaced_offline, "Offline") %><br/>
@@ -24,9 +20,14 @@
   <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
   <%= radio_button_tag(:mark_type, "other") %>
   <%= label_tag(:preplaced_other, "Other") %><br/>
+  <br>
   <%= label_tag(:description, "Description") %><br/>
-  <%= text_area_tag(:description) %><br/>
-  <%= f.submit "Delete Mark (make pullable)", name: "delete" %><br/>
-  <button type="submit" data-dismiss="modal">Cancel</button><br/>
-  <%= submit_tag("Mark Unpullable") %>
+  <%= text_area_tag(:description, nil, :class=> "form-control") %>
+  <br>
+  <%= f.submit "Delete Mark (make pullable)", name: "delete", class: "btn btn-info" %><br/>
+  <br>
+  <button type="submit" class="btn btn-info" data-dismiss="modal">Cancel</button><br/>
+  <br>
+  <%= submit_tag("Mark Unpullable", class: "btn btn-info") %>
+  <hr>
 <% end %>

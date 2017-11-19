@@ -12,28 +12,16 @@ Rails.application.routes.draw do
   # temporary route of landing page
   post 'emails/download_non_participants'
 
-  get 'dorms/atwood'
-
-  get 'dorms/case2'
-
-  get 'dorms/case'
-
   get 'login/show'
 
-  get 'admin/map'
-  get 'admin/case'
-  post 'admin/case', to: 'admin#edit_mark'
-  post 'admin/choose_room', to: 'admin#choose_room'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # Admin Room Assignments form
+  post 'dorms/:id', to: 'admin#edit_mark'
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
 
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
-
-  post 'admin/map', to: 'admin#edit_mark'
 
   #routes for admin landing page
   get 'admin/home', to: 'draw_periods#admin_landing_page'
