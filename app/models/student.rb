@@ -29,7 +29,7 @@ class Student < ApplicationRecord
 
   def number_sort
     # convert class rank to a number or it sorts as a string
-    [Student.class_ranks[class_rank], room_draw_number]
+    [Student.class_ranks[class_rank], number_is_last ? 1 : 0, room_draw_number]
   end
 
   def format_number

@@ -41,6 +41,11 @@
       <%= s_form.label :room_draw_number %>
       <%= s_form.text_field :room_draw_number, id: :student_room_draw_number, value: @user.student.room_draw_number %>
     </div>
+
+    <div class="field">
+      <%= s_form.label :number_is_last %>
+      <%= s_form.check_box :number_is_last, id: :student_number_is_last, checked: @user.student.number_is_last%>
+    </div>
     
     <div class="field">
       <%= s_form.label :has_completed_form %>
