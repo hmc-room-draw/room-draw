@@ -43,90 +43,66 @@
 
  <body>
 <!--  <h2 style="text-align:center">
-	Case Dorm
- 	  </h2> -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2">
-				<a href=/dorms><span style="font-size:2.5em;" class="glyphicon glyphicon-circle-arrow-left"></span> Go back</a>			</div>
+  Case Dorm
+    </h2> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <a href=/dorms><span style="font-size:2.5em;" class="glyphicon glyphicon-circle-arrow-left"></span> Go back</a>     </div>
 
-		    <div class="col-md-10">
-				<div class="btn-group">
-					<button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
-					</button>
+        <div class="col-md-10">
+        <div class="btn-group">
+          <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
+          </button>
 
-					<ul class="dropdown-menu">
-				  	<li><a href="#">Atwood</a></li>
-				  	<li><a href=/dorms/case>Case</a></li>
-				  	<li><a href="#">Drinkward</a></li>
-				  	<li><a href="#">East</a></li>
-				  	<li><a href="#">Linde</a></li>
-				  	<li><a href="#">North</a></li>
-				  	<li><a href="#">Sontag</a></li>
-				  	<li><a href="#">South</a></li>
-				    <li><a href="#">West</a></li>
-					</ul>
-			    </div>
-			</div>
-			<h1></h1>
-		</div>
-			<div class="row">
-				<div class="col-md-9"></div>
-				<div class="col-md-1">
-					<a href="#"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-top"></span><br>Go Up</a>
-				</div>
-				<div class="col-md-2">
-					<a href="#"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-bottom"></span><br>Go Down</a>
-				</div>
-			</div>
-	</div>
+          <ul class="dropdown-menu">
+            <li><a href="#">Atwood</a></li>
+            <li><a href=/dorms/case>Case</a></li>
+            <li><a href="#">Drinkward</a></li>
+            <li><a href="#">East</a></li>
+            <li><a href="#">Linde</a></li>
+            <li><a href="#">North</a></li>
+            <li><a href="#">Sontag</a></li>
+            <li><a href="#">South</a></li>
+            <li><a href="#">West</a></li>
+          </ul>
+          </div>
+      </div>
+      <h1></h1>
+    </div>
+      <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-1">
+          <a href="#"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-top"></span><br>Go Up</a>
+        </div>
+        <div class="col-md-2">
+          <a href="#"><span style="font-size:2em;" class="glyphicon glyphicon-triangle-bottom"></span><br>Go Down</a>
+        </div>
+      </div>
+  </div>
 
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
-      <% if @admin %>
-
-        <!-- Admin modal content -->
-        <div class="modal-content">
-          <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>Room 123</h2>
-          </div>
-          <div class="modal-body">
-            <div id="admin_buttons" class="collapse in">
-              <button id="createPull" class="btn btn-block">Create Pull</button>
-              <button id="editPull" class="btn btn-block">Edit/Delete Pull</button>
-              <button id="markPullable" href="#unpullable_form" class="btn btn-block" data-toggle="collapse">Mark Room Pullable/Unpullable</button>
-            </div>
-            <div class="collapse" id="unpullable_form">
-              <br>
-              <div id="plzwork">
-                
-              </div>
-              <br>
-            </div>
-          </div>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Pull request initiated</h2>
         </div>
-
-      <% else %>
-
-        <!-- Student modal content -->
-        <div class="modal-content">
-          <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>Pull request initiated</h2>
-          </div>
-          <div class="modal-body">
-            <p>You have begun a pull request for this room</p>
-            <p>The following form </p>
-          </div>
-          <div class="modal-footer">
-            <h3>Pull request form</h3>
-          </div>
+        <div class="modal-body">
+          <p>You have begun a pull request for this room</p>
+          <p>The following form </p>
         </div>
-      <% end %>
+        <div class="modal-footer">
+          <h3>Pull request form</h3>
+        </div>
+      </div>
+
     </div>
+
+
 </body>
 
 <script>
@@ -184,215 +160,188 @@ var quadWidth = 100
 var x = 80 //starting positions for left side 
 var y = 110
 
-for (var num = 0; num < 8; num++){	
-	dataset[num].x = x 
-	dataset[num].y = y
-	if (dataset[num].type =="D"){
-		y += doubleWidth
-	}
-	if (dataset[num].type =="S")
-		y += singleWidth 
+for (var num = 0; num < 8; num++){  
+  dataset[num].x = x 
+  dataset[num].y = y
+  if (dataset[num].type =="D"){
+    y += doubleWidth
+  }
+  if (dataset[num].type =="S")
+    y += singleWidth 
 }
 x = 170 //starting positions for lower side 
 y = 560
 
-for (var num = 8; num < 16; num++){	
-	dataset[num].x = x 
-	dataset[num].y = y
-	if (dataset[num].type =="D"){
-		x += doubleWidth
-	}
-	if (dataset[num].type =="S")
-		x += singleWidth 
+for (var num = 8; num < 16; num++){ 
+  dataset[num].x = x 
+  dataset[num].y = y
+  if (dataset[num].type =="D"){
+    x += doubleWidth
+  }
+  if (dataset[num].type =="S")
+    x += singleWidth 
 }
 x = 700 //starting positions for right side 
 y = 540
 
-for (var num = 16; num < 24; num++){	
-	if (dataset[num].type =="D"){
-		y -= doubleWidth
-	}
-	if (dataset[num].type =="S")
-		y -= singleWidth 
-	dataset[num].x = x 
-	dataset[num].y = y
+for (var num = 16; num < 24; num++){  
+  if (dataset[num].type =="D"){
+    y -= doubleWidth
+  }
+  if (dataset[num].type =="S")
+    y -= singleWidth 
+  dataset[num].x = x 
+  dataset[num].y = y
 }
 x = 690 //starting positions for upper side 
 y = 30
-for (var num = 24; num < 32; num++){	
-	if (dataset[num].type =="D"){
-		x -= doubleWidth
-	}
-	if (dataset[num].type =="S")
-		x -= singleWidth 
-	dataset[num].x = x 
-	dataset[num].y = y
+for (var num = 24; num < 32; num++){  
+  if (dataset[num].type =="D"){
+    x -= doubleWidth
+  }
+  if (dataset[num].type =="S")
+    x -= singleWidth 
+  dataset[num].x = x 
+  dataset[num].y = y
 }
 
-	var svg = d3.select("body")
+  var svg = d3.select("body")
             .append("svg")
             .attr("width", w)
             .attr("height", h);
-	svg.selectAll("text")
-	   .data(dataset)
-	   .enter()
-	   .append("text")
-	   .text(function(d) {
-	        return d.roomNum + '(' + d.type + ')';
-	   })
-	   .attr("x", function(d, i){
-		    switch (d.orient){
-		    	case "L":
-			   		return Number(d.x)-50;
-			   	case "D":
-			 		return Number(d.x) + 5;
-			 	case "R":
-			 		if (d.type == "S"){
-		    			return Number(d.x) + 80;
-			   		}			   		
-			   		else{
-			   			return Number(d.x) + 110;
-			   		}
-			   	case "U":
-			   		return Number(d.x) + 5;			   	
-		    }
-		   })
-	   .attr("y", function(d, i){
-			switch(d.orient){
-				case "L":
-			   		return Number(d.y) + 20;
-			   	case "D":
-			   		if (d.type == "S"){
-		    			return Number(d.y) + 90;
-			   		}
-			   		else{
-			   			return Number(d.y) + 120;
-			   		}
-			   	case "R":
-			   		return Number(d.y) + 20;
-			   	case "U":
-			   		return d.y - 10;
-		    }
-		})
-	   	.attr("font-family", "sans-serif")
-		.attr("font-size", "14px")
+  svg.selectAll("text")
+     .data(dataset)
+     .enter()
+     .append("text")
+     .text(function(d) {
+          return d.roomNum + '(' + d.type + ')';
+     })
+     .attr("x", function(d, i){
+        switch (d.orient){
+          case "L":
+            return Number(d.x)-50;
+          case "D":
+          return Number(d.x) + 5;
+        case "R":
+          if (d.type == "S"){
+              return Number(d.x) + 80;
+            }           
+            else{
+              return Number(d.x) + 110;
+            }
+          case "U":
+            return Number(d.x) + 5;         
+        }
+       })
+     .attr("y", function(d, i){
+      switch(d.orient){
+        case "L":
+            return Number(d.y) + 20;
+          case "D":
+            if (d.type == "S"){
+              return Number(d.y) + 90;
+            }
+            else{
+              return Number(d.y) + 120;
+            }
+          case "R":
+            return Number(d.y) + 20;
+          case "U":
+            return d.y - 10;
+        }
+    })
+      .attr("font-family", "sans-serif")
+    .attr("font-size", "14px")
 
-	svg.selectAll("rect")
-	   .data(dataset)
-	   .enter()
-	   .append("rect")
-	   .attr("x", function(d, i){
-	   	return d.x;
-	   })
-	   .attr("y", function(d, i){
-	   	return d.y;
-	   })
-	   .attr('fill', "white")
-	   .attr('stroke', 'black')
-	   .attr("width", function(d){
-		   	switch (d.orient){
-		   		case "L":
-				   	 if(d.type == "S")
-				   	 	return singleLength
-				   	 else if(d.type == "Q")
-				   	 	return quadWidth
-				   	 else{
-				   	 	return doubleLength
-				   	 }
-			   	case "D":
-					if(d.type == "S")
-						return singleWidth
-					else{
-						return doubleWidth
-			   	 }
-			   	case "R":
-			   	 	if(d.type == "S")
-				   	 	return singleLength
-				   	else if(d.type == "Q")
-				   	 	return quadWidth
-				   	else{
-				   	 	return doubleLength
-				   	}
-				case "U":
-					if(d.type == "S")
-						return singleWidth
-					else{
-						return doubleWidth
-					}				
-		   	}
-	   })
-	   .attr("height", function(d){
-		   	switch(d.orient){
-				case "L":
-					if(d.type == "S")
-						return singleWidth
-					else if(d.type == "Q")
-				   	 	return quadLength
-					else{
-						return doubleWidth
-	 				}
-				case "D":
-					if(d.type == "S")
-						return singleLength
-					else{
-						return doubleLength
-					}
-				case "R":
-					if(d.type == "S")
-						return singleWidth
-					else if(d.type == "Q")
-				   	 	return quadLength					
-					else{
-						return doubleWidth
-	 				}
-	 			case "U":
-					if(d.type == "S")
-						return singleLength
-					else{
-						return doubleLength
-					}
-			}
-		})
-	   .on("mouseover", function(d, i){
-	   		d3.select(this).attr("fill", "lightgray");
-	   })
-	   .on("mouseout", function(d, i){
-	   		d3.select(this).attr("fill", "white");
-	   })
+  svg.selectAll("rect")
+     .data(dataset)
+     .enter()
+     .append("rect")
+     .attr("x", function(d, i){
+      return d.x;
+     })
+     .attr("y", function(d, i){
+      return d.y;
+     })
+     .attr('fill', "white")
+     .attr('stroke', 'black')
+     .attr("width", function(d){
+        switch (d.orient){
+          case "L":
+             if(d.type == "S")
+              return singleLength
+             else if(d.type == "Q")
+              return quadWidth
+             else{
+              return doubleLength
+             }
+          case "D":
+          if(d.type == "S")
+            return singleWidth
+          else{
+            return doubleWidth
+           }
+          case "R":
+            if(d.type == "S")
+              return singleLength
+            else if(d.type == "Q")
+              return quadWidth
+            else{
+              return doubleLength
+            }
+        case "U":
+          if(d.type == "S")
+            return singleWidth
+          else{
+            return doubleWidth
+          }       
+        }
+     })
+     .attr("height", function(d){
+        switch(d.orient){
+        case "L":
+          if(d.type == "S")
+            return singleWidth
+          else if(d.type == "Q")
+              return quadLength
+          else{
+            return doubleWidth
+          }
+        case "D":
+          if(d.type == "S")
+            return singleLength
+          else{
+            return doubleLength
+          }
+        case "R":
+          if(d.type == "S")
+            return singleWidth
+          else if(d.type == "Q")
+              return quadLength         
+          else{
+            return doubleWidth
+          }
+        case "U":
+          if(d.type == "S")
+            return singleLength
+          else{
+            return doubleLength
+          }
+      }
+    })
+     .on("mouseover", function(d, i){
+        d3.select(this).attr("fill", "lightgray");
+     })
+     .on("mouseout", function(d, i){
+        d3.select(this).attr("fill", "white");
+     })
      .on("click", function(d, i){
-        console.log("THIS", this);
-        console.log(d);
-        console.log(i);
-        d["dorm"] = "Case";
-        currentRoom = d;
-        modal.style.display = "block";
-        jQuery.ajax({
-          data: d,
-          type: "post",
-          url: "/admin/choose_room"
-        })
-        $('#plzwork').html("<%= escape_javascript(render(:partial => 'admin/unpullable_form', locals: {image: @admin}, :admin => "adminsrock", :room => "yolo!!!")).html_safe %>");
+       modal.style.display = "block";
     })
 
-
-     //CURRENT STATUS: WE CAN PASS VARIABLES TO THE EXTERNAL FORM.  WE CAN (SORTA) PASS VARIABLES TO THE CONTROLLER, BUT THEY DISAPPEAR INTO THE ETHER.
-
     ;
-
-// Will store room information when a room is clicked.
-var currentRoom = null;
-// Popup
+// Get the modal
 var modal = document.getElementById('myModal');
-// Create Pull button
-var createPull = document.getElementById('createPull');
-createPull.onclick = function() {
-    alert("Not implemented yet.")
-}
-// Edit Pull button
-var editPull = document.getElementById('editPull');
-editPull.onclick = function() {
-    alert("Not implemented yet.")
-}
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
@@ -407,4 +356,5 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 </script>

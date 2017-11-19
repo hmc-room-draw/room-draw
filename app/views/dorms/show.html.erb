@@ -44,17 +44,6 @@
   width: 90%;
 }
 
-#filler {
-  background-color: yellow;
-  height: 50px;
-  width: 100%;
-}
-
-body {
-  position: relative;
-}
-
-
 </style>
 
 <div>
@@ -62,32 +51,29 @@ body {
   <div class="alert-div alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
-<div>
+<p>
+  <strong>Name:</strong>
+  <%= @dorm.name %>
+</p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @dorm.name %>
-  </p>
+<%= link_to 'Edit', edit_dorm_path(@dorm) %> |
+<%= link_to 'Back', dorms_path %>
+<div class="container">
 
-  <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
-  <%= link_to 'Back', dorms_path %>
-  <div class="container">
-
-      <div class="row">
-          <div class="col-md-7">
-              <div class="btn-group">
-                  <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                          <% @dorms.each do |dorm| %>
-                              <li><%= link_to dorm.name, dorm %></li>
-                          <% end %>
-                  </ul>
-              </div>
-          </div>
-          <h1><br></h1>
-      </div>
-  </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="btn-group">
+                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                        <% @dorms.each do |dorm| %>
+                            <li><%= link_to dorm.name, dorm %></li>
+                        <% end %>
+                </ul>
+            </div>
+        </div>
+        <h1><br></h1>
+    </div>
 </div>
 
        <!--  <div class="col-md-3">
@@ -359,7 +345,6 @@ function layout(level){
               if (event.data.info !== undefined) {
                   //show room info and populate form with room number
                   var info = event.data.info;
-                  console.log("DATA", event.data);
                   $('#usr').val(info.number); //TODO: Check this is actually used.
                   $('#unpullable-room-num').val(info.number);
                   $('#room-num').html(info.number);
