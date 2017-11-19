@@ -5,7 +5,7 @@ class Student < ApplicationRecord
   has_one :pull, through: :room_assignment
   has_one :pull
 
-  enum class_rank: [:sophomore, :junior, :super_senior, :senior]
+  enum class_rank: [:worst, :sophomore, :junior, :super_senior, :senior]
 
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
