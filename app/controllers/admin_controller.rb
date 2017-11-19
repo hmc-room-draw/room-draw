@@ -28,7 +28,7 @@ class AdminController < ApplicationController
     if @marked_room.save
       flash[:success] = "Room successfully marked unpullable."
     else
-      flash[:danger] = "Error marking room unpullable."
+      flash[:danger] = @marked_room.errors.full_messages
     end
   end
 
