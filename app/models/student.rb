@@ -32,6 +32,10 @@ class Student < ApplicationRecord
     [Student.class_ranks[class_rank], room_draw_number]
   end
 
+  def format_number
+    class_rank + " " + room_draw_number.to_s
+  end
+
   def status_sort
     if room_assignment.nil?
       if has_participated

@@ -21,7 +21,7 @@
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.email %></td>
-        <td data-value="<%= user.student.number_sort %>"><%= user.student.class_rank + " " + user.student.room_draw_number.to_s %></td>
+        <td data-value="<%= user.student.number_sort %>"><%= user.student.format_number %></td>
         <td data-value="<%= user.student.status_sort %>"><%= user.student.format_status %></td>
         <td><%= link_to 'Details', admin_student_path(user) %></td>
         <td><%= link_to 'Edit', edit_admin_student_path(user) %></td>
