@@ -63,6 +63,17 @@ class PullsController < ApplicationController
       end
     end
 
+    @pull.students.forEach { |student|
+      # TODO: Update these for more detail later
+      dorm = student.room_assignment.room.dorm
+      room = student.room_assignment.room.number
+      puller = "#{@pull.student.first_name} #{@pull.student.last_name}"
+
+      subject = "Pulled into #{dorm} #{room}"
+      content = "You have been pulled into #{dorm} #{room} by #{puller}."
+      GeneralMailer.reminder_email(student.user, subject, content)
+    }
+
     respond_to do |format|
       if @pull.save
         format.html { redirect_to @pull, notice: "Pull was successfully created." }
