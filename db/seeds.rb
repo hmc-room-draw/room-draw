@@ -27,11 +27,11 @@ User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admi
 
 #Students
 
-Student.create(user_id: 1, class_rank: :junior, room_draw_number: 1)
-Student.create(user_id: 2, class_rank: :sophomore, room_draw_number: 2)
-Student.create(user_id: 3, class_rank: :sophomore, room_draw_number: 3)
-Student.create(user_id: 4, class_rank: :senior, room_draw_number: 4)
-Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5)
+Student.create(user_id: 1, class_rank: :junior, room_draw_number: 1, number_is_last: false)
+Student.create(user_id: 2, class_rank: :sophomore, room_draw_number: 2, number_is_last: false)
+Student.create(user_id: 3, class_rank: :sophomore, room_draw_number: 3, number_is_last: false)
+Student.create(user_id: 4, class_rank: :senior, room_draw_number: 4, number_is_last: false)
+Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5, number_is_last: false)
 
 
 #Dorms

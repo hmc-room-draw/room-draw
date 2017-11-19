@@ -80,6 +80,6 @@ class AdminStudentsController < ApplicationController
     end
     
     def student_params
-      params[:admin_students].fetch(:student).permit(:class_rank, :room_draw_number, :has_completed_form, :has_participated)
+      params[:admin_students].fetch(:student).permit(:class_rank, :room_draw_number, :has_completed_form, :has_participated, :number_is_last)
     end
 end
