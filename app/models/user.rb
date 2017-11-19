@@ -25,6 +25,10 @@ class User < ApplicationRecord
     end
   end
 
+  def full_name
+    first_name + " " + last_name
+  end
+
   # Import users from a csv file
   # Checks to see if the user exists in the database (compares email). If the user exists,
   # it will attempt to update the user. If not, it will create a new user.

@@ -7,19 +7,17 @@ class AdminStudentsController < ApplicationController
   #after_action :verify_authorized, except: :index
   #after_action :verify_policy_scoped, only: :index
 
-  # GET /users
-  # GET /users.json
+  # GET /admin_students
   def index
-    @users = User.all#policy_scope(User)
+    @users = User.select {|user| user.has_student?}.sort_by {|user| user.student.number_sort}
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /admin_students/1
   def show
     @user = User.find(params[:id])
   end
 
-  # GET /users/new
+  # GET /admin_students/new
   def new
     @user = User.new
     @user.student = Student.new
@@ -27,15 +25,14 @@ class AdminStudentsController < ApplicationController
     @method = :post
   end
 
-  # GET /users/1/edit
+  # GET /admin_students/1/edit
   def edit
     @action = "update"
     @user = User.find(params[:id])
     @method = :patch
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /admin_students
   def create
     @user = User.new(user_params)
     @user.student = Student.new(student_params)
@@ -49,8 +46,7 @@ class AdminStudentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /admin_students/1
   def update
     @user = User.find(params[:id])
 
@@ -67,8 +63,7 @@ class AdminStudentsController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /admin_students/1
   def destroy
     @user = User.find(params[:id])
     @user.student.destroy

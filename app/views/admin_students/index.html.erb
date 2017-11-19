@@ -6,7 +6,8 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>First</th>
+      <th>Last</th>
       <th>Email</th>
       <th>Number</th>
       <th>Status</th>
@@ -16,11 +17,11 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <% next if !user.has_student? %>
       <tr>
-        <td><%= user.first_name %> <%= user.last_name %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
         <td><%= user.email %></td>
-        <td><%= user.student.class_rank %> <%= user.student.room_draw_number %></td>
+        <td><%= user.student.class_rank + " " + user.student.room_draw_number.to_s %></td>
         <td><%= user.student.format_status %></td>
         <td><%= link_to 'Details', admin_student_path(user) %></td>
         <td><%= link_to 'Edit', edit_admin_student_path(user) %></td>

@@ -4,8 +4,13 @@ class Student < ApplicationRecord
   has_one :room_assignment
   has_one :pull, through: :room_assignment
   has_one :pull
-  
-  enum class_rank: [:sophomore, :junior, :senior, :super_senior]
+
+  enum class_rank: {
+    :sophomore => 3,
+    :junior => 2,
+    :senior => 0,
+    :super_senior => 1,
+  }
 
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
@@ -13,13 +18,18 @@ class Student < ApplicationRecord
   validates :user_id, uniqueness: true
 
   # student A outranks student B means A can bump B
+  # note: this had a bug because enum values are compared as strings
   def outranks(other)
-    (self.class_rank == other.class_rank and self.room_draw_number < other.room_draw_number) \
-      or (self.class_rank > other.class_rank)
+    self.number_sort < other.number_sort
   end
 
   def senior?
     class_rank == :senior or class_rank == :super_senior
+  end
+
+  def number_sort
+    # convert class rank to a number or it sorts as a string
+    [Student.class_ranks[class_rank], room_draw_number]
   end
 
   def status_sort
