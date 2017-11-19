@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  accepts_nested_attributes_for :student
+  accepts_nested_attributes_for :student, :allow_destroy => true
 
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
@@ -54,4 +54,8 @@ class User < ApplicationRecord
 
     end # end CSV.foreach
   end # end self.import(file)
+
+  def has_student?
+    !self.student.nil?
+  end
 end

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   resources :room_assignments
   resources :students
 
+  resources :admin_students
+
   resources :users do
     collection { post :import }
   end
