@@ -6,6 +6,7 @@ class Student < ApplicationRecord
   has_one :pull
 
   enum class_rank: {
+    :worst => 999,
     :sophomore => 3,
     :junior => 2,
     :senior => 0,
