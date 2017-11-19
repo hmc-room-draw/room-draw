@@ -5,7 +5,7 @@ class Student < ApplicationRecord
   has_one :pull, through: :room_assignment
   has_one :pull
 
-  enum class_rank: [:freshman, :sophomore, :junior, :senior]
+  enum class_rank: [:sophomore, :junior, :super_senior, :senior]
 
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true
