@@ -15,6 +15,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-sprockets
+//= require moment
+//= require bootstrap-sortable
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
