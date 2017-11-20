@@ -148,7 +148,6 @@ span.onclick = function() {
 
     var dormElements = [];
 
-    var floorHoldOpen = false;
     var floorHold = $('<div>').css({
         position: 'absolute',
         left: 600,
@@ -160,7 +159,7 @@ span.onclick = function() {
         'border-radius': '5px',
         visibility: 'hidden',
         'z-index': 100,
-    }).addClass('floorHold').appendTo('body');
+    }).attr('id', 'floorHold').appendTo('body');
 
     var floorSelect = $('<div>').css({
         position: 'absolute',
@@ -175,18 +174,16 @@ span.onclick = function() {
         border: '1px solid rgb(173, 173, 173)',
         'border-radius': '5px',
         'z-index': 100,
-    }).text('Change Floors')
+    }).attr('id', 'floorSelect').text('Change Floors')
     .on('click', function(event){
-        if (floorHoldOpen) {
-            floorHold.css({
-                visibility: 'hidden',
-            });
-            floorHoldOpen = false;
-        }
-        else {
-            floorHoldOpen = true;
+        if (floorHold.css('visibility') !== 'visible') {
             floorHold.css({
                 visibility: 'visible',
+            });
+        }
+        else {
+            floorHold.css({
+                visibility: 'hidden',
             });
         }
     })
@@ -421,17 +418,18 @@ span.onclick = function() {
         floorHold.css({
             visibility: 'hidden',
         });
-        floorHoldOpen = false;
       }
     }
     
-//     $(document).click(function(event) { 
-//     if(!$(event.target).closest('.floorHold').length) {
-//         if($('.floorHold').is(":visible")) {
-//             $('.floorHold').hide();
-//         }
-//     }        
-// });
+    $(document).click(function(event) { 
+    if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+        if($('#floorHold').css("visibility") === 'visible') {
+            $('#floorHold').css({
+                visibility: 'hidden',
+            });
+        }
+    }        
+});
     layout(0);
     
 </script>
