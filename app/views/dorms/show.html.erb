@@ -160,7 +160,7 @@ span.onclick = function() {
         'border-radius': '5px',
         visibility: 'hidden',
         'z-index': 100,
-    }).appendTo('body');
+    }).addClass('floorHold').appendTo('body');
 
     var floorSelect = $('<div>').css({
         position: 'absolute',
@@ -176,7 +176,7 @@ span.onclick = function() {
         'border-radius': '5px',
         'z-index': 100,
     }).text('Change Floors')
-    .on('click', function(){
+    .on('click', function(event){
         if (floorHoldOpen) {
             floorHold.css({
                 visibility: 'hidden',
@@ -381,12 +381,6 @@ span.onclick = function() {
                       }
                       room.text(nameString + roomPullNum);
                   }
-                  else {
-                      room.text('test name, test name');
-                  }
-              }
-              else {
-                  room.text('test name, test name');
               }
               
               room.on('mouseenter', function(){
@@ -419,13 +413,6 @@ span.onclick = function() {
         if (event.target == modal) {
             modal.style.display = "none";
         }
-        // console.log(floorHoldOpen);
-        // if (floorHoldOpen) {
-        //     floorHold.css({
-        //         visibility: 'hidden',
-        //     });
-        //     floorHoldOpen = false;
-        // }
     }
 
     window.onkeyup = function(event) {
@@ -437,6 +424,14 @@ span.onclick = function() {
         floorHoldOpen = false;
       }
     }
+    
+//     $(document).click(function(event) { 
+//     if(!$(event.target).closest('.floorHold').length) {
+//         if($('.floorHold').is(":visible")) {
+//             $('.floorHold').hide();
+//         }
+//     }        
+// });
     layout(0);
     
 </script>
