@@ -6,7 +6,6 @@ class Student < ApplicationRecord
   has_one :pull
 
   enum class_rank: {
-    :worst => 999,
     :sophomore => 3,
     :junior => 2,
     :senior => 0,
@@ -34,7 +33,11 @@ class Student < ApplicationRecord
   end
 
   def format_number
-    class_rank + " " + room_draw_number.to_s
+    if number_is_last
+      class_rank + " last " + room_draw_number.to_s
+    else
+      class_rank + " " + room_draw_number.to_s
+    end
   end
 
   def status_sort
