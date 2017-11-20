@@ -28,29 +28,13 @@ class EmailsController < ApplicationController
     content = email["description"]
 
     @email = Email.new(subject: subject, description: content, sendDate: send_date)
-
     @email.save
 
-
     # Run bin/delayed_job start to process all jobs
-
-    # Calculate delayed time
-    diffD = (send_date-Date.today).to_i
-    #user = User.all.first
-    Student.all.each do |student|
-      if student.has_participated == false
-        #GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(subject, content)
-        if student.user
-          user = student.user
-          #puts user.email
-          #GeneralMailer.reminder_email(user, subject, content).deliver_now
-          GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(user, subject, content)
-        end
-      end
-    end
+    GeneralMailer.reminder_email_to_non_participants(subject, content, send_date)
   end
 
-  def destory
+  def destroy
   end
 
 end
