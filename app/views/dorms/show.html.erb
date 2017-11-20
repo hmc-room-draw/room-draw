@@ -55,7 +55,7 @@
                 </button>
                 <ul class="dropdown-menu">
                         <% @dorms.each do |dorm| %>
-                            <li><%= link_to dorm.name, dorm %></li>
+                            <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
                         <% end %>
                 </ul>
             </div>
@@ -131,8 +131,6 @@
 
 <script type="text/javascript">
 
-console.log("<%= @rooms.to_json %>")
-
 // Get the modal
 var modal = document.getElementById('myModal');
 // Get the button that opens the modal
@@ -143,194 +141,297 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
     modal.style.display = "none";
 }
+// 
+// $(document).on('turbolinks:load', function() {
+//     layout(0);
+// });
 
-var dormElements = [];
+    var dormElements = [];
 
-$('.map').each(function(i) {
-    $('<div>').css({
+    var floorHold = $('<div>').css({
         position: 'absolute',
-        left: 500 + 100*i,
+        left: 600,
+        top: 180,
+        height: 150,
+        width: 136,
+        background: 'rgb(255, 255, 255)',
+        border: '1px solid rgb(173, 173, 173)',
+        'border-radius': '5px',
+        visibility: 'hidden',
+        'z-index': 100,
+    }).attr('id', 'floorHold').appendTo('body');
+
+    var floorSelect = $('<div>').css({
+        position: 'absolute',
+        left: 600,
         top: 150,
-        height: 80,
-        width: 40,
-        'font-size': '60px',
-        color: 'blue',
-        background: 'black'
-    }).text(i+1).appendTo('body')
-    .on('click', function(){
-        layout(i);
+        height: 30,
+        width: 136,
+        'font-size': '15px',
+        'text-align': 'center',
+        'line-height': '30px',
+        color: 'black',
+        border: '1px solid rgb(173, 173, 173)',
+        'border-radius': '5px',
+        'z-index': 100,
+    }).attr('id', 'floorSelect').text('Change Floors')
+    .on('click', function(event){
+        if (floorHold.css('visibility') !== 'visible') {
+            floorHold.css({
+                visibility: 'visible',
+            });
+        }
+        else {
+            floorHold.css({
+                visibility: 'hidden',
+            });
+        }
     })
     .on('mouseenter', function(){
         $(this).css({
-            opacity: .5,
+            background: 'rgb(232, 232, 232)',
         });
     })
     .on('mouseleave', function(){
         $(this).css({
-            opacity: 1,
+            background: 'none',
+        });
+    })
+    .appendTo('body');
+
+    var heightCount = 0;
+    $('.map').each(function(i) {
+        heightCount++;
+        $('<div>').css({
+            position: 'absolute',
+            left: 0,
+            top: i*35,
+            height: 35,
+            width: 134,
+            'border-radius': '5px',
+            'text-align': 'center',
+            'font-size': '20px',
+            'z-index': 100,
+        }).text(i+1).appendTo(floorHold)
+        .on('click', function(){
+            layout(i);
+        })
+        .on('mouseenter', function(){
+            $(this).css({
+                background: 'rgb(232, 232, 232)',
+            });
+        })
+        .on('mouseleave', function(){
+            $(this).css({
+                background: 'none',
+            });
         });
     });
-});
-
-function layout(level){  
-    for (var i = 0; i < dormElements.length; i++) {
-        if (dormElements[i] !== undefined) {
-            dormElements[i].remove();
-        }
-    }
-    dormElements = [];
-    console.log(level); 
-    //get dorm room data
-    var roomData; 
-    switch (level) {
-        case 0:
-            roomData = <%= @level1 %>;
-            break;
-        case 1:
-            roomData = <%= @level2 %>;
-            break;
-        case 2:
-            roomData = <%= @level3 %>;
-            break;
-        default:
-            
-    }
-    var userDrawNum = <%= @curPullNum %>;
-    console.log(userDrawNum);
-    var room, val;
-    var layout = <%= @json %>;
-    console.log(layout);
-    //image map path
-    var map = layout.assets[level];
-    //speciifc floor layout coordinates
-    var floor = layout.floors[level+1];
-    console.log(floor);
-    var i = 0;
-    var x = 0;
-    var curRoomNum;
-    console.log(roomData);
-
-    //create image tag to size map correctly
-    var imgLev = level+1;
-    var img = document.getElementById('floor'+imgLev);  
-    var width = img.width;
-    var height = img.height;
-    var ratio = height/width;
-    var w = 940; 
-    $(".map").css({
-        display: 'none',
+    floorHold.css({
+        height: heightCount*35,
     });
 
-    //create dorm map 
-    console.log(map);
-    var fakeDorm = $('<div>').css({
-        position: 'absolute',
-        left: 90,
-        top: 250,
-        width: 940,
-        height: 940*ratio,
-        'background-image': map,
-        'background-size':  'contain',
-        border: '5px solid black',
-    }).appendTo('body');
-    dormElements.push(fakeDorm);
+
+    var userDrawNum = <%= @curPullNum %>;
+    var userRankNum = <%= @curRankNum %>;
+    var mapLayout = <%= @json %>;
+
+    function layout(level){ 
+        for (var i = 0; i < dormElements.length; i++) {
+            if (dormElements[i] !== undefined) {
+                dormElements[i].remove();
+            }
+        }
+        dormElements = [];
+        console.log(level); 
+        //get dorm room data
+        var roomData; 
+        switch (level) {
+            case 0:
+                roomData = <%= @level1 %>;
+                break;
+            case 1:
+                roomData = <%= @level2 %>;
+                break;
+            case 2:
+                roomData = <%= @level3 %>;
+                break;
+            default:
+                
+        }
+        console.log(roomData);
+        console.log(userRankNum);
+        var room, val;
+        //image map path
+        var map = mapLayout.assets[level];
+        //speciifc floor layout coordinates
+        var floor = mapLayout.floors[level+1];
+        var i = 0;
+        var x = 0;
+        var roomPullNum;
+        var roomRankNum;
+        var curRoomNum;
+
+        //create image tag to size map correctly
+        var imgLev = level+1;
+        var img = document.getElementById('floor'+imgLev);  
+        var width = img.width;
+        var height = img.height;
+        var ratio = height/width;
+        var w = 940; 
+        $(".map").css({
+            display: 'none',
+        });
+
+        //create dorm map 
+        var fakeDorm = $('<div>').css({
+            position: 'absolute',
+            left: 90,
+            top: 250,
+            width: 940,
+            height: 940*ratio,
+            'background-image': map,
+            'background-size':  'contain',
+            border: '5px solid black',
+        }).appendTo('body');
+        dormElements.push(fakeDorm);
 
 
-    //get keys so that you can traverse js by index
-    var keysbyindex = Object.keys(floor);
-    while (x < keysbyindex.length) {
-        
-        //get data for room
-          val = floor[keysbyindex[x]];
-          room = $('<div>').css({
-              position: 'absolute',
-              left: 100*(val.bounding_box.x)+'%',
-              top: 100*(val.bounding_box.y)+'%',
-              height: 100*(val.bounding_box.h)+'%',
-              width: 100*(val.bounding_box.w)+'%',
-              background: 'none',
-              color: 'black',
-          }).appendTo(fakeDorm);
-          dormElements.push(room);
-          
-          //get db info about room
-          if (roomData[i] !== undefined) {
-              room.info = roomData[i];
-              room.text(room.info.number);
+        //get keys so that you can traverse js by index
+        var keysbyindex = Object.keys(floor);
+        while (x < keysbyindex.length) {
+            
+            //get data for room
+              val = floor[keysbyindex[x]];
+              room = $('<div>').css({
+                  position: 'absolute',
+                  left: 100*(val.bounding_box.x)+'%',
+                  top: 100*(val.bounding_box.y)+'%',
+                  height: 100*(val.bounding_box.h)+'%',
+                  width: 100*(val.bounding_box.w)+'%',
+                  background: 'none',
+                  color: 'black',
+                  'font-size': '10px',
+              }).appendTo(fakeDorm);
+              dormElements.push(room);
               
-              //check if your room draw number is lower or the roomo is not pulled at all
-              if (userDrawNum < roomData[i].room_draw_number || roomData[i].room_draw_number === null) {
+              //get db info about room
+              if (roomData[i] !== undefined) {
+                  room.info = roomData[i];
+                  
+                  //need to check if student_id is equal to current_user.student.id
+                  //then you know if you are in room use bool in the while loop later
+                  
+                  //get names of students in room, possibly max of room draw numbers
+                  roomPullNum = null;
+                  room.curNames = [];
+                  curRoomNum = roomData[i].number;
+                  while (curRoomNum === roomData[i].number) {
+                      if (roomData[i].room_draw_number === userDrawNum) {
+                          room.css({
+                              background: 'rgb(217, 189, 4)',
+                          });
+                          roomRankNum = roomData[i].class_rank
+                          roomPullNum = userDrawNum;
+                      }
+                      else if (roomData[i].student_id !== null) {
+                          roomPullNum = roomData[i].room_draw_number;
+                          roomRankNum = roomData[i].class_rank
+                          console.log(roomRankNum);
+                      }
+                      
+                      if (roomData[i].first_name !== null) {
+                          room.curNames.push(roomData[i].first_name+' '+roomData[i].last_name);  
+                      }
+                      i++;
+                      if (roomData[i] === undefined) {
+                          break;
+                      }
+                  }
+                  //check if your room draw number is lower or the roomo is not pulled at all
+                  if (roomRankNum < userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) {
+                      room.css({
+                          background: 'rgb(102, 168, 255)',
+                      });
+                  }
+                  //room is pulled by someone with higher number
+                  else if((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum < roomRankNum) {
+                      room.css({
+                          background: 'rgb(136, 138, 139)',
+                      });
+                  }
+                  
+                  
+              }//if no db info on room ie undefined in roomData then just say its open
+              else {
                   room.css({
                       background: 'rgb(102, 168, 255)',
                   });
               }
-              //room is pulled by someone with higher number
-              else if(userDrawNum > roomData[i].room_draw_number) {
-                  room.css({
-                      background: 'rgb(136, 138, 139)',
-                  });
+              
+              if (room.curNames !== undefined) {
+                  if (room.curNames[0] !== undefined) {
+                      console.log(roomPullNum);
+                      var nameString = '';
+                      for (var j = 0; j < room.curNames.length; j++) {
+                          nameString = nameString + room.curNames[j] +', ';
+                      }
+                      room.text(nameString + roomPullNum);
+                  }
               }
               
-              //get names of students in room, possibly max of room draw numbers
-              room.curNames = [];
-              curRoomNum = roomData[i].number;
-              while (curRoomNum === roomData[i].number) {
-                  if (roomData[i].first_name !== null) {
-                      room.curNames.push(roomData[i].first_name+' '+roomData[i].last_name);  
-                  }
-                  i++;
-                  if (roomData[i] === undefined) {
-                      break;
-                  }
-              }
-              console.log(room.curNames);
-          }//if no db info on room ie undefined in roomData then just say its open
-          else {
-              room.css({
-                  background: 'rgb(102, 168, 255)',
+              room.on('mouseenter', function(){
+                 $(this).css({
+                     opacity: .5,
+                 }); 
               });
-          }
-          
-          room.on('mouseenter', function(){
-             $(this).css({
-                 opacity: .5,
-             }); 
-          });
-          
-          room.on('mouseleave', function(){
-             $(this).css({
-                    opacity: 1,
-             }); 
-          });
-          
-          room.on('click', {info: room.info}, function(event){
-              if (event.data.info !== undefined) {
-                  //show room info and populate form with room number
-                  var info = event.data.info;
-                  console.log(info);
-                  $('#usr').val(info.number);
-              }
-              modal.style.display = "block";
-          });
-        x++;
+              
+              room.on('mouseleave', function(){
+                 $(this).css({
+                        opacity: 1,
+                 }); 
+              });
+              
+              room.on('click', {info: room.info}, function(event){
+                  if (event.data.info !== undefined) {
+                      //show room info and populate form with room number
+                      var info = event.data.info;
+                      console.log(info);
+                      $('#usr').val(info.number);
+                  }
+                  modal.style.display = "block";
+              });
+            x++;
+        }
     }
-}
 
 
-window.onclick = function(event) {
-    if (event.target == modal) {
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    window.onkeyup = function(event) {
+      if (event.keyCode == 27) {
         modal.style.display = "none";
+        floorHold.css({
+            visibility: 'hidden',
+        });
+      }
     }
-}
-
-window.onkeyup = function(event) {
-  if (event.keyCode == 27) {
-    modal.style.display = "none";
-  }
-}
-
-layout(0);
-
+    
+    $(document).click(function(event) { 
+    if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+        if($('#floorHold').css("visibility") === 'visible') {
+            $('#floorHold').css({
+                visibility: 'hidden',
+            });
+        }
+    }        
+});
+    layout(0);
+    
 </script>
 
 <!-- Script for using radio buttons to show input field on the pull request
