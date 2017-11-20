@@ -14,7 +14,7 @@
     <% @dorms.each do |dorm| %>
       <tr>
         <td><%= dorm.name %></td>
-        <td><%= link_to 'Show', dorm %></td>
+        <td><%= link_to 'Show', dorm, :"data-turbolinks" => false %></td>
         <td><%= link_to 'Edit', edit_dorm_path(dorm) %></td>
         <td><%= link_to 'Destroy', dorm, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
