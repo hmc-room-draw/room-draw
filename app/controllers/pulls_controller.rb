@@ -28,6 +28,8 @@ class PullsController < ApplicationController
     @students = Student.all
     @rooms = Room.all
     @dorms = Dorm.all
+    #allow admin to toggle number of students to add in at a single time
+    @num = 1
   end
 
   # POST /pulls

@@ -34,7 +34,7 @@ class Pull < ApplicationRecord
   
   private
     def validate_student
-      errors.add(:student, "not in :students") if not students.include?(student)
+      errors.add(:student, "not in :students") if not Student.all.include?(student)
     end
 
   #check student conflicts/frosh/preplaced people check room assignments
