@@ -18,7 +18,6 @@ class Student < ApplicationRecord
   validates :user_id, uniqueness: true
 
   # student A outranks student B means A can bump B
-  # note: this had a bug because enum values are compared as strings
   def outranks(other)
     my_rank = Student.class_ranks[self.class_rank]
     their_rank = Student.class_ranks[other.class_rank]
@@ -30,12 +29,19 @@ class Student < ApplicationRecord
         return other.number_is_last
       end
     else
-      return my_rank > their_rank
+      # older class_ranks are smaller numbers so sorting is simpler
+      # thus, if my_rank is smaller than their_rank, I outrank them
+      return my_rank < their_rank
     end
   end
 
   def senior?
     class_rank == :senior or class_rank == :super_senior
+  end
+
+  def number_sort
+    # convert class rank to a number or it sorts as a string
+    [Student.class_ranks[class_rank], number_is_last ? 1 : 0, room_draw_number]
   end
 
   def format_number
