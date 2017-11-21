@@ -20,10 +20,6 @@ class PullsController < ApplicationController
     authorize Pull
     @pull = Pull.new
     3.times {@pull.room_assignments.build}
-    #TODO: Get only the necessary information
-    @students = Student.all
-    @rooms = Room.all
-    @dorms = Dorm.all
   end
 
   # GET /pulls/1/edit
@@ -39,9 +35,6 @@ class PullsController < ApplicationController
   def create
     authorize Pull
 
-    @students = Student.all
-    @rooms = Room.all
-    @dorms = Dorm.all
     @pull = Pull.new(pull_params)
 
     cps = @pull.get_conflicting_pulls

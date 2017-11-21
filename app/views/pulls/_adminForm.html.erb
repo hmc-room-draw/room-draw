@@ -13,9 +13,9 @@
 
   <div class="field">
     <%= form.label :student_id %>
-    <!-- TODO: We don't wanna display room_draw_numner.
+    <!-- TODO: We don't wanna display room_draw_number.
          So, we need to join the table of student and user and get the email address -->
-    <%= form.collection_select :student_id, @students, :id, :room_draw_number  %>
+    <%= form.collection_select :student_id, Student.all, :id, :room_draw_number  %>
   </div>
 
   <div class="field">
@@ -31,16 +31,16 @@
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+        <%= room_assignment.collection_select :student_id, Student.all, :id, :room_draw_number, id: :room_assignment_student_id %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>
-        <%= room_assignment.grouped_collection_select :room_id, @dorms, :room, :name, :id,:number, id: :room_assignment_room_id %>
+        <%= room_assignment.grouped_collection_select :room_id, Dorm.all, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
       </div> 
 
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= form.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
       </div> 
       
     <% end %>
