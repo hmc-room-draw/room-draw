@@ -40,7 +40,7 @@
 
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a, id: :room_assignment_assignment_type %>
       </div> 
       
     <% end %>

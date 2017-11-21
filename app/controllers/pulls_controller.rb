@@ -58,7 +58,7 @@ class PullsController < ApplicationController
         cp.destroy()
       end
     end
-
+      
     @pull.students.each { |student|
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
