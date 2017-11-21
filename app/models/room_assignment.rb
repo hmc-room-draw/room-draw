@@ -8,10 +8,10 @@ class RoomAssignment < ApplicationRecord
   validates :student_id, uniqueness: true, allow_nil: true
   validates :pull_id, uniqueness: true, allow_nil: true
 
-  # validate :validate_room
+  validate :validate_room
 
-  # private
-  #   def validate_room
-  #     errors.add(:room, "already full") if room.room_assignments.size == room.capacity
-  #   end
+  private
+    def validate_room
+      errors.add(:room, "already full") if room.room_assignments.size == room.capacity
+    end
 end
