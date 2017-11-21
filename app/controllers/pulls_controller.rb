@@ -39,6 +39,9 @@ class PullsController < ApplicationController
   def create
     authorize Pull
 
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
     @pull = Pull.new(pull_params)
 
     cps = @pull.get_conflicting_pulls
@@ -63,7 +66,7 @@ class PullsController < ApplicationController
       end
     end
 
-    @pull.students.forEach { |student|
+    @pull.students.each { |student|
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
       room = student.room_assignment.room.number
