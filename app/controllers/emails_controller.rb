@@ -28,7 +28,13 @@ class EmailsController < ApplicationController
     content = email["description"]
 
     @email = Email.new(subject: subject, description: content, sendDate: send_date)
-    @email.save
+    if @email.save
+      flash[:notice] = 'Email has been scheduled as requested!'
+      redirect_to admin_home_path
+    else 
+      flast[:alert] = 'There was a problem with scheduling your email.'
+      render :new
+    end
 
     # Run bin/delayed_job start to process all jobs
     GeneralMailer.reminder_email_to_non_participants(subject, content, send_date)
