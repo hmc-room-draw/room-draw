@@ -37,43 +37,76 @@
    text-decoration: none;
    cursor: pointer;
 }
+
+/* The Color Boxes for the legend */
+.input-color {
+    position: absolute;
+}
+.input-color input {
+    position: relative;
+    width: 180px;
+    height: 18px;
+    left: 840px;
+    top: 20px;
+    background-color: transparent;
+    border: 0px solid;
+}
+.input-color .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: relative;
+    left: 640px;
+    top: 21px;
+}
+
+.fixed {
+  position: absolute;
+  left: 100px;
+  top: 160px;
+}
+.info {
+  position: absolute;
+  left: 20px;
+  top: 115px;
+}
 </style>
 
-<p>
-  <strong>Name:</strong>
-  <%= @dorm.name %>
-</p>
-
-<%= link_to 'Edit', edit_dorm_path(@dorm) %> |
-<%= link_to 'Back', dorms_path %>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="btn-group">
-                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                        <% @dorms.each do |dorm| %>
-                            <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
-                        <% end %>
-                </ul>
-            </div>
-        </div>
-        <h1><br></h1>
-    </div>
+<div class="info">
+  <p>
+    <% if current_user.is_admin? %>
+      <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
+    <% end %>
+      <%= link_to 'Go Back', dorms_path %>
+    </br>
+  </p>
 </div>
 
-       <!--  <div class="col-md-3">
-            <ul class="dropdown-menu">
-            <li class = "active"><a href=/dorms/case>First Floor</a></li>
-            <li><a href=/dorms/case2>Second Floor</a></li>
-            </ul>
-        </div>
-
-        <h1><br></h1>
+<div class="fixed">
+  <p>
+    <strong>Dorm:</strong> <%= @dorm.name %>
+  </p>
+    <div class="dropdown" style="padding-right:700px">
+        <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+                <% @dorms.each do |dorm| %>
+                    <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
+                <% end %>
+        </ul>
     </div>
-</div> -->
+</div>
+  <div class="input-color">
+    <input type="text" value="vacant" readonly></input>
+      <div class="color-box" style="background-color: rgb(102, 168, 255);"></div></br>
+    <input type="text" value="occupied but pullable" readonly></input>
+      <div class="color-box" style="background-color: rgb(217, 189, 4);"></div></br>
+    <input type="text" value="occupied and not pullable" readonly></input>
+      <div class="color-box" style="background-color: rgb(136, 138, 139);"></div>
+  </div>
+  <p></br></p>
+
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -86,33 +119,6 @@
     <div class="modal-body">
     <p>You have begun a pull request for this room</p>
       <p>The following form must be filled out in order to pull a room:</p>
-<!--         <%= form_for @pull, :url => new_pull_path do |form| %>   
-        <% if @pull.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
-
-            <ul>
-            <% @pull.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="field">
-          <%= form.label :message %>
-          <%= form.text_field :message, id: :pull_message %>
-        </div>
-
-        <div class="field">
-          <%= form.label :student_id %>
-          <%= form.text_field :student_id, id: :pull_student_id %>
-        </div>
-
-        <div class="actions">
-          <%= form.submit %>
-        </div>
-      <% end %> -->
       <%= render 'pullform', pull: @pull %>
 
   </div>  <!-- End of modal content -->
@@ -152,29 +158,29 @@ span.onclick = function() {
 
     var floorHold = $('<div>').css({
         position: 'absolute',
-        left: 600,
-        top: 180,
-        height: 150,
-        width: 136,
+        left: 270,
+        top: 223,
+        height: 34,
+        width: 115,
         background: 'rgb(255, 255, 255)',
-        border: '1px solid rgb(173, 173, 173)',
+        border: '1px solid rgb(200, 200, 200)',
         'border-radius': '5px',
         visibility: 'hidden',
     }).attr('id', 'floorHold').appendTo('body');
 
     var floorSelect = $('<div>').css({
         position: 'absolute',
-        left: 600,
-        top: 150,
-        height: 30,
-        width: 136,
-        'font-size': '15px',
+        left: 270,
+        top: 188,
+        height: 34,
+        width: 115,
+        'font-size': '14px',
         'text-align': 'center',
         'line-height': '30px',
         color: 'black',
-        border: '1px solid rgb(173, 173, 173)',
+        border: '1px solid rgb(200, 200, 200)',
         'border-radius': '5px',
-    }).attr('id', 'floorSelect').text('Change Floors')
+    }).attr('id', 'floorSelect').text('switch floors')
     .on('click', function(event){
         if (floorHold.css('visibility') !== 'visible') {
             floorHold.css({
@@ -208,11 +214,11 @@ span.onclick = function() {
             position: 'absolute',
             left: 0,
             top: i*35,
-            height: 35,
-            width: 134,
+            height: 33,
+            width: 113,
             'border-radius': '5px',
             'text-align': 'center',
-            'font-size': '20px',
+            'font-size': '17px',
             'z-index': 100,
         }).text(i+1).appendTo(floorHold)
         .on('click', function(){
