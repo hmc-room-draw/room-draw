@@ -29,10 +29,10 @@ class EmailsController < ApplicationController
 
     @email = Email.new(subject: subject, description: content, sendDate: send_date)
     if @email.save
-      flash[:notice] = 'Email has been scheduled as requested!'
+      flash[:notice] = 'Email has been scheduled successfully!'
       redirect_to admin_home_path
     else 
-      flast[:alert] = 'There was a problem with scheduling your email.'
+      flash[:alert] = 'There was a problem with scheduling your email.'
       render :new
     end
 
