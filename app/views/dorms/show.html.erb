@@ -43,6 +43,10 @@
   left: 5%;
   width: 90%;
 }
+.popup-button {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 
 </style>
 
@@ -101,17 +105,21 @@
       <div class="modal-body">
         <div id="admin_buttons" class="collapse in">
           
-          <button id="create-pull" class="btn btn-primary btn-block">Create Pull</button>
-          <br>
-          <button id="edit-pull" class="btn btn-primary btn-block">Edit/Delete Pull</button>
-          <br>
+          <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
+          <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
+          <button id="delete-pull" class="btn btn-primary btn-block popup-button">Delete Pull</button>
           <!-- Unpullable Form -->
-          <button id="mark-pullable" class="btn btn-primary btn-block">Mark Room Pullable/Unpullable</button>
-          <div class="hidden" id="unpullable-form">
-            <br>
-              <%= render "admin/unpullable_form", :dorm => @dorm.name %>
+          <button id="mark-unpullable" class="btn btn-primary btn-block popup-button">Mark Room Unpullable</button>
+          <div class="hidden popup-button" id="unpullable-form">
+              <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
           </div>
-          <br>
+          <div id="mark-pullable" class="popup-button">
+            <%= form_with(method: "delete_mark") do %>
+              <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
+              <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
+              <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
+            <% end %>
+          </div>
           <% if @student %>
             <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
 
@@ -173,7 +181,7 @@ span.onclick = function() {
     modal.style.display = "none";
 }
 // Have the admin buttons toggle their respective divs
-$("#mark-pullable").click(function() {
+$("#mark-unpullable").click(function() {
   $("#unpullable-form").toggleClass("hidden");
 });
 $("#pull-student").click(function() {
@@ -246,7 +254,6 @@ function layout(level){
     var i = 0;
     var x = 0;
     var curRoomNum;
-    console.log(roomData);
 
     //create image tag to size map correctly
     var imgLev = level+1;
@@ -346,7 +353,30 @@ function layout(level){
                   //show room info and populate form with room number
                   var info = event.data.info;
                   $('#usr').val(info.number); //TODO: Check this is actually used.
+                  $('#unpullable-room-delete').val(info.number);
                   $('#unpullable-room-num').val(info.number);
+                  if (info.assignment_type != null) { // If there's currently a room assignment
+                    $('#create-pull').addClass('hidden');
+                    $('#mark-unpullable').addClass('hidden');
+                    $('#mark-pullable').removeClass('hidden');
+
+                    // If there's also a pull, show additional options
+                    if (info.pull_id != null) {
+                      $('#edit-pull').removeClass('hidden');
+                      $('#delete-pull').removeClass('hidden');
+                    } else {
+                      $('#edit-pull').addClass('hidden');
+                      $('#delete-pull').addClass('hidden');
+                    }
+                    
+                  } else { // If there isn't an assignment type, theres no RoomAssignment
+                    //So there isn't any associated Pull either.
+                    $('#create-pull').removeClass('hidden');
+                    $('#mark-unpullable').removeClass('hidden');
+                    $('#edit-pull').addClass('hidden');
+                    $('#delete-pull').addClass('hidden');
+                    $('#mark-pullable').addClass('hidden');
+                  }
                   $('#room-num').html(info.number);
               }
               modal.style.display = "block";

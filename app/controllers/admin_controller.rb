@@ -1,10 +1,11 @@
 class AdminController < ApplicationController
+  protect_from_forgery with: :null_session
 
   def edit_mark
-    if params[:delete]
-      delete_mark(params)
-    else
+    if params[:create]
       add_mark(params)
+    else
+      delete_mark(params)
     end
     # Refresh the page so the form can be used again.
     redirect_back fallback_location: root_path, success_message: "hello world"
@@ -13,18 +14,16 @@ class AdminController < ApplicationController
   def add_mark(params)
     @marked_room = RoomAssignment.new
     @marked_room.assignment_type = params[:mark_type]
-    room = get_room(params[:dorm_name][:value], params[:room])
+    room = get_room(params[:dorm], params[:room])
 
     # Make sure the user hasn't typed in an invalid room number
     if room.nil?
-      puts "FLASHING DANGER!!!"
       flash[:danger] = "Invalid room."
       return
     end
 
     @marked_room.room_id = room
     @marked_room.description = params[:description]
-    
     if @marked_room.save
       flash[:success] = "Room successfully marked unpullable."
     else
@@ -34,7 +33,7 @@ class AdminController < ApplicationController
 
   def delete_mark(params)
     # Look up the room with the corresponding room ID
-    room_id = get_room(params[:dorm_name][:value], params[:room])
+    room_id = get_room(params[:dorm], params[:room])
     if room_id.nil?
       flash[:success] = "Error - room not found."
     else
