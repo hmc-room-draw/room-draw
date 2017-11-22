@@ -106,6 +106,12 @@
         <div id="admin_buttons" class="collapse in">
           
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
+          <div class="hidden" id="pull-form">
+            <br>
+              <%= render 'pullform', pull: @pull %>
+            <br>
+          </div>
+
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
           <button id="delete-pull" class="btn btn-primary btn-block popup-button">Delete Pull</button>
           <!-- Unpullable Form -->
@@ -186,6 +192,9 @@ $("#mark-unpullable").click(function() {
 });
 $("#pull-student").click(function() {
   $("#student-pull-form").toggleClass("hidden");
+});
+$("#create-pull").click(function() {
+  $("#pull-form").toggleClass("hidden");
 });
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
@@ -358,13 +367,14 @@ function layout(level){
                   if (info.assignment_type != null) { // If there's currently a room assignment
                     $('#create-pull').addClass('hidden');
                     $('#mark-unpullable').addClass('hidden');
-                    $('#mark-pullable').removeClass('hidden');
 
                     // If there's also a pull, show additional options
                     if (info.pull_id != null) {
+                      $('#mark-pullable').addClass('hidden');
                       $('#edit-pull').removeClass('hidden');
                       $('#delete-pull').removeClass('hidden');
                     } else {
+                      $('#mark-pullable').removeClass('hidden');
                       $('#edit-pull').addClass('hidden');
                       $('#delete-pull').addClass('hidden');
                     }
