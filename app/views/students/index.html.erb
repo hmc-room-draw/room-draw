@@ -8,6 +8,7 @@
       <th>Class rank</th>
       <th>Room draw number</th>
       <th>Has participated</th>
+      <th>Has completed form</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= student.class_rank %></td>
         <td><%= student.room_draw_number %></td>
         <td><%= student.has_participated %></td>
+        <td><%= student.has_completed_form %></td>
         <td><%= link_to 'Show', student %></td>
         <td><%= link_to 'Edit', edit_student_path(student) %></td>
         <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>

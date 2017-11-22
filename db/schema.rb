@@ -10,8 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20171116071921) do
 
-ActiveRecord::Schema.define(version: 20171023000808) do
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
 
   create_table "dorms", force: :cascade do |t|
     t.string "name"
@@ -25,6 +39,14 @@ ActiveRecord::Schema.define(version: 20171023000808) do
     t.integer "last_updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "subject"
+    t.date "sendDate"
   end
 
   create_table "pulls", force: :cascade do |t|
@@ -79,10 +101,13 @@ ActiveRecord::Schema.define(version: 20171023000808) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
     t.string "email"
-    t.integer "userID"
-    t.integer "roomDrawNumber"
+    t.boolean "is_admin"
+    t.boolean "has_completed_form"
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

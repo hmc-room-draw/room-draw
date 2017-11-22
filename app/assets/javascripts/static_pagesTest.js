@@ -1,4 +1,3 @@
-
 // Class to create a popup effect
 function popCase(e) {
 

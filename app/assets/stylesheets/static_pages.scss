@@ -5,19 +5,18 @@
 @import "bootstrap";
 
 .dorms {
-	// Set up code for the div to appear in the right place
-	position:absolute;
-	z-index:20000;
-	display: none;
+    // Set up code for the div to appear in the right place
+    position:absolute;
+    z-index:20000;
+    display: none;
 
-	// styling 
-	background: white;
-	border-radius:  25px;
-	border-style: solid;
-	border-color: black;
-	padding: 20px;
-	font-family: Georgia;
-	font-size: 200%;
+    // styling 
+    background: white;
+    border-radius:  25px;
+    border-style: solid;
+    border-color: black;
+    padding: 20px;
+    font-family: Georgia;
+    font-size: 200%;
 
 }
-
