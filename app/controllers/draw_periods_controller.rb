@@ -99,7 +99,6 @@ class DrawPeriodsController < ApplicationController
                 end
 
                 csv << basic_info + placement_info
-            
             end
         end
     
@@ -128,10 +127,7 @@ class DrawPeriodsController < ApplicationController
           :filename => 'non_participants.csv',
           :disposition => 'attachment'
     end
-    #TODO
-    def downloadPulls
-        render html: "<script>alert('Download Pulls Called')</script>".html_safe
-    end
+
     private
         def set_draw_period
             @draw_period = DrawPeriod.find(params[:id])
