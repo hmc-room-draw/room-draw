@@ -51,7 +51,7 @@
     <div class="row">
         <div class="col-md-7">
             <div class="btn-group">
-                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
+                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                         <% @dorms.each do |dorm| %>
@@ -158,7 +158,6 @@ span.onclick = function() {
         border: '1px solid rgb(173, 173, 173)',
         'border-radius': '5px',
         visibility: 'hidden',
-        'z-index': 100,
     }).attr('id', 'floorHold').appendTo('body');
 
     var floorSelect = $('<div>').css({
@@ -173,17 +172,18 @@ span.onclick = function() {
         color: 'black',
         border: '1px solid rgb(173, 173, 173)',
         'border-radius': '5px',
-        'z-index': 100,
     }).attr('id', 'floorSelect').text('Change Floors')
     .on('click', function(event){
         if (floorHold.css('visibility') !== 'visible') {
             floorHold.css({
                 visibility: 'visible',
+                'z-index': 100,
             });
         }
         else {
             floorHold.css({
                 visibility: 'hidden',
+                'z-index': 0,
             });
         }
     })
@@ -337,7 +337,6 @@ span.onclick = function() {
                       else if (roomData[i].student_id !== null) {
                           roomPullNum = roomData[i].room_draw_number;
                           roomRankNum = roomData[i].class_rank
-                          console.log(roomRankNum);
                       }
                       
                       if (roomData[i].first_name !== null) {
@@ -349,13 +348,13 @@ span.onclick = function() {
                       }
                   }
                   //check if your room draw number is lower or the roomo is not pulled at all
-                  if (roomRankNum < userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) {
+                  if (roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) {
                       room.css({
                           background: 'rgb(102, 168, 255)',
                       });
                   }
                   //room is pulled by someone with higher number
-                  else if((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum < roomRankNum) {
+                  else if((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) {
                       room.css({
                           background: 'rgb(136, 138, 139)',
                       });
@@ -417,6 +416,7 @@ span.onclick = function() {
         modal.style.display = "none";
         floorHold.css({
             visibility: 'hidden',
+            'z-index': 0
         });
       }
     }
@@ -426,6 +426,7 @@ span.onclick = function() {
         if($('#floorHold').css("visibility") === 'visible') {
             $('#floorHold').css({
                 visibility: 'hidden',
+                'z-index': 0
             });
         }
     }        
