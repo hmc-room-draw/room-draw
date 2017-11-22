@@ -6,7 +6,6 @@ class GeneralMailer < ApplicationMailer
       if student.has_participated == false and student.user
           user = student.user
           GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).reminder_email(user, subject, content)
-        end
       end
     end
   end

@@ -93,14 +93,14 @@ class DrawPeriodsController < ApplicationController
         Download all students who have not participated in room draw
         '''
         user_csv = CSV.generate do |csv|
-          csv << ["Room Draw Number", "Class Rank"]
+          csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
           Student.all.each do |student|
             if student.has_participated == false
               # Use user_id to trace the first name, last name and email of user_id
               # uncomment and test this block when database code is ready
               #user = User.find_by(user_id: student.user_id)
               #csv << [user.first_name, user.last_name, student.class_rank,user.email]
-              csv << [student.room_draw_number, student.class_rank]
+              csv << [student.user.last_name, student.user.first_name, student.class_rank, student.room_draw_number, student.user.email]
             end
           end
         end

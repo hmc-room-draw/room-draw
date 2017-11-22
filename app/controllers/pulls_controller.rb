@@ -42,7 +42,7 @@ class PullsController < ApplicationController
     @pull = Pull.new(pull_params)
 
     cps = @pull.get_conflicting_pulls
-    cannot_override = cps.select { |cp| not pull can_override(cp) }
+    cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
     if not cannot_override.empty?
       format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
