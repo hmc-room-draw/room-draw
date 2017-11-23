@@ -42,4 +42,6 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path %>
+<% if current_user.is_admin %>
+  <%= link_to 'New Student', new_student_path %>
+<% end %>
