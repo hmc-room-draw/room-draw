@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_student_and_user, only: [:show, :edit, :update, :destroy]
   include StudentsHelper
 
   def index
@@ -31,7 +31,7 @@ class StudentsController < ApplicationController
     @user.student = Student.new(student_params)
 
     respond_to do |format|
-      if @user.save
+      if @user.save && @user.student.save
         format.html { redirect_to @user.student, notice: 'Student was successfully created.' }
       else
         format.html { render :new }
@@ -42,12 +42,8 @@ class StudentsController < ApplicationController
 
   def update    
     respond_to do |format|
-      if @user.update(user_params)
-        if @user.student.update(student_params)
+      if @user.update(user_params) && @user.student.update(student_params)
           format.html { redirect_to @user.student, notice: 'Student was successfully updated.' }
-        else
-          format.html { render :edit }
-        end
       else
         format.html { render :edit }
       end
@@ -56,8 +52,8 @@ class StudentsController < ApplicationController
 
 
   def destroy
-    @user.student.destroy
     @user.destroy
+    @student.destroy
 
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
@@ -66,9 +62,11 @@ class StudentsController < ApplicationController
   end
 
   private
-    def set_user
-      @user = User.find(params[:id])
+    def set_student_and_user
+      @student = Student.find(params[:id])
+      @user = @student.user
     end
+
     def user_params
       params.fetch(:user).permit(:first_name, :last_name, :email, :is_admin)
     end
