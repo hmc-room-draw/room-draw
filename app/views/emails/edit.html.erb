@@ -1,0 +1,29 @@
+
+<h1 style='color: #E5E7E9'> Edit Reminder Email</h1>
+
+<br>
+<h4 style='color: #E5E7E9'> Recipients (students who haven't filled out the form):</h1>
+<% Student.all.each do |student| %>
+   <% if student.has_participated == false %>
+      <% if student.user%>
+         <h5 style='color: #E5E7E9'> <%= student.user.email%> </h5>
+      <% end %>
+    <% end %>
+<% end %>
+
+<br>
+
+<body class="title">
+
+<%= form_for @email, html: { multipart: true } do |f| %>
+  <%= f.text_field :subject, class: 'subject', :required => true, :placeholder => 'Subject'%>
+  <br>
+  <%= f.text_field :description, class: 'message', :required => true, :placeholder => 'Message'%>
+  <br>
+  <%= f.date_select :created_at %>
+  <br>
+  <%= f.submit "Send Email"%>
+<% end %>
+
+
+</body>

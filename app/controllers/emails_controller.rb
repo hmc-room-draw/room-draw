@@ -10,6 +10,7 @@ class EmailsController < ApplicationController
   end
 
   def create
+    puts "AT LEAST THE FIRST FUNCTION GOT CALLED."
     # fetch created email
     email = params["email"]
 
@@ -31,7 +32,8 @@ class EmailsController < ApplicationController
     @email.save
 
     # Run bin/delayed_job start to process all jobs
-    GeneralMailer.reminder_email_to_non_participants(subject, content, send_date)
+    puts "CALLING FUNC WITH PARAMS", send_date, @email.attributes['id']
+    GeneralMailer.reminder_email_to_non_participants(send_date, @email.attributes['id'])
   end
 
   def destroy
