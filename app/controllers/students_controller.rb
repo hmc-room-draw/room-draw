@@ -2,44 +2,46 @@ class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update, :destroy]
   include StudentsHelper
 
-  # GET /students
-  # GET /students.json
   def index
     @students = Student.all
+    @users = User.select {|user| user.has_student?}
   end
 
-  # GET /students/1
-  # GET /students/1.json
+
   def show
+    @user = User.find(params[:id])
   end
 
-  # GET /students/new
+
   def new
-    @student = Student.new
+    @user = User.new
+    @user.student = Student.new
+    @action = "create"
+    @method = :post
   end
 
-  # GET /students/1/edit
+
   def edit
+    @action = "update"
+    @user = User.find(params[:id])
+    @method = :patch
   end
 
-  # POST /students
-  # POST /students.json
+
   def create
-    @student = Student.new(student_params)
+    @user = User.new(user_params)
+    @user.student = Student.new(student_params)
 
     respond_to do |format|
-      if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render :show, status: :created, location: @student }
+      if @user.save
+        format.html { redirect_to @user, notice: 'Student was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /students/1
-  # PATCH/PUT /students/1.json
+
   def update
     respond_to do |format|
       if @student.update(student_params)
@@ -52,13 +54,14 @@ class StudentsController < ApplicationController
     end
   end
 
-  # DELETE /students/1
-  # DELETE /students/1.json
+
   def destroy
-    @student.destroy
+    @user = User.find(params[:id])
+    @user.student.destroy
+    @user.destroy
+
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -68,8 +71,12 @@ class StudentsController < ApplicationController
       @student = Student.find(params[:id])
     end
 
+    def user_params
+      params.fetch(:user).permit(:first_name, :last_name, :email, :is_admin)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
+      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
     end
 end
