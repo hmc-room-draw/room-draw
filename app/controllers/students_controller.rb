@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   include StudentsHelper
 
   def index
@@ -9,7 +9,6 @@ class StudentsController < ApplicationController
 
 
   def show
-    @user = User.find(params[:id])
   end
 
 
@@ -23,7 +22,6 @@ class StudentsController < ApplicationController
 
   def edit
     @action = "update"
-    @user = User.find(params[:id])
     @method = :patch
   end
 
@@ -42,9 +40,7 @@ class StudentsController < ApplicationController
   end
 
 
-  def update
-    @user = User.find(params[:id])
-    
+  def update    
     respond_to do |format|
       if @user.update(user_params)
         if @user.student.update(student_params)
@@ -60,21 +56,19 @@ class StudentsController < ApplicationController
 
 
   def destroy
-    @user = User.find(params[:id])
     @user.student.destroy
     @user.destroy
 
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student
-      @student = Student.find(params[:id])
+    def set_user
+      @user = User.find(params[:id])
     end
-
     def user_params
       params.fetch(:user).permit(:first_name, :last_name, :email, :is_admin)
     end
