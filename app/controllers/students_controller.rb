@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'Student was successfully created.' }
+        format.html { redirect_to @user.student, notice: 'Student was successfully created.' }
       else
         format.html { render :new }
       end
@@ -43,13 +43,17 @@ class StudentsController < ApplicationController
 
 
   def update
+    @user = User.find(params[:id])
+    
     respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
-        format.json { render :show, status: :ok, location: @student }
+      if @user.update(user_params)
+        if @user.student.update(student_params)
+          format.html { redirect_to @user.student, notice: 'Student was successfully updated.' }
+        else
+          format.html { render :edit }
+        end
       else
         format.html { render :edit }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end

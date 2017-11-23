@@ -1,10 +1,10 @@
-<%= form_with(model: student, local: true) do |form| %>
-  <% if student.errors.any? %>
+<%= form_for :user, :url => {:action => @action, :id => @user}, :method => @method do |form| %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
-      <% student.errors.full_messages.each do |message| %>
+      <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,29 +12,51 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :class_rank %>
-    <%= form.text_field :class_rank, id: :student_class_rank %>
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, id: :user_first_name, value: @user.first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :room_draw_number %>
-    <%= form.text_field :room_draw_number, id: :student_room_draw_number %>
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :user_last_name, value: @user.last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :has_participated %>
-    <%= form.check_box :has_participated, id: :student_has_participated %>
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :user_email, value: @user.email %>
   </div>
 
   <div class="field">
-    <%= form.label :has_completed_form %>
-    <%= form.check_box :has_completed_form, id: :student_has_completed_form %>
+    <%= form.label :is_admin %>
+    <%= form.check_box :is_admin, id: :user_is_admin, checked: @user.is_admin %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :student_user_id %>
-  </div>
+  <%= form.fields_for :student do |s_form| %>
+    <div class="field">
+      <%= s_form.label :class_rank %>
+      <%= s_form.select :class_rank, Student.class_ranks.keys, id: :student_class_rank, :selected => @user.student.class_rank %>
+    </div>
+    
+    <div class="field">
+      <%= s_form.label :room_draw_number %>
+      <%= s_form.text_field :room_draw_number, id: :student_room_draw_number, value: @user.student.room_draw_number %>
+    </div>
+
+    <div class="field">
+      <%= s_form.label :number_is_last %>
+      <%= s_form.check_box :number_is_last, id: :student_number_is_last, checked: @user.student.number_is_last%>
+    </div>
+    
+    <div class="field">
+      <%= s_form.label :has_completed_form %>
+      <%= s_form.check_box :has_completed_form, id: :student_has_completed_form, checked: @user.student.has_completed_form %>
+    </div>
+    
+    <div class="field">
+      <%= s_form.label :has_participated %>
+      <%= s_form.check_box :has_participated, id: :student_has_participated, checked: @user.student.has_participated %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
