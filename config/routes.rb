@@ -2,12 +2,11 @@ Rails.application.routes.draw do
   
   resources :emails
   get 'emails/new', to: 'draw_periods#sendEmails'
-
   get 'emails/index'
-
   get 'emails/show', to: 'draw_periods#viewEmails'
-
   get 'emails/create'
+  get 'emails/:id/edit', to: 'draw_periods#edit'
+  delete 'emails/:id', to: 'draw_periods#destroy'
 
   # temporary route of landing page
   post 'emails/download_non_participants'

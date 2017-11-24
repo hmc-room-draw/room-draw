@@ -6,16 +6,22 @@
       <th>Send Date</th>
       <th>Subject</th>
       <th>Message</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
-    <% emails = Email.all.reverse %>
-    <% emails.each do |email| %>
+    <% @emails.each do |email_tuple| %>
+      <% email = email_tuple[0] %>
       <tr>
         <td><%= email.created_at %> </td>
         <td><%= email.sendDate %> </td>
         <td><%= email.subject %> </td>
         <td><%= email.description %> </td>
+        <td><%= email_tuple[1] %> </td>
+        <td><%= link_to 'Edit', edit_email_path(email) %></td>
+        <td><%= link_to 'Destroy', email, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
-
-
   </table>
+
+  <%= link_to 'New Email', new_email_path %>
