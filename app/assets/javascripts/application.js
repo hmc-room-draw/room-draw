@@ -16,5 +16,6 @@
 //= require bootstrap
 //= require bootstrap-sprockets
 //= require rails-ujs
+//= require tooltipster.bundle
 //= require turbolinks
 //= require_tree .

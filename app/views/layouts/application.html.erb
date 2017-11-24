@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,30 +13,26 @@
   <nav class="navbar navbar-inverse bg-inverse">
     <div class = "container">
         <div class = "navbar-header">
+        <div>
         <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
         # => <a href="/"><img src="/assets/images/logo-HMC.png" ></a>
         </div>
+        <% if current_page?("/launch") %>
+        <%= link_to "Home", "/launch", class: "navbar-brand" %>
+        <% else %>
+        <%= link_to "Home", root_path, class: "navbar-brand" %>
+        <% end %>
+        </div>
         <ul class= "nav navbar-nav">
-            <li><% if current_user %>
-                Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>!
-                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
-                <% else %>
-                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-                <!--   <h1>Welcome to Room Draw</h1>
- 
-                  <h2>Instructions:</h2>
-                  <p>1) Make sure you are an authenticated User (student).<br/>
-                     2) Login with your HMC google account.  You will then be redirected to a page where you can fill out the required CIS form.<br/>
-                     3) Fill out the CIS form.<br/>
-                     4) Select a room.  You will not be able to pull into a room until you have logged in and filled out the CIS form.<br/>
-                  </p> -->
-                <% end %></li>
+            <li> 
+            <% if current_page?("/launch") %>
+            <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %> 
+            <% else %>
+            <%= link_to "Logout", "/launch" %></li>
+            <% end %>
         </ul>
     </div>
   </nav>
-
-    <p class = "notice"><%= notice %></p>
-    <p class = "alert"><%= alert %></p>
 
     <%= yield %>
   </body>
