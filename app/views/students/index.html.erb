@@ -1,27 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Students</h1>
+<% if current_user.is_admin %>
+  <%= link_to 'Home', admin_home_path %>
+<% else %>
+  <!--TO DO: change depending on what default home page is-->
+  <%= link_to 'Home', root_path %>
+<% end %>
 
-<table>
+<table class = "sortable">
   <thead>
     <tr>
-      <th>Class rank</th>
-      <th>Room draw number</th>
-      <th>Has participated</th>
-      <th>Has completed form</th>
-      <th colspan="3"></th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Email</th>
+      <th>Number</th>
+      <th data-defaultsort="asc">Status</th>
+      <% if current_user.is_admin %>
+        <th colspan="3" data-defaultsort="disabled">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% @students.each do |student| %>
+    <% @users.each do |user| %>
       <tr>
-        <td><%= student.class_rank %></td>
-        <td><%= student.room_draw_number %></td>
-        <td><%= student.has_participated %></td>
-        <td><%= link_to 'Show', student %></td>
-        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td data-value="<%= user.student.number_sort %>"><%= user.student.format_number %></td>
+        <td data-value="<%= user.student.status_sort %>"><%= user.student.format_status %></td>
+        <% if current_user.is_admin %>
+          <td><%= link_to 'Details', student_path(user.student) %></td>
+          <td><%= link_to 'Edit', edit_student_path(user.student) %></td>
+          <td><%= link_to 'Delete', student_path(user.student), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +42,6 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path %>
+<% if current_user.is_admin %>
+  <%= link_to 'New Student', new_student_path %>
+<% end %>
