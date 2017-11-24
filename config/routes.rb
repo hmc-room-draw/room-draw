@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   
   resources :emails
   get 'emails/new', to: 'draw_periods#sendEmails'
