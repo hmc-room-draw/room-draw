@@ -13,16 +13,15 @@ class EmailsController < ApplicationController
 
   def show
     @status = []
-    @emails []= Email.all.reverse
+    @emails = []
     Email.all.reverse.each do |email|
       dateDiff = (email.sendDate - Date.today).to_i
-      puts "DATEDIFF", dateDiff
-      @emails.push((email, (dateDiff > 0) ? "Pending" : "Sent"))
+      status = (dateDiff > 0) ? "Pending" : "Sent"
+      @emails.push([email, status])
     end
   end
 
   def create
-    puts "AT LEAST THE FIRST FUNCTION GOT CALLED."
     # fetch created email
     email = params["email"]
 
@@ -44,7 +43,6 @@ class EmailsController < ApplicationController
     respond_to do |format|
       if @email.save
         # Run bin/delayed_job start to process all jobs
-        puts "CALLING FUNC WITH PARAMS", sendDate, @email.attributes['id']
         GeneralMailer.reminder_email_to_non_participants(sendDate, @email.attributes['id'])
         format.html { redirect_to emails_show_path, notice: 'Email was successfully created.' }
         format.json { render :show, status: :ok}
