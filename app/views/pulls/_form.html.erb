@@ -1,0 +1,27 @@
+<%= form_with(model: pull, local: true) do |form| %>
+  <% if pull.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
+
+      <ul>
+      <% pull.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_field :message, id: :pull_message %>
+  </div>
+
+  <div class="field">
+    <%= form.label :student_id %>
+    <%= form.text_field :student_id, id: :pull_student_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
