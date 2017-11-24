@@ -12,7 +12,7 @@
 
 #Users
 
-User.create(first_name:"Stu", last_name:"Dent", email: "joshgearou@gmail.com", is_admin: false)
+User.create(first_name:"Josh", last_name:"Gearou", email: "joshgearou@gmail.com", is_admin: false)
 User.create(first_name:"Stu1", last_name:"Dent1", email: "student1@hmc.edu", is_admin: false)
 User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_admin: false)
 User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
@@ -38,6 +38,7 @@ Student.create(user_id: 5, room_draw_number: 5)
 #Dorms
 
 Dorm.create([{name: 'Case'}])
+Dorm.create([{name: 'Sontag'}])
 Dorm.create([{ name: 'Atwood'}])
 Dorm.create([{ name: 'East'}])
 Dorm.create([{ name: 'Drinkward'}])
