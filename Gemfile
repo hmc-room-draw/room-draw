@@ -7,9 +7,7 @@ end
 
 gem 'wdm', '>= 0.1.0'
 
-gem 'bootstrap-sass', '3.2.0.2'
 
-gem 'jquery-rails', '~> 4.3'
 
 # Adding tooltipster gem, which allows us to add tooltips to the image map
 gem 'tooltipster-rails'
