@@ -25,4 +25,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     user.is_admin
   end
+
+  def admin_landing_page?
+    user.is_admin
+  end
 end
