@@ -12,13 +12,6 @@ class EmailsController < ApplicationController
   end
 
   def show
-    @status = []
-    @emails = []
-    Email.all.reverse.each do |email|
-      dateDiff = (email.sendDate - Date.today).to_i
-      status = (dateDiff > 0) ? "Pending" : "Sent"
-      @emails.push([email, status])
-    end
   end
 
   def create
@@ -38,7 +31,16 @@ class EmailsController < ApplicationController
 
     # extract content of the email
     content = email["description"]
-    @email = Email.new(subject: subject, description: content, sendDate: sendDate)
+    @email = Email.new(
+      subject: subject, 
+      description: content, 
+      sendDate: sendDate,
+      sent_status: false,
+      send_to_never_logged_in: email["send_to_never_logged_in"],
+      send_to_never_pulled_room: email["send_to_never_pulled_room"],
+      send_to_formerly_in_room: email["send_to_formerly_in_room"],
+      send_to_in_room: email["send_to_in_room"],
+      send_to_admins: email["send_to_admins"])
 
     respond_to do |format|
       if @email.save
@@ -77,6 +79,22 @@ class EmailsController < ApplicationController
     end
   end
 
+  def get_person_counts(status_type)
+    count = 0
+    case status_type
+    when "admin"
+      count = User.all.select{|user| user.is_admin == true}.length
+    else
+      count = Student.all.select{|student| student.status == status_type}.length
+    end
+    if count == 1
+      return " (currently 1 person)"
+    else
+      return " (currently #{count} people)"
+    end
+  end
+  helper_method :get_person_counts
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -86,7 +104,15 @@ class EmailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
-      params.require(:email).permit(:subject, :description, :sendDate)
+      params.require(:email).permit(
+        :subject, 
+        :description, 
+        :sendDate, 
+        :send_to_never_logged_in,
+        :send_to_never_pulled_room,
+        :send_to_formerly_in_room,
+        :send_to_in_room,
+        :send_to_admins)
     end
 
 end

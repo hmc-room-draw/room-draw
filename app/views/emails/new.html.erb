@@ -1,18 +1,6 @@
 
 <h1 style='color: #E5E7E9'> Send Reminder Email</h1>
-
 <br>
-<h4 style='color: #E5E7E9'> Recipients (students who haven't filled out the form):</h1>
-<% Student.all.each do |student| %>
-   <% if student.has_participated == false %>
-      <% if student.user%>
-         <h5 style='color: #E5E7E9'> <%= student.user.email%> </h5>
-      <% end %>
-    <% end %>
-<% end %>
-
-<br>
-
 <body class="title">
 
 <%= form_for @email, html: { multipart: true } do |f| %>
@@ -22,6 +10,29 @@
   <br>
   <%= f.date_select :sendDate %>
   <br>
+  <div style='color: #E5E7E9'>
+    <h3>Select email recipients</h3>
+    <div class="field">
+      <%= f.label :send_to_never_logged_in %><%= get_person_counts(:never_logged_in) %>
+      <%= f.check_box :send_to_never_logged_in %>
+    </div>
+    <div class="field">
+      <%= f.label :send_to_never_pulled_room %><%= get_person_counts(:never_pulled_room) %>
+      <%= f.check_box :send_to_never_pulled_room %>
+    </div>
+    <div class="field">
+      <%= f.label :send_to_formerly_in_room %><%= get_person_counts(:formerly_in_room) %>
+      <%= f.check_box :send_to_formerly_in_room %>
+    </div>
+    <div class="field">
+      <%= f.label :send_to_in_room %><%= get_person_counts(:in_room) %>
+      <%= f.check_box :send_to_in_room %>
+    </div>
+    <div class="field">
+      <%= f.label :send_to_admins %><%= get_person_counts("admin") %>
+      <%= f.check_box :send_to_admins %>
+    </div>
+  </div>
   <%= f.submit "Save Scheduled Email"%>
 <% end %>
 
