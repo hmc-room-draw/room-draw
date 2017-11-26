@@ -36,13 +36,13 @@ class GeneralMailer < ApplicationMailer
         end 
 
         if send_mail
-          mail(to: student.user.email, subject: email.subject, body: email.description)
+          ActionMailer::Base.mail(to: student.user.email, from: 'from@example.com', subject: email.subject, body: email.description).deliver
         end
       end
       if email.send_to_admins
         User.all.each do |user|
           if user.is_admin
-            mail(to: user.email, subject: email.subject, body: email.description)
+            ActionMailer::Base.mail(to: user.email, from: 'from@example.com', subject: email.subject, body: email.description).deliver
           end
         end 
       end
