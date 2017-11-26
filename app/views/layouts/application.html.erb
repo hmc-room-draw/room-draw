@@ -12,7 +12,15 @@
   <nav class="navbar navbar-default">
     <div class = "container">
         <div class = "navbar-header">
-        <%= link_to "Home", root_path, class: "navbar-brand" %>
+        <% if current_user == nil %>
+          <%= link_to "Home", root_path, class: "navbar-brand" %>
+        <% else %>
+          <% if current_user.is_admin %>
+            <%= link_to "Home", admin_home_path, class: "navbar-brand" %>
+          <% else %>
+            <%= link_to "Home", dorms_path, class: "navbar-brand" %>
+          <% end %>
+        <% end %>
         </div>
         <ul class= "nav navbar-nav">
             <li><% if current_user %>
