@@ -17,7 +17,32 @@
 	border-color: black;
 	padding: 20px;
 	font-family: Georgia;
-	font-size: 200%;
+	font-size: 100%;
 
 }
 
+// Styling taken from w3schools
+#dormTable {
+	display:  none;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+#dormTable td, #dormTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#dormTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#dormTable tr:hover {background-color: #ddd;}
+
+#dormTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #9d9d9d;
+    color: white;
+}

@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  email: MyString
-  userID: 1
-  roomDrawNumber: 1
+# one:
+#   name: MyString
+#   email: MyString
+#   userID: 1
+#   roomDrawNumber: 1
 
-two:
-  name: MyString
-  email: MyString
-  userID: 1
-  roomDrawNumber: 1
+# two:
+#   name: Coco Stiff
+#   email: cstiff@g.hmc.edu
+#   userID: 1
+#   roomDrawNumber: 1

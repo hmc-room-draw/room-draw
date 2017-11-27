@@ -10,7 +10,7 @@ class DormsController < ApplicationController
   # GET /dorms/1
   # GET /dorms/1.json
   def show
-      @rooms = @dorm.room
+      @rooms = @dorm.rooms
   end
 
   # GET /dorms/new

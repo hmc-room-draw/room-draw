@@ -13,15 +13,17 @@
     <div class = "container">
         <div class = "navbar-header">
         <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
-        # => <a href="/"><img src="/assets/images/logo-HMC.png" ></a>
+
         </div>
         <ul class= "nav navbar-nav">
-            <li><% if current_user %>
-                Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>!
-                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
+            <% if current_user %>
+              <li style="color:#9d9d9d;">
+               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong> 
+                </li> <li>
+                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </li>
                 <% else %>
-                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-                <% end %></li>
+                <li>                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></li>
+                <% end %>
         </ul>
     </div>
   </nav>
