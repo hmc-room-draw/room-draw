@@ -2,7 +2,7 @@ class Pull < ApplicationRecord
   has_many :room_assignments, dependent: :destroy
   has_many :students, through: :room_assignments
 
-  accepts_nested_attributes_for :room_assignments, allow_destroy: true
+  accepts_nested_attributes_for :room_assignments
   #TODO: add rejection parameters for :room_assignments
 
   belongs_to :student
@@ -34,7 +34,7 @@ class Pull < ApplicationRecord
   
   private
     def validate_student
-      errors.add(:student, "not in :students") if not Student.all.include?(student)
+      errors.add(:student, "not in :students") if not students.include?(student)
     end
 
   #check student conflicts/frosh/preplaced people check room assignments

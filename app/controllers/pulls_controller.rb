@@ -20,6 +20,10 @@ class PullsController < ApplicationController
     authorize Pull
     @pull = Pull.new
     3.times {@pull.room_assignments.build}
+    #TODO: Get only the necessary information
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
   end
 
   # GET /pulls/1/edit
@@ -28,8 +32,6 @@ class PullsController < ApplicationController
     @students = Student.all
     @rooms = Room.all
     @dorms = Dorm.all
-    #allow admin to toggle number of students to add in at a single time
-    @num = 1
   end
 
   # POST /pulls
@@ -40,7 +42,7 @@ class PullsController < ApplicationController
     @pull = Pull.new(pull_params)
 
     cps = @pull.get_conflicting_pulls
-    cannot_override = cps.select { |cp| not @pull.can_override(cp) }
+    cannot_override = cps.select { |cp| not pull can_override(cp) }
 
     if not cannot_override.empty?
       format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
@@ -60,8 +62,8 @@ class PullsController < ApplicationController
         cp.destroy()
       end
     end
-      
-    @pull.students.each { |student|
+
+    @pull.students.forEach { |student|
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
       room = student.room_assignment.room.number

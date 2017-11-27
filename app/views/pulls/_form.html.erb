@@ -2,24 +2,24 @@
 
 
   <%= field_set_tag 'Room Assignments' do %>
-      <%= form.fields_for :room_assignments do |room_assignment| %>
-  
-          <div>
-            <%= room_assignment.label :student_id %>
-            <%= room_assignment.collection_select :student_id, Student.all, :id, :room_draw_number, id: :room_assignment_student_id %>
-          </div>
-          <div>
-            <%= room_assignment.label :room_id %>
-            <%= room_assignment.grouped_collection_select :room_id, Dorm.all, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
-          </div> 
 
-          <div>
-            <%= room_assignment.label :assignment_type %>
-            <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a, id: :room_assignment_assignment_type %>
-          </div> 
-  
-      <% end %>
+    <%= form.fields_for :room_assignments do |room_assignment| %>
+      <div>
+        <%= room_assignment.label :student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+      </div>
+      <div>
+        <%= room_assignment.label :room_id %>
+        <%= room_assignment.grouped_collection_select :room_id, @dorms, :room, :name, :id,:number, id: :room_assignment_room_id %>
+      </div>  
+      
+      <div>
+        <%= room_assignment.label :assignment_type %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+      </div> 
 
+      
+    <% end %>
   <% end %> 
 
   <% if pull.errors.any? %>

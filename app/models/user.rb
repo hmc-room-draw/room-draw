@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  require 'csv'
+  require 'CSV'
 
   has_one :student, dependent: :destroy
 

@@ -39,6 +39,11 @@ class Student < ApplicationRecord
     class_rank == :senior or class_rank == :super_senior
   end
 
+  def number_sort
+    # convert class rank to a number or it sorts as a string
+    [Student.class_ranks[class_rank], number_is_last ? 1 : 0, room_draw_number]
+  end
+
   def format_number
     if number_is_last
       class_rank + " last " + room_draw_number.to_s
