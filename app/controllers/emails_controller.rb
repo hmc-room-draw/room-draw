@@ -15,6 +15,19 @@ class EmailsController < ApplicationController
   end
 
   def create
+    respond_to do |format|
+      @email = makeEmail(params)
+      if @email
+        format.html { redirect_to emails_show_path, notice: 'Email was successfully created.' }
+        format.json { render :show, status: :ok}
+      else
+        format.html { render :new }
+        format.json { render json: @email.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def makeEmail(params)
     # fetch created email
     email = params["email"]
 
@@ -42,26 +55,30 @@ class EmailsController < ApplicationController
       send_to_in_room: email["send_to_in_room"],
       send_to_admins: email["send_to_admins"])
 
-    respond_to do |format|
-      if @email.save
-        # Run bin/delayed_job start to process all jobs
-        GeneralMailer.reminder_email_to_non_participants(sendDate, @email.attributes['id'])
-        format.html { redirect_to emails_show_path, notice: 'Email was successfully created.' }
-        format.json { render :show, status: :ok}
-      else
-        format.html { render :new }
-        format.json { render json: @email.errors, status: :unprocessable_entity }
-      end
+    if @email.save
+      GeneralMailer.schedule_reminder_email(@email["sendDate"], @email.attributes['id'])
+      return @email
+    else
+      return nil
     end
   end
 
   def update
+    no_errors = true
+    email = params["email"]
+    params["email"]["sendDate"] = Date.new(email["sendDate(1i)"].to_i,
+                                          email["sendDate(2i)"].to_i,
+                                          email["sendDate(3i)"].to_i)
+    if params["email"]["sendDate"] != @email["sendDate"]
+      @email.destroy
+      no_errors = makeEmail(params)
+    else
+      # Don't make a new delayed job if we don't need to.
+      no_errors = @email.update(email_params)
+    end
+    # Redirect to the right page
     respond_to do |format|
-      email = params["email"]
-      params["email"]["sendDate"] = Date.new(email["sendDate(1i)"].to_i,
-                                            email["sendDate(2i)"].to_i,
-                                            email["sendDate(3i)"].to_i)
-      if @email.update(email_params)
+      if no_errors
         format.html { redirect_to emails_show_path, notice: 'Email was successfully updated.' }
         format.json { render :show, status: :ok}
       else

@@ -1,5 +1,5 @@
 class GeneralMailer < ApplicationMailer
-  def self.reminder_email_to_non_participants(sendDate, emailId)
+  def self.schedule_reminder_email(sendDate, emailId)
     diffD = (sendDate - Date.today).to_i
     GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).scheduled_email(emailId)
   end
