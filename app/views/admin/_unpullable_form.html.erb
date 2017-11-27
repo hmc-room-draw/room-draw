@@ -1,0 +1,17 @@
+<%= form_for("/admin/map", method: "add_mark") do |f| %>
+  <%= text_field_tag(:room, value="", :id=>"unpullable-room-num", class: "hidden") %><br/>
+  <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %><br/>
+  <%= radio_button_tag(:mark_type, "freshman", true) %>
+  <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
+  <%= radio_button_tag(:mark_type, "unavailable") %>
+  <%= label_tag(:preplaced_offline, "Offline") %><br/>
+  <%= radio_button_tag(:mark_type, "preplaced") %>
+  <%= label_tag(:preplaced_preplaced, "Preplaced") %><br/>
+  <%= radio_button_tag(:mark_type, "other") %>
+  <%= label_tag(:preplaced_other, "Other") %><br/>
+  <br>
+  <%= label_tag(:description, "Description") %><br/>
+  <%= text_area_tag(:description, nil, :class=> "form-control") %>
+  <br>
+  <%= submit_tag("Mark Unpullable", name: "create", class: "btn btn-info") %>
+<% end %>
