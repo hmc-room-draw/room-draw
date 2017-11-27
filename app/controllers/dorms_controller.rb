@@ -10,26 +10,33 @@ class DormsController < ApplicationController
   # GET /dorms/1
   # GET /dorms/1.json
   def show
-      @rooms = @dorm.rooms
-      @pull = Pull.new
-      5.times {@pull.room_assignments.build}
-      #TODO: Get only the necessary information
-      # @students = Student.all
-      @users = User.all
-      @rooms = Room.all
-      @dorms = Dorm.all
 
-      #join tables
-      @students = Student.joins(:user).
-      select('users.first_name, users.last_name, users.email, students.*')
-      
-      if current_user
-        @curPullNum = 50
-        # if current_user.student?
-        #     @curPullNum = current_user.student.room_draw_number        
-        # else 
-        #     @curPullNum = 70
-        # end
+    # Render one form or the other depending on whether the peron's an admin
+    if current_user
+      @admin = current_user.is_admin?
+      @student = dorm_id = Student.find_by user: current_user
+    end
+
+    @rooms = @dorm.rooms
+    @pull = Pull.new
+    5.times {@pull.room_assignments.build}
+    #TODO: Get only the necessary information
+    # @students = Student.all
+    @users = User.all
+    @rooms = Room.all
+    @dorms = Dorm.all
+
+    #join tables
+    @students = Student.joins(:user).
+    select('users.first_name, users.last_name, users.email, students.*')
+    
+    if current_user
+      @curPullNum = 50
+      # if current_user.student?
+      #     @curPullNum = current_user.student.room_draw_number        
+      # else 
+      #     @curPullNum = 70
+      # end
     else 
         @curPullNum = 69
     end
