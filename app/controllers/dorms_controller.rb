@@ -12,11 +12,10 @@ class DormsController < ApplicationController
   def show
       @rooms = @dorm.rooms
       @pull = Pull.new
-      5.times {@pull.room_assignments.build}
+      6.times {@pull.room_assignments.build}
       #TODO: Get only the necessary information
       # @students = Student.all
       @users = User.all
-      @rooms = Room.all
       @dorms = Dorm.all
       
 

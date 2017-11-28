@@ -11,9 +11,15 @@ two:
   room_draw_number: 60
   has_participated: false
   user: two
-  
+
 three:
   class_rank: sophomore
   room_draw_number: 70
   has_participated: false
   user: three
+
+four:
+  class_rank: sophomore
+  room_draw_number: 100
+  has_participated: false
+  user: four

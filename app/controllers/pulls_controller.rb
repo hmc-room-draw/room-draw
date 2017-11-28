@@ -63,7 +63,7 @@ class PullsController < ApplicationController
       end
     end
 
-    @pull.students.forEach { |student|
+    @pull.students.each { |student|
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
       room = student.room_assignment.room.number

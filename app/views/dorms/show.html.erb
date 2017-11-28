@@ -108,21 +108,36 @@
   <p></br></p>
 
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-    <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2>Pull request initiated</h2>
-    </div>
-    <div class="modal-body">
-    <p>You have begun a pull request for this room</p>
-      <p>The following form must be filled out in order to pull a room:</p>
-      <%= render 'pullform', pull: @pull %>
+<% if current_user.student != nil %>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+      <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Pull request initiated</h2>
+      </div>
+      <div class="modal-body">
+      <p>You have begun a pull request for this room</p>
+        <p>The following form must be filled out in order to pull a room:</p>
+        <%= render 'pullform', pull: @pull %>
 
-  </div>  <!-- End of modal content -->
-</div>  <!-- End of modal --> 
+    </div>  <!-- End of modal content -->
+  </div>  <!-- End of modal --> 
+<% else %>
+  <div id="myModal" class="modal">
+      <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Pull request initiated</h2>
+      </div>
+      <div class="modal-body">
+      <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
+
+    </div>  <!-- End of modal content -->
+  </div>  <!-- End of modal -->
+<% end %> 
 
 <!-- get dorm floor maps -->
 <% if !@floor1.nil?  %>
@@ -241,7 +256,7 @@ span.onclick = function() {
 
 
     var userDrawNum = <%= @curPullNum %>;
-    var userRankNum = <%= @curRankNum %>;
+    var userRankNum = <%= 20 %>;
     var mapLayout = <%= @json %>;
 
     function layout(level){ 
@@ -404,7 +419,7 @@ span.onclick = function() {
                       //show room info and populate form with room number
                       var info = event.data.info;
                       console.log(info);
-                      $('#usr').val(info.number);
+                      $('#room_number').val(info.number);
                   }
                   modal.style.display = "block";
               });
@@ -442,40 +457,3 @@ span.onclick = function() {
     layout(0);
     
 </script>
-
-<!-- Script for using radio buttons to show input field on the pull request
-  General code structure adapted from: https://www.aspsnippets.com/Articles/Show-Hide-DIV-with-TextBox-based-on-RadioButton-selection-checked-unchecked-using-JavaScript-and-jQuery.aspx 
-  "require-if active" from: https://css-tricks.com/exposing-form-fields-radio-button-css/ !-->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("input[name='roommate-nums']").click(function () {
-            if ($("#1-roommates").is(":checked")) {
-                $("#roommate-1").show(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#2-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").show(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#3-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").show(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#4-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").show(); $("#roommate-5").hide();
-            } else if ($("#5-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").show();
-            } else {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();            
-            } 
-        });
-      // find each input that may be hidden or not
-      $(".require-if-active").each(function() {
-        var el = $(this);
-        // find the pairing radio or checkbox
-        if ($(el.data("require-pair")).is(":checked")) {
-          // if its checked, the field should be required
-          el.prop("required", true);
-        } else {
-          // otherwise it should not
-          el.prop("required", false);
-        }
-      });
-    });
-</script>
-
