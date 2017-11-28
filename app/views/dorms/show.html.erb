@@ -37,7 +37,23 @@
    text-decoration: none;
    cursor: pointer;
 }
+.alert-div {
+  position: absolute;
+  top: 90px;
+  left: 5%;
+  width: 90%;
+}
+.popup-button {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 </style>
+
+<div>
+<% flash.each do |key, value| %>
+  <div class="alert-div alert alert-<%= key %>"><%= value %></div>
+<% end %>
 
 <p>
   <strong>Name:</strong>
@@ -46,8 +62,8 @@
 
 <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
 <%= link_to 'Back', dorms_path %>
-
 <div class="container">
+
     <div class="row">
         <div class="col-md-7">
             <div class="btn-group">
@@ -75,48 +91,73 @@
     </div>
 </div> -->
 
-<!-- The Modal -->
+<!--  Modal -->
 <div id="myModal" class="modal">
-    <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2>Pull request initiated</h2>
-    </div>
-    <div class="modal-body">
-    <p>You have begun a pull request for this room</p>
-      <p>The following form must be filled out in order to pull a room:</p>
-<!--         <%= form_for @pull, :url => new_pull_path do |form| %>   
-        <% if @pull.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
 
-            <ul>
-            <% @pull.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
+  <% if @admin %>
+
+    <!-- Admin Modal -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Admin Options: <%= @dorm.name.capitalize %> <div style="display: inline" id="room-num"></div></h2>
+      </div>
+      <div class="modal-body">
+        <div id="admin_buttons" class="collapse in">
+          
+          <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
+          <div class="hidden" id="pull-form">
+            <br>
+              <%= render 'pullform', pull: @pull %>
+            <br>
           </div>
-        <% end %>
 
-        <div class="field">
-          <%= form.label :message %>
-          <%= form.text_field :message, id: :pull_message %>
+          <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
+          <button id="delete-pull" class="btn btn-primary btn-block popup-button">Delete Pull</button>
+          <!-- Unpullable Form -->
+          <button id="mark-unpullable" class="btn btn-primary btn-block popup-button">Mark Room Unpullable</button>
+          <div class="hidden popup-button" id="unpullable-form">
+              <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
+          </div>
+          <div id="mark-pullable" class="popup-button">
+            <%= form_with(method: "delete_mark") do %>
+              <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
+              <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
+              <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
+            <% end %>
+          </div>
+          <% if @student %>
+            <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
+
+            <div class="hidden" id="student-pull-form">
+              <br>
+                <%= render 'pullform', pull: @pull %>
+              <br>
+            </div>
+          <% end %>
         </div>
+      </div>
+    </div>
 
-        <div class="field">
-          <%= form.label :student_id %>
-          <%= form.text_field :student_id, id: :pull_student_id %>
-        </div>
+  <% else %>
 
-        <div class="actions">
-          <%= form.submit %>
-        </div>
-      <% end %> -->
-      <%= render 'pullform', pull: @pull %>
+    <!-- Student Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Pull request initiated</h2>
+      </div>
+      <div class="modal-body">
+      <p>You have begun a pull request for this room</p>
+        <p>The following form must be filled out in order to pull a room:</p>
+        <%= render 'pullform', pull: @pull %>
+      </div>  <!-- End of modal content -->
+    </div>  <!-- End of modal -->
 
-  </div>  <!-- End of modal content -->
-</div>  <!-- End of modal --> 
+  <% end %>
+
+</div>
+
 
 <!-- get dorm floor maps -->
 <% if !@floor1.nil?  %>
@@ -128,6 +169,8 @@
 <% if !@floor3.nil?  %>
   <%= image_tag(@floor3, :id => "floor3", :class => "map") %> 
 <% end %>
+
+</div>
 
 <script type="text/javascript">
 
@@ -143,6 +186,18 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
     modal.style.display = "none";
 }
+// Have the admin buttons toggle their respective divs
+$("#mark-unpullable").click(function() {
+  $("#unpullable-form").toggleClass("hidden");
+});
+$("#pull-student").click(function() {
+  $("#student-pull-form").toggleClass("hidden");
+});
+$("#create-pull").click(function() {
+  $("#pull-form").toggleClass("hidden");
+});
+// Fade out error messages after a bit
+$(".alert-div").fadeOut(8000);
 
 var dormElements = [];
 
@@ -208,7 +263,6 @@ function layout(level){
     var i = 0;
     var x = 0;
     var curRoomNum;
-    console.log(roomData);
 
     //create image tag to size map correctly
     var imgLev = level+1;
@@ -307,8 +361,33 @@ function layout(level){
               if (event.data.info !== undefined) {
                   //show room info and populate form with room number
                   var info = event.data.info;
-                  console.log(info);
-                  $('#usr').val(info.number);
+                  $('#usr').val(info.number); //TODO: Check this is actually used.
+                  $('#unpullable-room-delete').val(info.number);
+                  $('#unpullable-room-num').val(info.number);
+                  if (info.assignment_type != null) { // If there's currently a room assignment
+                    $('#create-pull').addClass('hidden');
+                    $('#mark-unpullable').addClass('hidden');
+
+                    // If there's also a pull, show additional options
+                    if (info.pull_id != null) {
+                      $('#mark-pullable').addClass('hidden');
+                      $('#edit-pull').removeClass('hidden');
+                      $('#delete-pull').removeClass('hidden');
+                    } else {
+                      $('#mark-pullable').removeClass('hidden');
+                      $('#edit-pull').addClass('hidden');
+                      $('#delete-pull').addClass('hidden');
+                    }
+                    
+                  } else { // If there isn't an assignment type, theres no RoomAssignment
+                    //So there isn't any associated Pull either.
+                    $('#create-pull').removeClass('hidden');
+                    $('#mark-unpullable').removeClass('hidden');
+                    $('#edit-pull').addClass('hidden');
+                    $('#delete-pull').addClass('hidden');
+                    $('#mark-pullable').addClass('hidden');
+                  }
+                  $('#room-num').html(info.number);
               }
               modal.style.display = "block";
           });
