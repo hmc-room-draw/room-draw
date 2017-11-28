@@ -1,0 +1,48 @@
+<body class="title">
+  <%= form_with(model: @email, local: true) do |f| %>
+    <% if @email.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@email.errors.count, "error") %> prohibited this email from being saved:</h2>
+
+        <ul>
+        <% @email.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.text_field :subject, class: 'subject', :required => true, :placeholder => 'Subject'%>
+    <br>
+    <%= f.text_field :description, class: 'message', :required => true, :placeholder => 'Message'%>
+    <br>
+    <%= f.date_select :sendDate %>
+    <div style='color: #E5E7E9'>
+      <h3>Select email recipients</h3>
+      <div class="field">
+        <%= f.label :send_to_never_logged_in %><%= get_person_counts(:never_logged_in) %>
+        <%= f.check_box :send_to_never_logged_in %>
+      </div>
+      <div class="field">
+        <%= f.label :send_to_never_pulled_room %><%= get_person_counts(:never_pulled_room) %>
+        <%= f.check_box :send_to_never_pulled_room %>
+      </div>
+      <div class="field">
+        <%= f.label :send_to_formerly_in_room %><%= get_person_counts(:formerly_in_room) %>
+        <%= f.check_box :send_to_formerly_in_room %>
+      </div>
+      <div class="field">
+        <%= f.label :send_to_in_room %><%= get_person_counts(:in_room) %>
+        <%= f.check_box :send_to_in_room %>
+      </div>
+      <div class="field">
+        <%= f.label :send_to_admins %><%= get_person_counts("admin") %>
+        <%= f.check_box :send_to_admins %>
+      </div>
+    </div>
+    <br>
+    <%= f.submit "Save Edited Email"%>
+  <% end %>
+
+
+</body>

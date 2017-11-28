@@ -5,7 +5,11 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user
       session[:user_id] = user.id
-      redirect_to dorms_path
+      if user.is_admin
+        redirect_to admin_home_path
+      else
+        redirect_to dorms_path
+      end
     else
       flash[:alert] = "No account exists with the given email."
       redirect_to root_path

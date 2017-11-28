@@ -1,25 +1,57 @@
 <p id="notice"><%= notice %></p>
 
+<h1>View Student</h1>
+
 <p>
-  <strong>Class rank:</strong>
-  <%= @student.class_rank %>
+  <strong>First name:</strong>
+  <%= @user.first_name %>
 </p>
 
 <p>
-  <strong>Room draw number:</strong>
-  <%= @student.room_draw_number %>
+  <strong>Last name:</strong>
+  <%= @user.last_name %>
 </p>
 
 <p>
-  <strong>Has participated:</strong>
-  <%= @student.has_participated %>
+  <strong>Is admin:</strong>
+  <%= @user.is_admin %>
+</p>
+
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
 </p>
 
 <p>
-	<strong> ID: </strong>
-	<%= @student.id %>
+  <strong>Class Rank:</strong>
+  <%= @user.student.class_rank %>
 </p>
 
+<p>
+  <strong>Number:</strong>
+  <%= @user.student.room_draw_number %>
+</p>
+
+<p>
+  <strong>Number is last:</strong>
+  <%= @user.student.number_is_last%>
+</p>
+
+<p>
+  <strong>Completed form:</strong>
+  <%= @user.student.has_completed_form %>
+</p>
+
+<p>
+  <strong>Participated:</strong>
+  <%= @user.student.has_participated %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @user.student.format_status %>
+</p>
 
 <%= link_to 'Edit', edit_student_path(@student) %> |
 <%= link_to 'Back', students_path %>
