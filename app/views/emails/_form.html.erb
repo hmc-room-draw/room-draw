@@ -18,30 +18,30 @@
     <br>
     <%= f.date_select :sendDate %>
     <div style='color: #E5E7E9'>
-      <h3>Select email recipients</h3>
+      <h3>Select email recipients by status</h3>
       <div class="field">
-        <%= f.label :send_to_never_logged_in %><%= get_person_counts(:never_logged_in) %>
         <%= f.check_box :send_to_never_logged_in %>
+        <%= f.label :send_to_never_logged_in %><%= get_person_counts(:never_logged_in) %>
       </div>
       <div class="field">
-        <%= f.label :send_to_never_pulled_room %><%= get_person_counts(:never_pulled_room) %>
         <%= f.check_box :send_to_never_pulled_room %>
+        <%= f.label :send_to_never_pulled_room %><%= get_person_counts(:never_pulled_room) %>
       </div>
       <div class="field">
-        <%= f.label :send_to_formerly_in_room %><%= get_person_counts(:formerly_in_room) %>
         <%= f.check_box :send_to_formerly_in_room %>
+        <%= f.label :send_to_formerly_in_room %><%= get_person_counts(:formerly_in_room) %>
       </div>
       <div class="field">
-        <%= f.label :send_to_in_room %><%= get_person_counts(:in_room) %>
         <%= f.check_box :send_to_in_room %>
+        <%= f.label :send_to_in_room %><%= get_person_counts(:in_room) %>
       </div>
       <div class="field">
-        <%= f.label :send_to_admins %><%= get_person_counts("admin") %>
         <%= f.check_box :send_to_admins %>
+        <%= f.label :send_to_admins %><%= get_person_counts("admin") %>
       </div>
     </div>
     <br>
-    <%= f.submit "Save Edited Email"%>
+    <%= f.submit "Save Email"%>
   <% end %>
 
 
