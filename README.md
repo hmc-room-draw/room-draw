@@ -51,3 +51,10 @@ TODO(Spencer): Write up how to get creds from Google Developer Console later.
   URL of the sheet.
 
 -- Spencer
+
+
+## Sending scheduled emails
+
+Run `bin/delayed_job start` if you want the ability to send scheduled emails.  Run `bin/delayed_job stop` afterwards to stop it.  If emails are not sending, you can enter `Delayed::Job.all` into the rails console to see emails in the queue.
+
+-- Olivia and Jasmine
