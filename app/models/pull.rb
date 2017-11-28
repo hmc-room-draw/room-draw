@@ -31,7 +31,14 @@ class Pull < ApplicationRecord
     conflicting_assignments = RoomAssignment.where(room_id: room_ids).where.not(id: self.id)
     conflicting_assignments.map{ |asn| asn.pull }
   end
-  
+
+  def has_conflicting_nonpulls
+    room_ids = self.room_assignments.map{ |ra| ra.room_id }
+    conflicting_assignments = RoomAssignment.where(room_id: room_ids).where.not(id: self.id)
+    cnps = conflicting_assignments.select{ |asn| asn.assignment_type != :pulled }
+    not cnps.empty?
+  end
+
   private
     def validate_student
       errors.add(:student, "not in :students") if not students.include?(student)

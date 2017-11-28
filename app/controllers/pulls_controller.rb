@@ -46,7 +46,10 @@ class PullsController < ApplicationController
 
     if not cannot_override.empty?
       format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
+    else if @pull.has_conflicting_nonpulls
+      format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
     end
+
 
     if not cps.empty?
       cps.forEach do |cp|
