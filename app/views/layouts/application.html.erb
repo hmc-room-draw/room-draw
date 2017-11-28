@@ -17,9 +17,8 @@
         </div>
         <ul class= "nav navbar-nav">
             <% if current_user %>
-              <li class="nav navbar-text" style="color:#9d9d9d;">
-              
-               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong> 
+              <li class="nav navbar-text">
+               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
                 </li> <li class="nav nav-item">
                 <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </li>
                 <% else %>
