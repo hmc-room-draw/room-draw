@@ -1,61 +1,60 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student_and_user, only: [:show, :edit, :update, :destroy]
   include StudentsHelper
 
-  # GET /students
-  # GET /students.json
   def index
     @students = Student.all
+    @users = User.select {|user| user.has_student?}
   end
 
-  # GET /students/1
-  # GET /students/1.json
+
   def show
   end
 
-  # GET /students/new
+
   def new
-    @student = Student.new
+    @user = User.new
+    @user.student = Student.new
+    @action = "create"
+    @method = :post
   end
 
-  # GET /students/1/edit
+
   def edit
+    @action = "update"
+    @method = :patch
   end
 
-  # POST /students
-  # POST /students.json
+
   def create
-    @student = Student.new(student_params)
+    @user = User.new(user_params)
+    @user.student = Student.new(student_params)
 
     respond_to do |format|
-      if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render :show, status: :created, location: @student }
+      if @user.save && @user.student.save
+        format.html { redirect_to @user.student, notice: 'Student was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /students/1
-  # PATCH/PUT /students/1.json
-  def update
+
+  def update    
     respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
-        format.json { render :show, status: :ok, location: @student }
+      if @user.update(user_params) && @user.student.update(student_params)
+          format.html { redirect_to @user.student, notice: 'Student was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /students/1
-  # DELETE /students/1.json
+
   def destroy
+    @user.destroy
     @student.destroy
+
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
       format.json { head :no_content }
@@ -63,13 +62,17 @@ class StudentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student
+    def set_student_and_user
       @student = Student.find(params[:id])
+      @user = @student.user
+    end
+
+    def user_params
+      params.fetch(:user).permit(:first_name, :last_name, :email, :is_admin)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
+      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
     end
 end

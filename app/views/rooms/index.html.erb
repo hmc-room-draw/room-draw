@@ -9,7 +9,9 @@
       <th>Number</th>
       <th>Capacity</th>
       <th>Dorm</th>
+      <th>Dorm Name</th>
       <th>Suite</th>
+      <th>Suite Name</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,7 +23,9 @@
         <td><%= room.number %></td>
         <td><%= room.capacity %></td>
         <td><%= room.dorm %></td>
+        <td><%= room.dorm.name %></td>
         <td><%= room.suite %></td>
+        <td><%= room.suite ? room.suite.name : nil %></td>
         <td><%= link_to 'Show', room %></td>
         <td><%= link_to 'Edit', edit_room_path(room) %></td>
         <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>

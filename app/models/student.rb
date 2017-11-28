@@ -12,6 +12,13 @@ class Student < ApplicationRecord
     :super_senior => 1,
   }
 
+  enum status: {
+    :never_logged_in => 0,
+    :never_pulled_room => 1,
+    :formerly_in_room => 2,
+    :in_room => 3,
+  }
+
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true
@@ -53,30 +60,34 @@ class Student < ApplicationRecord
   end
 
   def status_sort
+    Student.statuses[status]
+  end
+
+  def status
     if room_assignment.nil?
       if has_participated
-        2
+        :formerly_in_room
       else
         if has_completed_form
-          1
+          :never_pulled_room
         else
-          0
+          :never_logged_in
         end
       end
     else
-      3
+      :in_room
     end
   end
 
   def format_status
-    case status_sort
-    when 0
+    case status
+    when :never_logged_in
       "Never logged in"
-    when 1
+    when :never_pulled_room
       "Never pulled room"
-    when 2
+    when :formerly_in_room
       "Participated, but not in room"
-    when 3
+    when :in_room
       room_assignment.room.name
     end
   end
