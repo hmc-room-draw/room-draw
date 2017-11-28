@@ -25,9 +25,8 @@ Rails.application.routes.draw do
   #routes for admin landing page
   get 'admin/home', to: 'draw_periods#admin_landing_page'
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
-  post 'admin/downloadStudents', to: 'draw_periods#downloadStudents'
   post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
-  post 'admin/downloadPulls', to: 'draw_periods#downloadPulls'
+  post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
   post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
 
   resources :draw_periods
