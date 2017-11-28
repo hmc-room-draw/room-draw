@@ -27,11 +27,12 @@ class DormsController < ApplicationController
         if !current_user.student.nil?
             @curPullNum = current_user.student.room_draw_number    
             @curRankNum = Student.class_ranks[current_user.student.class_rank]
-        else 
-            @curPullNum = 70
+        else
+            @curRankNum = 0 
+            @curPullNum = 0
         end
     else 
-        @curPullNum = 69
+        @curPullNum = 0
     end
     
     case @dorm.name.downcase
