@@ -48,6 +48,40 @@
   margin-bottom: 15px;
 }
 
+/* The Color Boxes for the legend */
+.input-color {
+    position: absolute;
+}
+.input-color input {
+    position: relative;
+    width: 180px;
+    height: 18px;
+    left: 840px;
+    top: 20px;
+    background-color: transparent;
+    border: 0px solid;
+}
+.input-color .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: relative;
+    left: 640px;
+    top: 21px;
+}
+
+.fixed {
+  position: absolute;
+  left: 100px;
+  top: 160px;
+}
+.info {
+  position: absolute;
+  left: 20px;
+  top: 115px;
+}
+
 </style>
 
 <div>
@@ -55,30 +89,39 @@
   <div class="alert-div alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @dorm.name %>
-</p>
+<div class="info">
+  <p>
+    <% if current_user.is_admin? %>
+      <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
+    <% end %>
+      <%= link_to 'Go Back', dorms_path %>
+    </br>
+  </p>
+</div>
 
-<%= link_to 'Edit', edit_dorm_path(@dorm) %> |
-<%= link_to 'Back', dorms_path %>
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-7">
-            <div class="btn-group">
-                <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Change Dorms <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                        <% @dorms.each do |dorm| %>
-                            <li><%= link_to dorm.name, dorm %></li>
-                        <% end %>
-                </ul>
-            </div>
-        </div>
-        <h1><br></h1>
+<div class="fixed">
+  <p>
+    <strong>Dorm:</strong> <%= @dorm.name %>
+  </p>
+    <div class="dropdown" style="padding-right:700px">
+        <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+                <% @dorms.each do |dorm| %>
+                    <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
+                <% end %>
+        </ul>
     </div>
 </div>
+  <div class="input-color">
+    <input type="text" value="vacant" readonly></input>
+      <div class="color-box" style="background-color: rgb(102, 168, 255);"></div></br>
+    <input type="text" value="occupied but pullable" readonly></input>
+      <div class="color-box" style="background-color: rgb(217, 189, 4);"></div></br>
+    <input type="text" value="occupied and not pullable" readonly></input>
+      <div class="color-box" style="background-color: rgb(136, 138, 139);"></div>
+  </div>
+  <p></br></p>
 
        <!--  <div class="col-md-3">
             <ul class="dropdown-menu">
@@ -142,18 +185,31 @@
   <% else %>
 
     <!-- Student Modal content -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>Pull request initiated</h2>
-      </div>
-      <div class="modal-body">
-      <p>You have begun a pull request for this room</p>
-        <p>The following form must be filled out in order to pull a room:</p>
-        <%= render 'pullform', pull: @pull %>
-      </div>  <!-- End of modal content -->
-    </div>  <!-- End of modal -->
+    <% if current_user.student != nil %>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Pull request initiated</h2>
+        </div>
+        <div class="modal-body">
+        <p>You have begun a pull request for this room</p>
+          <p>The following form must be filled out in order to pull a room:</p>
+          <%= render 'pullform', pull: @pull %>
 
+      </div>  <!-- End of modal content -->
+    <% else %>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Pull request initiated</h2>
+        </div>
+        <div class="modal-body">
+        <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
+
+      </div>  <!-- End of modal content -->
+    <% end %> 
   <% end %>
 
 </div>
@@ -173,6 +229,7 @@
 </div>
 
 <script type="text/javascript">
+$('.dropdown-toggle').dropdown();
 
 console.log("<%= @rooms.to_json %>")
 
@@ -199,33 +256,96 @@ $("#create-pull").click(function() {
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
 
-var dormElements = [];
+    var dormElements = [];
 
-$('.map').each(function(i) {
-    $('<div>').css({
+    var floorHold = $('<div>').css({
         position: 'absolute',
-        left: 500 + 100*i,
-        top: 150,
-        height: 80,
-        width: 40,
-        'font-size': '60px',
-        color: 'blue',
-        background: 'black'
-    }).text(i+1).appendTo('body')
-    .on('click', function(){
-        layout(i);
+        left: 270,
+        top: 223,
+        height: 34,
+        width: 115,
+        background: 'rgb(255, 255, 255)',
+        border: '1px solid rgb(200, 200, 200)',
+        'border-radius': '5px',
+        visibility: 'hidden',
+    }).attr('id', 'floorHold').appendTo('body');
+
+    var floorSelect = $('<div>').css({
+        position: 'absolute',
+        left: 270,
+        top: 188,
+        height: 34,
+        width: 115,
+        'font-size': '14px',
+        'text-align': 'center',
+        'line-height': '30px',
+        color: 'black',
+        border: '1px solid rgb(200, 200, 200)',
+        'border-radius': '5px',
+    }).attr('id', 'floorSelect').text('switch floors')
+    .on('click', function(event){
+        if (floorHold.css('visibility') !== 'visible') {
+            floorHold.css({
+                visibility: 'visible',
+                'z-index': 100,
+            });
+        }
+        else {
+            floorHold.css({
+                visibility: 'hidden',
+                'z-index': 0,
+            });
+        }
     })
     .on('mouseenter', function(){
         $(this).css({
-            opacity: .5,
+            background: 'rgb(232, 232, 232)',
         });
     })
     .on('mouseleave', function(){
         $(this).css({
-            opacity: 1,
+            background: 'none',
+        });
+    })
+    .appendTo('body');
+
+    var heightCount = 0;
+    $('.map').each(function(i) {
+        heightCount++;
+        $('<div>').css({
+            position: 'absolute',
+            left: 0,
+            top: i*35,
+            height: 33,
+            width: 113,
+            'border-radius': '5px',
+            'text-align': 'center',
+            'font-size': '17px',
+            'z-index': 100,
+        }).text(i+1).appendTo(floorHold)
+        .on('click', function(){
+            layout(i);
+        })
+        .on('mouseenter', function(){
+            $(this).css({
+                background: 'rgb(232, 232, 232)',
+            });
+        })
+        .on('mouseleave', function(){
+            $(this).css({
+                background: 'none',
+            });
         });
     });
-});
+    floorHold.css({
+        height: heightCount*35,
+    });
+
+
+    var userDrawNum = <%= @curPullNum %>;
+    var userRankNum = <%= @curRankNum %>;
+    var mapLayout = <%= @json %>;
+
 
 function layout(level){  
     for (var i = 0; i < dormElements.length; i++) {
@@ -250,18 +370,17 @@ function layout(level){
         default:
             
     }
-    var userDrawNum = <%= @curPullNum %>;
-    console.log(userDrawNum);
+    console.log(roomData);
+    console.log(userRankNum);
     var room, val;
-    var layout = <%= @json %>;
-    console.log(layout);
     //image map path
-    var map = layout.assets[level];
+    var map = mapLayout.assets[level];
     //speciifc floor layout coordinates
-    var floor = layout.floors[level+1];
-    console.log(floor);
+    var floor = mapLayout.floors[level+1];
     var i = 0;
     var x = 0;
+    var roomPullNum;
+    var roomRankNum;
     var curRoomNum;
 
     //create image tag to size map correctly
@@ -276,7 +395,6 @@ function layout(level){
     });
 
     //create dorm map 
-    console.log(map);
     var fakeDorm = $('<div>').css({
         position: 'absolute',
         left: 90,
@@ -304,31 +422,34 @@ function layout(level){
               width: 100*(val.bounding_box.w)+'%',
               background: 'none',
               color: 'black',
+              'font-size': '10px',
           }).appendTo(fakeDorm);
           dormElements.push(room);
           
           //get db info about room
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
-              room.text(room.info.number);
               
-              //check if your room draw number is lower or the roomo is not pulled at all
-              if (userDrawNum < roomData[i].room_draw_number || roomData[i].room_draw_number === null) {
-                  room.css({
-                      background: 'rgb(102, 168, 255)',
-                  });
-              }
-              //room is pulled by someone with higher number
-              else if(userDrawNum > roomData[i].room_draw_number) {
-                  room.css({
-                      background: 'rgb(136, 138, 139)',
-                  });
-              }
+              //need to check if student_id is equal to current_user.student.id
+              //then you know if you are in room use bool in the while loop later
               
               //get names of students in room, possibly max of room draw numbers
+              roomPullNum = null;
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
+                  if (roomData[i].room_draw_number === userDrawNum) {
+                      room.css({
+                          background: 'rgb(217, 189, 4)',
+                      });
+                      roomRankNum = roomData[i].class_rank
+                      roomPullNum = userDrawNum;
+                  }
+                  else if (roomData[i].student_id !== null) {
+                      roomPullNum = roomData[i].room_draw_number;
+                      roomRankNum = roomData[i].class_rank
+                  }
+                  
                   if (roomData[i].first_name !== null) {
                       room.curNames.push(roomData[i].first_name+' '+roomData[i].last_name);  
                   }
@@ -337,12 +458,36 @@ function layout(level){
                       break;
                   }
               }
-              console.log(room.curNames);
+              //check if your room draw number is lower or the roomo is not pulled at all
+              if (roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) {
+                  room.css({
+                      background: 'rgb(102, 168, 255)',
+                  });
+              }
+              //room is pulled by someone with higher number
+              else if((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) {
+                  room.css({
+                      background: 'rgb(136, 138, 139)',
+                  });
+              }
+              
+              
           }//if no db info on room ie undefined in roomData then just say its open
           else {
               room.css({
                   background: 'rgb(102, 168, 255)',
               });
+          }
+          
+          if (room.curNames !== undefined) {
+              if (room.curNames[0] !== undefined) {
+                  console.log(roomPullNum);
+                  var nameString = '';
+                  for (var j = 0; j < room.curNames.length; j++) {
+                      nameString = nameString + room.curNames[j] +', ';
+                  }
+                  room.text(nameString + roomPullNum);
+              }
           }
           
           room.on('mouseenter', function(){
@@ -361,7 +506,7 @@ function layout(level){
               if (event.data.info !== undefined) {
                   //show room info and populate form with room number
                   var info = event.data.info;
-                  $('#usr').val(info.number); //TODO: Check this is actually used.
+                  $('#room_number').val(info.number); //TODO: Check this is actually used.
                   $('#unpullable-room-delete').val(info.number);
                   $('#unpullable-room-num').val(info.number);
                   if (info.assignment_type != null) { // If there's currently a room assignment
@@ -396,55 +541,34 @@ function layout(level){
 }
 
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-window.onkeyup = function(event) {
-  if (event.keyCode == 27) {
-    modal.style.display = "none";
-  }
-}
-
-layout(0);
-
-</script>
-
-<!-- Script for using radio buttons to show input field on the pull request
-  General code structure adapted from: https://www.aspsnippets.com/Articles/Show-Hide-DIV-with-TextBox-based-on-RadioButton-selection-checked-unchecked-using-JavaScript-and-jQuery.aspx 
-  "require-if active" from: https://css-tricks.com/exposing-form-fields-radio-button-css/ !-->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("input[name='roommate-nums']").click(function () {
-            if ($("#1-roommates").is(":checked")) {
-                $("#roommate-1").show(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#2-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").show(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#3-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").show(); $("#roommate-4").hide(); $("#roommate-5").hide();
-            } else if ($("#4-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").show(); $("#roommate-5").hide();
-            } else if ($("#5-roommates").is(":checked")) {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").show();
-            } else {
-                $("#roommate-1").hide(); $("#roommate-2").hide(); $("#roommate-3").hide(); $("#roommate-4").hide(); $("#roommate-5").hide();            
-            } 
-        });
-      // find each input that may be hidden or not
-      $(".require-if-active").each(function() {
-        var el = $(this);
-        // find the pairing radio or checkbox
-        if ($(el.data("require-pair")).is(":checked")) {
-          // if its checked, the field should be required
-          el.prop("required", true);
-        } else {
-          // otherwise it should not
-          el.prop("required", false);
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
-      });
-    });
+    }
+
+    window.onkeyup = function(event) {
+      if (event.keyCode == 27) {
+        modal.style.display = "none";
+        floorHold.css({
+            visibility: 'hidden',
+            'z-index': 0
+        });
+      }
+    }
+    
+    $(document).click(function(event) { 
+    if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+        if($('#floorHold').css("visibility") === 'visible') {
+            $('#floorHold').css({
+                visibility: 'hidden',
+                'z-index': 0
+            });
+        }
+    }        
+});
+    layout(0);
+    
 </script>
+
 

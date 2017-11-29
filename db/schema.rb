@@ -47,16 +47,17 @@ ActiveRecord::Schema.define(version: 20171125090245) do
     t.datetime "updated_at", null: false
     t.string "subject"
     t.date "sendDate"
-    t.boolean "send_to_formerly_in_room"
-    t.boolean "sent_status"
     t.boolean "send_to_never_logged_in"
     t.boolean "send_to_never_pulled_room"
+    t.boolean "send_to_formerly_in_room"
     t.boolean "send_to_in_room"
     t.boolean "send_to_admins"
+    t.boolean "sent_status"
   end
 
   create_table "pulls", force: :cascade do |t|
     t.string "message"
+    t.integer "round"
     t.integer "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
