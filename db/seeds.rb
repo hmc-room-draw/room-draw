@@ -12,6 +12,25 @@
 
 #Users
 
+User.create(first_name:"Josh", last_name:"Gearou", email: "joshgearou@gmail.com", is_admin: false)
+User.create(first_name:"Stu1", last_name:"Dent1", email: "student1@hmc.edu", is_admin: false)
+User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_admin: false)
+User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
+User.create(first_name:"Stu4", last_name:"Dent4", email: "student4@hmc.edu", is_admin: false)
+User.create(first_name:"Stu5", last_name:"Dent5", email: "student5@hmc.edu", is_admin: false)
+User.create(first_name:"Ad", last_name:"Min", email: "admin@hmc.edu", is_admin: true)
+User.create(first_name:"Ad1", last_name:"Min1", email: "admin1@hmc.edu", is_admin: true)
+User.create(first_name:"Ad2", last_name:"Min2", email: "admin2@hmc.edu", is_admin: true)
+User.create(first_name:"Ad3", last_name:"Min3", email: "admin3@hmc.edu", is_admin: true)
+User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
+
+#Students
+
+Student.create(user_id: 1, room_draw_number: 1)
+Student.create(user_id: 2, room_draw_number: 2)
+Student.create(user_id: 3, room_draw_number: 3)
+Student.create(user_id: 4, room_draw_number: 4)
+Student.create(user_id: 5, room_draw_number: 5)
 
 
 
@@ -20,6 +39,9 @@
 #Dorms
 
 Dorm.create([{name: 'Case'}])
+
+Dorm.create([{name: 'Sontag'}])
+
 Dorm.create([{ name: 'Atwood'}])
 Dorm.create([{ name: 'East'}])
 Dorm.create([{ name: 'Drinkward'}])
@@ -28,6 +50,7 @@ Dorm.create([{ name: 'North'}])
 Dorm.create([{ name: 'South'}])
 Dorm.create([{ name: 'West'}])
 Dorm.create([{ name: 'Sontag'}])
+
 
 #Case
 
@@ -180,3 +203,4 @@ Suite.create(name: 'F', dorm_id: 8)
 Suite.create(name: 'C', dorm_id: 8)
 Suite.create(name: 'D', dorm_id: 8)
 Suite.create(name: 'E', dorm_id: 8)
+

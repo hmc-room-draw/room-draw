@@ -5,10 +5,11 @@
 @import "bootstrap";
 
 .dorms {
-	// Set up code for the div to appear in the right place
-	position:absolute;
-	z-index:20000;
-	display: none;
+    // Set up code for the div to appear in the right place
+    position:absolute;
+    z-index:20000;
+    display: none;
+
 
 	// styling 
 	background: white;
@@ -45,4 +46,5 @@
     text-align: center;
     background-color: #9d9d9d;
     color: white;
+
 }

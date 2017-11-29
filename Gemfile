@@ -5,18 +5,37 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'wdm', '>= 0.1.0'
+
+
+
+# Adding tooltipster gem, which allows us to add tooltips to the image map
+gem 'tooltipster-rails'
 # Generate entity-relationship diagrams
 group :development, :test do
   gem 'rails-erd', require: false
   gem 'rspec-rails'
 end
 
+
+# Use daemons to handle backend scripts
+gem 'daemons'
+
+# User delayed_job to handle asynchronous scheduled mailing
+gem 'delayed_job_active_record'
+
+gem 'google_drive'
+
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 # Authorization policy; see https://github.com/elabs/pundit
 gem 'pundit'
 
-#gem 'unicorn'
+
+# group :production do
+# 	gem 'unicorn'
+# end
+# gem 'unicorn'
 
 
 # Google OAuth support for OmniAuth

@@ -21,9 +21,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-
-  # This has been changed to True since we are not using Apache/NGINX
-  config.public_file_server.enabled = true
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -31,9 +29,6 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
-
-  # Raise error when asset isn't found
-  config.assets.unknown_asset_fallback = false
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -69,7 +64,7 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  #config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
