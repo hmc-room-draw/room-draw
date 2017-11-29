@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       if user.is_admin
         redirect_to admin_home_path
       else
-        redirect_to dorms_path
+        redirect_to root_path
       end
     else
       flash[:alert] = "No account exists with the given email."
