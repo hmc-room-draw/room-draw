@@ -114,12 +114,13 @@
     </div>
 </div>
   <div class="input-color">
-    <input type="text" value="pullable" readonly></input>
+    <input type="text" value="vacant or bumpable" readonly></input>
       <div class="color-box" style="background-color: rgb(102, 168, 255);"></div></br>
-    <input type="text" value="not pullable" readonly></input>
+      <input type="text" value="not pullable or bumpable" readonly></input>
       <div class="color-box" style="background-color: rgb(136, 138, 139);"></div></br>
-    <input type="text" value="your room" readonly></input>
+    <input type="text" value="pulled by or with you" readonly></input>
       <div class="color-box" style="background-color: rgb(217, 189, 4);"></div></br>
+      
   </div>
   <p></br></p>
 
@@ -247,6 +248,8 @@ $("#create-pull").click(function() {
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
 
+    var curDorm = "<%= @dorm.name.downcase %>";
+    var fillingForm = false;
     var dormElements = [];
 
     var floorHold = $('<div>').css({
@@ -315,7 +318,8 @@ $(".alert-div").fadeOut(8000);
             'z-index': 100,
         }).text(i+1).appendTo(floorHold)
         .on('click', function(){
-            layout(i);
+            sessionStorage.setItem("floorLevel", i);
+            location.reload();
         })
         .on('mouseenter', function(){
             $(this).css({
@@ -335,6 +339,7 @@ $(".alert-div").fadeOut(8000);
 
     var userDrawNum = <%= @curPullNum %>;
     var userRankNum = <%= @curRankNum %>;
+    var userId = <%= @userId %>;
     var mapLayout = <%= @json %>;
 
 
@@ -344,6 +349,7 @@ function layout(level){
             dormElements[i].remove();
         }
     }
+    sessionStorage.setItem("curDorm", "<%= @dorm.name.downcase %>");
     dormElements = [];
     console.log(level); 
     //get dorm room data
@@ -373,6 +379,7 @@ function layout(level){
     var roomPullNum;
     var roomRankNum;
     var curRoomNum;
+    var userInRoom;
 
     //create image tag to size map correctly
     var imgLev = level+1;
@@ -402,7 +409,7 @@ function layout(level){
     //get keys so that you can traverse js by index
     var keysbyindex = Object.keys(floor);
     while (x < keysbyindex.length) {
-        
+        userInRoom = false;
         //get data for room
           val = floor[keysbyindex[x]];
           room = $('<div>').css({
@@ -429,14 +436,13 @@ function layout(level){
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
-                  if (roomData[i].room_draw_number === userDrawNum) {
+                  if (roomData[i].student_id === userId) {
                       room.css({
                           background: 'rgb(217, 189, 4)',
                       });
-                      roomRankNum = roomData[i].class_rank
-                      roomPullNum = userDrawNum;
+                      userInRoom = true;
                   }
-                  else if (roomData[i].student_id !== null) {
+                  if (roomData[i].pull_id !== null) {
                       roomPullNum = roomData[i].room_draw_number;
                       roomRankNum = roomData[i].class_rank
                   }
@@ -450,13 +456,13 @@ function layout(level){
                   }
               }
               //check if your room draw number is lower or the roomo is not pulled at all
-              if (roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) {
+              if ((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) && !userInRoom) {
                   room.css({
                       background: 'rgb(102, 168, 255)',
                   });
               }
               //room is pulled by someone with higher number
-              else if((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) {
+              else if(((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && !userInRoom) {
                   room.css({
                       background: 'rgb(136, 138, 139)',
                   });
@@ -477,7 +483,7 @@ function layout(level){
                   for (var j = 0; j < room.curNames.length; j++) {
                       nameString = nameString + room.curNames[j] +', ';
                   }
-                  room.text(nameString + roomPullNum);
+                  room.text(nameString);
               }
           }
           
@@ -526,6 +532,7 @@ function layout(level){
                   $('#room-num').html(info.number);
               }
               modal.style.display = "block";
+              fillingForm = true;
           });
         x++;
     }
@@ -535,12 +542,14 @@ function layout(level){
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
+            fillingForm = false;
         }
     }
 
     window.onkeyup = function(event) {
       if (event.keyCode == 27) {
         modal.style.display = "none";
+        fillingForm = false;
         floorHold.css({
             visibility: 'hidden',
             'z-index': 0
@@ -558,7 +567,21 @@ function layout(level){
         }
     }        
 });
+
+// update info timer with refresh
+setInterval(function(){
+    if (!fillingForm || modal.style.display === 'none') {
+        location.reload();
+    }
+}, 60000);
+
+
+if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
     layout(0);
+}
+else {
+    layout(parseInt(sessionStorage.getItem("floorLevel")));
+}
     
 </script>
 

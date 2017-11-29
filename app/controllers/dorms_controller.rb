@@ -32,12 +32,16 @@ class DormsController < ApplicationController
       if !current_user.student.nil?
           @curPullNum = current_user.student.room_draw_number    
           @curRankNum = Student.class_ranks[current_user.student.class_rank]
+          @userId = current_user.student.id
       else 
           @curRankNum = 0
           @curPullNum = 0
+          @userId = -1
       end
     else 
+        @curRankNum = 0
         @curPullNum = 0
+        @userId = -1
     end
     
     case @dorm.name.downcase
@@ -81,12 +85,12 @@ class DormsController < ApplicationController
             @floor2 = "west2.png"
     end 
       
-    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*, pulls.*")
+    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*")
     .joins(:rooms)
     .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
     .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
-    .joins("LEFT OUTER JOIN pulls on students.id = pulls.student_id")
     .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+    # .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
     
     @level1 = @testDorm
     .where("floor = ?", 1)

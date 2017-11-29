@@ -9,7 +9,6 @@ one:
   
 three:
   student: three
-  pull: one
   room: one
   assignment_type: 0
   description: room
