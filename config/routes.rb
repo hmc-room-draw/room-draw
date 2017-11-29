@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     get '/sontag', to: 'static_pages#sontag'
     get '/drinkward', to: 'static_pages#drinkward'
 
+  get'/launch', to: 'static_pages#launch'
+
   get 'dorms/atwood'
 
   get '/dormLookup', to: 'static_pages#dormLookup'

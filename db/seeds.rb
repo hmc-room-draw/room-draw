@@ -35,10 +35,13 @@ Student.create(user_id: 5, room_draw_number: 5)
 
 
 
+
 #Dorms
 
 Dorm.create([{name: 'Case'}])
+
 Dorm.create([{name: 'Sontag'}])
+
 Dorm.create([{ name: 'Atwood'}])
 Dorm.create([{ name: 'East'}])
 Dorm.create([{ name: 'Drinkward'}])
@@ -46,6 +49,8 @@ Dorm.create([{ name: 'Linde'}])
 Dorm.create([{ name: 'North'}])
 Dorm.create([{ name: 'South'}])
 Dorm.create([{ name: 'West'}])
+Dorm.create([{ name: 'Sontag'}])
+
 
 #Case
 

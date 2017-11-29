@@ -1,24 +1,26 @@
 <%= stylesheet_link_tag 'static_pages' %>
 <%= javascript_include_tag 'static_pagesTest' %>
+<%= javascript_include_tag 'imageMapResizer.min.js' %>
+
+<% if current_user %>
+<center> <h1> Welcome to Room Draw!</h1>
+ Select a dorm to see all available rooms in that dorm. </br>
+<button onclick="popTable()"> Click here to see all empty rooms </button> </center>
 
 
-<li><% if current_user %>
-<img src="/assets/harvey-mudd-college-evacuation-sites-page-001.jpg" alt="" usemap="#Map" />
+<img src="/assets/harvey-mudd-college-evacuation-sites-page-001.jpg" alt="" usemap="#Map">
 <map name="Map" id="Map">
-    <area alt="" title="Case" href="/dormLookup?name=Case" shape="rect" coords="1816,384,1987,514" onmouseover="popCase(event);" onmouseout="popCase(event);" 
+    <area alt="" title="" href="/dormLookup?name=Case" shape="rect" coords="1082,377,929,516" id="Case" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" 
      />
-    <area alt="" title="Linde" href="/dormLookup?name=Linde" shape="rect" coords="1937,243,2059,382" onmouseover="popLinde(event);" onmouseout="popLinde(event);" />
-    <area alt="" title="Drinkward" href="/dormLookup?name=Drinkward" shape="rect" coords="1775,148,1928,265" onmouseover="popDrinkward(event);" onmouseout="popDrinkward(event);" />
-    <area alt="" title="Sontag" href="/dormLookup?name=Sontag" shape="rect" coords="1645,148,1766,265" onmouseover="popSontag(event);" onmouseout="popSontag(event);" />
-    <area alt="" title="Atwood" href="/dormLookup?name=Atwood" shape="rect" coords="1640,382,1793,508" onmouseover="popAtwood(event);" onmouseout="popAtwood(event);" />
-    <area alt="" title="North" href="/dormLookup?name=North" shape="rect" coords="1311,157,1446,279"  onmouseover="popNorth(event);" onmouseout="popNorth(event);" />
-    <area alt="" title="East" href="/dormLookup?name=East" shape="rect" coords="1311,328,1446,450"  onmouseover="popEast(event);" onmouseout="popEast(event);" />
-    <area alt="" title="South" href="/dormLookup?name=South" shape="rect" coords="1149,283,1293,153"  onmouseover="popSouth(event);" onmouseout="popSouth(event);" />
-    <area alt="" title="West" href="/dormLookup?name=West" shape="rect"  coords="1149,324,1289,454" onmouseover="popWest(event);" onmouseout="popWest(event);" />
+    <area alt="" title="" id="Linde" href="/dormLookup?name=Linde" shape="rect" coords="1033,368,1154,242" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Drinkward" href="/dormLookup?name=Drinkward" shape="rect" coords="1024,260,870,147" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Sontag" href="/dormLookup?name=Sontag" shape="rect" coords="866,260,749,156" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Atwood" href="/dormLookup?name=Atwood" shape="rect" coords="888,512,744,381"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="North" href="/dormLookup?name=North" shape="rect" coords="541,278,410,156" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="East" href="/dormLookup?name=East" shape="rect" coords="541,446,410,329"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="South" href="/dormLookup?name=South" shape="rect" coords="379,269,257,165"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="West" href="/dormLookup?name=West" shape="rect"  coords="379,447,257,339"onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
 </map>
-
-
-
 
 <!-- Hidden popup div goes here
   Shows up when hovering over dorms -->
@@ -102,53 +104,54 @@ There are <% dorm = Dorm.find_by_name("West") %>
 <% end %>
 </div>
 
-<table style="width:100%">
+<table id = "dormTable">
+
 <tr>
-<th>Dorm Name</th>
-<th>Number of Empty Rooms</th>
+<th style="text-align: center">Dorm Name</th>
+<th style="text-align: center">Number of Empty Rooms</th>
 </tr>
 <tr>
-  <td>Case</td>
+  <td><%= link_to "Case", "/dormLookup?name=Case"%> </td>
   <td> <% dorm = Dorm.find_by_name("Case") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>Linde</td>
+  <td><%= link_to "Linde", "/dormLookup?name=Linde" %></td>
   <td> <% dorm = Dorm.find_by_name("Linde") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>Sontag</td>
+  <td><%= link_to "Sontag", "/dormLookup?name=Sontag" %></td>
   <td> <% dorm = Dorm.find_by_name("Sontag") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>Drinkward</td>
+  <td><%= link_to "Drinkward", "/dormLookup?name=Drinkward" %></td>
   <td> <% dorm = Dorm.find_by_name("Drinkward") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>Atwood</td>
+  <td><%= link_to "Atwood", "/dormLookup?name=Atwood" %></td>
   <td> <% dorm = Dorm.find_by_name("Atwood") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>South</td>
+  <td><%= link_to "South", "/dormLookup?name=South" %></td>
   <td> <% dorm = Dorm.find_by_name("South") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>North</td>
+  <td><%= link_to "North", "/dormLookup?name=North" %></td>
   <td> <% dorm = Dorm.find_by_name("North") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>East</td>
+  <td><%= link_to "East", "/dormLookup?name=East" %></td>
   <td> <% dorm = Dorm.find_by_name("East") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td>West</td>
+  <td><%= link_to "West", "/dormLookup?name=West" %></td>
   <td> <% dorm = Dorm.find_by_name("West") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
@@ -161,9 +164,11 @@ There are <% dorm = Dorm.find_by_name("West") %>
 
 <h2 style="text-align: center;">Instructions:</h2>
 <p style="text-align: center;">1) Make sure you are an authenticated User (student).<br/>
+
                      2) Login with your HMC google account.  You will then be redirected to a page where you can fill out the required CIS form.<br/>
                      3) Fill out the CIS form.<br/>
                      4) Select a room.  You will not be able to pull into a room until you have logged in and filled out the CIS form.<br/>
+
 </p>
 
 <% end %>

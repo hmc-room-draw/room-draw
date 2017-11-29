@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+
 one:
   first_name: "Stu"
   last_name: "Dent"
@@ -39,3 +40,4 @@ five:
   is_admin: false
   oauth_token: Something
   oauth_expires_at: 2017-11-10 13:26:34
+
