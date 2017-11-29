@@ -49,6 +49,7 @@ Dorm.create([{ name: 'Linde'}])
 Dorm.create([{ name: 'North'}])
 Dorm.create([{ name: 'South'}])
 Dorm.create([{ name: 'West'}])
+Dorm.create([{ name: 'Sontag'}])
 
 #Case
 

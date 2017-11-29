@@ -4,38 +4,31 @@
     <title>RoomDraw</title>
     <%= csrf_meta_tags %>
 
-    <script src="/assets/jquery.js" type="text/javascript"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-inverse bg-inverse">
     <div class = "container">
         <div class = "navbar-header">
-        <% if current_user == nil %>
-          <%= link_to "Home", root_path, class: "navbar-brand" %>
-        <% else %>
-          <% if current_user.is_admin %>
-            <%= link_to "Home", admin_home_path, class: "navbar-brand" %>
-          <% else %>
-            <%= link_to "Home", dorms_path, class: "navbar-brand" %>
-          <% end %>
-        <% end %>
+        <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
+
         </div>
-        <ul class= "nav navbar-nav">
-            <li><% if current_user %>
-                Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>!
-                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
+
+              <% if current_user %>
+              <p class="nav navbar-text">
+               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
+                </p>
+        
+                <p class="nav navbar-text navbar-right" >
+                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </p>
                 <% else %>
-                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-                <% end %></li>
-        </ul>
+                <p class="nav navbar-text">                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></p>
+                <% end %>
+        
     </div>
   </nav>
-
-    <p class = "notice"><%= notice %></p>
-    <p class = "alert"><%= alert %></p>
 
     <%= yield %>
   </body>
