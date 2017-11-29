@@ -10,3 +10,4 @@ two:
   class_rank: sophomore
   room_draw_number: 27
   has_participated: false
+  user: two
