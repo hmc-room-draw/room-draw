@@ -25,10 +25,8 @@ class DormsController < ApplicationController
     @users = User.all
     # @rooms = Room.all
     @dorms = Dorm.all
-
     #join tables
-    @students = Student.joins(:user).
-    select('users.first_name, users.last_name, users.email, students.*')
+    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').select{ |s| not s.room_assignment }
     
     if current_user
       if !current_user.student.nil?

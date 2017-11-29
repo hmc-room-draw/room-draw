@@ -1,50 +1,62 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Pull List</h1>
+  <% if current_user.is_admin? %>
+    <div class="center">
+      <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
+      <%= button_to 'Create', new_pull_path, :class => "button", :method => :get  %>
+    </div>
+  <% end %>
 
-<div class="center">
-  <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
-  <%= button_to 'Create', new_pull_path, :class => "button", :method => :get  %>
-</div>
-
-<br>
-</br>
-<table>
-  <thead>
-    <tr>
-      <th>Number</th>
-      <th>Names</th>
-      <th>Rooms</th>
-      <th>Round</th>
-      <th>Message</th>  
-      <th>Actions</th>
-      <th colspan="5"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @pulls.each do |pull| %>
+  <br>
+  </br>
+  <table>
+    <thead>
       <tr>
-        <td><%= pull.student.room_draw_number %></td> 
-        
-        <td>
-        <% pull.room_assignments.each do |room_assignment| %>
-          <%= student_name(room_assignment) %>
-        <% end %>
-        </td>
-
-        <td>
-        <% pull.room_assignments.each do |room_assignment| %>
-          <%= room_assignment.room.number %>
-        <% end %>
-        </td>
-        
-        <td>tbd</td>
-        <td><%= pull.message %></td>
-        <td><%= link_to 'Show', pull %>
-        <%= link_to 'Edit', edit_pull_path(pull) %>
-        <%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Number</th>
+        <th>Names</th>
+        <th>Rooms</th>
+        <th>Round</th>
+        <% if current_user.is_admin? %>
+          <th>Message</th> 
+        <% end %> 
+        <th>Actions</th>
+        <th colspan="5"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @pulls.each do |pull| %>
+        <tr>
+          <td><%= pull.student.room_draw_number %></td> 
+          
+          <td>
+          <% pull.room_assignments.each do |room_assignment| %>
+            <%= student_name(room_assignment) %>
+          <% end %>
+          </td>
+
+          <td>
+          <% pull.room_assignments.each do |room_assignment| %>
+            <%= room_assignment.room.number %>
+          <% end %>
+          </td>
+          
+          <td>tbd</td>
+          <% if current_user.is_admin? %>
+           <td><%= pull.message %></td>
+            <td><%= link_to 'Show', pull %>
+            <%= link_to 'Edit', edit_pull_path(pull) %>
+            <%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% else %>
+            <% if current_user.student.room_assignment %>
+              <% if pull.room_assignments.include?(current_user.student.room_assignment) %>
+                <td><%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
+            <% end %>
+          <% end %>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
