@@ -427,6 +427,7 @@ function layout(level){
           //get db info about room
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
+              room.info.clickable = true;
               
               //need to check if student_id is equal to current_user.student.id
               //then you know if you are in room use bool in the while loop later
@@ -463,6 +464,7 @@ function layout(level){
               }
               //room is pulled by someone with higher number
               else if(((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && !userInRoom) {
+                  room.info.clickable = false;
                   room.css({
                       background: 'rgb(136, 138, 139)',
                   });
@@ -500,39 +502,41 @@ function layout(level){
           });
           
           room.on('click', {info: room.info}, function(event){
-              if (event.data.info !== undefined) {
-                  //show room info and populate form with room number
-                  var info = event.data.info;
-                  $('#room_number').val(info.number); //TODO: Check this is actually used.
-                  $('#unpullable-room-delete').val(info.number);
-                  $('#unpullable-room-num').val(info.number);
-                  if (info.assignment_type != null) { // If there's currently a room assignment
-                    $('#create-pull').addClass('hidden');
-                    $('#mark-unpullable').addClass('hidden');
+              if (event.data.info.clickable) {
+                  if (event.data.info.clickable !== undefined) {
+                      //show room info and populate form with room number
+                      var info = event.data.info;
+                      $('#room_number').val(info.number); //TODO: Check this is actually used.
+                      $('#unpullable-room-delete').val(info.number);
+                      $('#unpullable-room-num').val(info.number);
+                      if (info.assignment_type != null) { // If there's currently a room assignment
+                        $('#create-pull').addClass('hidden');
+                        $('#mark-unpullable').addClass('hidden');
 
-                    // If there's also a pull, show additional options
-                    if (info.pull_id != null) {
-                      $('#mark-pullable').addClass('hidden');
-                      $('#edit-pull').removeClass('hidden');
-                      $('#delete-pull').removeClass('hidden');
-                    } else {
-                      $('#mark-pullable').removeClass('hidden');
-                      $('#edit-pull').addClass('hidden');
-                      $('#delete-pull').addClass('hidden');
-                    }
-                    
-                  } else { // If there isn't an assignment type, theres no RoomAssignment
-                    //So there isn't any associated Pull either.
-                    $('#create-pull').removeClass('hidden');
-                    $('#mark-unpullable').removeClass('hidden');
-                    $('#edit-pull').addClass('hidden');
-                    $('#delete-pull').addClass('hidden');
-                    $('#mark-pullable').addClass('hidden');
-                  }
-                  $('#room-num').html(info.number);
-              }
+                        // If there's also a pull, show additional options
+                        if (info.pull_id != null) {
+                          $('#mark-pullable').addClass('hidden');
+                          $('#edit-pull').removeClass('hidden');
+                          $('#delete-pull').removeClass('hidden');
+                        } else {
+                          $('#mark-pullable').removeClass('hidden');
+                          $('#edit-pull').addClass('hidden');
+                          $('#delete-pull').addClass('hidden');
+                        }
+                        
+                      } else { // If there isn't an assignment type, theres no RoomAssignment
+                        //So there isn't any associated Pull either.
+                        $('#create-pull').removeClass('hidden');
+                        $('#mark-unpullable').removeClass('hidden');
+                        $('#edit-pull').addClass('hidden');
+                        $('#delete-pull').addClass('hidden');
+                        $('#mark-pullable').addClass('hidden');
+                      }
+                      $('#room-num').html(info.number);
+                  }  
               modal.style.display = "block";
               fillingForm = true;
+          }
           });
         x++;
     }
