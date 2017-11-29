@@ -43,6 +43,8 @@ class User < ApplicationRecord
       user = User.where(email: user_hash["email"])
 
       if user.count == 1
+        student_hash["has_participated"] = user.first.student.has_participated
+        student_hash["has_completed_form"] = user.first.student.has_completed_form
         user.first.update_attributes(user_hash)
       else
         student_hash["has_participated"] = false
