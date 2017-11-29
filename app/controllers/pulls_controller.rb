@@ -42,18 +42,40 @@ class PullsController < ApplicationController
     @pull = Pull.new(pull_params)
 
     cps = @pull.get_conflicting_pulls
-    cannot_override = cps.select { |cp| not pull can_override(cp) }
+    cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
     if not cannot_override.empty?
       format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
+    elsif @pull.has_conflicting_nonpulls
+      format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
     end
+
 
     if not cps.empty?
       cps.forEach do |cp|
         # TODO: email people from destroyed pulls
+
+        cp.students.forEach { |student|
+          # TODO: Update these for more detail later
+          subject = "Pull bumped"
+          content = "Your pull has been bumped."
+          GeneralMailer.reminder_email(student.user, subject, content)
+        }
+
         cp.destroy()
       end
     end
+
+    @pull.students.forEach { |student|
+      # TODO: Update these for more detail later
+      dorm = student.room_assignment.room.dorm
+      room = student.room_assignment.room.number
+      puller = "#{@pull.student.first_name} #{@pull.student.last_name}"
+
+      subject = "Pulled into #{dorm} #{room}"
+      content = "You have been pulled into #{dorm} #{room} by #{puller}."
+      GeneralMailer.reminder_email(student.user, subject, content)
+    }
 
     respond_to do |format|
       if @pull.save

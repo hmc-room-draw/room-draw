@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20171116071921) do
 
   create_table "delayed_jobs", force: :cascade do |t|
