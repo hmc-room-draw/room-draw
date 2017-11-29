@@ -8,7 +8,7 @@ class Dorm < ApplicationRecord
   validates :name, :presence => true
 
 	def unassigned_rooms
-		self.rooms.select { |r| !r.room_assignment.exists? }
+		self.rooms.select { |r| !r.room_assignments.exists? }
 	end
 
 	def unassigned_rooms_number
