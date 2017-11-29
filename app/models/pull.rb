@@ -2,7 +2,7 @@ class Pull < ApplicationRecord
   has_many :room_assignments, dependent: :destroy
   has_many :students, through: :room_assignments
 
-  accepts_nested_attributes_for :room_assignments
+  accepts_nested_attributes_for :room_assignments, reject_if: proc { |attributes| attributes ["student_id"] == "" || attributes ["room_id"] == "" }
   #TODO: add rejection parameters for :room_assignments
 
   belongs_to :student
@@ -10,7 +10,7 @@ class Pull < ApplicationRecord
   validates :room_assignments, :presence => true
   validates :student, :presence => true
 
-  validate :validate_student
+  # validate :validate_student
 
   # Checks if self can override another pull
   # @param other_pull

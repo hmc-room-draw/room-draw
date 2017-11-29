@@ -15,7 +15,15 @@
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_numner.
          So, we need to join the table of student and user and get the email address -->
-    <%= form.collection_select :student_id, @students, :id, :email, id: :room_draw_number  %>
+    <%= form.text_field :student_id, :value => current_user.email, :readonly => true  %>
+    <%= form.hidden_field :student_id, :value => current_user.student.id  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :room_id %>
+<!--     TODO: We don't wanna display room_draw_numner.
+         So, we need to join the table of student and user and get the email address -->
+    <%= form.text_field :room_id, :id => 'room_number', :readonly => true %>
   </div>
 
   <div class="field">
@@ -23,30 +31,31 @@
     <%= form.text_field :message, id: :pull_message %>
   </div>
 
-  <div class="field">
-    <%= form.label :senior_round %>
-    <%= form.number_field :round, id: :pull_round %> 
-    <p><i> If you are not a senior, please leave this field blank </i></p>
-  </div>
-
-  <!-- TO DO: Senior rounds -->
+  <% if current_user.student %>
+    <% if current_user.student.class_rank == 'senior' %>
+      <div class="field">
+        <%= form.label :senior_round %>
+        <%= form.number_field :round, id: :pull_round %> 
+      </div>
+    <% end %>
+  <% end %>
   
   <%= field_set_tag 'Room Assignments' do %>
+  <p> Please fill out the following fields with <i>your</i> email and the room you want to pull, as well as the emails and rooms of other students you want to pull with you. </br>If you do not want to pull in anyone else, please leave the remaining fields blank. </br></p>
 
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id, :include_blank => true %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>
-        <%= room_assignment.grouped_collection_select :room_id, @dorms, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
+        <%= room_assignment.collection_select :room_id, @rooms, :id, :name, id: :room_assignment_room_id, :include_blank => true %>
       </div>
           </br>
-<!--       <div>
-        <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.text_field :assignment_type, id: :room_assignment_assignment_type %>
-      </div> -->
+      <div>
+        <%= room_assignment.hidden_field :assignment_type, :value => 'pulled' %>
+      </div>
       
     <% end %>
   <% end %> 

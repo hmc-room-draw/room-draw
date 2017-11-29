@@ -6,10 +6,16 @@ one:
   room: one
   assignment_type: 0
   description: room
+  
+three:
+  student: three
+  room: one
+  assignment_type: 0
+  description: room
 
 two:
   student: two
   pull: two
-  room: two
+  room: three
   assignment_type: 1
   description: lol
