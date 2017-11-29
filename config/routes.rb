@@ -48,7 +48,5 @@ Rails.application.routes.draw do
   
   resources :sessions, only: [:create, :destroy]
 
-  root "static_pages#home"
-  # Add dormlookup route
-  get '/dormLookup', to: 'static_pages#dormLookup'
+  root "sessions#new"
 end
