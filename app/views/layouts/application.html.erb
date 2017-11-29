@@ -15,16 +15,30 @@
         <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
 
         </div>
-        <ul class= "nav navbar-nav">
+<!--         <ul class= "nav navbar-nav">
             <% if current_user %>
-              <li class="nav navbar-text">
+              <li class="nav nav-item navbar-text">
                Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
-                </li> <li class="nav nav-item">
-                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </li>
+                </li> 
+                </ul>
+                <ul class = "nav navbar-nav navbar-right">
+                <li class="nav nav-item" >
+                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </li> </ul>
                 <% else %>
-                <li class="nav nav-item">                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></li>
+                <li class="nav nav-item">                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></li></ul>
+                <% end %> -->
+
+              <% if current_user %>
+              <p class="nav navbar-text">
+               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
+                </p>
+        
+                <p class="nav navbar-text navbar-right" >
+                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </p>
+                <% else %>
+                <p class="nav navbar-text">                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></p>
                 <% end %>
-        </ul>
+        
     </div>
   </nav>
 
