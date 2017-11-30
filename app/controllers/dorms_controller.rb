@@ -10,28 +10,38 @@ class DormsController < ApplicationController
   # GET /dorms/1
   # GET /dorms/1.json
   def show
-      @rooms = @dorm.rooms
-      @pull = Pull.new
-      5.times {@pull.room_assignments.build}
-      #TODO: Get only the necessary information
-      # @students = Student.all
-      @users = User.all
-      @rooms = Room.all
-      @dorms = Dorm.all
 
-      #join tables
-      @students = Student.joins(:user).
-      select('users.first_name, users.last_name, users.email, students.*')
-      
-      if current_user
-        @curPullNum = 50
-        # if current_user.student?
-        #     @curPullNum = current_user.student.room_draw_number        
-        # else 
-        #     @curPullNum = 70
-        # end
+    # Render one form or the other depending on whether the peron's an admin
+    if current_user
+      @admin = current_user.is_admin?
+      @student = dorm_id = Student.find_by user: current_user
+    end
+
+    @rooms = @dorm.rooms
+    @pull = Pull.new
+    6.times {@pull.room_assignments.build}
+    #TODO: Get only the necessary information
+    # @students = Student.all
+    @users = User.all
+    # @rooms = Room.all
+    @dorms = Dorm.all
+    #join tables
+    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').select{ |s| not s.room_assignment }
+    
+    if current_user
+      if !current_user.student.nil?
+          @curPullNum = current_user.student.room_draw_number    
+          @curRankNum = Student.class_ranks[current_user.student.class_rank]
+          @userId = current_user.student.id
+      else 
+          @curRankNum = 0
+          @curPullNum = 0
+          @userId = -1
+      end
     else 
-        @curPullNum = 69
+        @curRankNum = 0
+        @curPullNum = 0
+        @userId = -1
     end
     
     case @dorm.name.downcase
@@ -80,6 +90,7 @@ class DormsController < ApplicationController
     .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
     .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
     .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+    # .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
     
     @level1 = @testDorm
     .where("floor = ?", 1)

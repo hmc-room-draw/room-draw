@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116071921) do
+ActiveRecord::Schema.define(version: 20171125090245) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -47,6 +47,12 @@ ActiveRecord::Schema.define(version: 20171116071921) do
     t.datetime "updated_at", null: false
     t.string "subject"
     t.date "sendDate"
+    t.boolean "send_to_never_logged_in"
+    t.boolean "send_to_never_pulled_room"
+    t.boolean "send_to_formerly_in_room"
+    t.boolean "send_to_in_room"
+    t.boolean "send_to_admins"
+    t.boolean "sent_status"
   end
 
   create_table "pulls", force: :cascade do |t|

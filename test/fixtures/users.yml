@@ -3,22 +3,22 @@
 one:
   first_name: "Stu"
   last_name: "Dent"
-  email: tudent@g.hmc.edu
+  email: tre.gonzales96@gmail.com
   is_admin: true
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34
 
 two:
-  first_name: MyString
-  last_name: MyString
+  first_name: "MyString"
+  last_name: "MyString"
   email: email@emailaddress.com
   is_admin: false
   oauth_token: MyString
   oauth_expires_at: 2017-10-07 13:26:34
 
 three:
-  first_name: Admin
-  last_name: Admin
+  first_name: "Admin"
+  last_name: "Admin"
   email: hyobinyou@gmail.com
   is_admin: true
   oauth_token: Something

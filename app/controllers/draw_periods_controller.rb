@@ -80,21 +80,39 @@ class DrawPeriodsController < ApplicationController
         render html: "<script>alert('Set Start/End Date Called')</script>".html_safe
     end
 
+    def downloadPlacements
+        placements_csv = CSV.generate do |csv|
+            headings = ["Last Name", "First Name", "Class", 
+                        "Room Draw Number", "Dorm", "Room", "Preplaced"]
+            csv << headings
 
-    def uploadRoster
-        render html: "<script>alert('Upload Roster Called')</script>".html_safe
-    end
+            Student.all.each do |student|
+                user = User.find_by(id: student.user_id)
+                room_assignment = student.room_assignment
+
+                basic_info = [user.last_name, user.first_name, 
+                              student.class_rank, student.room_draw_number]
+                
+                if room_assignment == nil
+                    placement_info = ["", "", false]
+                else
+                    placement_info = [room_assignment.room.dorm.name, 
+                                      room_assignment.room.number, 
+                                      room_assignment.assignment_type == "preplaced"]
+                end
+
+                csv << basic_info + placement_info
+            end
+        end
     
-    #TODO
-    def downloadStudents
-        render html: "<script>alert('Download Students Called')</script>".html_safe
+        send_data placements_csv, 
+            :type => 'text/csv', 
+            :filename => 'placements.csv', 
+            :disposition => 'attachment'
     end
     
 
     def downloadNonParticipants
-        '''
-        Download all students who have not participated in room draw
-        '''
         user_csv = CSV.generate do |csv|
           csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
           Student.all.each do |student|
@@ -112,10 +130,7 @@ class DrawPeriodsController < ApplicationController
           :filename => 'non_participants.csv',
           :disposition => 'attachment'
     end
-    #TODO
-    def downloadPulls
-        render html: "<script>alert('Download Pulls Called')</script>".html_safe
-    end
+
     private
         def set_draw_period
             @draw_period = DrawPeriod.find(params[:id])

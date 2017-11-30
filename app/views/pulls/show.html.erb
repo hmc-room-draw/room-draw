@@ -1,11 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.is_admin? %>
-<h1>Pull <%= @pull.id %></h1>
+	<h1>Pull <%= @pull.id %></h1>
 
-<%= render 'currentList', pull: @pull %>
+	<%= render 'currentList', pull: @pull %>
 
-<%= link_to 'Edit', edit_pull_path(@pull) %>
-<%= link_to 'Back', pulls_path %>
+	<%= link_to 'Edit', edit_pull_path(@pull) %>
+	<%= link_to 'Back', pulls_path %>
+<% else %>
+	<%= link_to 'Back', pulls_path %>
 
 <% end %>
