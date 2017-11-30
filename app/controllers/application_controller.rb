@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user, :current_draw_period
 
-  # TODO: Uncomment the line below to enable form/login redirect. Make sure also
-  # to uncomment the corresponding line in `app/controllers/sessions_controller.rb`!
-  #before_action :check_login, :check_form
+  # TODO: Uncomment the line below to enable form/login redirect and comingsoon
+  # redirect when draw period isn't live. Make sure also to uncomment the 
+  # corresponding line in `app/controllers/sessions_controller.rb`!
+  before_action :check_login, :check_form, :check_draw_period
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
@@ -24,17 +25,26 @@ class ApplicationController < ActionController::Base
   end
 
   def check_form
-    unless current_user.has_completed_form then
+    @current_student = current_user.student
+    unless @current_student == nil || @current_student.has_completed_form then
       ss_key = Rails.application.config.responses_spreadsheet_key
       if email_in_spreadsheet?(ss_key, current_user.email) then
-        current_user.has_completed_form = true
-        current_user.save!
+        @current_student.has_completed_form = true
+        @current_student.save!
       else
         if current_user.is_admin
           flash[:alert] = 'Don\'t forget to fill out the form!'
         else
           redirect_to Rails.application.config.form_url
         end
+      end
+    end
+  end
+
+  def check_draw_period
+    unless current_draw_period != nil then
+      unless current_user.is_admin then
+        redirect_to coming_soon_path
       end
     end
   end

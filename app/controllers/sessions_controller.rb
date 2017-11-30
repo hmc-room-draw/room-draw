@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  #skip_before_action :check_login, :check_form
+  skip_before_action :check_login, :check_form, :check_draw_period
 
   def create
     user = User.from_omniauth(request.env['omniauth.auth'])
