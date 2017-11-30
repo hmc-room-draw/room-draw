@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<center>
 <% if status(@draw_period) == 'Complete' %>
     <h1>You're Too Late!</h1>
     <p>Digital Draw ended on <strong><%= @end %></strong>.</p>
@@ -11,3 +11,4 @@
         <p>Date of next Digital Draw to be announced!</p>
     <% end %>
 <% end %>
+</center>
