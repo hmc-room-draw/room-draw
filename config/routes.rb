@@ -8,9 +8,6 @@ Rails.application.routes.draw do
   get 'emails/:id/edit', to: 'draw_periods#edit'
   delete 'emails/:id', to: 'draw_periods#destroy'
 
-  # temporary route of landing page
-  # post 'emails/download_non_participants'
-
   get 'login/show'
 
   # Admin Room Assignments form
