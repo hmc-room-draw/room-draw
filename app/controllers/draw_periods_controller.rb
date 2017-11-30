@@ -1,7 +1,8 @@
 class DrawPeriodsController < ApplicationController
     skip_before_action :check_draw_period, only: [:coming_soon]
     before_action :set_draw_period, only: [:admin_landing_page, :coming_soon, :update, :destroy]
-
+    include DrawPeriodHelper
+    
     def create
         @draw_period = DrawPeriod.new(draw_period_params)
         
