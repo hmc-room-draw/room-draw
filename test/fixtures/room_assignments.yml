@@ -4,18 +4,18 @@ one:
   student: one
   pull: one
   room: one
-  assignment_type: 0
+  assignment_type: 2
   description: room
   
 three:
   student: three
   room: one
-  assignment_type: 0
+  assignment_type: 2
   description: room
 
 two:
   student: two
   pull: two
   room: three
-  assignment_type: 1
+  assignment_type: 0
   description: lol

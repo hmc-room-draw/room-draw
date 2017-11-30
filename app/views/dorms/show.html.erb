@@ -380,6 +380,7 @@ function layout(level){
     var roomRankNum;
     var curRoomNum;
     var userInRoom;
+    var preplaced;
 
     //create image tag to size map correctly
     var imgLev = level+1;
@@ -410,6 +411,7 @@ function layout(level){
     var keysbyindex = Object.keys(floor);
     while (x < keysbyindex.length) {
         userInRoom = false;
+        preplaced = false;
         //get data for room
           val = floor[keysbyindex[x]];
           room = $('<div>').css({
@@ -445,7 +447,7 @@ function layout(level){
                   }
                   if (roomData[i].pull_id !== null) {
                       roomPullNum = roomData[i].room_draw_number;
-                      roomRankNum = roomData[i].class_rank
+                      roomRankNum = roomData[i].class_rank;
                   }
                   
                   if (roomData[i].first_name !== null) {
@@ -457,17 +459,25 @@ function layout(level){
                   }
               }
               //check if your room draw number is lower or the roomo is not pulled at all
-              if ((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum) || roomPullNum === null) && !userInRoom) {
+              if ((((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum)) && room.info.assignment_type === 2) || room.info.assignment_type === null) && !userInRoom) {
                   room.css({
                       background: 'rgb(102, 168, 255)',
                   });
               }
               //room is pulled by someone with higher number
-              else if(((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && !userInRoom) {
+              else if(((((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && room.info.assignment_type === 2) || room.assignment_type !== 2) && !userInRoom) {
                   room.info.clickable = false;
                   room.css({
                       background: 'rgb(136, 138, 139)',
                   });
+                  if (room.info.assignment_type === 1) {
+                      preplaced = true;
+                      room.text('freshman');
+                  }
+                  else if (room.info.assignment_type !== 2) {
+                      preplaced = true;
+                      room.text('preplaced/ unavailable');
+                  }
               }
               
               
@@ -478,16 +488,19 @@ function layout(level){
               });
           }
           
-          if (room.curNames !== undefined) {
-              if (room.curNames[0] !== undefined) {
-                  console.log(roomPullNum);
-                  var nameString = '';
-                  for (var j = 0; j < room.curNames.length; j++) {
-                      nameString = nameString + room.curNames[j] +', ';
+          if (!preplaced) {
+              if (room.curNames !== undefined) {
+                  if (room.curNames[0] !== undefined) {
+                      console.log(roomPullNum);
+                      var nameString = '';
+                      for (var j = 0; j < room.curNames.length; j++) {
+                          nameString = nameString + room.curNames[j] +', ';
+                      }
+                      room.text(nameString.substring(0, nameString.length-2));
                   }
-                  room.text(nameString);
               }
           }
+          
           
           room.on('mouseenter', function(){
              $(this).css({

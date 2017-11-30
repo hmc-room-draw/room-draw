@@ -13,47 +13,47 @@
 <th style="text-align: center">Number of Empty Rooms</th>
 </tr>
 <tr>
-  <td><%= link_to "Case", "/dormLookup?name=Case"%> </td>
+  <td><%= link_to "Case", "/dormLookup?name=Case", :"data-turbolinks" => false %> </td>
   <td> <% dorm = Dorm.find_by_name("Case") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "Linde", "/dormLookup?name=Linde" %></td>
+  <td><%= link_to "Linde", "/dormLookup?name=Linde", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("Linde") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "Sontag", "/dormLookup?name=Sontag" %></td>
+  <td><%= link_to "Sontag", "/dormLookup?name=Sontag", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("Sontag") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "Drinkward", "/dormLookup?name=Drinkward" %></td>
+  <td><%= link_to "Drinkward", "/dormLookup?name=Drinkward", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("Drinkward") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "Atwood", "/dormLookup?name=Atwood" %></td>
+  <td><%= link_to "Atwood", "/dormLookup?name=Atwood", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("Atwood") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "South", "/dormLookup?name=South" %></td>
+  <td><%= link_to "South", "/dormLookup?name=South", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("South") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "North", "/dormLookup?name=North" %></td>
+  <td><%= link_to "North", "/dormLookup?name=North", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("North") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "East", "/dormLookup?name=East" %></td>
+  <td><%= link_to "East", "/dormLookup?name=East", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("East") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
 <tr>
-  <td><%= link_to "West", "/dormLookup?name=West" %></td>
+  <td><%= link_to "West", "/dormLookup?name=West", :"data-turbolinks" => false  %></td>
   <td> <% dorm = Dorm.find_by_name("West") %>
        <%= dorm.unassigned_rooms_number %> </td>
 </tr>
