@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.is_admin? %>
-	<h1>Pull <%= @pull.id %></h1>
+	<h1>Pull: <%= @pull.id %></h1>
+	<h2>Senior Round: <%= 'tdb' %></h2>
 
 	<%= render 'currentList', pull: @pull %>
 
