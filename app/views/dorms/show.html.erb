@@ -340,6 +340,8 @@ $(".alert-div").fadeOut(8000);
     var userRankNum = <%= @curRankNum %>;
     var userId = <%= @userId %>;
     var mapLayout = <%= @json %>;
+    var admin = <%= @admin %>;
+    var is_student = <%= @is_student %>;
 
 
 function layout(level){  
@@ -514,13 +516,15 @@ function layout(level){
           });
           
           room.on('click', {info: room.info}, function(event){
-              if (event.data.info.clickable) {
+              if (admin || event.data.info.clickable) {
                   if (event.data.info.clickable !== undefined) {
                       //show room info and populate form with room number
                       var info = event.data.info;
                       $('#room_number').val(info.number); //TODO: Check this is actually used.
                       $('#unpullable-room-delete').val(info.number);
                       $('#unpullable-room-num').val(info.number);
+                      $('#pull-student').addClass('hidden');
+
                       if (info.assignment_type != null) { // If there's currently a room assignment
                         $('#create-pull').addClass('hidden');
                         $('#mark-unpullable').addClass('hidden');
@@ -530,6 +534,10 @@ function layout(level){
                           $('#mark-pullable').addClass('hidden');
                           $('#edit-pull').removeClass('hidden');
                           $('#delete-pull').removeClass('hidden');
+                          // Maybe show "Pull on your own number" button, depending on their #
+                          if (is_student && event.data.info.clickable) {
+                            $('#pull-student').removeClass('hidden');
+                          }
                         } else {
                           $('#mark-pullable').removeClass('hidden');
                           $('#edit-pull').addClass('hidden');
@@ -543,6 +551,9 @@ function layout(level){
                         $('#edit-pull').addClass('hidden');
                         $('#delete-pull').addClass('hidden');
                         $('#mark-pullable').addClass('hidden');
+                        if (is_student) {
+                          $('#pull-student').removeClass('hidden');
+                        }
                       }
                       $('#room-num').html(info.number);
                   }  
