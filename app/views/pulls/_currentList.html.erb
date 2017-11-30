@@ -14,7 +14,7 @@
       <tr>
         <td><%= student_name(room_assignment) %></td>
         <td><%= student_number(room_assignment) %></td>
-        <td><%= room_assignment.room_id %></td>
+        <td><%= room_assignment.room.name %></td>
         <td><%= link_to 'Delete', room_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
