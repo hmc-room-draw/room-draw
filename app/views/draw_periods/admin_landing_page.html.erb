@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 <h1>Admin Settings</h1>
 
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants"}, {class: 'dashboard-button'} %>
@@ -20,9 +21,7 @@
 
 <br>
 <% if @draw_period != nil %>
-<h4>Reschedule Draw Period</h4>
-<% else %>
 <h4>Schedule Draw Period</h4>
-<% end %>
 <%= render 'form', draw_period: @draw_period %>
+<% end %>
 

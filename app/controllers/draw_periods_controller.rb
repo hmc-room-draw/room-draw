@@ -1,43 +1,37 @@
 class DrawPeriodsController < ApplicationController
-    before_action :set_draw_period, only: [:show, :edit, :update, :destroy]
+    before_action :set_draw_period, only: [:update, :destroy]
     helper DrawPeriodHelper
 
     def create
         @draw_period = DrawPeriod.new(draw_period_params)
         
-        respond_to do |format|
-            if @draw_period.save
-                format.html { redirect_to root_path, notice: 'Draw Period was successfully scheduled.' }
-                format.json { render :show, status: :created, location: @draw_period }
-            else
-                format.html { render :new }
-                format.json { render json: @draw_period.errors, status: :unprocessable_entity }
-            end
+        if @draw_period.save
+            flash[:notice] = 'Draw Period was successfully created.'
+            redirect_to admin_home_path
+        else
+            render :admin_landing_page
         end
     end
 
     def update
-        respond_to do |format|
-            if @draw_period.update(draw_period_params)
-                format.html { redirect_to root_path, notice: 'Draw Period was successfully updated.' }
-                format.json { render :show, status: :ok, location: @draw_period }
-            else
-                format.html { render :edit }
-                format.json { render json: @draw_period.errors, status: :unprocessable_entity }
-            end
+        if @draw_period.update(draw_period_params)
+            flash[:notice] = 'Draw Period was successfully updated.'
+            redirect_to admin_home_path
+        else
+            render :admin_landing_page
         end
     end
 
     def destroy
         @draw_period.destroy
         respond_to do |format|
-            format.html { redirect_to draw_periods_url, notice: 'Draw Period was successfully canceled.' }
+            format.html { redirect_to admin_home_path, notice: 'Draw Period was successfully canceled.' }
             format.json { head :no_content }
         end
     end 
 
     def admin_landing_page
-        if(DrawPeriod.all == nil)
+        if(DrawPeriod.first == nil)
             @draw_period = DrawPeriod.new
         else
             @draw_period = DrawPeriod.first
@@ -94,10 +88,10 @@ class DrawPeriodsController < ApplicationController
 
     private
         def set_draw_period
-            @draw_period = DrawPeriod.find(params[:id])
+            @draw_period = DrawPeriod.first
         end
         
         def draw_period_params
-            params.require(:draw_period).permit(:start_datetime, :end_datetime).merge(last_updated_by: current_user.id)
+            params.require(:draw_period).permit(:start_datetime, :end_datetime).merge(id: 1, last_updated_by: current_user.id)
         end
 end
