@@ -30,14 +30,12 @@ class ApplicationController < ActionController::Base
         current_user.has_completed_form = true
         current_user.save!
       else
-        redirect_to Rails.application.config.form_url
+        if current_user.is_admin
+          flash[:alert] = 'Don\'t forget to fill out the form!'
+        else
+          redirect_to Rails.application.config.form_url
+        end
       end
-    end
-  end
-
-  def check_form_skip_admin
-    unless current_user.is_admin then
-      check_form
     end
   end
 
