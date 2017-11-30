@@ -56,7 +56,11 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      if current_user.is_admin 
+        format.html { redirect_to admin_students_url, notice: 'Student was successfully destroyed.' }
+      else
+        format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      end
       format.json { head :no_content }
     end
   end
