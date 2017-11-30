@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Room Draw hasn't started yet. </h1>
+
+<% if @draw_period != nil %>
+    <p>
+    Digital Draw will take place from <strong><%= @start %></strong> to <strong><%= @end %></strong>.
+    </p>
+<% else %>
+    <h2> Date to be announced! </h2>
+<% end %>

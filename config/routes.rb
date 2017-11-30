@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'coming_soon', to: 'draw_periods#coming_soon'
+  
   resources :emails
   get 'emails/new', to: 'draw_periods#sendEmails'
   get 'emails/index'
@@ -25,8 +27,7 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
-
-  resources :draw_periods
+  resources :draw_periods, only: [:create, :update, :destroy]
 
   resources :dorms
   resources :pulls
