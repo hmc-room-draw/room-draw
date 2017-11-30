@@ -95,6 +95,10 @@ class PullsController < ApplicationController
   # PATCH/PUT /pulls/1
   # PATCH/PUT /pulls/1.json
   def update
+    @students = Student.all
+    @dorms = Dorm.all
+    @rooms = Room.all
+    
     authorize @pull
 
     respond_to do |format|
