@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+<% if not current_user.is_admin? %>
   <div class="field">
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_numner.
@@ -39,6 +40,7 @@
       </div>
     <% end %>
   <% end %>
+<% end %>
   
   <%= field_set_tag 'Room Assignments' do %>
   <p> Please fill out the following fields with <i>your</i> email and the room you want to pull, as well as the emails and rooms of other students you want to pull with you. </br>If you do not want to pull in anyone else, please leave the remaining fields blank. </br></p>
