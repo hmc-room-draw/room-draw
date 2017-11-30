@@ -1,0 +1,92 @@
+<img src="/assets/harvey-mudd-college-evacuation-sites-page-001.jpg" alt="" usemap="#Map">
+<map name="Map" id="Map">
+    <area alt="" title="" href="/dormLookup?name=Case" shape="rect" coords="1082,377,929,516" id="Case" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" 
+     />
+    <area alt="" title="" id="Linde" href="/dormLookup?name=Linde" shape="rect" coords="1033,368,1154,242" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Drinkward" href="/dormLookup?name=Drinkward" shape="rect" coords="1024,260,870,147" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Sontag" href="/dormLookup?name=Sontag" shape="rect" coords="866,260,749,156" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="Atwood" href="/dormLookup?name=Atwood" shape="rect" coords="888,512,744,381"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="North" href="/dormLookup?name=North" shape="rect" coords="541,278,410,156" onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="East" href="/dormLookup?name=East" shape="rect" coords="541,446,410,329"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="South" href="/dormLookup?name=South" shape="rect" coords="379,269,257,165"  onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+    <area alt="" title="" id="West" href="/dormLookup?name=West" shape="rect"  coords="379,447,257,339"onmouseover="popDorm(event, this);" onmouseout="popDorm(event, this);" />
+</map>
+
+<!-- Hidden popup div goes here
+  Shows up when hovering over dorms -->
+<div id= "case" class= "dorms">
+  Case </br>
+  There are <% dorm = Dorm.find_by_name("Case") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Case. </br>
+    <% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in Case. </br>
+    <% end %>
+</div>
+
+<div id= "linde" class = "dorms">
+Linde </br>
+There are <% dorm = Dorm.find_by_name("Linde") %>
+                        <%= dorm.unassigned_rooms_number %> empty rooms in Linde. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in Linde. </br>
+<% end %>
+
+</div>
+
+<div id= "sontag" class = "dorms">
+
+There are <% dorm = Dorm.find_by_name("Sontag") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Sontag. </br>
+<% if current_user.student %>
+There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in Sontag. </br>
+<% end %>
+</div>
+
+<div id= "drinkward" class = "dorms">
+
+There are <% dorm = Dorm.find_by_name("Drinkward") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Drinkward. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in Drinkward. </br>
+<% end %>
+</div>
+
+<div id= "atwood" class = "dorms">
+There are <% dorm = Dorm.find_by_name("Atwood") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in Atwood. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in Atwood. </br>
+<% end %>
+</div>
+
+<div id= "south" class = "dorms">
+There are <% dorm = Dorm.find_by_name("South") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in South. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in South. </br>
+<% end %>
+</div>
+ 
+<div id= "north" class = "dorms">
+There are <% dorm = Dorm.find_by_name("North") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in North. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in North. </br>
+<% end %>
+</div>
+
+<div id= "east" class = "dorms">
+There are <% dorm = Dorm.find_by_name("East") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in East. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in East. </br>
+<% end %>
+</div>
+
+<div id = "west" class = "dorms">
+There are <% dorm = Dorm.find_by_name("West") %>
+                            <%= dorm.unassigned_rooms_number %> empty rooms in West. </br>
+<% if current_user.student %>
+    There are approximately <%= pullable_rooms_number(dorm) %> pullable rooms in West. </br>
+<% end %>
+</div>

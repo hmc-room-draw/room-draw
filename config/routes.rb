@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
   
   resources :emails
-  get 'emails/new', to: 'draw_periods#sendEmails'
   get 'emails/index'
-  get 'emails/show', to: 'draw_periods#viewEmails'
+  get 'emails/show', to: 'static_pages#viewEmails'
   get 'emails/create'
-  get 'emails/:id/edit', to: 'draw_periods#edit'
-  delete 'emails/:id', to: 'draw_periods#destroy'
+  get 'emails/:id/edit', to: 'static_pages#edit'
+  delete 'emails/:id', to: 'static_pages#destroy'
 
   get 'login/show'
 
@@ -20,11 +19,10 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   #routes for admin landing page
-  get 'admin/home', to: 'draw_periods#admin_landing_page'
   get 'admin/students', to: 'students#index'
-  post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
-  post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
-  post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
+  post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
+  post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
+  post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
 
   resources :draw_periods
 
