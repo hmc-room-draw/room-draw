@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
 
   # TODO: Uncomment the line below to enable form/login redirect and comingsoon
   # redirect when draw period isn't live. Make sure also to uncomment the 
-  # corresponding line in `app/controllers/sessions_controller.rb`!
-  before_action :check_login, :check_form, :check_draw_period
+  # corresponding line in sessions controller and draw periods controller!
+  #before_action :check_login, :check_form, :check_draw_period
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
