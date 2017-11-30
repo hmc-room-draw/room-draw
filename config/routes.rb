@@ -8,9 +8,6 @@ Rails.application.routes.draw do
   get 'emails/:id/edit', to: 'draw_periods#edit'
   delete 'emails/:id', to: 'draw_periods#destroy'
 
-  # temporary route of landing page
-  post 'emails/download_non_participants'
-
   get 'login/show'
 
   # Admin Room Assignments form
@@ -28,7 +25,6 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
-  post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
 
   resources :draw_periods
 
