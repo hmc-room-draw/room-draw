@@ -6,9 +6,12 @@
 
 	<%= render 'currentList', pull: @pull %>
 
+	<br></br>
 	<%= link_to 'Edit', edit_pull_path(@pull) %>
 	<%= link_to 'Back', pulls_path %>
+
 <% else %>
+	<br></br>
 	<%= link_to 'Back', pulls_path %>
 
 <% end %>
