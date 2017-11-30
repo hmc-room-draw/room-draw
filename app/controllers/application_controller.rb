@@ -15,8 +15,9 @@ class ApplicationController < ActionController::Base
 
   def current_draw_period
     candidate = DrawPeriod.first
-    
-    if candidate.start_datetime < DateTime.now && candidate.end_datetime > DateTime.now
+    if candidate == nil
+      @current_draw_period = nil
+    elsif candidate.start_datetime < DateTime.now && candidate.end_datetime > DateTime.now
       @current_draw_period = candidate
     else
       @current_draw_period = nil
