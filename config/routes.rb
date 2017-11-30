@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete 'emails/:id', to: 'draw_periods#destroy'
 
   # temporary route of landing page
-  post 'emails/download_non_participants'
+  # post 'emails/download_non_participants'
 
   get 'login/show'
 
