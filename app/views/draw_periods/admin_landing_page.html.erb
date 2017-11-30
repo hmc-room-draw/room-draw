@@ -19,5 +19,10 @@
 </div> 
 
 <br>
+<% if @draw_period != nil %>
+<h4>Reschedule Draw Period</h4>
+<% else %>
+<h4>Schedule Draw Period</h4>
+<% end %>
 <%= render 'form', draw_period: @draw_period %>
 

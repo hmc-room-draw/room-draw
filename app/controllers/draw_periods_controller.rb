@@ -1,14 +1,6 @@
 class DrawPeriodsController < ApplicationController
     before_action :set_draw_period, only: [:show, :edit, :update, :destroy]
     helper DrawPeriodHelper
-    
-    def show
-        @draw_period = DrawPeriod.find(params[:id])
-    end
-
-    def new
-        @draw_period = DrawPeriod.new
-    end
 
     def create
         @draw_period = DrawPeriod.new(draw_period_params)
@@ -22,10 +14,6 @@ class DrawPeriodsController < ApplicationController
                 format.json { render json: @draw_period.errors, status: :unprocessable_entity }
             end
         end
-    end
-
-    def edit
-        @draw_period = DrawPeriod.find(params[:id])
     end
 
     def update
@@ -48,23 +36,12 @@ class DrawPeriodsController < ApplicationController
         end
     end 
 
-    # method for setting up datetime entry on landing page
     def admin_landing_page
         if(DrawPeriod.all == nil)
-            @draw_period = DrawPeriod.all[0]
-            @start_datetime = drawperiod.start_datetime
-            @end_datetime = drawperiod.start_datetime
-            puts "first"
+            @draw_period = DrawPeriod.new
         else
-            new
-            @start_datetime = Time.now
-            @end_datetime = Time.now
-            @draw_period.start_datetime = @start_datetime
-            puts "second"
+            @draw_period = DrawPeriod.first
         end
-        puts "start"
-        puts @draw_period.inspect
-        puts "end"
     end
 
     def downloadPlacements
