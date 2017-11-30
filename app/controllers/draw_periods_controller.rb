@@ -1,4 +1,6 @@
 class DrawPeriodsController < ApplicationController
+    include Pundit
+    
     before_action :set_draw_period, only: [:show, :edit, :update, :destroy]
     helper DrawPeriodHelper
 
@@ -54,6 +56,7 @@ class DrawPeriodsController < ApplicationController
 
     # method for setting up datetime entry on landing page
     def admin_landing_page
+        authorize User
         if(DrawPeriod.all == nil)
             @draw_period = DrawPeriod.all[0]
             @start_datetime = drawperiod.start_datetime
