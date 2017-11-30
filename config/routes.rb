@@ -28,7 +28,6 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
-  post 'admin/setStartEndDate', to: 'draw_periods#setStartEndDate'
 
   resources :draw_periods
 

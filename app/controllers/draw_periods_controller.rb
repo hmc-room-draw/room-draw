@@ -70,12 +70,6 @@ class DrawPeriodsController < ApplicationController
         puts @draw_period.inspect
         puts "end"
     end
-    
-    #TODO
-    def setStartEndDate
-
-        render html: "<script>alert('Set Start/End Date Called')</script>".html_safe
-    end
 
     def downloadPlacements
         placements_csv = CSV.generate do |csv|

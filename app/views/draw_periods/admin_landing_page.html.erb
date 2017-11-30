@@ -18,25 +18,6 @@
   <% end %>
 </div> 
 
-<div class="row top-buffer">
-	<div class='col-sm-3'>
-		<span>Start Date:</span>
-	</div>
-	<div class='col-sm-3'>
-		<span>End Date:</span>
-	</div>
-</div>
+<br>
+<%= render 'form', draw_period: @draw_period %>
 
-<div class="row">
-	<%= form_tag("/admin/setStartEndDate", action: "setStartEndDate") do%>
-		<div class='col-sm-3'>
-			<%= select_datetime @start_datetime, prefix: :start_datetime%>
-		</div>
-		<div class='col-sm-3'>
-			<%= select_datetime @end_datetime, prefix: :end_datetime%>
-		</div>
-		<div class='col-sm-3'>	
-			<%= submit_tag "Submit"%>
-		</div>
-	<% end %>
-</div>
