@@ -1,5 +1,5 @@
 class DrawPeriodsController < ApplicationController
-    before_action :set_draw_period, only: [:update, :destroy]
+    before_action :set_draw_period, only: [:admin_landing_page, :update, :destroy]
     helper DrawPeriodHelper
 
     def create
@@ -31,10 +31,9 @@ class DrawPeriodsController < ApplicationController
     end 
 
     def admin_landing_page
-        if(DrawPeriod.first == nil)
+        if(@draw_period == nil)
             @draw_period = DrawPeriod.new
         else
-            @draw_period = DrawPeriod.first
             @start = @draw_period.start_datetime.to_formatted_s(:short)
             @end = @draw_period.end_datetime.to_formatted_s(:short)
         end
