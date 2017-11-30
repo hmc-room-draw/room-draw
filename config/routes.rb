@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
 
+  get 'student/home', to: 'static_pages#home'
+
   get    '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
 
