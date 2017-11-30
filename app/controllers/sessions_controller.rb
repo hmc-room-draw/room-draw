@@ -2,8 +2,8 @@ class SessionsController < ApplicationController
   #skip_before_action :check_login, :check_form
 
   def new
-    if(current_user && current_user.is_admin)
-      redirect_to "/admin/home"
+    if current_user && current_user.is_admin
+      redirect_to admin_home_path
     end
   end
   
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     if user
       session[:user_id] = user.id
       if(user.is_admin)
-        redirect_to "/admin/home"
+        redirect_to admin_home_path
       else
         redirect_to dorms_path
       end
