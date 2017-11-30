@@ -35,6 +35,8 @@ class DrawPeriodsController < ApplicationController
             @draw_period = DrawPeriod.new
         else
             @draw_period = DrawPeriod.first
+            @start = @draw_period.start_datetime.to_formatted_s(:short)
+            @end = @draw_period.end_datetime.to_formatted_s(:short)
         end
     end
 

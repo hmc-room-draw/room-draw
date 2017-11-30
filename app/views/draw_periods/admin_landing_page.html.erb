@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<h1>Admin Settings</h1>
+<h1>Admin Home</h1>
 
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants"}, {class: 'dashboard-button'} %>
 <%= button_to 'Download Placements', {action: "downloadPlacements"}, {class: 'dashboard-button'} %>
@@ -20,8 +20,12 @@
 </div> 
 
 <br>
-<% if @draw_period != nil %>
 <h4>Schedule Draw Period</h4>
-<%= render 'form', draw_period: @draw_period %>
+
+<% if @start != nil %>
+  <p>Currently scheduled for <b><%= @start %></b> to <b><%= @end %></b>
+    <%= link_to 'Cancel', @draw_period, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </p>
 <% end %>
+<%= render 'form', draw_period: @draw_period %>
 
