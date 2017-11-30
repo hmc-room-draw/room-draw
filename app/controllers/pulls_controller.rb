@@ -37,6 +37,10 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
+    @students = Student.all
+    @dorms = Dorm.all
+    @rooms = Room.all
+
     authorize Pull
 
     @pull = Pull.new(pull_params)
