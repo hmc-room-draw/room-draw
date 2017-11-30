@@ -1,10 +1,6 @@
 class DrawPeriodsController < ApplicationController
     before_action :set_draw_period, only: [:show, :edit, :update, :destroy]
     helper DrawPeriodHelper
-
-    def index
-        @draw_periods = DrawPeriod.all
-    end
     
     def show
         @draw_period = DrawPeriod.find(params[:id])
