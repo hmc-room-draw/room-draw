@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<% if current_user.is_admin? %>
+<% if current_user != nil && current_user.is_admin? %>
 <h1>Pull List</h1>
   <div class="center">
     <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
@@ -51,7 +51,7 @@
 <% else %> 
 <h1>My Pull</h1>
   <!-- if the student viewing has been pulled into a room -->
-  <% if current_user.student.room_assignment %>
+  <% if current_user != nil && current_user.student.room_assignment %>
       <table>
       <thead>
         <tr>

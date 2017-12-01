@@ -22,9 +22,12 @@ Rails.application.routes.draw do
 
   #routes for admin landing page
   get 'admin/students', to: 'students#index'
-  post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
-  post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
-  post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
+  get 'admin/users', to: 'users#index'
+  post 'admin/uploadRoster', to: 'draw_periods#uploadRoster'
+  post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
+  post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
+
+  
   resources :draw_periods, only: [:create, :update, :destroy]
 
   resources :dorms

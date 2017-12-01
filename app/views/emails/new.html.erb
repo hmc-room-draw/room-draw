@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<% if current_user != nil && current_user.is_admin? %>
 <h1 style='color: #E5E7E9'> Send Reminder Email</h1>
 <br>
 <body class="title">
@@ -7,3 +8,6 @@
 <%= render 'form', user: @user %>
 
 </body>
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
+<% end %>
