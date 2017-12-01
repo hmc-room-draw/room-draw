@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-	skip_before_action :check_draw_period, only: [:coming_soon]
+	#skip_before_action :check_draw_period, only: [:coming_soon]
 	helper_method :pullable_rooms_number
 
 	def home

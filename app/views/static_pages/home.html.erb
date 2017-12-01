@@ -1,8 +1,22 @@
 <%= stylesheet_link_tag 'static_pages' %>
 <%= javascript_include_tag 'static_pagesTest' %>
 
-<% if current_user == nil %>
-    <%= render partial: "static_pages/logged_out_home" %>
+<!-- Code to show alerts -->
+<div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <% flash.each do |a, b| %>
+              <div class="alert alert-danger"> <%= b %> </div>
+            <% end %>
+            <%= yield %>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+<!-- Homepage -->
+<% if current_user == nil%>
+   <%= render partial: "static_pages/logged_out_home" %>
 <% elsif current_user.is_admin %>
     <%= render "static_pages/admin_home" %>
 <% else %>
@@ -10,8 +24,8 @@
     Select a dorm to see all available rooms in that dorm. </br>
     <button onclick="popTable()"> Click here to see all empty rooms </button>
 
-    <%= render partial: "dorm_table" %>
-    <%= render partial: "dorm_map" %>
+    <%= render partial: "static_pages/dorm_table" %>
+    <%= render partial: "static_pages/dorm_map" %>
     </center>
 <% end %>
 
