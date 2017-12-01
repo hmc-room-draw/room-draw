@@ -31,4 +31,20 @@ class RoomAssignmentPolicy < ApplicationPolicy
   def destroy?
     user.is_admin
   end
+
+  def edit_mark?
+    user.is_admin
+  end
+
+  def add_mark?
+    user.is_admin
+  end
+
+  def delete_mark?
+    user.is_admin
+  end
+
+  def get_room?
+    user.is_admin
+  end
 end
