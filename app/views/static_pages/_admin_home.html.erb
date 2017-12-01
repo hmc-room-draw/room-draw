@@ -35,7 +35,7 @@
 
   <%= render 'draw_periods/form', draw_period: @draw_period %>
 
-  <% if @start != nil %>
+  <% if @last_updated_by != nil %>
     <p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
   <% end %>
 </div>
