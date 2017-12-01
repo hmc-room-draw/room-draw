@@ -2,7 +2,7 @@
 
 <% if current_user.is_admin? %>
 	<h1>Pull: <%= @pull.id %></h1>
-	<h2>Senior Round: <%= 'tdb' %></h2>
+	<h2>Senior Round: <%= @pull.round %></h2>
 
 	<%= render 'currentList', pull: @pull, :redirect_path => pulls_path(@pull) %>
 
