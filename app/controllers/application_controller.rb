@@ -60,7 +60,8 @@ class ApplicationController < ActionController::Base
     def email_in_spreadsheet?(key, email)
       ss = GoogleDriveApi.read_spreadsheet(key)
       ws = ss.worksheets.first
+      email_idx = ws.rows.first.index("Email Address")
       replies = ws.rows.drop(1)
-      replies.any? {|row| row.last == email}
+      replies.any? {|row| row[email_idx] == email}
     end
 end

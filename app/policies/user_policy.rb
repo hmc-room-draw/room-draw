@@ -14,6 +14,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def import?
+    user.is_admin
+  end
+
   def create?
     user.is_admin
   end
