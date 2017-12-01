@@ -1,6 +1,6 @@
 class DrawPeriodsController < ApplicationController
-    before_action :set_draw_period, only: [:admin_landing_page, :update, :destroy]
-    helper DrawPeriodHelper
+    #skip_before_action :check_draw_period, only: [:coming_soon]
+    before_action :set_draw_period, only: [:admin_landing_page, :coming_soon, :update, :destroy]
 
     def create
         @draw_period = DrawPeriod.new(draw_period_params)
@@ -34,8 +34,15 @@ class DrawPeriodsController < ApplicationController
         if(@draw_period == nil)
             @draw_period = DrawPeriod.new
         else
-            @start = @draw_period.start_datetime.to_formatted_s(:short)
-            @end = @draw_period.end_datetime.to_formatted_s(:short)
+            @start = format_datetime(@draw_period.start_datetime)
+            @end = format_datetime(@draw_period.end_datetime)
+        end
+    end
+
+    def coming_soon
+        if @draw_period != nil
+            @start = format_datetime(@draw_period.start_datetime)
+            @end = format_datetime(@draw_period.end_datetime)
         end
     end
 
@@ -88,6 +95,10 @@ class DrawPeriodsController < ApplicationController
     end
 
     private
+        def format_datetime(datetime)
+            return datetime.strftime("%B %e, %Y %l:%M %p")
+        end
+
         def set_draw_period
             @draw_period = DrawPeriod.first
         end
