@@ -17,17 +17,17 @@
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <% @students.each do |student| %>
       <tr>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.email %></td>
-        <td data-value="<%= user.student.number_sort %>"><%= user.student.format_number %></td>
-        <td data-value="<%= user.student.status_sort %>"><%= user.student.format_status %></td>
+        <td><%= student.user.first_name %></td>
+        <td><%= student.user.last_name %></td>
+        <td><%= student.user.email %></td>
+        <td data-value="<%= student.number_sort %>"><%= student.format_number %></td>
+        <td data-value="<%= student.status_sort %>"><%= student.format_status %></td>
         <% if current_user.is_admin %>
-          <td><%= link_to 'Details', student_path(user.student) %></td>
-          <td><%= link_to 'Edit', edit_student_path(user.student) %></td>
-          <td><%= link_to 'Delete', student_path(user.student), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Details', student_path(student) %></td>
+          <td><%= link_to 'Edit', edit_student_path(student) %></td>
+          <td><%= link_to 'Delete', student_path(student), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
