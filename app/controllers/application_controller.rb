@@ -1,12 +1,8 @@
 require './lib/google_api/drive.rb'
 
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
-  helper_method :current_user, :current_draw_period
-
-  # TODO: Uncomment the line below to enable form/login redirect and comingsoon
-  # redirect when draw period isn't live. Make sure also to uncomment the 
-  # corresponding line in sessions controller and static pages controller!
   before_action :check_login, :check_form, :check_draw_period
 
   def current_user

@@ -1,10 +1,7 @@
 class RoomAssignmentsController < ApplicationController
   before_action :set_room_assignment, only: [:show, :edit, :update, :destroy]
-  include RoomAssignmentsHelper
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
+  include RoomAssignmentsHelper  
 
   # GET /room_assignments
   # GET /room_assignments.json

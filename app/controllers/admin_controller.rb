@@ -1,8 +1,5 @@
 class AdminController < ApplicationController
   protect_from_forgery with: :null_session
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
 
   def edit_mark
