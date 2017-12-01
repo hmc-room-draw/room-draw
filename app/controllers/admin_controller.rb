@@ -1,7 +1,12 @@
 class AdminController < ApplicationController
   protect_from_forgery with: :null_session
 
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized
+
   def edit_mark
+    authorize RoomAssignment
     if params[:create]
       add_mark(params)
     else
@@ -12,6 +17,7 @@ class AdminController < ApplicationController
   end
 
   def add_mark(params)
+    authorize RoomAssignment
     @marked_room = RoomAssignment.new
     @marked_room.assignment_type = params[:mark_type]
     room = get_room(params[:dorm], params[:room])
@@ -32,6 +38,7 @@ class AdminController < ApplicationController
   end
 
   def delete_mark(params)
+    authorize RoomAssignment
     # Look up the room with the corresponding room ID
     room_id = get_room(params[:dorm], params[:room])
     if room_id.nil?
