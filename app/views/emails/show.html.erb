@@ -1,4 +1,4 @@
-
+<% if current_user != nil && current_user.is_admin? %>
 <h1 style="color: #5D6D7E">View all emails</h1>
   <table id="emails" class="sortable">
     <thead>
@@ -46,3 +46,7 @@
   </table>
 
   <%= link_to 'New Email', new_email_path %>
+
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
+<% end %>

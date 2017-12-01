@@ -1,5 +1,6 @@
-<p id="notice"><%= notice %></p>
 
+<p id="notice"><%= notice %></p>
+<% if current_user != nil && current_user.is_admin? %>
 <h1>Students</h1>
 <% if current_user.is_admin %>
   <%= link_to 'Home', admin_home_path %>
@@ -44,4 +45,8 @@
 
 <% if current_user.is_admin %>
   <%= link_to 'New Student', new_student_path %>
+<% end %>
+
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
 <% end %>

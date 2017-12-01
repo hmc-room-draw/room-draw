@@ -1,4 +1,6 @@
+
 <p id="notice"><%= notice %></p>
+<% if current_user != nil && current_user.is_admin? %>
 <h1>Admin Home</h1>
 
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants"}, {class: 'dashboard-button'} %>
@@ -29,4 +31,6 @@
   </p>
 <% end %>
 <%= render 'form', draw_period: @draw_period %>
-
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
+<% end %>
