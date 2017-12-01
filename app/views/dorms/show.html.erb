@@ -147,14 +147,11 @@
 
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
           <div class="hidden popup-button toggle-form" id="edit-pull-form">
-            <div id="ugh"></div>
-
+            <div id="edit-form-div"></div>
           </div>
 
           <button id="delete-pull" class="btn btn-primary btn-block popup-button">
           </button>
-
-          
 
           <!-- Unpullable Form -->
           <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
@@ -229,8 +226,6 @@
 
 <script type="text/javascript">
 $('.dropdown-toggle').dropdown();
-
-console.log("<%= @rooms.to_json %>")
 
 // Get the modal
 var modal = document.getElementById('myModal');
@@ -362,7 +357,6 @@ function layout(level){
     }
     sessionStorage.setItem("curDorm", "<%= @dorm.name.downcase %>");
     dormElements = [];
-    console.log(level); 
     //get dorm room data
     var roomData; 
     switch (level) {
@@ -378,8 +372,6 @@ function layout(level){
         default:
             
     }
-    console.log(roomData);
-    console.log(userRankNum);
     var room, val;
     //image map path
     var map = mapLayout.assets[level];
@@ -502,7 +494,6 @@ function layout(level){
           if (!preplaced) {
               if (room.curNames !== undefined) {
                   if (room.curNames[0] !== undefined) {
-                      console.log(roomPullNum);
                       var nameString = '';
                       for (var j = 0; j < room.curNames.length; j++) {
                           nameString = nameString + room.curNames[j] +', ';
@@ -563,7 +554,6 @@ function layout(level){
                   }  
               modal.style.display = "block";
               fillingForm = true;
-              console.log("DORM ID", dormId + '/load_pull_ajax/' + event.data.info.pull_id);
               if (event.data.info.pull_id) {
                 url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
                 $.ajax({
@@ -571,7 +561,6 @@ function layout(level){
                   type: 'POST',
                   dataType: 'script',
                   success: function(data){
-                    console.log("DATA!!!!");
                     eval(data);
                   }
                 })

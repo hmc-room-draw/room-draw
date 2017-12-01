@@ -8,12 +8,9 @@ class DormsController < ApplicationController
   end
 
   def load_pull_ajax
-    puts "ASDFASDFASDFASDFASDFASDFASDFASDFASFASFASDFASDFASDFSA"
-    puts params
-    puts "DONE"
     @pull = Pull.find(params["pull_id"])
     respond_to do |format|
-      format.js {render layout: false} # Add this line to you respond_to block
+      format.js {render layout: false}
     end
   end
 
