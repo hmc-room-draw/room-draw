@@ -3,7 +3,7 @@
 
 
 <% if current_user == nil %>
-    <%= render partial: "logged_out_home" %>
+    <%= render partial: "static_pages/logged_out_home" %>
 <% elsif current_user.is_admin %>
     <%= render "static_pages/admin_home" %>
 <% else %>

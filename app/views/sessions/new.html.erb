@@ -7,14 +7,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-  <body>
-    <div>
-      <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
-    </div>
-    <div>
-    <%= yield %>
-    </div>
-  </body>
+  
+  <%= yield %>
 </html>
 
