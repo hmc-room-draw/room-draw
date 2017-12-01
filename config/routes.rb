@@ -27,10 +27,7 @@ Rails.application.routes.draw do
   post 'admin/downloadNonParticipants', to: 'draw_periods#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'draw_periods#downloadPlacements'
 
-  resources :draw_periods
-  post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
-  post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
-  post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
+  
   resources :draw_periods, only: [:create, :update, :destroy]
 
   resources :dorms

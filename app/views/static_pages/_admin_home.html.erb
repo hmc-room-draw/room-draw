@@ -34,16 +34,12 @@
     <%= link_to 'Cancel', @draw_period, method: :delete, data: { confirm: 'Are you sure?' } %>
   </p>
 <% end %>
-<<<<<<< HEAD:app/views/draw_periods/admin_landing_page.html.erb
-<%= render 'form', draw_period: @draw_period %>
-<% else %> 
-<h1>You don't have permission to access this page.</h1>
-<% end %>
-=======
 
 <%= render 'draw_periods/form', draw_period: @draw_period %>
 <% if @start != nil %>
 <p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
 <% end %>
 </div>
->>>>>>> 713f70f67793d27b36800837652e7315a8c62ebf:app/views/static_pages/_admin_home.html.erb
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
+<% end %>
