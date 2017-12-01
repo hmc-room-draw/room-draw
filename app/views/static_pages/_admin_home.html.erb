@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <% if current_user.has_student? and not current_user.student.has_completed_form %>
   <span style="color: #ff0000;">
     You haven't filled out the form yet.

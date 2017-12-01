@@ -9,7 +9,9 @@
   </head>
   
   <%= render partial: "layouts/nav" %>
-
+  <p id="notice"><%= notice %></p>
+  <p id="alert"><%= alert %></p>
+  
   <% if !current_user %>
   <body>
     <h1 style="text-align: center;">Welcome to Room Draw</h1>

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'emails/:id/edit', to: 'static_pages#edit'
   delete 'emails/:id', to: 'static_pages#destroy'
 
+  get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
+
   get 'login/show'
 
   # Admin Room Assignments form
