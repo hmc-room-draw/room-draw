@@ -68,7 +68,6 @@ class User < ApplicationRecord
             student_hash["has_participated"] = user.first.student.has_participated
             student_hash["has_completed_form"] = user.first.student.has_completed_form
           end
-
           user.first.update_attributes(user_hash)
         else
           student_hash["has_participated"] = false
@@ -81,8 +80,7 @@ class User < ApplicationRecord
 
         if room_hash["preplaced"] == "preplaced"
 
-          room_id = get_room("East","104")
-          student_id = user.first.student.id
+          room_id = get_room(room_hash["dorm"], room_hash["room"])
 
           # Look for existing room assignments for the room
           roomAssignments = RoomAssignment.where(room_id: room_id)
