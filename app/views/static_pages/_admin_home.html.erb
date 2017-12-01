@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+<% if current_user.has_student? and not current_user.student.has_completed_form %>
+  <span style="color: #ff0000;">
+    You haven't filled out the form yet.
+    <%= link_to "Fill it out", ENV['FORM_URL'] %>
+  </span>
+<% end %>
+
+<h1>Admin Home</h1>
+
+<button style= "float: right;" onclick="popTable()"> View Empty Rooms By Dorm </button>
+<%= button_to 'Download Non-participants', {action: "downloadNonParticipants", controller: "static_pages"}, {class: 'dashboard-button'} %>
+<%= button_to 'Download Placements', {action: "downloadPlacements", controller: "static_pages"}, {class: 'dashboard-button'} %>
+
+
+<%= render partial: "static_pages/dorm_table" %>
+
+<div>
+  <h4>Upload Roster</h4>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload" %>
+  <% end %>
+</div> 
+
+<br>
+<div>
+  <h4>Schedule Draw Period</h4>
+
+  <% if @start != nil %>
+    <p>Currently scheduled for <b><%= @start %></b> to <b><%= @end %></b>.
+      <%= link_to 'Cancel', @draw_period, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </p>
+  <% end %>
+
+  <%= render 'draw_periods/form', draw_period: @draw_period %>
+
+  <% if @start != nil %>
+    <p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
+  <% end %>
+</div>

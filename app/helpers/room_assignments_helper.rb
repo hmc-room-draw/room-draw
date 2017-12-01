@@ -1,8 +1,8 @@
 module RoomAssignmentsHelper
     def student_name(room_assignment)
         student = Student.find(room_assignment.student_id)
-        studentuser = User.find(room_assignment.student.id)
-        @student_name = studentuser.first_name + " " + studentuser.last_name
+        user = student.user
+        @student_name = user.first_name + " " + user.last_name
     end
 
     def student_number(room_assignment)

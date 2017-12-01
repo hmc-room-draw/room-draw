@@ -7,29 +7,21 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+  
+  <%= render partial: "layouts/nav" %>
 
+  <% if !current_user %>
   <body>
-  <nav class="navbar navbar-inverse bg-inverse">
-    <div class = "container">
-        <div class = "navbar-header">
-        <%= link_to image_tag('logo-HMC.png', :size => "50x50"), root_path %>
-
-        </div>
-
-              <% if current_user %>
-              <p class="nav navbar-text">
-               Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
-                </p>
-        
-                <p class="nav navbar-text navbar-right" >
-                <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> </p>
-                <% else %>
-                <p class="nav navbar-text">                  <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %></p>
-                <% end %>
-        
-    </div>
-  </nav>
-
-    <%= yield %>
+    <h1 style="text-align: center;">Welcome to Room Draw</h1>
+    <h2 style="text-align: center;">Instructions:</h2>
+    
+    <p style="text-align: center;">
+      1) Make sure you are an authenticated User (student).<br/>
+      2) Login with your HMC google account.  You will then be redirected to a page where you can fill out the required CIS form.<br/>
+      3) Fill out the CIS form.<br/>
+      4) Select a room.  You will not be able to pull into a room until you have logged in and filled out the CIS form.<br/>
+    </p>
   </body>
+  <% end %>
+  <%= yield %>
 </html>
