@@ -1,20 +1,29 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: [:edit, :update, :destroy]
 
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized
+
   def new
+    authorize Email
     @email = Email.new
   end
 
   def edit
+    authorize @email
   end
 
   def index
+    authorize Email
   end
 
   def show
+    authorize @email
   end
 
   def create
+    authorize Email
     respond_to do |format|
       @email = makeEmail(params)
       if @email
@@ -27,43 +36,8 @@ class EmailsController < ApplicationController
     end
   end
 
-  def makeEmail(params)
-    # fetch created email
-    email = params["email"]
-
-    # convert information in datetime_select form to Ruby date:
-    # https://stackoverflow.com/questions/5073756/where-is-the-
-    # rails-method-that-converts-data-from-datetime-select-into-a-datet
-
-    # extract send datetime
-    sendDate = Date.new(email["sendDate(1i)"].to_i,
-                        email["sendDate(2i)"].to_i,
-                        email["sendDate(3i)"].to_i)
-    # extract subject of the email
-    subject = email["subject"]
-
-    # extract content of the email
-    content = email["description"]
-    @email = Email.new(
-      subject: subject, 
-      description: content, 
-      sendDate: sendDate,
-      sent_status: false,
-      send_to_never_logged_in: email["send_to_never_logged_in"],
-      send_to_never_pulled_room: email["send_to_never_pulled_room"],
-      send_to_formerly_in_room: email["send_to_formerly_in_room"],
-      send_to_in_room: email["send_to_in_room"],
-      send_to_admins: email["send_to_admins"])
-
-    if @email.save
-      GeneralMailer.schedule_reminder_email(@email["sendDate"], @email.attributes['id'])
-      return @email
-    else
-      return nil
-    end
-  end
-
   def update
+    authorize @email
     no_errors = true
     email = params["email"]
     params["email"]["sendDate"] = Date.new(email["sendDate(1i)"].to_i,
@@ -97,6 +71,7 @@ class EmailsController < ApplicationController
   end
 
   def get_person_counts(status_type)
+    authorize Email
     count = 0
     case status_type
     when "admin"
@@ -111,7 +86,6 @@ class EmailsController < ApplicationController
     end
   end
   helper_method :get_person_counts
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -130,6 +104,42 @@ class EmailsController < ApplicationController
         :send_to_formerly_in_room,
         :send_to_in_room,
         :send_to_admins)
+    end
+
+    def makeEmail(params)
+      # fetch created email
+      email = params["email"]
+
+      # convert information in datetime_select form to Ruby date:
+      # https://stackoverflow.com/questions/5073756/where-is-the-
+      # rails-method-that-converts-data-from-datetime-select-into-a-datet
+
+      # extract send datetime
+      sendDate = Date.new(email["sendDate(1i)"].to_i,
+                          email["sendDate(2i)"].to_i,
+                          email["sendDate(3i)"].to_i)
+      # extract subject of the email
+      subject = email["subject"]
+
+      # extract content of the email
+      content = email["description"]
+      @email = Email.new(
+        subject: subject, 
+        description: content, 
+        sendDate: sendDate,
+        sent_status: false,
+        send_to_never_logged_in: email["send_to_never_logged_in"],
+        send_to_never_pulled_room: email["send_to_never_pulled_room"],
+        send_to_formerly_in_room: email["send_to_formerly_in_room"],
+        send_to_in_room: email["send_to_in_room"],
+        send_to_admins: email["send_to_admins"])
+
+      if @email.save
+        GeneralMailer.schedule_reminder_email(@email["sendDate"], @email.attributes['id'])
+        return @email
+      else
+        return nil
+      end
     end
 
 end

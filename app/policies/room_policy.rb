@@ -1,15 +1,7 @@
 # See https://github.com/elabs/pundit/ for an explanation of the code below
-class RoomAssignmentPolicy < ApplicationPolicy
+class RoomPolicy < ApplicationPolicy
   def index?
     user.is_admin
-  end
-
-  def new?
-    user.is_admin
-  end
-
-  def new_from_pull?
-    true
   end
 
   def show?
@@ -19,8 +11,12 @@ class RoomAssignmentPolicy < ApplicationPolicy
   def create?
     user.is_admin
   end
-  
+
   def edit?
+    user.is_admin
+  end
+
+  def new?
     user.is_admin
   end
 

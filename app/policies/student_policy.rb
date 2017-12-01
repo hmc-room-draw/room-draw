@@ -18,6 +18,10 @@ class StudentPolicy < ApplicationPolicy
     user.is_admin
   end
 
+  def edit?
+    user.is_admin
+  end
+
   def update?
     user.is_admin
   end

@@ -22,8 +22,12 @@ class UserPolicy < ApplicationPolicy
     user.is_admin
   end
 
+  def edit?
+    user.is_admin
+  end
+
   def update?
-    user == record || user.is_admin
+    user.is_admin
   end
 
   def destroy?
