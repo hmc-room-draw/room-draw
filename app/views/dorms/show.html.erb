@@ -140,14 +140,22 @@
         <div id="admin_buttons" class="collapse in">
           
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
-          <div class="hidden" id="pull-form">
-            <br>
-              <%= render 'pullform', pull: @pull %>
-            <br>
+          <div class="hidden popup-button" id="pull-form">
+              <%= render 'pulls/adminForm', pull: @pull %>
           </div>
 
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
-          <button id="delete-pull" class="btn btn-primary btn-block popup-button">Delete Pull</button>
+          <div class="hidden popup-button" id="edit-pull-form">
+            INSERT EDIT STUFF HERE
+         
+          </div>
+
+          <button id="delete-pull" class="btn btn-primary btn-block popup-button">
+            <%= link_to 'Delete Pull', @pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </button>
+
+          
+
           <!-- Unpullable Form -->
           <button id="mark-unpullable" class="btn btn-primary btn-block popup-button">Mark Room Unpullable</button>
           <div class="hidden popup-button" id="unpullable-form">
@@ -243,6 +251,9 @@ $("#pull-student").click(function() {
 });
 $("#create-pull").click(function() {
   $("#pull-form").toggleClass("hidden");
+});
+$("#edit-pull").click(function() {
+  $("#edit-pull-form").toggleClass("hidden");
 });
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);

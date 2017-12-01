@@ -115,13 +115,14 @@ class PullsController < ApplicationController
   # DELETE /pulls/1
   # DELETE /pulls/1.json
   def destroy
-    authorize @pull
+    puts "DESTROYING PUL!!!!"
+    # authorize @pull
 
-    @pull.destroy
-    respond_to do |format|
-      format.html { redirect_to pulls_url, notice: "Pull was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    # @pull.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to pulls_url, notice: "Pull was successfully destroyed." }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
