@@ -4,7 +4,6 @@ class StudentsController < ApplicationController
 
   def index
     @students = Student.all
-    @users = User.select {|user| user.has_student?}
   end
 
 
@@ -56,7 +55,11 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      if current_user.is_admin 
+        format.html { redirect_to admin_students_url, notice: 'Student was successfully destroyed.' }
+      else
+        format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      end
       format.json { head :no_content }
     end
   end
@@ -73,6 +76,6 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
+      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form, :number_is_last)
     end
 end
