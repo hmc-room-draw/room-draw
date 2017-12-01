@@ -83,10 +83,7 @@ class PullsController < ApplicationController
     }
 
     respond_to do |format|
-      redirect_path = @pull
-      if (params["redirect_path"])
-        redirect_path = params["redirect_path"]
-      end
+      redirect_path = get_redirect_path(params, @pull)
       if @pull.save
         format.html { redirect_to redirect_path, notice: "Pull was successfully created." }
         format.json { render :show, status: :created, location: @pull }
@@ -108,10 +105,7 @@ class PullsController < ApplicationController
 
     respond_to do |format|
       if @pull.update(pull_params)
-        redirect_path = @pull
-        if (params["redirect_path"])
-          redirect_path = params["redirect_path"]
-        end
+        redirect_path = get_redirect_path(params, @pull)
         format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
         format.json { render :show, status: :ok, location: @pull }
       else
@@ -128,10 +122,7 @@ class PullsController < ApplicationController
 
     @pull.destroy
     respond_to do |format|
-      redirect_path = pulls_url
-      if (params["redirect_path"])
-        redirect_path = params["redirect_path"]
-      end
+      redirect_path = get_redirect_path(params, pulls_url)
       format.html { redirect_to redirect_path, notice: "Pull was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -142,6 +133,10 @@ class PullsController < ApplicationController
     def set_pull
       @pull = Pull.find(params[:id])
     end
+
+    def get_redirect_path(params, default)
+      return params["redirect_path"] ? params["redirect_path"] : default
+    end 
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pull_params
