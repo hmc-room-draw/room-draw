@@ -14,12 +14,9 @@ class UsersController < ApplicationController
   end
 
   def import
-    begin
-      authorize User.import(params[:file])
-      redirect_to users_url
-    rescue
-      redirect_to users_url
-    end
+    authorize User
+    User.import(params[:file])
+    redirect_to users_url
   end
 
   # GET /users/1
