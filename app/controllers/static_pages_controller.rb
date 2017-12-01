@@ -1,16 +1,24 @@
 class StaticPagesController < ApplicationController
+	skip_before_action :check_draw_period, only: [:coming_soon]
 	helper_method :pullable_rooms_number
-
 
 	def home
 		@draw_period = DrawPeriod.first
 		if @draw_period == nil
 			@draw_period = DrawPeriod.new
 		else
-			@start = @draw_period.start_datetime.to_formatted_s(:short)
-			@end = @draw_period.end_datetime.to_formatted_s(:short)
+			@start = format_datetime(@draw_period.start_datetime)
+			@end = format_datetime(@draw_period.end_datetime)
 		end
 	end
+
+	def coming_soon
+		@draw_period = DrawPeriod.first
+        if @draw_period != nil
+            @start = format_datetime(@draw_period.start_datetime)
+            @end = format_datetime(@draw_period.end_datetime)
+        end
+    end
 
 	def dormLookup
 		# Get the name of the dorm from the params
@@ -83,6 +91,12 @@ class StaticPagesController < ApplicationController
 				:type => 'text/csv',
 				:filename => 'non_participants.csv',
 				:disposition => 'attachment'
+	end
+
+	private
+
+	def format_datetime(datetime)
+		return datetime.strftime("%B %e, %Y %l:%M %p")
 	end
 	
 end

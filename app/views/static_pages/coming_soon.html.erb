@@ -3,6 +3,7 @@
 <% if status(@draw_period) == 'Complete' %>
     <h1>You're Too Late!</h1>
     <p>Digital Draw ended on <strong><%= @end %></strong>.</p>
+    <p>See ya next time!</p>
 <% else %>
     <h1>Coming Soon</h1>
     <% if @draw_period != nil %>

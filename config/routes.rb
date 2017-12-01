@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  get 'coming_soon', to: 'draw_periods#coming_soon'
+  get 'coming_soon', to: 'static_pages#coming_soon'
   
   resources :emails
   get 'emails/index'
