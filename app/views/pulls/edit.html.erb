@@ -2,7 +2,7 @@
 
 <h1>Editing Pull <%= @pull.id %></h1>
 
-	<%= render 'currentList', pull: @pull %>
+	<%= render 'currentList', pull: @pull, redirect_path: pulls_path(@pull) %>
 
     <%= render 'form', pull: @pull %>
 

@@ -25,36 +25,91 @@ class User < ApplicationRecord
     end
   end
 
+  def self.get_room(dorm, room_num)
+    dorm_id = Dorm.find_by name: dorm
+    room = Room.find_by dorm: dorm_id, number: room_num
+    if room.nil?
+      return nil
+    end
+    return room.attributes['id']
+  end
+
   # Import users from a csv file
   # Checks to see if the user exists in the database (compares email). If the user exists,
   # it will attempt to update the user. If not, it will create a new user.
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      full_hash = row.to_hash
-      
-      student_hash = {"class_rank" => full_hash["class_rank"],
-        "room_draw_number" => full_hash["room_draw_number"]}
 
-      user_hash = {"first_name" => full_hash["first_name"],
-        "last_name" => full_hash["last_name"],
-        "email" => full_hash["email"],
-        "student_attributes" => student_hash}
-
-      user = User.where(email: user_hash["email"])
-
-      if user.count == 1
-        student_hash["has_participated"] = user.first.student.has_participated
-        student_hash["has_completed_form"] = user.first.student.has_completed_form
-        user.first.update_attributes(user_hash)
-      else
-        student_hash["has_participated"] = false
-        student_hash["has_completed_form"] = false
-        user_hash["is_admin"] = false
+    if not file.nil?
+      CSV.foreach(file.path, headers: true) do |row|
+        full_hash = row.to_hash
         
-        User.create!(user_hash)
-      end # end if !user.nil?
+        student_hash = {"class_rank" => full_hash["class_rank"],
+          "room_draw_number" => full_hash["room_draw_number"]}
 
-    end # end CSV.foreach
+        user_hash = {"first_name" => full_hash["first_name"],
+          "last_name" => full_hash["last_name"],
+          "email" => full_hash["email"],
+          "student_attributes" => student_hash}
+
+        room_hash = {"dorm" => full_hash["dorm"],
+          "room" => full_hash["room"],
+          "preplaced" => full_hash["preplaced"]}
+
+        user = User.where(email: user_hash["email"])
+
+        if user.count == 1
+          # If the user has an associated student, keep those values of has_participated
+          # and has_completed_form, otherwise set them to false (and create a student)
+          student = user.first.student
+          if student.nil?
+            student_hash["has_participated"] = false
+            student_hash["has_completed_form"] = false
+          else
+            student_hash["has_participated"] = user.first.student.has_participated
+            student_hash["has_completed_form"] = user.first.student.has_completed_form
+          end
+          user.first.update_attributes(user_hash)
+        else
+          student_hash["has_participated"] = false
+          student_hash["has_completed_form"] = false
+          user_hash["is_admin"] = false
+          
+          User.create!(user_hash)
+        end # end if !user.nil?
+
+
+        if room_hash["preplaced"] == "preplaced"
+
+          room_id = get_room(room_hash["dorm"], room_hash["room"])
+
+          # Look for existing room assignments for the room
+          roomAssignments = RoomAssignment.where(room_id: room_id)
+
+          # If a room assignment exists, delete it!
+          if roomAssignments.count != 0
+            # Delete a pull associated if one exists
+            if not roomAssignments.first.pull_id.nil?
+              pull = Pull.find(id: roomAssignments.first.pull_id)
+              pull.students.each { |student|
+                subject = "Pull bumped"
+                content = "Your pull has been bumped by an admin."
+                GeneralMailer.reminder_email(student.user, subject, content)
+              }
+              pull.destroy
+            # Else delete all room assignments associated with the room
+            else
+              roomAssignments.each do |assignment|
+                assignment.destroy()
+              end
+            end
+          end
+          
+          # Make the RoomAssignment for the preplaced student
+          RoomAssignment.create!(:room_id => room_id, :assignment_type => "preplaced")
+        end
+
+      end # end CSV.foreach
+    end
   end # end self.import(file)
 
   def has_student?

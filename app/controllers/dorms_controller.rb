@@ -1,15 +1,31 @@
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax]
+
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized, except: [:index, :load_pull_ajax]
 
   # GET /dorms
   # GET /dorms.json
   def index
+    if not current_user.is_admin?
+      redirect_to root_path
+    end
+    
     @dorms = Dorm.all
+  end
+
+  def load_pull_ajax
+    @pull = Pull.find(params["pull_id"])
+    respond_to do |format|
+      format.js {render layout: false}
+    end
   end
 
   # GET /dorms/1
   # GET /dorms/1.json
   def show
+    authorize @dorm
 
     # Render one form or the other depending on whether the peron's an admin
     if current_user
@@ -31,66 +47,66 @@ class DormsController < ApplicationController
     
     if current_user
       if !current_user.student.nil?
-          @curPullNum = current_user.student.room_draw_number    
-          @curRankNum = Student.class_ranks[current_user.student.class_rank]
-          @userId = current_user.student.id
+        @curPullNum = current_user.student.room_draw_number    
+        @curRankNum = Student.class_ranks[current_user.student.class_rank]
+        @userId = current_user.student.id
       else 
-          @curRankNum = 0
-          @curPullNum = 0
-          @userId = -1
-      end
-    else 
         @curRankNum = 0
         @curPullNum = 0
         @userId = -1
+      end
+    else 
+      @curRankNum = 0
+      @curPullNum = 0
+      @userId = -1
     end
     
     case @dorm.name.downcase
-        when 'case'
-            @json = JSON.parse(File.read('app/assets/jsons/case.json')).to_json.html_safe
-            @floor1 = "case1.png"
-            @floor2 = "case2.png"
-        when 'atwood'
-            @json = JSON.parse(File.read('app/assets/jsons/atwood.json')).to_json.html_safe
-            @floor1 = "atwood1.png"
-            @floor2 = "atwood2.png"
-            @floor3 = "atwood3.png"
-        when 'drinkward'
-            @json = JSON.parse(File.read('app/assets/jsons/drinkward.json')).to_json.html_safe
-            @floor1 = "drinkward1.png"
-            @floor2 = "drinkward2.png"
-            @floor3 = "drinkward3.png"
-        when 'east'
-            @json = JSON.parse(File.read('app/assets/jsons/east.json')).to_json.html_safe
-            @floor1 = "east1.png"
-            @floor2 = "east2.png"
-        when 'linde'
-            @json = JSON.parse(File.read('app/assets/jsons/linde.json')).to_json.html_safe
-            @floor1 = "linde1.png"
-            @floor2 = "linde2.png"
-        when 'north'
-            @json = JSON.parse(File.read('app/assets/jsons/north.json')).to_json.html_safe
-            @floor1 = "north1.png"
-            @floor2 = "north2.png"
-        when 'sontag'
-            @json = JSON.parse(File.read('app/assets/jsons/sontag.json')).to_json.html_safe
-            @floor1 = "sontag1.png"
-            @floor2 = "sontag2.png"
-        when 'south'
-            @json = JSON.parse(File.read('app/assets/jsons/south.json')).to_json.html_safe
-            @floor1 = "south1.png"
-            @floor2 = "south2.png"
-        when 'west'
-            @json = JSON.parse(File.read('app/assets/jsons/west.json')).to_json.html_safe
-            @floor1 = "west1.png"
-            @floor2 = "west2.png"
+      when 'case'
+        @json = JSON.parse(File.read('app/assets/jsons/case.json')).to_json.html_safe
+        @floor1 = "case1.png"
+        @floor2 = "case2.png"
+      when 'atwood'
+        @json = JSON.parse(File.read('app/assets/jsons/atwood.json')).to_json.html_safe
+        @floor1 = "atwood1.png"
+        @floor2 = "atwood2.png"
+        @floor3 = "atwood3.png"
+      when 'drinkward'
+        @json = JSON.parse(File.read('app/assets/jsons/drinkward.json')).to_json.html_safe
+        @floor1 = "drinkward1.png"
+        @floor2 = "drinkward2.png"
+        @floor3 = "drinkward3.png"
+      when 'east'
+        @json = JSON.parse(File.read('app/assets/jsons/east.json')).to_json.html_safe
+        @floor1 = "east1.png"
+        @floor2 = "east2.png"
+      when 'linde'
+        @json = JSON.parse(File.read('app/assets/jsons/linde.json')).to_json.html_safe
+        @floor1 = "linde1.png"
+        @floor2 = "linde2.png"
+      when 'north'
+        @json = JSON.parse(File.read('app/assets/jsons/north.json')).to_json.html_safe
+        @floor1 = "north1.png"
+        @floor2 = "north2.png"
+      when 'sontag'
+        @json = JSON.parse(File.read('app/assets/jsons/sontag.json')).to_json.html_safe
+        @floor1 = "sontag1.png"
+        @floor2 = "sontag2.png"
+      when 'south'
+        @json = JSON.parse(File.read('app/assets/jsons/south.json')).to_json.html_safe
+        @floor1 = "south1.png"
+        @floor2 = "south2.png"
+      when 'west'
+        @json = JSON.parse(File.read('app/assets/jsons/west.json')).to_json.html_safe
+        @floor1 = "west1.png"
+        @floor2 = "west2.png"
     end 
       
     @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*")
-    .joins(:rooms)
-    .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
-    .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
-    .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+      .joins(:rooms)
+      .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
+      .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
+      .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
     # .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
     
     @level1 = @testDorm
@@ -114,19 +130,22 @@ class DormsController < ApplicationController
 
   # GET /dorms/new
   def new
+    authorize Dorm
     @dorm = Dorm.new
   end
 
   # GET /dorms/1/edit
   def edit
-      # @students = Student.all
-      # @rooms = Room.all
-      # @dorms = Dorm.all
+    authorize @dorm
+    # @students = Student.all
+    # @rooms = Room.all
+    # @dorms = Dorm.all
   end
 
   # POST /dorms
   # POST /dorms.json
   def create
+    authorize Dorm
     @dorm = Dorm.new(dorm_params)
 
     respond_to do |format|
@@ -143,6 +162,7 @@ class DormsController < ApplicationController
   # PATCH/PUT /dorms/1
   # PATCH/PUT /dorms/1.json
   def update
+    authorize @dorm
     respond_to do |format|
       if @dorm.update(dorm_params)
         format.html { redirect_to @dorm, notice: 'Dorm was successfully updated.' }
@@ -157,6 +177,7 @@ class DormsController < ApplicationController
   # DELETE /dorms/1
   # DELETE /dorms/1.json
   def destroy
+    authorize @dorm
     @dorm.destroy
     respond_to do |format|
       format.html { redirect_to dorms_url, notice: 'Dorm was successfully destroyed.' }

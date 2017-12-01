@@ -138,20 +138,24 @@
         <div id="admin_buttons" class="collapse in">
           
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
-          <div class="hidden" id="pull-form">
-            <br>
-              <%= render 'pullform', pull: @pull %>
-            <br>
+          <div class="hidden popup-button toggle-form" id="pull-form">
+              <%= render 'pulls/adminForm', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
           </div>
 
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
-          <button id="delete-pull" class="btn btn-primary btn-block popup-button">Delete Pull</button>
+          <div class="hidden popup-button toggle-form" id="edit-pull-form">
+            <div id="edit-form-div"></div>
+          </div>
+
+          <div id="delete-pull">
+          </div>
+
           <!-- Unpullable Form -->
-          <button id="mark-unpullable" class="btn btn-primary btn-block popup-button">Mark Room Unpullable</button>
+          <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
           <div class="hidden popup-button" id="unpullable-form">
               <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
           </div>
-          <div id="mark-pullable" class="popup-button">
+          <div id="mark-pullable" class="popup-button toggle-form">
             <%= form_with(method: "delete_mark") do %>
               <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
               <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
@@ -220,8 +224,6 @@
 <script type="text/javascript">
 $('.dropdown-toggle').dropdown();
 
-console.log("<%= @rooms.to_json %>")
-
 // Get the modal
 var modal = document.getElementById('myModal');
 // Get the button that opens the modal
@@ -241,6 +243,9 @@ $("#pull-student").click(function() {
 });
 $("#create-pull").click(function() {
   $("#pull-form").toggleClass("hidden");
+});
+$("#edit-pull").click(function() {
+  $("#edit-pull-form").toggleClass("hidden");
 });
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
@@ -338,6 +343,7 @@ $(".alert-div").fadeOut(8000);
     var userRankNum = <%= @curRankNum %>;
     var userId = <%= @userId %>;
     var mapLayout = <%= @json %>;
+    var dormId = <%= @dorm.id %>;
     var admin = <%= @admin %>;
     var is_student = <%= @is_student %>;
 
@@ -350,7 +356,6 @@ function layout(level){
     }
     sessionStorage.setItem("curDorm", "<%= @dorm.name.downcase %>");
     dormElements = [];
-    console.log(level); 
     //get dorm room data
     var roomData; 
     switch (level) {
@@ -366,8 +371,6 @@ function layout(level){
         default:
             
     }
-    console.log(roomData);
-    console.log(userRankNum);
     var room, val;
     //image map path
     // var map = mapLayout.assets[level];
@@ -491,7 +494,6 @@ function layout(level){
           if (!preplaced) {
               if (room.curNames !== undefined) {
                   if (room.curNames[0] !== undefined) {
-                      console.log(roomPullNum);
                       var nameString = '';
                       for (var j = 0; j < room.curNames.length; j++) {
                           nameString = nameString + room.curNames[j] +', ';
@@ -517,6 +519,9 @@ function layout(level){
           room.on('click', {info: room.info}, function(event){
               if (admin || event.data.info.clickable) {
                   if (event.data.info.clickable !== undefined) {
+                      //Hide all of the forms
+                      $(".toggle-form").addClass('hidden');
+
                       //show room info and populate form with room number
                       var info = event.data.info;
                       $('#room_number').val(info.number); //TODO: Check this is actually used.
@@ -558,6 +563,17 @@ function layout(level){
                   }  
               modal.style.display = "block";
               fillingForm = true;
+              if (event.data.info.pull_id) {
+                url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
+                $.ajax({
+                  url: url,
+                  type: 'POST',
+                  dataType: 'script',
+                  success: function(data){
+                    eval(data);
+                  }
+                })
+              }
           }
           });
         x++;

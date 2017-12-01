@@ -1,11 +1,14 @@
 class PullsController < ApplicationController
-  include Pundit
-
   before_action :set_pull, only: [:show, :edit, :update, :destroy]
+
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized
 
   # GET /pulls
   # GET /pulls.json
   def index
+    authorize Pull
     @pulls = Pull.all.order(created_at: :desc)
   end
 
@@ -32,6 +35,8 @@ class PullsController < ApplicationController
     @students = Student.all
     @rooms = Room.all
     @dorms = Dorm.all
+    
+    authorize @pull
   end
 
   # POST /pulls
@@ -42,9 +47,8 @@ class PullsController < ApplicationController
     @dorms = Dorm.all
     @rooms = Room.all
 
-    authorize Pull
-
     @pull = Pull.new(pull_params)
+    authorize @pull
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
@@ -68,6 +72,7 @@ class PullsController < ApplicationController
 
     if not cps.empty?
       cps.each { |cp|
+
         # TODO: email people from destroyed pulls
 
         cp.students.each { |student|
@@ -93,6 +98,7 @@ class PullsController < ApplicationController
     }
 
     respond_to do |format|
+      redirect_path = get_redirect_path(params, @pull)
       if @pull.save
         if from_dorm
           # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
@@ -101,6 +107,7 @@ class PullsController < ApplicationController
           format.html { redirect_to @pull, notice: "Pull was successfully created." }
           format.json { render :show, status: :created, location: @pull }
         end
+
       else
         if from_dorm
           # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
@@ -125,7 +132,8 @@ class PullsController < ApplicationController
 
     respond_to do |format|
       if @pull.update(pull_params)
-        format.html { redirect_to @pull, notice: "Pull was successfully updated." }
+        redirect_path = get_redirect_path(params, @pull)
+        format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
         format.json { render :show, status: :ok, location: @pull }
       else
         format.html { render :edit }
@@ -141,7 +149,8 @@ class PullsController < ApplicationController
 
     @pull.destroy
     respond_to do |format|
-      format.html { redirect_to pulls_url, notice: "Pull was successfully destroyed." }
+      redirect_path = get_redirect_path(params, pulls_url)
+      format.html { redirect_to redirect_path, notice: "Pull was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -151,6 +160,10 @@ class PullsController < ApplicationController
     def set_pull
       @pull = Pull.find(params[:id])
     end
+
+    def get_redirect_path(params, default)
+      return params["redirect_path"] ? params["redirect_path"] : default
+    end 
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pull_params

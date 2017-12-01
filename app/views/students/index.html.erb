@@ -21,7 +21,13 @@
         <td><%= student.user.last_name %></td>
         <td><%= student.user.email %></td>
         <td data-value="<%= student.number_sort %>"><%= student.format_number %></td>
-        <td data-value="<%= student.status_sort %>"><%= student.format_status %></td>
+        <td data-value="<%= student.status_sort %>">
+          <% if student.status == :in_room %>
+            <%= link_to student.format_status, pull_path(student.room_assignment.pull) %>
+          <% else %>
+            <%= student.format_status %>
+          <% end %>
+        </td>
         <% if current_user.is_admin %>
           <td><%= link_to 'Details', student_path(student) %></td>
           <td><%= link_to 'Edit', edit_student_path(student) %></td>

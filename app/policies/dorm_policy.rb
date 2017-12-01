@@ -1,11 +1,7 @@
 # See https://github.com/elabs/pundit/ for an explanation of the code below
-class PullPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
+class DormPolicy < ApplicationPolicy
   def new?
-    true
+    user.is_admin
   end
 
   def show?
@@ -25,6 +21,6 @@ class PullPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.is_admin || record.students.include?(user.student)
+    user.is_admin
   end
 end

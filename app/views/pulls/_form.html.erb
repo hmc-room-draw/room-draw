@@ -1,5 +1,5 @@
 <%= form_with(model: pull, local: true) do |form| %>
-
+  <%= text_field_tag(:redirect_path, value=(@dorm.nil? ? pulls_path(@pull) : dorm_path(@dorm)), class: "hidden") %>
   <% if pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
@@ -16,7 +16,8 @@
     
   </div>
 
-  <%= link_to "Add a student to this pull", {controller: "room_assignments", action: "new_from_pull", pull_id: @pull.id} %>
+  <%= link_to "Add a student to this pull", {controller: "room_assignments", action: "new_from_pull", pull_id: @pull.id}
+  %>
   <br></br>
 
   <div class="field">
@@ -24,7 +25,10 @@
     <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
   </div>
 
-  <!-- TO DO: Senior rounds -->
+  <div class = "field">
+    <%= form.label :round %>
+    <%= form.text_field :round, id: :round %>
+  <div
 
   <div class="field">
     <%= form.label :message %>

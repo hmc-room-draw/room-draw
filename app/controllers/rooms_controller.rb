@@ -1,29 +1,38 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized
+
   # GET /rooms
   # GET /rooms.json
   def index
+    authorize Room
     @rooms = Room.all
   end
 
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+    authorize @room
   end
 
   # GET /rooms/new
   def new
+    authorize Room
     @room = Room.new
   end
 
   # GET /rooms/1/edit
   def edit
+    authorize @room
   end
 
   # POST /rooms
   # POST /rooms.json
   def create
+    authorize Room
     @room = Room.new(room_params)
 
     respond_to do |format|
@@ -40,6 +49,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1
   # PATCH/PUT /rooms/1.json
   def update
+    authorize @room
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to @room, notice: 'Room was successfully updated.' }
@@ -54,6 +64,7 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy
+    authorize @room
     @room.destroy
     respond_to do |format|
       format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
