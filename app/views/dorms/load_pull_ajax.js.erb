@@ -1,2 +1,2 @@
 $("#edit-form-div").html("<%= escape_javascript(render 'pulls/currentList', pull: @pull, redirect_path: dorm_path(@dorm)) %><%= escape_javascript(render 'pulls/form', pull: @pull, redirect_path: dorm_path(@dorm) ) %>");
-$("#delete-pull").html("<%= escape_javascript(link_to 'Delete Pull', pull_path(@pull, :redirect_path => dorm_path(@dorm)), method: :delete, data: { confirm: 'Are you sure?'}) %></td>");
+$("#delete-pull").html("<%= escape_javascript(button_to 'Delete Pull', pull_path(@pull, :redirect_path => dorm_path(@dorm)), method: :delete, data: { confirm: 'Are you sure?'}, :class => 'btn btn-primary btn-block popup-button') %></td>");
