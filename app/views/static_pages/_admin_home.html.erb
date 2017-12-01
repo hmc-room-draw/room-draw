@@ -1,0 +1,49 @@
+
+<p id="notice"><%= notice %></p>
+<% if current_user != nil && current_user.is_admin? %>
+<h1>Admin Home</h1>
+
+<button style= "float: right;" onclick="popTable()"> View Empty Rooms By Dorm </button>
+<%= button_to 'Download Non-participants', {action: "downloadNonParticipants", controller: "static_pages"}, {class: 'dashboard-button'} %>
+<%= button_to 'Download Placements', {action: "downloadPlacements", controller: "static_pages"}, {class: 'dashboard-button'} %>
+
+<%= render partial: "static_pages/dorm_table" %>
+
+<%= link_to "Maps", dorms_path, {class: 'dashboard-link'} %>
+<%= link_to "Pulls", pulls_path, {class: 'dashboard-link'} %>
+<%= link_to "Users", admin_users_path, {class: 'dashboard-link'} %>
+<%= link_to "Students", admin_students_path, {class: 'dashboard-link'} %>
+<%= link_to "Send emails", new_email_path, {class: 'dashboard-link'} %>
+<%= link_to "View emails", {action: "viewEmails", controller: "static_pages"}, {class: 'dashboard-link'} %>
+
+<br>
+
+<div>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload Roster" %>
+  <% end %>
+</div> 
+
+<br>
+<div>
+<h4>Schedule Draw Period</h4>
+
+<% if @start != nil %>
+  <p>Currently scheduled for <b><%= @start %></b> to <b><%= @end %></b>.
+    <%= link_to 'Cancel', @draw_period, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </p>
+<% end %>
+<<<<<<< HEAD:app/views/draw_periods/admin_landing_page.html.erb
+<%= render 'form', draw_period: @draw_period %>
+<% else %> 
+<h1>You don't have permission to access this page.</h1>
+<% end %>
+=======
+
+<%= render 'draw_periods/form', draw_period: @draw_period %>
+<% if @start != nil %>
+<p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
+<% end %>
+</div>
+>>>>>>> 713f70f67793d27b36800837652e7315a8c62ebf:app/views/static_pages/_admin_home.html.erb

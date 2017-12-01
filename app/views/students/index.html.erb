@@ -2,12 +2,6 @@
 <p id="notice"><%= notice %></p>
 <% if current_user != nil && current_user.is_admin? %>
 <h1>Students</h1>
-<% if current_user.is_admin %>
-  <%= link_to 'Home', admin_home_path %>
-<% else %>
-  <!--TO DO: change depending on what default home page is-->
-  <%= link_to 'Home', root_path %>
-<% end %>
 
 <table class = "sortable">
   <thead>
