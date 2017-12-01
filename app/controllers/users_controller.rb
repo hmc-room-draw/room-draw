@@ -14,6 +14,11 @@ class UsersController < ApplicationController
   end
 
   def import
+    if not params[:file] then
+      flash[:error] = "You must select a file."
+      redirect_to users_url
+    end
+
     authorize User
     User.import(params[:file])
     redirect_to users_url
