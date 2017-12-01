@@ -28,15 +28,37 @@ class StudentsController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.student = Student.new(student_params)
+    @student = Student.new(student_params)
 
-    respond_to do |format|
-      if @user.save && @user.student.save
-        format.html { redirect_to @user.student, notice: 'Student was successfully created.' }
+    # check if a user already exists for that email. if yes update student for it
+    if @existing_user = User.where(email: @user.email).first
+      # if the user already has a student can't override
+      if @existing_user.student
+        respond_to do |format|
+            format.html { redirect_to @existing_user.student, notice: 'There is already a user with that email adress' }
+        end
+      # if user has no student create one
       else
-        format.html { render :new }
+        respond_to do |format|
+        @existing_user.student = @student
+        if @existing_user.save && @existing_user.student.save
+            format.html { redirect_to @existing_user.student, notice: 'Student was added to existing user.' }
+        else
+          format.html { render :edit }
+        end
       end
     end
+    # if no user exists create one
+    else
+      @user.student = @student
+      respond_to do |format|
+        if @user.save && @user.student.save
+          format.html { redirect_to @user.student, notice: 'Student was successfully created.' }
+        else
+          format.html { render :new }
+        end
+      end
+    end 
   end
 
 
