@@ -31,18 +31,22 @@ class RoomAssignmentsController < ApplicationController
   # POST /room_assignments.json
   def create
     @room_assignment = RoomAssignment.new(room_assignment_params)
+    @pull_id = params[:pull_id]
 
     respond_to do |format|
       if @room_assignment.save
-        format.html { redirect_to Pull.find(params[:pull_id]), notice: 'Room assignment was successfully created.' }
-        format.json { render :show, status: :created, location: Pull.find(params[:pull_id]) }
+        if (@pull_id)
+          format.html { redirect_to Pull.find(params[:pull_id]), notice: 'Room assignment was successfully created.' }
+          format.json { render :show, status: :created, location: Pull.find(params[:pull_id]) }
+        else
+          format.html { redirect_to action: "index"}
+        end
       else
-        if params[:id]
+        if @pull_id
           format.html { render :new_from_pull }
         else
           format.html { render :new }
         end
-        format.json { render json: @room_assignment.errors, status: :unprocessable_entity }
       end
     end
   end

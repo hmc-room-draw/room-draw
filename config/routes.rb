@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'emails/:id/edit', to: 'draw_periods#edit'
   delete 'emails/:id', to: 'draw_periods#destroy'
 
+  get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
+
   get 'login/show'
 
   # Admin Room Assignments form

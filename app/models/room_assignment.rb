@@ -6,7 +6,7 @@ class RoomAssignment < ApplicationRecord
   enum assignment_type: [:preplaced, :freshman, :pulled, :unavailable, :other]
   validates :assignment_type, presence: true
   validates :student_id, uniqueness: true, allow_nil: true
-  validates :pull_id, uniqueness: true, allow_nil: true
+  validates :pull_id, uniqueness: false, allow_nil: true
 
   validate :validate_room
 
