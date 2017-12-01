@@ -3,7 +3,7 @@ class DormsController < ApplicationController
 
   # Enforce that all endpoints call `authorize`
   include Pundit
-  after_action :verify_authorized, except: :index
+  after_action :verify_authorized, except: [:index, :load_pull_ajax]
 
   # GET /dorms
   # GET /dorms.json
