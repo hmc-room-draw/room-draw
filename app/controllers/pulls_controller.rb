@@ -37,6 +37,7 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
+    from_dorm = params[:from_dorm]
     @students = Student.all
     @dorms = Dorm.all
     @rooms = Room.all
@@ -47,20 +48,29 @@ class PullsController < ApplicationController
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
-
-    if not cannot_override.empty?
-      ids = cannot_override.map { |co| co.id }
-      format.html { render :new, error: "Can't pull! Conflicts with pulls #{ids * ","}." }
-    elsif @pull.has_conflicting_nonpulls
-      format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
-    end
+      if not cannot_override.empty?
+        ids = cannot_override.map { |co| co.id }
+        if from_dorm
+          # format.html{  redirect_to  ({controller: "dorm", action: "show", id: from_dorm}, notice: "Can't pull! Conflicts with pulls.") } #and return
+          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
+        else
+          format.html { render :new, error: "Can't pull! Conflicts with pulls #{ids * ","}." }
+        end
+      elsif @pull.has_conflicting_nonpulls
+        if from_dorm
+          # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
+          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
+        else
+          format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
+        end
+      end
 
 
     if not cps.empty?
-      cps.forEach do |cp|
+      cps.each { |cp|
         # TODO: email people from destroyed pulls
 
-        cp.students.forEach { |student|
+        cp.students.each { |student|
           # TODO: Update these for more detail later
           subject = "Pull bumped"
           content = "Your pull has been bumped."
@@ -68,7 +78,7 @@ class PullsController < ApplicationController
         }
 
         cp.destroy()
-      end
+      }
     end
 
     @pull.students.each { |student|
@@ -84,11 +94,22 @@ class PullsController < ApplicationController
 
     respond_to do |format|
       if @pull.save
-        format.html { redirect_to @pull, notice: "Pull was successfully created." }
-        format.json { render :show, status: :created, location: @pull }
+        if from_dorm
+          # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
+          format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
+        else
+          format.html { redirect_to @pull, notice: "Pull was successfully created." }
+          format.json { render :show, status: :created, location: @pull }
+        end
       else
-        format.html { render :new }
-        format.json { render json: @pull.errors, status: :unprocessable_entity }
+        if from_dorm
+          # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
+          print "yeah we right"
+          format.html{redirect_back(fallback_location: root_path)}
+        else
+          format.html { render :new }
+          format.json { render json: @pull.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

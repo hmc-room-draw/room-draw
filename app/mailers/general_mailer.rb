@@ -6,7 +6,7 @@ class GeneralMailer < ApplicationMailer
 
   def self.reminder_email(user, subject, content)
     @user = user
-    mail(to: user.email, subject: subject, body: content)
+    ActionMailer::Base.mail(to: user.email, subject: subject, body: content)
   end
 
   def scheduled_email(emailId)
