@@ -74,7 +74,7 @@ class PullsController < ApplicationController
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
       room = student.room_assignment.room.number
-      puller = "#{@pull.student.first_name} #{@pull.student.last_name}"
+      puller = "#{@pull.student.user.first_name} #{@pull.student.user.last_name}"
 
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
