@@ -31,6 +31,7 @@
     </div>
   </nav>
 
+  <% if !current_user %>
   <body>
     <h1 style="text-align: center;">Welcome to Room Draw</h1>
     <h2 style="text-align: center;">Instructions:</h2>
@@ -42,5 +43,6 @@
       4) Select a room.  You will not be able to pull into a room until you have logged in and filled out the CIS form.<br/>
     </p>
   </body>
+  <% end %>
   <%= yield %>
 </html>
