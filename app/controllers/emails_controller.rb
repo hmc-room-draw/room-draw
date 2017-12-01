@@ -19,7 +19,7 @@ class EmailsController < ApplicationController
   end
 
   def show
-    authorize @email
+    authorize Email
   end
 
   def create
@@ -63,6 +63,7 @@ class EmailsController < ApplicationController
   end
 
   def destroy
+    authorize @email
     @email.destroy
     respond_to do |format|
       format.html { redirect_to emails_show_url, notice: 'Email was successfully destroyed.' }
