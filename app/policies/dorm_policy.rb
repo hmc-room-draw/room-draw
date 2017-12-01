@@ -5,7 +5,7 @@ class DormPolicy < ApplicationPolicy
   end
 
   def show?
-    user.is_admin
+    true
   end
 
   def create?
