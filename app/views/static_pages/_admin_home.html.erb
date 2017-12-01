@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 <h1>Admin Home</h1>
 
+<button style= "float: right;" onclick="popTable()"> View Empty Rooms By Dorm </button>
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants"}, {class: 'dashboard-button'} %>
 <%= button_to 'Download Placements', {action: "downloadPlacements"}, {class: 'dashboard-button'} %>
+
+<%= render partial: "dorm_table" %>
 
 <%= link_to "Maps", dorms_path, {class: 'dashboard-link'} %>
 <%= link_to "Pulls", pulls_path, {class: 'dashboard-link'} %>

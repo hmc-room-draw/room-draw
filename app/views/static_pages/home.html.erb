@@ -6,8 +6,6 @@
     <%= render partial: "logged_out_home" %>
 <% elsif current_user.is_admin %>
     <%= render partial: "admin_home" %>
-    <button style= "float: right;" onclick="popTable()"> View empty rooms by dorm </button> </center>
-    <%= render partial: "dorm_table" %>
 <% else %>
     <center> <h1> Welcome to Room Draw!</h1>
     Select a dorm to see all available rooms in that dorm. </br>
