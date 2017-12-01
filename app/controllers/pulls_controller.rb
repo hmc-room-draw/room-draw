@@ -83,8 +83,12 @@ class PullsController < ApplicationController
     }
 
     respond_to do |format|
+      redirect_path = @pull
+      if (params["redirect_path"])
+        redirect_path = params["redirect_path"]
+      end
       if @pull.save
-        format.html { redirect_to @pull, notice: "Pull was successfully created." }
+        format.html { redirect_to redirect_path, notice: "Pull was successfully created." }
         format.json { render :show, status: :created, location: @pull }
       else
         format.html { render :new }
@@ -104,7 +108,11 @@ class PullsController < ApplicationController
 
     respond_to do |format|
       if @pull.update(pull_params)
-        format.html { redirect_to @pull, notice: "Pull was successfully updated." }
+        redirect_path = @pull
+        if (params["redirect_path"])
+          redirect_path = params["redirect_path"]
+        end
+        format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
         format.json { render :show, status: :ok, location: @pull }
       else
         format.html { render :edit }
@@ -120,7 +128,11 @@ class PullsController < ApplicationController
 
     @pull.destroy
     respond_to do |format|
-      format.html { redirect_to pulls_url, notice: "Pull was successfully destroyed." }
+      redirect_path = pulls_url
+      if (params["redirect_path"])
+        redirect_path = params["redirect_path"]
+      end
+      format.html { redirect_to redirect_path, notice: "Pull was successfully destroyed." }
       format.json { head :no_content }
     end
   end

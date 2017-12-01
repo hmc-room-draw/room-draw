@@ -69,7 +69,11 @@ class RoomAssignmentsController < ApplicationController
   def destroy
     @room_assignment.destroy
     respond_to do |format|
-      format.html { redirect_to room_assignments_url, notice: 'Room assignment was successfully destroyed.' }
+      redirect_path = room_assignments_url
+      if (params["redirect_path"])
+        redirect_path = params["redirect_path"]
+      end
+      format.html { redirect_to redirect_path, notice: 'Room assignment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

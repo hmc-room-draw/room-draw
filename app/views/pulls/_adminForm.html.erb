@@ -1,4 +1,5 @@
 <%= form_with(model: pull, local: true) do |form| %>
+  <%= text_field_tag(:redirect_path, value=(@dorm.nil? ? nil : dorm_path(@dorm)), class: "hidden") %>
   <% if pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
