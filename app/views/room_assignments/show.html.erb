@@ -1,18 +1,20 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Student:</strong>
-  <%= @room_assignment.student %>
+  <%= student_name(@room_assignment) %>
 </p>
 
 <p>
-  <strong>Pull:</strong>
-  <%= @room_assignment.pull %>
+  <strong>Pull Number:</strong>
+  <% if (@room_assignment.pull) %>
+  	<%= @room_assignment.pull.student.room_draw_number %>
+  <% else %>
+  	<%= "No Associated Pull" %>
+  <% end %>
 </p>
 
 <p>
   <strong>Room:</strong>
-  <%= @room_assignment.room %>
+  <%= @room_assignment.room.dorm.name + " " + @room_assignment.room.number %>
 </p>
 
 <%= link_to 'Edit', edit_room_assignment_path(@room_assignment) %> |
