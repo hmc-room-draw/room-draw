@@ -31,8 +31,7 @@ class RoomAssignmentsController < ApplicationController
   # POST /room_assignments.json
   def create
     @room_assignment = RoomAssignment.new(room_assignment_params)
-    @pull_id = params[:pull_id]
-
+    @pull_id = params[:from_pull]
     respond_to do |format|
       if @room_assignment.save
         if (@pull_id)

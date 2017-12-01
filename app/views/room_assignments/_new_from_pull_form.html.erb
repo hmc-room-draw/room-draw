@@ -26,6 +26,7 @@
     <%= form.hidden_field :pull_id, :value => @pull_id%>
     <!--TO DO: Room assignment type?-->
     <%= form.hidden_field :assignment_type, :value => 'other' %>
+    <input type="hidden" name="from_pull" value = "true">
 
   <div class="actions">
     <%= form.submit %>
