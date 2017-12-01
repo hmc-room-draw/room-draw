@@ -17,12 +17,12 @@ User.create(first_name:"Stu1", last_name:"Dent1", email: "student1@hmc.edu", is_
 User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_admin: false)
 User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
 User.create(first_name:"Stu4", last_name:"Dent4", email: "student4@hmc.edu", is_admin: false)
-User.create(first_name:"Stu5", last_name:"Dent5", email: "ako@g.hmc.edu", is_admin: false)
+User.create(first_name:"Stu5", last_name:"Dent5", email: "student5@hmc.edu", is_admin: false)
 User.create(first_name:"Ad", last_name:"Min", email: "admin@hmc.edu", is_admin: true)
 User.create(first_name:"Ad1", last_name:"Min1", email: "admin1@hmc.edu", is_admin: true)
 User.create(first_name:"Ad2", last_name:"Min2", email: "admin2@hmc.edu", is_admin: true)
 User.create(first_name:"Ad3", last_name:"Min3", email: "admin3@hmc.edu", is_admin: true)
-User.create(first_name:"Ad4", last_name:"Min4", email: "annaliseliuko@gmail.com", is_admin: true)
+User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
 
 
 
