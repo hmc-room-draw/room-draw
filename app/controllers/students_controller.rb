@@ -4,7 +4,6 @@ class StudentsController < ApplicationController
 
   def index
     @students = Student.all
-    @users = User.select {|user| user.has_student?}
   end
 
 
@@ -99,6 +98,6 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form)
+      params[:user].fetch(:student).permit(:class_rank, :room_draw_number, :has_participated, :user_id, :has_completed_form, :number_is_last)
     end
 end
