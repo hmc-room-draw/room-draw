@@ -9,9 +9,10 @@
 
 <%= link_to "Maps", dorms_path, {class: 'dashboard-link'} %>
 <%= link_to "Pulls", pulls_path, {class: 'dashboard-link'} %>
+<%= link_to "Users", admin_users_path, {class: 'dashboard-link'} %>
 <%= link_to "Students", admin_students_path, {class: 'dashboard-link'} %>
-<%= link_to "Send emails", new_email_path, {class: 'dashboard-link'} %>
-<%= link_to "View emails", {action: "viewEmails", controller: "static_pages"}, {class: 'dashboard-link'} %>
+<%= link_to "Emails", {action: "viewEmails", controller: "static_pages"}, {class: 'dashboard-link'} %>
+<%= link_to "Send Email", new_email_path, {class: 'dashboard-link'} %>
 
 <br>
 
