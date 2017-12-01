@@ -9,6 +9,12 @@
 <%= link_to "Students", admin_students_path, {class: 'dashboard-link'} %>
 <%= link_to "Send emails", {action: "sendEmails"}, {class: 'dashboard-link'} %>
 <%= link_to "View emails", {action: "viewEmails"}, {class: 'dashboard-link'} %>
+<% if current_user.has_student? %>
+  <%= link_to "Go to student site", root_path, {class: 'dashboard-link'} %>
+  <% if not current_user.student.has_completed_form %>
+    <%= link_to "Fill out form", {}, {class: 'dashboard-link'} %>
+  <% end %>
+<% end %>
 
 <br>
 
