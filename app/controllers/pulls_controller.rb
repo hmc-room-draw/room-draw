@@ -19,7 +19,7 @@ class PullsController < ApplicationController
   def new
     authorize Pull
     @pull = Pull.new
-    3.times {@pull.room_assignments.build}
+    1.times {@pull.room_assignments.build}
     #TODO: Get only the necessary information
     @students = Student.all
     @rooms = Room.all
