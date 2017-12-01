@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   #routes for admin landing page
+  get 'admin/users', to: 'users#index'
   get 'admin/students', to: 'students#index'
   get 'admin/users', to: 'users#index'
   post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
