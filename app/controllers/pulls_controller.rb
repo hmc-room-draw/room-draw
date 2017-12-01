@@ -53,18 +53,22 @@ class PullsController < ApplicationController
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
     if not cannot_override.empty?
-      ids = cannot_override.map { |co| co.id }
-      format.html { render :new, error: "Can't pull! Conflicts with pulls #{ids * ","}." }
+      respond_to do |format|
+        ids = cannot_override.map { |co| co.id }
+        format.html { render :new, error: "Can't pull! Conflicts with other pulls #{ids * ","}." }
+      end
     elsif @pull.has_conflicting_nonpulls
-      format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
+      respond_to do |format|
+        format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
+      end
     end
 
 
     if not cps.empty?
-      cps.forEach do |cp|
+      cps.each do |cp|
         # TODO: email people from destroyed pulls
 
-        cp.students.forEach { |student|
+        cp.students.each { |student|
           # TODO: Update these for more detail later
           subject = "Pull bumped"
           content = "Your pull has been bumped."

@@ -16,7 +16,8 @@
     
   </div>
 
-  <%= link_to "Add a student to this pull", {controller: "room_assignments", action: "new_from_pull", pull_id: @pull.id} %>
+  <%= link_to "Add a student to this pull", {} #{controller: "room_assignments", action: "new_from_pull", pull_id: @pull.id}
+  %>
   <br></br>
 
   <div class="field">
