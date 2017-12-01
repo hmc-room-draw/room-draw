@@ -1,30 +1,30 @@
 # See https://github.com/elabs/pundit/ for an explanation of the code below
-class PullPolicy < ApplicationPolicy
+class SuitePolicy < ApplicationPolicy
   def index?
-    true
-  end
-
-  def new?
-    true
+    user.is_admin
   end
 
   def show?
-    true
+    user.is_admin
   end
 
   def create?
-    true
+    user.is_admin
+  end
+
+  def edit?
+    user.is_admin
+  end
+
+  def new?
+    user.is_admin
   end
 
   def update?
     user.is_admin
   end
-  
-  def edit?
-    user.is_admin
-  end
 
   def destroy?
-    user.is_admin || record.students.include?(user.student)
+    user.is_admin
   end
 end

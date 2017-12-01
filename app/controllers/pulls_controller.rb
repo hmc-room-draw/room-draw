@@ -1,11 +1,14 @@
 class PullsController < ApplicationController
-  include Pundit
-
   before_action :set_pull, only: [:show, :edit, :update, :destroy]
+
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized
 
   # GET /pulls
   # GET /pulls.json
   def index
+    authorize Pull
     @pulls = Pull.all.order(created_at: :desc)
   end
 
@@ -32,6 +35,8 @@ class PullsController < ApplicationController
     @students = Student.all
     @rooms = Room.all
     @dorms = Dorm.all
+    
+    authorize @pull
   end
 
   # POST /pulls
@@ -41,9 +46,8 @@ class PullsController < ApplicationController
     @dorms = Dorm.all
     @rooms = Room.all
 
-    authorize Pull
-
     @pull = Pull.new(pull_params)
+    authorize @pull
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }

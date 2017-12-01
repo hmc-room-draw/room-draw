@@ -2,6 +2,10 @@ class StaticPagesController < ApplicationController
 	skip_before_action :check_draw_period, only: [:coming_soon]
 	helper_method :pullable_rooms_number
 
+  # Enforce that all endpoints call `authorize`
+  include Pundit
+  after_action :verify_authorized, only: [:downloadPlacements, :downloadNonParticipants]
+
 	def home
 		@draw_period = DrawPeriod.first
 		if @draw_period == nil
@@ -46,51 +50,53 @@ class StaticPagesController < ApplicationController
 	end
 		
 	def downloadPlacements
+	  authorize CSV
 		placements_csv = CSV.generate do |csv|
-				headings = ["Last Name", "First Name", "Class", 
-										"Room Draw Number", "Dorm", "Room", "Preplaced"]
-				csv << headings
+      headings = ["Last Name", "First Name", "Class", 
+                  "Room Draw Number", "Dorm", "Room", "Preplaced"]
+      csv << headings
 
-				Student.all.each do |student|
-						user = User.find_by(id: student.user_id)
-						room_assignment = student.room_assignment
+      Student.all.each do |student|
+        user = student.user
+        room_assignment = student.room_assignment
 
-						basic_info = [user.last_name, user.first_name, 
-													student.class_rank, student.room_draw_number]
-						
-						if room_assignment == nil
-								placement_info = ["", "", false]
-						else
-								placement_info = [room_assignment.room.dorm.name, 
-																	room_assignment.room.number, 
-																	room_assignment.assignment_type == "preplaced"]
-						end
+        basic_info = [user.last_name, user.first_name, 
+                      student.class_rank, student.room_draw_number]
+        
+        if room_assignment == nil
+          placement_info = ["", "", false]
+        else
+          placement_info = [room_assignment.room.dorm.name, 
+                            room_assignment.room.number, 
+                            room_assignment.assignment_type == "preplaced"]
+        end
 
-						csv << basic_info + placement_info
-				end
+        csv << basic_info + placement_info
+      end
 		end
 
 		send_data placements_csv, 
-				:type => 'text/csv', 
-				:filename => 'placements.csv', 
-				:disposition => 'attachment'
+      :type => 'text/csv', 
+      :filename => 'placements.csv', 
+      :disposition => 'attachment'
 	end
 
 
 	def downloadNonParticipants
-			user_csv = CSV.generate do |csv|
-				csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
-				Student.all.each do |student|
-					if student.has_participated == false
-						user = User.find_by(id: student.user_id)
-						csv << [user.first_name, user.last_name, student.class_rank, student.room_draw_number, user.email]
-					end
-				end
-			end
-			send_data user_csv,
-				:type => 'text/csv',
-				:filename => 'non_participants.csv',
-				:disposition => 'attachment'
+    authorize CSV
+    user_csv = CSV.generate do |csv|
+      csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
+      Student.all.each do |student|
+        if student.has_participated == false
+          user = student.user
+          csv << [user.first_name, user.last_name, student.class_rank, student.room_draw_number, user.email]
+        end
+      end
+    end
+    send_data user_csv,
+      :type => 'text/csv',
+      :filename => 'non_participants.csv',
+      :disposition => 'attachment'
 	end
 
 	private
