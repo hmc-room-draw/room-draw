@@ -81,10 +81,6 @@ class User < ApplicationRecord
         if room_hash["preplaced"] == "preplaced"
 
           room_id = get_room(room_hash["dorm"], room_hash["room"])
-          puts "pls"
-          puts room_hash["dorm"]
-          puts room_hash["room"]
-          puts room_id
 
           # Look for existing room assignments for the room
           roomAssignments = RoomAssignment.where(room_id: room_id)
