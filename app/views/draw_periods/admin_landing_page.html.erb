@@ -20,12 +20,16 @@
 </div> 
 
 <br>
+<div>
 <h4>Schedule Draw Period</h4>
 
 <% if @start != nil %>
-  <p>Currently scheduled for <b><%= @start %></b> to <b><%= @end %></b>
+  <p>Currently scheduled for <b><%= @start %></b> to <b><%= @end %></b>.
     <%= link_to 'Cancel', @draw_period, method: :delete, data: { confirm: 'Are you sure?' } %>
   </p>
 <% end %>
 <%= render 'form', draw_period: @draw_period %>
-
+<% if @start != nil %>
+<p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
+<% end %>
+</div>
