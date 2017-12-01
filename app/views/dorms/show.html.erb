@@ -370,7 +370,7 @@ function layout(level){
     console.log(userRankNum);
     var room, val;
     //image map path
-    var map = mapLayout.assets[level];
+    // var map = mapLayout.assets[level];
     //speciifc floor layout coordinates
     var floor = mapLayout.floors[level+1];
     var i = 0;
@@ -384,6 +384,7 @@ function layout(level){
     //create image tag to size map correctly
     var imgLev = level+1;
     var img = document.getElementById('floor'+imgLev);  
+    var map = $(img).attr("src");
     var width = img.width;
     var height = img.height;
     var ratio = height/width;
@@ -399,7 +400,7 @@ function layout(level){
         top: 250,
         width: 940,
         height: 940*ratio,
-        'background-image': map,
+        'background-image': "url(" + map + ")",
         'background-size':  'contain',
         border: '5px solid black',
     }).appendTo('body');
