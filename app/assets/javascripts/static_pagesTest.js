@@ -4,8 +4,8 @@
 function popDorm(e, area) {
 	var thing = document.getElementById(area.id.toLowerCase());
 
-	thing.style.left = (e.clientX) + 'px';
-	thing.style.top = e.clientY + 'px';
+	thing.style.left = (e.clientX + 5) + 'px';
+	thing.style.top = (e.clientY + 5) + 'px';
 	$("#" + area.id.toLowerCase()).toggle();
 	return true;
 

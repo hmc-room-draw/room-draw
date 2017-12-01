@@ -21,7 +21,7 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
-      @student = current_user.student
+      @is_student = !@student.nil?
     end
 
     @rooms = @dorm.rooms
@@ -33,7 +33,7 @@ class DormsController < ApplicationController
     # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
-    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').select{ |s| not s.room_assignment }
+    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment }
     
     if current_user
       if !current_user.student.nil?

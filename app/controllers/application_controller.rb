@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
 
   # TODO: Uncomment the line below to enable form/login redirect and comingsoon
   # redirect when draw period isn't live. Make sure also to uncomment the 
-  # corresponding line in sessions controller and draw periods controller!
-  #before_action :check_login, :check_form, :check_draw_period
+  # corresponding line in sessions controller and static pages controller!
+  before_action :check_login, :check_form, :check_draw_period
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
@@ -60,7 +60,8 @@ class ApplicationController < ActionController::Base
     def email_in_spreadsheet?(key, email)
       ss = GoogleDriveApi.read_spreadsheet(key)
       ws = ss.worksheets.first
+      email_idx = ws.rows.first.index("Email Address")
       replies = ws.rows.drop(1)
-      replies.any? {|row| row.last == email}
+      replies.any? {|row| row[email_idx] == email}
     end
 end

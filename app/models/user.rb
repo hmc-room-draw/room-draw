@@ -12,7 +12,7 @@ class User < ApplicationRecord
   # Email must be a valid email address
   # This regex is not technically email-compliant but is right in 99% of cases
   # From https://www.railstutorial.org/book/modeling_users
-  validates :email, presence: true, 
+  validates :email, presence: true, uniqueness: true,
     format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
     
   before_save { self.email = email.downcase  }

@@ -13,19 +13,20 @@
 
   <div class="field">
     <%= form.label :student_id %>
-    <%= form.select :student_id, Student.all {|student| [get_name(student), student.id]}, id: :room_assignment_student_id %>
+    <%= form.collection_select :student_id, Student.all, :id, :room_draw_number, id: :room_assignment_student_id %>
   </div>
 
 
   <div class="field">
     <%= form.label :room_id %>
-    <%= form.select :room_id, Room.all {|room| [room.id, room.id]}, id: :room_assignment_room_id %>
+    <%= form.grouped_collection_select :room_id, Dorm.all, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
   </div>
 
 
-    <%= form.hidden_field @pull, id: :room_assignment_pull_id %>
+    <%= form.hidden_field :pull_id, :value => @pull_id%>
     <!--TO DO: Room assignment type?-->
-    <%= form.hidden_field 1, id: :room_assignment_assignment_type %>
+    <%= form.hidden_field :assignment_type, :value => 'other' %>
+    <input type="hidden" name="from_pull" value = "true">
 
   <div class="actions">
     <%= form.submit %>
