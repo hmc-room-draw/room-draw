@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path
     else
-      flash[:alert] = "No account exists with the given email."
+      flash[:danger] = "No account exists with the given email."
       redirect_to root_path
     end
   end
