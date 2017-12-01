@@ -49,7 +49,8 @@ class PullsController < ApplicationController
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
     if not cannot_override.empty?
-      format.html { render :new, error: "Can't pull! Conflicts with pulls #{cannot_override.join(', ')}." }
+      ids = cannot_override.map { |co| co.id }
+      format.html { render :new, error: "Can't pull! Conflicts with pulls #{ids * ","}." }
     elsif @pull.has_conflicting_nonpulls
       format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
     end
