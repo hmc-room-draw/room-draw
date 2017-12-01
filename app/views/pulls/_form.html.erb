@@ -24,7 +24,10 @@
     <%= form.collection_select :student_id, @pull.students, :id, :room_draw_number %>
   </div>
 
-  <!-- TO DO: Senior rounds -->
+  <div class = "field">
+    <%= form.label :round %>
+    <%= form.text_field :round, id: :round %>
+  <div
 
   <div class="field">
     <%= form.label :message %>
