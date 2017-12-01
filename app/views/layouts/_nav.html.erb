@@ -30,9 +30,9 @@
                     </li>
                 <% end %>
                 
-                <p class="nav navbar-text navbar-right" >
+                <li class="nav navbar-text navbar-right" >
                     <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> 
-                </p>
+                </li>
             <% else %>
                 <p class="nav navbar-text">
                     <%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in" %>
