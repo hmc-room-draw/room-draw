@@ -141,17 +141,17 @@
           
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
           <div class="hidden popup-button toggle-form" id="pull-form">
-              <%= render 'pulls/adminForm', pull: @pull %>
+              <%= render 'pulls/adminForm', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+              <%  render 'pulls/adminForm', pull: @pull %>
           </div>
 
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
           <div class="hidden popup-button toggle-form" id="edit-pull-form">
-            INSERT EDIT STUFF HERE
-         
+            <div id="ugh"></div>
+
           </div>
 
           <button id="delete-pull" class="btn btn-primary btn-block popup-button">
-            <%= link_to 'Delete Pull', @pull, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </button>
 
           
@@ -351,6 +351,7 @@ $(".alert-div").fadeOut(8000);
     var userRankNum = <%= @curRankNum %>;
     var userId = <%= @userId %>;
     var mapLayout = <%= @json %>;
+    var dormId = <%= @dorm.id %>;
 
 
 function layout(level){  
@@ -562,6 +563,19 @@ function layout(level){
                   }  
               modal.style.display = "block";
               fillingForm = true;
+              console.log("DORM ID", dormId + '/load_pull_ajax/' + event.data.info.pull_id);
+              if (event.data.info.pull_id) {
+                url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
+                $.ajax({
+                  url: url,
+                  type: 'POST',
+                  dataType: 'script',
+                  success: function(data){
+                    console.log("DATA!!!!");
+                    eval(data);
+                  }
+                })
+              }
           }
           });
         x++;

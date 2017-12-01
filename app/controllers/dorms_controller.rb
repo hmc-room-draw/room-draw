@@ -1,10 +1,20 @@
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax]
 
   # GET /dorms
   # GET /dorms.json
   def index
     @dorms = Dorm.all
+  end
+
+  def load_pull_ajax
+    puts "ASDFASDFASDFASDFASDFASDFASDFASDFASFASFASDFASDFASDFSA"
+    puts params
+    puts "DONE"
+    @pull = Pull.find(params["pull_id"])
+    respond_to do |format|
+      format.js {render layout: false} # Add this line to you respond_to block
+    end
   end
 
   # GET /dorms/1
@@ -14,7 +24,7 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
-      @student = dorm_id = Student.find_by user: current_user
+      @student = current_user.student
     end
 
     @rooms = @dorm.rooms

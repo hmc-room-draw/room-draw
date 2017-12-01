@@ -82,8 +82,12 @@ class PullsController < ApplicationController
     }
 
     respond_to do |format|
+      redirect_path = @pull
+      if (params["redirect_path"])
+        redirect_path = params["redirect_path"]
+      end
       if @pull.save
-        format.html { redirect_to @pull, notice: "Pull was successfully created." }
+        format.html { redirect_to redirect_path, notice: "Pull was successfully created." }
         format.json { render :show, status: :created, location: @pull }
       else
         format.html { render :new }
@@ -115,14 +119,17 @@ class PullsController < ApplicationController
   # DELETE /pulls/1
   # DELETE /pulls/1.json
   def destroy
-    puts "DESTROYING PUL!!!!"
-    # authorize @pull
+    authorize @pull
 
-    # @pull.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to pulls_url, notice: "Pull was successfully destroyed." }
-    #   format.json { head :no_content }
-    # end
+    @pull.destroy
+    respond_to do |format|
+      redirect_path = pulls_url
+      if (params["redirect_path"])
+        redirect_path = params["redirect_path"]
+      end
+      format.html { redirect_to redirect_path, notice: "Pull was successfully destroyed." }
+      format.json { head :no_content }
+    end
   end
 
   private
