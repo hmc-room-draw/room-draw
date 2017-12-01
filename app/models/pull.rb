@@ -44,10 +44,6 @@ class Pull < ApplicationRecord
       errors.add(:student, "not in :students") if not students.include?(student)
     end
 
-    def validate_room_assignments
-      errors.add(:room_assignments, "too many") if room_assignments.size > room.capacity
-    end
-
   #check student conflicts/frosh/preplaced people check room assignments
   #
 end

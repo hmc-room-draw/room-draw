@@ -5,27 +5,27 @@
 
         <ul>
         <% draw_period.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+        <li><%= message %></li>
         <% end %>
         </ul>
     </div>
     <% end %>
 
     <div class="field">
-        <%= form.label :start_datetime %>
-        <% if draw_period != current_draw_period %>
-            <%= form.datetime_select :start_datetime, id: :start %>
-        <% else %>
-            <%= form.datetime_select :start_datetime, id: :start, :readonly => true, onclick: 'alert("You cannot edit the start time of a current draw period.")' %>
-        <% end %>
+    <%= form.label :start_datetime %>
+    <% if draw_period != current_draw_period %>
+    <%= form.datetime_select :start_datetime, id: :start %>
+    <% else %>
+    <%= form.datetime_select :start_datetime, id: :start, :readonly => true, onclick: 'alert("You cannot edit the start time of a current draw period.")' %>
+    <% end %>
     </div>
 
     <div class="field">
-        <%= form.label :end_datetime %>
-        <%= form.datetime_select :end_datetime, id: :end %>
+    <%= form.label :end_datetime %>
+    <%= form.datetime_select :end_datetime, id: :end %>
     </div>
 
     <div class="actions">
-        <%= form.submit params[:method], data: {confirm: 'Are you sure?'} %>
+    <%= form.submit %>
     </div>
 <% end %>

@@ -37,10 +37,6 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
-    @students = Student.all
-    @dorms = Dorm.all
-    @rooms = Room.all
-
     authorize Pull
 
     @pull = Pull.new(pull_params)
@@ -74,7 +70,7 @@ class PullsController < ApplicationController
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm
       room = student.room_assignment.room.number
-      puller = "#{@pull.student.user.first_name} #{@pull.student.user.last_name}"
+      puller = "#{@pull.student.first_name} #{@pull.student.last_name}"
 
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
@@ -95,10 +91,6 @@ class PullsController < ApplicationController
   # PATCH/PUT /pulls/1
   # PATCH/PUT /pulls/1.json
   def update
-    @students = Student.all
-    @dorms = Dorm.all
-    @rooms = Room.all
-    
     authorize @pull
 
     respond_to do |format|

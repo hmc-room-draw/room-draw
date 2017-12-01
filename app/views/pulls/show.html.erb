@@ -1,17 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.is_admin? %>
-	<h1>Pull: <%= @pull.id %></h1>
-	<h2>Senior Round: <%= 'tdb' %></h2>
+	<h1>Pull <%= @pull.id %></h1>
 
 	<%= render 'currentList', pull: @pull %>
 
-	<br></br>
 	<%= link_to 'Edit', edit_pull_path(@pull) %>
 	<%= link_to 'Back', pulls_path %>
-
 <% else %>
-	<br></br>
 	<%= link_to 'Back', pulls_path %>
 
 <% end %>

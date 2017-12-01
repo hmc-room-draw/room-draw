@@ -14,10 +14,11 @@
       <tr>
         <th>Number</th>
         <th>Names</th>
-        <th>Room</th>
+        <th>Rooms</th>
         <th>Round</th>
         <th>Message</th>  
         <th>Actions</th>
+        <th colspan="5"></th>
       </tr>
     </thead>
 
@@ -34,7 +35,7 @@
 
           <td>
           <% pull.room_assignments.each do |room_assignment| %>
-            <%= room_assignment.room.name %>
+            <%= room_assignment.room.number %>
           <% end %>
           </td>
           
@@ -57,7 +58,7 @@
         <tr>
           <th>Number</th>
           <th>Names</th>
-          <th>Room</th>
+          <th>Rooms</th>
           <th>Round</th> 
           <th>Actions</th>
         </tr>
@@ -77,7 +78,7 @@
 
                 <td>
                 <% pull.room_assignments.each do |room_assignment| %>
-                  <%= room_assignment.room.name %>
+                  <%= room_assignment.room.number %>
                 <% end %>
                 </td>
                 
