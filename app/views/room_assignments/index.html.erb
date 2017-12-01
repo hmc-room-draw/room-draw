@@ -15,10 +15,11 @@
   <tbody>
     <% @room_assignments.each do |room_assignment| %>
       <tr>
-        <td><%= student_name(room_assignment) %></td>
         <% if (room_assignment.pull) %>
+          <td><%= student_name(room_assignment) %></td>
           <td><%= room_assignment.pull.student.room_draw_number %></td>
         <% else %>
+          <td></td>
           <td></td>
         <% end %>
         <td><%= room_assignment.room.name %></td>
