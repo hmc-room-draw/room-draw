@@ -1,6 +1,13 @@
 <p id="notice"><%= notice %></p>
 <h1>Admin Home</h1>
 
+<% if current_user.has_student? and not current_user.student.has_completed_form %>
+  <span style="color: #ff0000;">
+    You haven't filled out the form yet.
+    <%= link_to "Fill it out", ENV['FORM_URL'] %>
+  </span>
+<% end %>
+
 <button style= "float: right;" onclick="popTable()"> View Empty Rooms By Dorm </button>
 <%= button_to 'Download Non-participants', {action: "downloadNonParticipants", controller: "static_pages"}, {class: 'dashboard-button'} %>
 <%= button_to 'Download Placements', {action: "downloadPlacements", controller: "static_pages"}, {class: 'dashboard-button'} %>
