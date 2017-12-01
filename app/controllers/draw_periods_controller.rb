@@ -1,5 +1,5 @@
 class DrawPeriodsController < ApplicationController
-    before_action :set_draw_period, only: [:admin_landing_page, :update, :destroy]
+    before_action :set_draw_period, only: [:update, :destroy]
     helper DrawPeriodHelper
 
     def create
@@ -7,25 +7,25 @@ class DrawPeriodsController < ApplicationController
         
         if @draw_period.save
             flash[:notice] = 'Draw Period was successfully created.'
-            redirect_to admin_home_path
+            redirect_to root_path
         else
-            render :admin_landing_page
+            render "static_pages/home"
         end
     end
 
     def update
         if @draw_period.update(draw_period_params)
             flash[:notice] = 'Draw Period was successfully updated.'
-            redirect_to admin_home_path
+            redirect_to root_path
         else
-            render :admin_landing_page
+            render "static_pages/home"
         end
     end
 
     def destroy
         @draw_period.destroy
         respond_to do |format|
-            format.html { redirect_to admin_home_path, notice: 'Draw Period was successfully canceled.' }
+            format.html { redirect_to root_path, notice: 'Draw Period was successfully canceled.' }
             format.json { head :no_content }
         end
     end 
