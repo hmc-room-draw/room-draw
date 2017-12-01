@@ -140,7 +140,6 @@
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
           <div class="hidden popup-button toggle-form" id="pull-form">
               <%= render 'pulls/adminForm', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
-              <%  render 'pulls/adminForm', pull: @pull %>
           </div>
 
           <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>

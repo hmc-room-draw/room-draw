@@ -21,6 +21,7 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
+      @student = dorm_id = Student.find_by user: current_user
       @is_student = !@student.nil?
     end
 
