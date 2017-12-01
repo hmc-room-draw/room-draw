@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<% if current_user != nil && current_user.is_admin? %>
 <h1>Users</h1>
 
 <table>
@@ -31,3 +31,6 @@
 <br>
 
 <%= link_to 'New User', new_user_path %>
+<% else %> 
+<h1> You don't have permission to access this page. </h1>
+<% end %>
