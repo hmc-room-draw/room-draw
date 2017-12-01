@@ -1,6 +1,6 @@
+<p id="notice"><%= notice %></p>
 <%= stylesheet_link_tag 'static_pages' %>
 <%= javascript_include_tag 'static_pagesTest' %>
-
 
 <% if current_user == nil %>
     <%= render partial: "static_pages/logged_out_home" %>
