@@ -16,6 +16,9 @@
 
 <div>
   <h4>Upload Roster</h4>
+  <p> <b> Please upload a csv file in format as follows (header line followed by example student line): </b> <br>last_name,first_name,email,class_rank,room_draw_number,dorm,room,preplaced <br> 
+  Einstein,Albert,aeinstein@g.hmc.edu,senior,1,,, <br>
+  Curie,Marie,mcurie@g.hmc.edu,senior,3,East,106,preplaced</p>
   <%= form_tag import_users_path, multipart: true do %>
     <%= file_field_tag :file %>
     <%= submit_tag "Upload" %>
