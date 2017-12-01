@@ -68,6 +68,7 @@ class User < ApplicationRecord
             student_hash["has_participated"] = user.first.student.has_participated
             student_hash["has_completed_form"] = user.first.student.has_completed_form
           end
+          user.first.update_attributes(user_hash)
         else
           student_hash["has_participated"] = false
           student_hash["has_completed_form"] = false
