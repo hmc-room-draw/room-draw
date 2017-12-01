@@ -9,25 +9,29 @@
                     Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
                 </p>
 
+                <li class="nav navbar-text">
+                    <%= link_to "Maps", dorms_path %> 
+                </li>
+                <li class="nav navbar-text">
+                    <%= link_to "Pulls", pulls_path %> 
+                </li>
                 <% if current_user.is_admin %>
-                    <li class="nav navbar-text">
-                        <%= link_to "Maps", dorms_path %> 
-                    </li>
-                    <li class="nav navbar-text">
-                        <%= link_to "Pulls", pulls_path %> 
-                    </li>
-                    <li class="nav navbar-text">
-                        <%= link_to "Users", admin_users_path %> 
-                    </li>
-                    <li class="nav navbar-text">
-                        <%= link_to "Students", admin_students_path %> 
-                    </li>
-                    <li class="nav navbar-text">
-                        <%= link_to "Emails", {action: "viewEmails", controller: "static_pages"} %> 
-                    </li>
-                    <li class="nav navbar-text">
-                        <%= link_to "Send Email", new_email_path %> 
-                    </li>
+                <li class="nav navbar-text">
+                    <%= link_to "Users", admin_users_path %> 
+                </li>
+                <li class="nav navbar-text">
+                    <%= link_to "Students", admin_students_path %> 
+                </li>
+                <li class="nav navbar-text">
+                    <%= link_to "Emails", {action: "viewEmails", controller: "static_pages"} %> 
+                </li>
+                <li class="nav navbar-text">
+                    <%= link_to "Send Email", new_email_path %> 
+                </li>
+                <% else %>
+                <li class="nav navbar-text">
+                    <%= link_to "Students", students_path %> 
+                </li>
                 <% end %>
                 
                 <li class="nav navbar-text navbar-right" >
