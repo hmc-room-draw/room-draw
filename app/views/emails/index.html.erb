@@ -1,28 +1,29 @@
-<h1 style="color: #5D6D7E">View all emails</h1>
-  <table id="emails" class="sortable">
+<h1>Emails</h1>
+  <table class="sortable">
     <thead>
       <tr>
-        <th>Created At </th>
+        <th>Created At</th>
         <th>Send Date</th>
+        <th>To</th>
         <th>Subject</th>
         <th>Message</th>
-        <th>Recipients</th>
         <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <% Email.all.reverse.each do |email| %>
         <tr>
-          <td><%= email.created_at %> </td>
+          <td><%= format_datetime(email.created_at) %> </td>
           <td><%= email.sendDate %> </td>
+          <td><%= recipients(email).html_safe %></td>
           <td><%= email.subject %> </td>
           <td><%= email.description %> </td>
-          <td><%= recipients(@email) %></td>
           <td><%= email.sent_status ? "Sent" : "Unsent" %> </td>
-          <td><%= link_to 'Edit', edit_email_path(email) %></td>
-          <td><%= link_to 'Destroy', email, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td>
+            <%= link_to 'Edit', edit_email_path(email) %>
+            <%= link_to 'Cancel', email, method: :delete, data: { confirm: 'Are you sure you want to cancel that email?' } %>
+          </td>
         </tr>
       <% end %>
     </tbody>
