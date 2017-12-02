@@ -20,7 +20,6 @@ module EmailsHelper
   end
 
   def get_person_counts(status_type)
-    authorize Email
     count = 0
     case status_type
     when "admin"

@@ -1,8 +1,8 @@
 class EmailsController < ApplicationController
-  before_action :set_email, only: [:receiver, :edit, :update, :destroy]
+  before_action :set_email, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
   include EmailsHelper
-  
+
   def new
     authorize Email
     @email = Email.new
