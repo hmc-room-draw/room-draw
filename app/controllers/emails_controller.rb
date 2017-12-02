@@ -1,6 +1,7 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: [:receiver, :edit, :update, :destroy]
   after_action :verify_authorized
+  helper_method :get_person_counts, :recipients
 
   def new
     authorize Email
@@ -49,7 +50,7 @@ class EmailsController < ApplicationController
     # Redirect to the right page
     respond_to do |format|
       if no_errors
-        format.html { redirect_to emails_show_path, notice: 'Email was successfully updated.' }
+        format.html { redirect_to emails_path, notice: 'Email was successfully updated.' }
         format.json { render :show, status: :ok}
       else
         format.html { render :edit }
@@ -62,7 +63,7 @@ class EmailsController < ApplicationController
     authorize @email
     @email.destroy
     respond_to do |format|
-      format.html { redirect_to emails_show_url, notice: 'Email was successfully destroyed.' }
+      format.html { redirect_to emails_path, notice: 'Email was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,20 +71,21 @@ class EmailsController < ApplicationController
   def recipients(email)
     @recipients = ""
     if email.send_to_never_logged_in
-      @recipients += "Never logged in\n"
+      @recipients += "Never logged in<br>"
     end
     if email.send_to_never_pulled_room
-      @recipients += "Never pulled room\n"
+      @recipients += "Never pulled room<br>"
     end
     if email.send_to_formerly_in_room
-      @recipients += "Formerly in room\n"
+      @recipients += "Formerly in room<br>"
     end
     if email.send_to_in_room
-      @recipients += "In room\n"
+      @recipients += "In room<br>"
     end
     if email.send_to_admins
-      @recipients += "Admins\n"
+      @recipients += "Admins"
     end
+    return @recipients
   end
 
   def get_person_counts(status_type)
