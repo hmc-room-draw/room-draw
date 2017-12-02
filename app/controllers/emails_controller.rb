@@ -14,6 +14,7 @@ class EmailsController < ApplicationController
 
   def index
     authorize Email
+    @emails = Email.all.reverse
   end
 
   def show

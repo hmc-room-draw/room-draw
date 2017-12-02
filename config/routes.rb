@@ -2,12 +2,6 @@ Rails.application.routes.draw do
 
   get 'coming_soon', to: 'static_pages#coming_soon'
 
-  resources :emails
-  # get 'emails/show', to: 'static_pages#viewEmails'
-  # get 'emails/create'
-  # get 'emails/:id/edit', to: 'static_pages#edit'
-  # delete 'emails/:id', to: 'static_pages#destroy'
-
   get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
 
   get 'login/show'
@@ -32,6 +26,7 @@ Rails.application.routes.draw do
   resources :draw_periods, only: [:create, :update, :destroy]
 
   resources :dorms
+  resources :emails
   resources :pulls
   resources :rooms
   resources :suites

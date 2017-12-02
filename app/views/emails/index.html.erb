@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% Email.all.reverse.each do |email| %>
+      <% @emails.each do |email| %>
         <tr>
           <td><%= format_datetime(email.created_at) %> </td>
           <td><%= email.sendDate %> </td>
