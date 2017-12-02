@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-  
+
   get 'coming_soon', to: 'static_pages#coming_soon'
-  
+
   resources :emails
-  get 'emails/index'
-  get 'emails/show', to: 'static_pages#viewEmails'
-  get 'emails/create'
-  get 'emails/:id/edit', to: 'static_pages#edit'
-  delete 'emails/:id', to: 'static_pages#destroy'
+  # get 'emails/show', to: 'static_pages#viewEmails'
+  # get 'emails/create'
+  # get 'emails/:id/edit', to: 'static_pages#edit'
+  # delete 'emails/:id', to: 'static_pages#destroy'
 
   get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
 
@@ -43,7 +42,7 @@ Rails.application.routes.draw do
   resources :users do
     collection { post :import }
   end
-  
+
   resources :sessions, only: [:create, :destroy]
 
   root "static_pages#home"
