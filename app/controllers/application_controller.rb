@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
   before_action :check_login, :check_form, :check_draw_period
-
+  helper_method :current_user, :current_draw_period
+  
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
   end
