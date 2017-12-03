@@ -49,21 +49,15 @@ class PullsController < ApplicationController
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
+
+    #TODO: I made some escapes to avoid problems that call this method from different places
+    #      but some of them might not be necessary.
       if not cannot_override.empty?
         ids = cannot_override.map { |co| co.id }
-        if from_dorm
-          # format.html{  redirect_to  ({controller: "dorm", action: "show", id: from_dorm}, notice: "Can't pull! Conflicts with pulls.") } #and return
-          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
-        else
-          format.html { render :new, error: "Can't pull! Conflicts with pulls #{ids * ","}." }
-        end
+        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
       elsif @pull.has_conflicting_nonpulls
-        if from_dorm
           # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
-          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
-        else
-          format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
-        end
+          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
       end
 
 
