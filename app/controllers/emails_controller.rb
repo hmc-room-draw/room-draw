@@ -1,6 +1,7 @@
 class EmailsController < ApplicationController
-  before_action :set_email, only: [:edit, :update, :destroy]
+  before_action :set_email, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
+  include EmailsHelper
 
   def new
     authorize Email
@@ -13,19 +14,19 @@ class EmailsController < ApplicationController
 
   def index
     authorize Email
+    @emails = Email.all.reverse
   end
 
   def show
-    authorize Email
+    authorize @email
   end
 
   def create
     authorize Email
     respond_to do |format|
-      @email = makeEmail(params)
-      if @email
-        format.html { redirect_to emails_show_path, notice: 'Email was successfully created.' }
-        format.json { render :show, status: :ok}
+      if makeEmail(params)
+        format.html { redirect_to emails_path, notice: 'Email was successfully created.' }
+        format.json { render :index, status: :ok}
       else
         format.html { render :new }
         format.json { render json: @email.errors, status: :unprocessable_entity }
@@ -50,7 +51,7 @@ class EmailsController < ApplicationController
     # Redirect to the right page
     respond_to do |format|
       if no_errors
-        format.html { redirect_to emails_show_path, notice: 'Email was successfully updated.' }
+        format.html { redirect_to emails_path, notice: 'Email was successfully updated.' }
         format.json { render :show, status: :ok}
       else
         format.html { render :edit }
@@ -63,40 +64,21 @@ class EmailsController < ApplicationController
     authorize @email
     @email.destroy
     respond_to do |format|
-      format.html { redirect_to emails_show_url, notice: 'Email was successfully destroyed.' }
+      format.html { redirect_to emails_path, notice: 'Email was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  def get_person_counts(status_type)
-    authorize Email
-    count = 0
-    case status_type
-    when "admin"
-      count = User.all.select{|user| user.is_admin == true}.length
-    else
-      count = Student.all.select{|student| student.status == status_type}.length
-    end
-    if count == 1
-      return " (currently 1 person)"
-    else
-      return " (currently #{count} people)"
-    end
-  end
-  helper_method :get_person_counts
-
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_email
       @email = Email.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
       params.require(:email).permit(
-        :subject, 
-        :description, 
-        :sendDate, 
+        :subject,
+        :description,
+        :sendDate,
         :send_to_never_logged_in,
         :send_to_never_pulled_room,
         :send_to_formerly_in_room,
@@ -105,12 +87,7 @@ class EmailsController < ApplicationController
     end
 
     def makeEmail(params)
-      # fetch created email
       email = params["email"]
-
-      # convert information in datetime_select form to Ruby date:
-      # https://stackoverflow.com/questions/5073756/where-is-the-
-      # rails-method-that-converts-data-from-datetime-select-into-a-datet
 
       # extract send datetime
       sendDate = Date.new(email["sendDate(1i)"].to_i,
@@ -122,8 +99,8 @@ class EmailsController < ApplicationController
       # extract content of the email
       content = email["description"]
       @email = Email.new(
-        subject: subject, 
-        description: content, 
+        subject: subject,
+        description: content,
         sendDate: sendDate,
         sent_status: false,
         send_to_never_logged_in: email["send_to_never_logged_in"],

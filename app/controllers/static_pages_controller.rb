@@ -45,11 +45,11 @@ class StaticPagesController < ApplicationController
       	end
     end
 	end
-		
+
 	def downloadPlacements
 	  authorize CSV
 		placements_csv = CSV.generate do |csv|
-      headings = ["Last Name", "First Name", "Class", 
+      headings = ["Last Name", "First Name", "Class",
                   "Room Draw Number", "Dorm", "Room", "Preplaced"]
       csv << headings
 
@@ -57,14 +57,14 @@ class StaticPagesController < ApplicationController
         user = student.user
         room_assignment = student.room_assignment
 
-        basic_info = [user.last_name, user.first_name, 
+        basic_info = [user.last_name, user.first_name,
                       student.class_rank, student.room_draw_number]
-        
+
         if room_assignment == nil
           placement_info = ["", "", false]
         else
-          placement_info = [room_assignment.room.dorm.name, 
-                            room_assignment.room.number, 
+          placement_info = [room_assignment.room.dorm.name,
+                            room_assignment.room.number,
                             room_assignment.assignment_type == "preplaced"]
         end
 
@@ -72,9 +72,9 @@ class StaticPagesController < ApplicationController
       end
 		end
 
-		send_data placements_csv, 
-      :type => 'text/csv', 
-      :filename => 'placements.csv', 
+		send_data placements_csv,
+      :type => 'text/csv',
+      :filename => 'placements.csv',
       :disposition => 'attachment'
 	end
 
@@ -96,10 +96,4 @@ class StaticPagesController < ApplicationController
       :disposition => 'attachment'
 	end
 
-	private
-
-	def format_datetime(datetime)
-		return datetime.strftime("%B %e, %Y %l:%M %p")
-	end
-	
 end
