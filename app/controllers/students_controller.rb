@@ -1,12 +1,8 @@
-class StudentsController < ApplicationController
-  include Pundit
-  
+class StudentsController < ApplicationController  
   before_action :set_student_and_user, only: [:show, :edit, :update, :destroy]
-  include StudentsHelper
-  
-  # Enforce that all endpoints call `authorize`
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
+  include StudentsHelper
 
   def index
     @students = policy_scope(Student)

@@ -1,8 +1,5 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
 
   # GET /rooms
