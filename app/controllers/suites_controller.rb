@@ -1,8 +1,5 @@
 class SuitesController < ApplicationController
-  before_action :set_suite, only: [:show, :edit, :update, :destroy]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
+  before_action :set_suite, only: [:show, :edit, :update, :destroy]  
   after_action :verify_authorized
 
   # GET /suites

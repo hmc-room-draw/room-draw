@@ -1,8 +1,5 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: [:edit, :update, :destroy]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
 
   def new
