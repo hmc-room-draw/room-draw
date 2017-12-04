@@ -36,14 +36,17 @@ class DormsController < ApplicationController
     6.times {@pull.room_assignments.build}
     @adminPull = Pull.new
     1.times {@adminPull.room_assignments.build}
+    @students = Student.all
     #TODO: Get only the necessary information
-    # @students = Student.all
     @users = User.all
-    # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
-    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
-    
+    @studentData = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+    @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
+    @dorms_index = get_dorm_index()
+
+
+
     if current_user
       if !current_user.student.nil?
         @curPullNum = current_user.student.room_draw_number    
@@ -136,9 +139,6 @@ class DormsController < ApplicationController
   # GET /dorms/1/edit
   def edit
     authorize @dorm
-    # @students = Student.all
-    # @rooms = Room.all
-    # @dorms = Dorm.all
   end
 
   # POST /dorms
@@ -198,6 +198,18 @@ class DormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pull
       @pull = Pull.find(params[:id])
+    end
+
+    # Count how many rooms are before this room out of all Rooms
+    # This function helps us populate the adming Pulls form with the correct data
+    def get_dorm_index
+      count = 1
+      Dorm.all.each do |d|
+        if d == @dorm
+          return count
+        end
+        count += d.rooms.count
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

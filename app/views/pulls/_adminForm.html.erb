@@ -33,6 +33,7 @@
       <div>
         <%= room_assignment.label :student_id %>
         <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+
       </div>
       <div>
         <%= room_assignment.label :room_id %>
@@ -41,7 +42,7 @@
 
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a, :selected => 'pulled' %>
       </div> 
       
     <% end %>

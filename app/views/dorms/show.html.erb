@@ -346,6 +346,8 @@ $(".alert-div").fadeOut(8000);
     var dormId = <%= @dorm.id %>;
     var admin = <%= @admin %>;
     var is_student = <%= @is_student %>;
+    var room_ids = <%= @room_ids %>;
+    var dorms_index = <%= @dorms_index %>;
 
 
 function layout(level){  
@@ -408,6 +410,10 @@ function layout(level){
         border: '5px solid black',
     }).appendTo('body');
     dormElements.push(fakeDorm);
+
+    function get_room_index(x) {
+      return dorms_index + room_ids.indexOf(x);
+    }
 
 
     //get keys so that you can traverse js by index
@@ -527,6 +533,9 @@ function layout(level){
                       $('#room_number').val(info.number); //TODO: Check this is actually used.
                       $('#unpullable-room-delete').val(info.number);
                       $('#unpullable-room-num').val(info.number);
+                      var index = get_room_index(info.number);
+                      $('#pull_room_assignments_attributes_0_room_id').val(index);
+                      
                       $('#pull-student').addClass('hidden');
 
                       if (info.assignment_type != null) { // If there's currently a room assignment
