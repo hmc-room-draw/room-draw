@@ -102,7 +102,6 @@ class PullsController < ApplicationController
       else
         if from_dorm
           # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
-          print "yeah we right"
           format.html{redirect_back(fallback_location: root_path)}
         else
           format.html { render :new }
