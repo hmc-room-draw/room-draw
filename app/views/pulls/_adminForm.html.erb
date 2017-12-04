@@ -44,7 +44,7 @@
 
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a, :selected => 'pulled' %>
       </div> 
       
     <% end %>
