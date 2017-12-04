@@ -1,10 +1,7 @@
 class StaticPagesController < ApplicationController
 	skip_before_action :check_draw_period, only: [:coming_soon]
-	helper_method :pullable_rooms_number
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized, only: [:downloadPlacements, :downloadNonParticipants]
+  helper_method :pullable_rooms_number
 
 	def home
 		@draw_period = DrawPeriod.first

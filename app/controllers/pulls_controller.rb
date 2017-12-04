@@ -1,8 +1,5 @@
 class PullsController < ApplicationController
   before_action :set_pull, only: [:show, :edit, :update, :destroy]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
 
   # GET /pulls

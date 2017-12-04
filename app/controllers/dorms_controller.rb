@@ -1,8 +1,5 @@
 class DormsController < ApplicationController
   before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized, except: [:index, :load_pull_ajax]
 
   # GET /dorms

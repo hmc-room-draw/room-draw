@@ -1,8 +1,5 @@
 class DrawPeriodsController < ApplicationController
   before_action :set_draw_period, only: [:update, :destroy]
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
 
   def create

@@ -1,10 +1,7 @@
 class RoomAssignmentsController < ApplicationController
   before_action :set_room_assignment, only: [:show, :edit, :update, :destroy]
-  include RoomAssignmentsHelper
-
-  # Enforce that all endpoints call `authorize`
-  include Pundit
   after_action :verify_authorized
+  include RoomAssignmentsHelper  
 
   # GET /room_assignments
   # GET /room_assignments.json
@@ -41,12 +38,15 @@ class RoomAssignmentsController < ApplicationController
   def create
     authorize RoomAssignment
     @room_assignment = RoomAssignment.new(room_assignment_params)
-    @pull_id = params[:from_pull]
+    @from_pull = params[:from_pull]
     respond_to do |format|
       if @room_assignment.save
-        if (@pull_id)
-          format.html { redirect_to Pull.find(params[:pull_id]), notice: 'Room assignment was successfully created.' }
-          format.json { render :show, status: :created, location: Pull.find(params[:pull_id]) }
+        if (@from_pull)
+          @pull = Pull.find(@room_assignment.pull_id)
+          redirect_to @pull
+          flash[:notice] = "Room Assignment added to pull!"
+          # format.html { redirect_to {controller: "pulls", action: :show, params[:pull_id], notice: 'Room assignment was successfully created.' }
+          # format.json { render :show, status: :created, location: @pull }
         else
           format.html { redirect_to action: "index"}
         end
@@ -78,7 +78,7 @@ class RoomAssignmentsController < ApplicationController
   # DELETE /room_assignments/1
   # DELETE /room_assignments/1.json
   def destroy
-    authorize @room_assignments
+    authorize @room_assignment
     @room_assignment.destroy
     respond_to do |format|
       redirect_path = room_assignments_url
