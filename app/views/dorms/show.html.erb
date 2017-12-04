@@ -142,13 +142,13 @@
               <%= render 'pulls/adminForm', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
           </div>
 
-          <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
+          <!-- <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
           <div class="hidden popup-button toggle-form" id="edit-pull-form">
             <div id="edit-form-div"></div>
           </div>
 
           <div id="delete-pull">
-          </div>
+          </div> -->
 
           <!-- Unpullable Form -->
           <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
@@ -549,6 +549,7 @@ function layout(level){
                         }
                         
                       } else { // If there isn't an assignment type, theres no RoomAssignment
+                        console.log("SHOULD SHOW RA");
                         //So there isn't any associated Pull either.
                         $('#create-pull').removeClass('hidden');
                         $('#mark-unpullable').removeClass('hidden');
