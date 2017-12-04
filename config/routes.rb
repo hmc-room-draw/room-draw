@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   get 'coming_soon', to: 'static_pages#coming_soon'
   
+  post 'pulls/new' => 'pulls#new'
+  
   resources :emails
   get 'emails/index'
   get 'emails/show', to: 'static_pages#viewEmails'
