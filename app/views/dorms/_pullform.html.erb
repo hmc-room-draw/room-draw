@@ -11,21 +11,15 @@
     </div>
   <% end %>
 
-<% if not current_user.is_admin? %>
   <div class="field">
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_numner.
          So, we need to join the table of student and user and get the email address -->
-    <%= form.text_field :student_id, :value => current_user.email, :readonly => true  %>
+    <%= current_user.email  %>
     <%= form.hidden_field :student_id, :value => current_user.student.id  %>
   </div>
 
-  <div class="field">
-    <%= form.label :room_id %>
-<!--     TODO: We don't wanna display room_draw_numner.
-         So, we need to join the table of student and user and get the email address -->
-    <%= form.text_field :room_id, :id => 'room_number', :readonly => true %>
-  </div>
+
 
   <div class="field">
     <%= form.label :message %>
@@ -40,7 +34,6 @@
       </div>
     <% end %>
   <% end %>
-<% end %>
   
   <%= field_set_tag 'Room Assignments' do %>
   <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you. </br>If you do not want to pull in anyone else, please leave the remaining fields blank. </br></p>
@@ -62,6 +55,7 @@
     <% end %>
   <% end %> 
 
+<input type="hidden" name="from_dorm" value=<%=@dorm.id %>>
 
   <div class="actions">
     <%= form.submit %>

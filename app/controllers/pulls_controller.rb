@@ -39,6 +39,7 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
+    from_dorm = params[:from_dorm]
     @students = Student.all
     @dorms = Dorm.all
     @rooms = Room.all
@@ -49,22 +50,21 @@ class PullsController < ApplicationController
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
-    if not cannot_override.empty?
-      respond_to do |format|
+    #TODO: I made some escapes to avoid problems that call this method from different places
+    #      but some of them might not be necessary.
+      if not cannot_override.empty?
         ids = cannot_override.map { |co| co.id }
-        format.html { render :new, error: "Can't pull! Conflicts with other pulls #{ids * ","}." }
+        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
+      elsif @pull.has_conflicting_nonpulls
+          # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
+          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
       end
-    elsif @pull.has_conflicting_nonpulls
-      respond_to do |format|
-        format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
-      end
-    end
 
 
     if not cps.empty?
       cps.each do |cp|
         cp.destroy()
-      end
+      }
     end
 
     @pull.students.each { |student|
@@ -81,11 +81,22 @@ class PullsController < ApplicationController
     respond_to do |format|
       redirect_path = get_redirect_path(params, @pull)
       if @pull.save
-        format.html { redirect_to redirect_path, notice: "Pull was successfully created." }
-        format.json { render :show, status: :created, location: @pull }
+        if from_dorm
+          # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
+          format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
+        else
+          format.html { redirect_to @pull, notice: "Pull was successfully created." }
+          format.json { render :show, status: :created, location: @pull }
+        end
+
       else
-        format.html { render :new }
-        format.json { render json: @pull.errors, status: :unprocessable_entity }
+        if from_dorm
+          # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
+          format.html{redirect_back(fallback_location: root_path)}
+        else
+          format.html { render :new }
+          format.json { render json: @pull.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
