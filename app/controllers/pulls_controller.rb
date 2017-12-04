@@ -21,7 +21,7 @@ class PullsController < ApplicationController
     @pull = Pull.new
     1.times {@pull.room_assignments.build}
     #TODO: Get only the necessary information
-    @students = Student.all
+    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
     @rooms = Room.all
     @dorms = Dorm.all
   end
