@@ -63,6 +63,10 @@ class Student < ApplicationRecord
     Student.statuses[status]
   end
 
+  def student_name
+    self.user.first_name + " " + self.user.last_name
+  end
+
   def status
     if room_assignment.nil?
       if has_participated
