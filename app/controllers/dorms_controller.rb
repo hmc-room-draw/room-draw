@@ -41,7 +41,6 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
     #join tables
     @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
-    puts "STUDENTS IS", @students.count
     @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
     @dorms_index = get_dorm_index()
 
