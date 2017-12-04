@@ -16,7 +16,8 @@
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_numner.
          So, we need to join the table of student and user and get the email address -->
-    <%= form.collection_select :student_id, @students, :id, :room_draw_number  %>
+    <%= form.collection_select :student_id, @students, :id, :email, id: :student_id %>
+
   </div>
 
   <div class="field">
@@ -30,10 +31,9 @@
   <%= field_set_tag 'Room Assignments' do %>
 
     <%= form.fields_for :room_assignments do |room_assignment| %>
-      <div>
+      <div> 
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
-
+        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>
