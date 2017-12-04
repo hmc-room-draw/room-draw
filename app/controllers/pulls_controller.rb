@@ -61,10 +61,10 @@ class PullsController < ApplicationController
       end
 
 
-    if not cps.empty?
+    if not cps.empty? 
       cps.each do |cp|
         cp.destroy()
-      }
+      end
     end
 
     @pull.students.each { |student|
