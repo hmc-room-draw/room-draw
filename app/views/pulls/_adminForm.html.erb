@@ -16,23 +16,26 @@
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_numner.
          So, we need to join the table of student and user and get the email address -->
-    <%= form.collection_select :student_id, @students, :id, :room_draw_number  %>
+    <%= form.collection_select :student_id, @students, :id, :student_name_and_number %>
+<!--    SELECT ROOM DRAW NUMBER FROM STUDENTS AND STORE ID AS STUDENT_ID -->
   </div>
+
+  <div class = "field">
+    <%= form.label :round %>
+    <%= form.text_field :round, id: :round %>
+  <div>
 
   <div class="field">
     <%= form.label :message %>
     <%= form.text_field :message, id: :pull_message %>
   </div>
-
-
-  <!-- TO DO: Senior rounds -->
   
   <%= field_set_tag 'Room Assignments' do %>
 
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :room_draw_number, id: :room_assignment_student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>

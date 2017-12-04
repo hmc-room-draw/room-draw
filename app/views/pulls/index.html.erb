@@ -3,9 +3,22 @@
 <% if current_user.is_admin? %>
 <h1>Pull List</h1>
   <div class="center">
-    <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
-    <%= button_to 'Create', new_pull_path, :class => "button", :method => :get  %>
+    <%= button_to 'Download Placements', {action: "downloadPlacements", controller: "static_pages"}, {class: 'dashboard-button'} %>
   </div>
+
+  <%= form_for :pullCount, url: "pulls/new" do |form|  %>
+    
+    <div class = "field">
+      <%= form.label "How many students in the pull?" %>
+      <br>
+      <%= form.text_field :submission, id: :submission %>
+    <div>
+
+    <div class="actions">
+      <%= form.submit "Make pull"%>
+    </div>
+  <% end %>
+
 
   <br>
   </br>

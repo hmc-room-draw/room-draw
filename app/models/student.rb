@@ -63,6 +63,10 @@ class Student < ApplicationRecord
     Student.statuses[status]
   end
 
+  def student_name
+    self.user.first_name + " " + self.user.last_name
+  end
+
   def status
     if room_assignment.nil?
       if has_participated
@@ -78,6 +82,17 @@ class Student < ApplicationRecord
       :in_room
     end
   end
+
+  def student_name_and_number
+    user = self.user
+    room_draw_number.to_s + " " + user.first_name + " " + user.last_name
+  end
+
+  def student_name
+    user = self.user
+    user.first_name + " " + user.last_name
+  end
+
 
   def format_status
     case status
