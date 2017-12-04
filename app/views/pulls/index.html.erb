@@ -3,7 +3,7 @@
 <% if current_user.is_admin? %>
 <h1>Pull List</h1>
   <div class="center">
-    <%= button_to 'Download', new_pull_path, :class => "button", :method => :get %>
+    <%= button_to 'Download Placements', {action: "downloadPlacements", controller: "static_pages"}, {class: 'dashboard-button'} %>
     <%= button_to 'Create', new_pull_path, :class => "button", :method => :get  %>
   </div>
 
