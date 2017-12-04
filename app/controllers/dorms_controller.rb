@@ -34,6 +34,8 @@ class DormsController < ApplicationController
     @rooms = @dorm.rooms
     @pull = Pull.new
     6.times {@pull.room_assignments.build}
+    @adminPull = Pull.new
+    1.times {@adminPull.room_assignments.build}
     #TODO: Get only the necessary information
     # @students = Student.all
     @users = User.all
