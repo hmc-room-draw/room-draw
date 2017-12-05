@@ -2,6 +2,7 @@ require './lib/google_api/drive.rb'
 
 class ApplicationController < ActionController::Base
   include Pundit
+  include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :check_login, :check_form, :check_draw_period
   helper_method :current_user, :current_draw_period

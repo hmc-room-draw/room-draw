@@ -1,54 +1,43 @@
 Rails.application.routes.draw do
-  
-  get 'coming_soon', to: 'static_pages#coming_soon'
-  
-  post 'pulls/new' => 'pulls#new'
-  
+  resources :dorms
+  resources :draw_periods, only: [:create, :update, :destroy]
   resources :emails
-  get 'emails/index'
-  get 'emails/show', to: 'static_pages#viewEmails'
-  get 'emails/create'
-  get 'emails/:id/edit', to: 'static_pages#edit'
-  delete 'emails/:id', to: 'static_pages#destroy'
+  resources :pulls
+  resources :rooms
+  resources :room_assignments
+  resources :sessions, only: [:create, :destroy]
+  resources :students
+  resources :suites
 
-  get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
-
-  get 'login/show'
+  resources :users do
+    collection { post :import }
+  end
 
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
   post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
   get 'dorms/:id', to: 'dorms#show'
+  get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
 
-  get 'auth/:provider/callback', to: 'sessions#create'
-  get 'auth/failure', to: redirect('/')
-
-  get    '/login',   to: 'sessions#new'
-  delete '/logout',  to: 'sessions#destroy'
-
-  #routes for admin landing page
+  # Admin Fake Routes
   get 'admin/students', to: 'students#index'
   get 'admin/users', to: 'users#index'
+
+  # Admin Landing Page Actions
   post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
-  resources :draw_periods, only: [:create, :update, :destroy]
 
-  resources :dorms
-  resources :pulls
-  resources :rooms
-  resources :suites
+  # Google OAuth
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
 
-  resources :room_assignments
-  resources :students
+  get 'login/show'
+  get    '/login',   to: 'sessions#new'
+  delete '/logout',  to: 'sessions#destroy'
 
-  resources :users do
-    collection { post :import }
-  end
-  
-  resources :sessions, only: [:create, :destroy]
+  get 'coming_soon', to: 'static_pages#coming_soon'
+  get '/dormLookup', to: 'static_pages#dormLookup'
 
   root "static_pages#home"
-  # Add dormlookup route
-  get '/dormLookup', to: 'static_pages#dormLookup'
 end

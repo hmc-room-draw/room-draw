@@ -1,47 +1,38 @@
-<h1 style="color: #5D6D7E">View all emails</h1>
-  <table id="emails" class="sortable">
-    <thead>
-      <tr>
-        <th>Created At </th>
-        <th>Send Date</th>
-        <th>Subject</th>
-        <th>Message</th>
-        <th>Send To</th>
-        <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Email.all.reverse.each do |email| %>
-        <tr>
-          <td><%= email.created_at %> </td>
-          <td><%= email.sendDate %> </td>
-          <td><%= email.subject %> </td>
-          <td><%= email.description %> </td>
-          <td>
-            <% if email.send_to_never_logged_in %>
-              <%= "Never logged in" %><br>
-            <% end %>
-            <% if email.send_to_never_pulled_room %>
-              <%= "Never pulled room" %><br>
-            <% end %>
-            <% if email.send_to_formerly_in_room %>
-              <%= "Formerly in room" %><br>
-            <% end %>
-            <% if email.send_to_in_room %>
-              <%= "In room" %><br>
-            <% end %>
-            <% if email.send_to_admins %>
-              <%= "Admins" %><br>
-            <% end %>
-          </td>
-          <td><%= email.sent_status ? "Sent" : "Unsent" %> </td>
-          <td><%= link_to 'Edit', edit_email_path(email) %></td>
-          <td><%= link_to 'Destroy', email, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<h1>View Email</h1>
 
-  <%= link_to 'New Email', new_email_path %>
+<p>
+  Send Date: <%= @email.sendDate %>
+  <h2>Sent to<%= recipients(@email) %></h2>
+</p>
+
+<p>
+  <h3>Subject: <%= @email.subject %></h3>
+</p>
+
+<p>
+  <strong>Description</strong>
+  <%= @email.description %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @room.number %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @room.capacity %>
+</p>
+
+<p>
+  <strong>Dorm:</strong>
+  <%= @room.dorm %>
+</p>
+
+<p>
+  <strong>Suite:</strong>
+  <%= @room.suite %>
+</p>
+
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>
