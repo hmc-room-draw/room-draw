@@ -193,8 +193,17 @@
         <div class="modal-body">
         <p>You have begun a pull request for this room</p>
           <p>The following form must be filled out in order to pull a room:</p>
-          <%= render 'pullform', pull: @pull %>
 
+
+            <div class="popup-button" id="pull-form">
+            <b>Number of students in pull:</b><input id="num-students" type="text">
+            <button id="num-pull-student-button">Update</button>
+            <br><br>
+            <div id="actual-pull-form">
+              <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+            </div>
+          </div>
+        </div>
       </div>  <!-- End of modal content -->
     <% else %>
       <!-- Modal content -->
@@ -256,6 +265,18 @@ $("#edit-pull").click(function() {
 $("#num-students-button").click(function() {
   var numStudents = $("#num-students").val();
   url = dormId + '/pull_num_ajax/' + numStudents + "/" + index
+  $.ajax({
+    url: url,
+    type: 'POST',
+    dataType: 'script',
+    success: function(data){
+      eval(data);
+    }
+  })
+});
+$("#num-pull-student-button").click(function() {
+  var numStudents = $("#num-students").val();
+  url = dormId + '/student_pull_ajax/' + numStudents + "/" + index
   $.ajax({
     url: url,
     type: 'POST',

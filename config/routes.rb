@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   get 'login/show'
 
+  # Ajax for student form
+  post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
+  post 'dorms/:id/student_pull_ajax/:pull_count/:room_index', to: 'dorms#student_pull_ajax'
+
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
   post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
