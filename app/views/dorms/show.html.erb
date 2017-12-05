@@ -167,21 +167,20 @@
               <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
             <% end %>
           </div>
+
           <% if @student %>
             <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
-
             <div class="hidden" id="student-pull-form">
               <br>
-            <div class="popup-button" id="pull-form">
-              <b>Number of students in pull </b><i>(including yourself)</i>: <input id="admin-students" type="text">
-              <button id="num-admin-student-button">Update</button>
-              <br><br>
-              <div id = 'actual-student-pull-form'>
-                <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+                <div class="popup-button" id="pull-form">
+                  <b>Number of students in pull </b><i>(including yourself)</i>: <input id="admin-students" type="text">
+                <button id="num-admin-student-button">Update</button>
+                <br><br>
+                  <div id = 'actual-student-pull-form'>
+                    <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+                  </div>
+                <br>
               </div>
-                
-              <br>
-            </div>
             </div>
           </div>
           <% end %>
