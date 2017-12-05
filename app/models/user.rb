@@ -93,7 +93,7 @@ class User < ApplicationRecord
               pull.students.each { |student|
                 subject = "Pull bumped"
                 content = "Your pull has been bumped by an admin."
-                GeneralMailer.reminder_email(student.user, subject, content)
+                GeneralMailer.send_email(student.user, subject, content)
               }
               pull.destroy
             # Else delete all room assignments associated with the room
