@@ -172,9 +172,18 @@
 
             <div class="hidden" id="student-pull-form">
               <br>
-                <%= render 'studentAdmin', pull: @adminStudent, locals: {redirect_path: dorm_path(@dorm)} %>
+            <div class="popup-button" id="pull-form">
+              <b>Number of students in pull </b><i>(including yourself)</i>: <input id="admin-students" type="text">
+              <button id="num-admin-student-button">Update</button>
+              <br><br>
+              <div id = 'actual-student-pull-form'>
+                <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+              </div>
+                
               <br>
             </div>
+            </div>
+          </div>
           <% end %>
         </div>
       </div>
@@ -198,7 +207,7 @@
             <b>Number of students in pull </b><i>(including yourself)</i>: <input id="num-students" type="text">
             <button id="num-pull-student-button">Update</button>
             <br><br>
-            <div id="actual-pull-form">
+            <div id="actual-student-pull-form">
               <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
             </div>
           </div>
@@ -276,6 +285,19 @@ $("#num-students-button").click(function() {
 });
 $("#num-pull-student-button").click(function() {
   var numStudents = $("#num-students").val();
+  url = dormId + '/student_pull_ajax/' + numStudents + "/" + index
+  $.ajax({
+    url: url,
+    type: 'POST',
+    dataType: 'script',
+    success: function(data){
+      eval(data);
+    }
+  })
+});
+
+$("#num-admin-student-button").click(function() {
+  var numStudents = $("#admin-students").val();
   url = dormId + '/student_pull_ajax/' + numStudents + "/" + index
   $.ajax({
     url: url,

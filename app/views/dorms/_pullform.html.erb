@@ -17,9 +17,7 @@
     <!-- TODO: We don't wanna display room_draw_numner.
          So, we need to join the table of student and user and get the email address -->
     <%= current_user.email  %>
-    <% if not current_user.is_admin? %>
-      <%= form.hidden_field :student_id, :value => current_user.student.id  %>
-    <% end %>
+    <%= form.hidden_field :student_id, :value => current_user.student.id  %>
   </div>
 
 
