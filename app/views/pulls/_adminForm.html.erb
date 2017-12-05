@@ -23,7 +23,7 @@
   <div class = "field">
     <%= form.label :round %>
     <%= form.text_field :round, id: :round %>
-  <div>
+  </div>
 
   <div class="field">
     <%= form.label :message %>
@@ -39,12 +39,12 @@
       </div>
       <div>
         <%= room_assignment.label :room_id %>
-        <%= room_assignment.grouped_collection_select :room_id, @dorms, :rooms, :name, :id,:number, id: :room_assignment_room_id %>
+        <%= room_assignment.grouped_collection_select :room_id, @dorms, :rooms, :name, :id,:number, {:id => :room_assignment_room_id}, {:class => "room-num-field"} %>
       </div> 
 
       <div>
         <%= room_assignment.label :assignment_type %>
-        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+        <%= room_assignment.select :assignment_type, RoomAssignment.assignment_types.keys.to_a, :selected => 'pulled' %>
       </div> 
       
     <% end %>

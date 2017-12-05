@@ -1,6 +1,6 @@
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax]
 
   # GET /dorms
   # GET /dorms.json
@@ -14,6 +14,20 @@ class DormsController < ApplicationController
 
   def load_pull_ajax
     @pull = Pull.find(params["pull_id"])
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+  def pull_num_ajax
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
+    @adminPull = Pull.new
+    @pull = Pull.new
+    @room_index = params["room_index"]
+    params["pull_count"].to_i.times {@adminPull.room_assignments.build}
+    params["pull_count"].to_i.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -33,7 +47,9 @@ class DormsController < ApplicationController
 
     @rooms = @dorm.rooms
     @pull = Pull.new
-    6.times {@pull.room_assignments.build}
+    @adminPull = Pull.new
+    1.times {@pull.room_assignments.build}
+    1.times {@adminPull.room_assignments.build}
     #TODO: Get only the necessary information
     # @students = Student.all
     @users = User.all
@@ -41,7 +57,9 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
     #join tables
     @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
-    
+    @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
+    @dorms_index = get_dorm_index()
+
     if current_user
       if !current_user.student.nil?
         @curPullNum = current_user.student.room_draw_number    
@@ -196,6 +214,18 @@ class DormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pull
       @pull = Pull.find(params[:id])
+    end
+
+    # Count how many rooms are before this room out of all Rooms
+    # This function helps us populate the adming Pulls form with the correct data
+    def get_dorm_index
+      count = 1
+      Dorm.all.each do |d|
+        if d == @dorm
+          return count
+        end
+        count += d.rooms.count
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
