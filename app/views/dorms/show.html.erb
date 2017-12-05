@@ -172,7 +172,7 @@
 
             <div class="hidden" id="student-pull-form">
               <br>
-                <%= render 'adminStudent', pull: @adminStudent %>
+                <%= render 'studentAdmin', pull: @adminStudent, locals: {redirect_path: dorm_path(@dorm)} %>
               <br>
             </div>
           <% end %>
