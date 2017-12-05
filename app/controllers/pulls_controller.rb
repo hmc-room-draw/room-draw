@@ -19,7 +19,7 @@ class PullsController < ApplicationController
   def new
     authorize Pull
     @pull = Pull.new
-    1.times {@pull.room_assignments.build}
+    params[:pullCount][:submission].to_i.times {@pull.room_assignments.build}
     #TODO: Get only the necessary information
     @students = Student.all
     @rooms = Room.all
@@ -39,6 +39,8 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
+    validate_room_cap
+    from_dorm = params[:from_dorm]
     @students = Student.all
     @dorms = Dorm.all
     @rooms = Room.all
@@ -46,32 +48,27 @@ class PullsController < ApplicationController
     @pull = Pull.new(pull_params)
     authorize @pull
 
+    capacity_check = validate_room_cap
+    if capacity_check
+      redirect_back(fallback_location: root_path, notice: capacity_check) and return
+    end
+
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
-    if not cannot_override.empty?
-      respond_to do |format|
+    #TODO: I made some escapes to avoid problems that call this method from different places
+    #      but some of them might not be necessary.
+      if not cannot_override.empty?
         ids = cannot_override.map { |co| co.id }
-        format.html { render :new, error: "Can't pull! Conflicts with other pulls #{ids * ","}." }
+        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
+      elsif @pull.has_conflicting_nonpulls
+          # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
+          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
       end
-    elsif @pull.has_conflicting_nonpulls
-      respond_to do |format|
-        format.html { render :new, error: "Can't pull! Conflicts with preplacements or frosh." }
-      end
-    end
 
 
-    if not cps.empty?
+    if not cps.empty? 
       cps.each do |cp|
-        # TODO: email people from destroyed pulls
-
-        cp.students.each { |student|
-          # TODO: Update these for more detail later
-          subject = "Pull bumped"
-          content = "Your pull has been bumped."
-          GeneralMailer.reminder_email(student.user, subject, content)
-        }
-
         cp.destroy()
       end
     end
@@ -90,11 +87,22 @@ class PullsController < ApplicationController
     respond_to do |format|
       redirect_path = get_redirect_path(params, @pull)
       if @pull.save
-        format.html { redirect_to redirect_path, notice: "Pull was successfully created." }
-        format.json { render :show, status: :created, location: @pull }
+        if from_dorm
+          # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
+          format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
+        else
+          format.html { redirect_to @pull, notice: "Pull was successfully created." }
+          format.json { render :show, status: :created, location: @pull }
+        end
+
       else
-        format.html { render :new }
-        format.json { render json: @pull.errors, status: :unprocessable_entity }
+        if from_dorm
+          # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
+          format.html{redirect_back(fallback_location: root_path)}
+        else
+          format.html { render :new }
+          format.json { render json: @pull.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -125,6 +133,14 @@ class PullsController < ApplicationController
   def destroy
     authorize @pull
 
+    @pull.students.each { |student|
+      # TODO: Update these for more detail later
+      subject = "Pull bumped"
+      content = "Your pull has either been bumped or was deleted by an admin."
+      GeneralMailer.reminder_email(student.user, subject, content)
+    }
+
+
     @pull.destroy
     respond_to do |format|
       redirect_path = get_redirect_path(params, pulls_url)
@@ -148,4 +164,41 @@ class PullsController < ApplicationController
       params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id])
     end
 
+
+    #TODO: currently, I am returning the message, but it's better to cause an error 
+    #     and pass error message to the redirect called when we call @pull.save
+    def validate_room_cap      
+      counter = 0
+      ra_attributes = params[:pull][:room_assignments_attributes][counter.to_s]
+      room_list = Hash.new(0)
+      while ra_attributes do
+        room_id = ra_attributes[:room_id]
+        if room_id != ""
+          if room_list.has_key?(room_id)
+            room_list[room_id] += 1
+          else
+            room_list[room_id] = 1
+          end
+        end
+        counter += 1
+        ra_attributes = params[:pull][:room_assignments_attributes][counter.to_s]
+      end
+
+      message = nil
+      room_list.keys.each{ |key|
+
+        room = Room.find(key)
+        room_cap = room.capacity
+        room_name = room.number
+        dorm_name =room.dorm.name
+        if room_cap != room_list[key]
+          if message
+            message += "You need #{room_cap} people for #{dorm_name} #{room_name}, but you pulled #{room_list[key]} people. "
+          else
+            message =  "You need to fullfill all of the rooms with as many people as the capacity. You need #{room_cap} people for #{dorm_name}#{room_name}, but you pulled #{room_list[key]} people. "
+          end
+        end
+      }
+      message
+    end
 end

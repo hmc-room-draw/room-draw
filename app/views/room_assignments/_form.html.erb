@@ -11,25 +11,22 @@
     </div>
   <% end %>
 
+
   <div class="field">
     <%= form.label :student_id %>
-    <%= form.text_field :student_id, id: :room_assignment_student_id %>
+    <%= form.collection_select :student_id, Student.all, :id, :student_name %>
   </div>
 
-  <div class="field">
-    <%= form.label :pull_id %>
-    <%= form.text_field :pull_id, id: :room_assignment_pull_id %>
-  </div>
-
-  <div class="field">
+  <div>
     <%= form.label :room_id %>
-    <%= form.text_field :room_id, id: :room_assignment_room_id %>
-  </div>
+    <%= form.grouped_collection_select :room_id, Dorm.all, :rooms, :name, :id,:number, id: :room_id %>
+  </div> 
 
-  <div class="field">
+
+  <div>
     <%= form.label :assignment_type %>
-    <%= form.text_field :assignment_type, id: :room_assignment_assignment_type %>
-  </div>
+    <%= form.select :assignment_type, RoomAssignment.assignment_types.keys.to_a %>
+  </div> 
 
   <div class="actions">
     <%= form.submit %>

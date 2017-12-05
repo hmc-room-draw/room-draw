@@ -35,7 +35,7 @@ class Pull < ApplicationRecord
   def has_conflicting_nonpulls
     room_ids = self.room_assignments.map{ |ra| ra.room_id }
     conflicting_assignments = RoomAssignment.where(room_id: room_ids).where.not(id: self.id)
-    cnps = conflicting_assignments.select{ |asn| asn.assignment_type != :pulled }
+    cnps = conflicting_assignments.select{ |asn| asn.assignment_type != 'pulled' }
     not cnps.empty?
   end
 
