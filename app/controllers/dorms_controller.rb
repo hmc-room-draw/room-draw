@@ -24,10 +24,8 @@ class DormsController < ApplicationController
     @rooms = Room.all
     @dorms = Dorm.all
     @adminPull = Pull.new
-    @pull = Pull.new
     @room_index = params["room_index"]
     params["pull_count"].to_i.times {@adminPull.room_assignments.build}
-    params["pull_count"].to_i.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -48,7 +46,7 @@ class DormsController < ApplicationController
     @rooms = @dorm.rooms
     @pull = Pull.new
     @adminPull = Pull.new
-    1.times {@pull.room_assignments.build}
+    6.times {@pull.room_assignments.build}
     1.times {@adminPull.room_assignments.build}
     #TODO: Get only the necessary information
     # @students = Student.all
