@@ -39,6 +39,7 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
+    validate_room_cap
     from_dorm = params[:from_dorm]
     @students = Student.all
     @dorms = Dorm.all
@@ -46,6 +47,11 @@ class PullsController < ApplicationController
 
     @pull = Pull.new(pull_params)
     authorize @pull
+
+    capacity_check = validate_room_cap
+    if capacity_check
+      redirect_back(fallback_location: root_path, notice: capacity_check) and return
+    end
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
@@ -63,7 +69,8 @@ class PullsController < ApplicationController
 
     if not cps.empty? 
       cps.each do |cp|
-        cp.destroy()
+        email_students(cp)
+        cp.destroy
       end
     end
 
@@ -75,7 +82,7 @@ class PullsController < ApplicationController
 
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
-      GeneralMailer.reminder_email(student.user, subject, content)
+      GeneralMailer.send_email(student.user, subject, content)
     }
 
     respond_to do |format|
@@ -122,6 +129,15 @@ class PullsController < ApplicationController
     end
   end
 
+  def email_students(pull)
+    pull.students.each { |student|
+      # TODO: Update these for more detail later
+      subject = "Pull bumped"
+      content = "Your pull has either been bumped or was deleted by an admin."
+      GeneralMailer.send_email(student.user, subject, content)
+    }
+  end
+
   # DELETE /pulls/1
   # DELETE /pulls/1.json
   def destroy
@@ -131,7 +147,7 @@ class PullsController < ApplicationController
       # TODO: Update these for more detail later
       subject = "Pull bumped"
       content = "Your pull has either been bumped or was deleted by an admin."
-      GeneralMailer.reminder_email(student.user, subject, content)
+      GeneralMailer.send_email(student.user, subject, content)
     }
 
 
@@ -158,4 +174,41 @@ class PullsController < ApplicationController
       params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id])
     end
 
+
+    #TODO: currently, I am returning the message, but it's better to cause an error 
+    #     and pass error message to the redirect called when we call @pull.save
+    def validate_room_cap      
+      counter = 0
+      ra_attributes = params[:pull][:room_assignments_attributes][counter.to_s]
+      room_list = Hash.new(0)
+      while ra_attributes do
+        room_id = ra_attributes[:room_id]
+        if room_id != ""
+          if room_list.has_key?(room_id)
+            room_list[room_id] += 1
+          else
+            room_list[room_id] = 1
+          end
+        end
+        counter += 1
+        ra_attributes = params[:pull][:room_assignments_attributes][counter.to_s]
+      end
+
+      message = nil
+      room_list.keys.each{ |key|
+
+        room = Room.find(key)
+        room_cap = room.capacity
+        room_name = room.number
+        dorm_name =room.dorm.name
+        if room_cap != room_list[key]
+          if message
+            message += "You need #{room_cap} people for #{dorm_name} #{room_name}, but you pulled #{room_list[key]} people. "
+          else
+            message =  "You need to fullfill all of the rooms with as many people as the capacity. You need #{room_cap} people for #{dorm_name}#{room_name}, but you pulled #{room_list[key]} people. "
+          end
+        end
+      }
+      message
+    end
 end

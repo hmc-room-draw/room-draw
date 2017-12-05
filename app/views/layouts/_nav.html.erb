@@ -9,34 +9,33 @@
                     Signed in as <strong><%= current_user.first_name %> <%=current_user.last_name %></strong>
                 </p>
 
-            
                 <li class="nav navbar-text">
-                    <%= link_to "Maps", dorms_path %> 
+                    <%= link_to "Maps", dorms_path %>
                 </li>
                 <li class="nav navbar-text">
-                    <%= link_to "Pulls", pulls_path %> 
+                    <%= link_to "Pulls", pulls_path %>
                 </li>
                 <% if current_user.is_admin %>
                 <li class="nav navbar-text">
-                    <%= link_to "Users", admin_users_path %> 
+                    <%= link_to "Users", admin_users_path %>
                 </li>
                 <li class="nav navbar-text">
-                    <%= link_to "Students", admin_students_path %> 
+                    <%= link_to "Students", admin_students_path %>
                 </li>
                 <li class="nav navbar-text">
-                    <%= link_to "Emails", {action: "viewEmails", controller: "static_pages"} %> 
+                    <%= link_to "Emails", emails_path %>
                 </li>
                 <li class="nav navbar-text">
-                    <%= link_to "Send Email", new_email_path %> 
+                    <%= link_to "Send Email", new_email_path %>
                 </li>
                 <% else %>
                 <li class="nav navbar-text">
-                    <%= link_to "Students", students_path %> 
+                    <%= link_to "Students", students_path %>
                 </li>
                 <% end %>
-                
+
                 <li class="nav navbar-text navbar-right" >
-                    <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %> 
+                    <%= link_to "Logout", logout_path, id: "sign_out", method: :delete %>
                 </li>
             <% else %>
                 <li class="nav navbar-text">
