@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
   post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
+  post 'dorms/:id/pull_num_ajax/:pull_count/:room_index', to: 'dorms#pull_num_ajax'
   get 'dorms/:id', to: 'dorms#show'
 
   get 'auth/:provider/callback', to: 'sessions#create'

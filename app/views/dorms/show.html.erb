@@ -139,16 +139,21 @@
           
           <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
           <div class="hidden popup-button toggle-form" id="pull-form">
-              <%= render 'pulls/adminForm', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+            <b>Number of students in pull:</b><input id="num-students" type="text">
+            <button id="num-students-button">Update</button>
+            <br><br>
+            <div id="actual-pull-form">
+              <%= render 'pulls/adminForm', pull: @adminPull, locals: {redirect_path: dorm_path(@dorm)} %>
+            </div>
           </div>
 
-          <!-- <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
+          <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
           <div class="hidden popup-button toggle-form" id="edit-pull-form">
             <div id="edit-form-div"></div>
           </div>
 
           <div id="delete-pull">
-          </div> -->
+          </div>
 
           <!-- Unpullable Form -->
           <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
@@ -231,6 +236,7 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
+var index;
 span.onclick = function() {
     modal.style.display = "none";
 }
@@ -247,6 +253,19 @@ $("#create-pull").click(function() {
 $("#edit-pull").click(function() {
   $("#edit-pull-form").toggleClass("hidden");
 });
+$("#num-students-button").click(function() {
+  var numStudents = $("#num-students").val();
+  url = dormId + '/pull_num_ajax/' + numStudents + "/" + index
+  $.ajax({
+    url: url,
+    type: 'POST',
+    dataType: 'script',
+    success: function(data){
+      eval(data);
+    }
+  })
+});
+
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
 
@@ -533,11 +552,8 @@ function layout(level){
                       $('#unpullable-room-delete').val(info.number);
                       $('#unpullable-room-num').val(info.number);
                       $('#pull-student').addClass('hidden');
-                      var index = get_room_index(info.number);
-                      for (var i = 0; i < 10; i++) {
-                        $('#pull_room_assignments_attributes_' + i + '_room_id').val(index);
-                      }
-                      
+                      index = get_room_index(info.number);
+                      $('.room-num-field').val(index);
 
                       if (info.assignment_type != null) { // If there's currently a room assignment
                         $('#create-pull').addClass('hidden');
@@ -559,7 +575,6 @@ function layout(level){
                         }
                         
                       } else { // If there isn't an assignment type, theres no RoomAssignment
-                        console.log("SHOULD SHOW RA");
                         //So there isn't any associated Pull either.
                         $('#create-pull').removeClass('hidden');
                         $('#mark-unpullable').removeClass('hidden');

@@ -1,6 +1,6 @@
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax]
 
   # GET /dorms
   # GET /dorms.json
@@ -14,6 +14,18 @@ class DormsController < ApplicationController
 
   def load_pull_ajax
     @pull = Pull.find(params["pull_id"])
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+  def pull_num_ajax
+    @students = Student.all
+    @rooms = Room.all
+    @dorms = Dorm.all
+    @adminPull = Pull.new
+    @room_index = params["room_index"]
+    params["pull_count"].to_i.times {@adminPull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -33,7 +45,9 @@ class DormsController < ApplicationController
 
     @rooms = @dorm.rooms
     @pull = Pull.new
+    @adminPull = Pull.new
     6.times {@pull.room_assignments.build}
+    1.times {@adminPull.room_assignments.build}
     #TODO: Get only the necessary information
     # @students = Student.all
     @users = User.all
