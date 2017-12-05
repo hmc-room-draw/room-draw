@@ -21,9 +21,13 @@ Rails.application.routes.draw do
 
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
+
+  # Dorm map page
   post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
   post 'dorms/:id/pull_num_ajax/:pull_count/:room_index', to: 'dorms#pull_num_ajax'
   get 'dorms/:id', to: 'dorms#show'
+
+  # Pulls
   get 'pulls/:id/new', to: 'room_assignments#new_from_pull'
 
   # Admin Fake Routes
