@@ -1,5 +1,4 @@
 <%= form_with(model: pull, local: true) do |form| %>
-  <%= text_field_tag(:redirect_path, value=(@dorm.nil? ? nil : dorm_path(@dorm)), class: "hidden") %>
   <% if pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
@@ -44,7 +43,7 @@
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :email, id: :room_assignment_student_id, :include_blank => true %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>

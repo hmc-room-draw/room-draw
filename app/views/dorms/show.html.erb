@@ -169,6 +169,7 @@
           </div>
           <% if @student %>
             <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
+
             <div class="hidden" id="student-pull-form">
               <br>
                 <%= render 'pullform', pull: @pull %>
@@ -192,19 +193,9 @@
         <div class="modal-body">
         <p>You have begun a pull request for this room</p>
           <p>The following form must be filled out in order to pull a room:</p>
-          <div class="popup-button" id="pull-form">
-            <b>Number of students in pull:</b><input id="num-students" type="text">
-            <button id="num-students-button">Update</button>
-            <br><br>
-            <div id="actual-pull-form">
-              <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
-            </div>
-          </div>
+          <%= render 'pullform', pull: @pull %>
 
       </div>  <!-- End of modal content -->
-
-
-
     <% else %>
       <!-- Modal content -->
       <div class="modal-content">

@@ -1,4 +1,3 @@
 $("#actual-pull-form").html("<%= escape_javascript(render 'pulls/adminForm', pull: @adminPull, locals: {redirect_path: dorm_path(@dorm)}) %>");
-$("#actual-pull-form").html("<%= escape_javascript(render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)}) %>");
 var room_index = <%= @room_index %>;
 $('.room-num-field').val(room_index);
