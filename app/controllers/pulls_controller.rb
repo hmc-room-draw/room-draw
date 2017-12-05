@@ -69,7 +69,8 @@ class PullsController < ApplicationController
 
     if not cps.empty? 
       cps.each do |cp|
-        cp.destroy()
+        email_students(cp)
+        cp.destroy
       end
     end
 
@@ -81,7 +82,7 @@ class PullsController < ApplicationController
 
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
-      GeneralMailer.reminder_email(student.user, subject, content)
+      GeneralMailer.send_email(student.user, subject, content)
     }
 
     respond_to do |format|
@@ -128,6 +129,15 @@ class PullsController < ApplicationController
     end
   end
 
+  def email_students(pull)
+    pull.students.each { |student|
+      # TODO: Update these for more detail later
+      subject = "Pull bumped"
+      content = "Your pull has either been bumped or was deleted by an admin."
+      GeneralMailer.send_email(student.user, subject, content)
+    }
+  end
+
   # DELETE /pulls/1
   # DELETE /pulls/1.json
   def destroy
@@ -137,7 +147,7 @@ class PullsController < ApplicationController
       # TODO: Update these for more detail later
       subject = "Pull bumped"
       content = "Your pull has either been bumped or was deleted by an admin."
-      GeneralMailer.reminder_email(student.user, subject, content)
+      GeneralMailer.send_email(student.user, subject, content)
     }
 
 
