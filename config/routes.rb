@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     collection { post :import }
   end
 
+  post 'pulls/new', to: 'pulls#new'
+
   # Ajax for student form
   post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
   post 'dorms/:id/student_pull_ajax/:pull_count/:room_index', to: 'dorms#student_pull_ajax'
