@@ -1,6 +1,7 @@
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
+
 
   # GET /dorms
   # GET /dorms.json
@@ -31,6 +32,18 @@ class DormsController < ApplicationController
     end
   end
 
+  def student_pull_ajax
+    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+    @rooms = @dorm.rooms
+    @dorms = Dorm.all
+    @pull = Pull.new
+    @room_index = params["room_index"]
+    params["pull_count"].to_i.times {@pull.room_assignments.build}
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
   # GET /dorms/1
   # GET /dorms/1.json
   def show
@@ -46,7 +59,7 @@ class DormsController < ApplicationController
     @rooms = @dorm.rooms
     @pull = Pull.new
     @adminPull = Pull.new
-    6.times {@pull.room_assignments.build}
+    1.times {@pull.room_assignments.build}
     1.times {@adminPull.room_assignments.build}
     #TODO: Get only the necessary information
     # @students = Student.all

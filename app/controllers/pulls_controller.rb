@@ -39,7 +39,7 @@ class PullsController < ApplicationController
   # POST /pulls
   # POST /pulls.json
   def create
-    validate_room_cap
+    
     from_dorm = params[:from_dorm]
     @students = Student.all
     @dorms = Dorm.all
@@ -98,8 +98,14 @@ class PullsController < ApplicationController
 
       else
         if from_dorm
-          # format.html{redirect_to controller: "dorm", action: "show", id: from_dorm}
-          format.html{redirect_back(fallback_location: root_path)}
+          ## Uncomment commented code below for debugging purposes if a pull is unsuccessful and no error messages show up.
+          ## Error message as to why pull was unsuccessful will show in the console
+          # error_messages= ''
+          # @pull.errors.full_messages.each{|message|
+          #    error_messages += message
+          # }
+          # print error_messages
+          format.html{redirect_back(fallback_location: root_path, notice: "Pull unsuccessful. Please contact admin.")}
         else
           format.html { render :new }
           format.json { render json: @pull.errors, status: :unprocessable_entity }

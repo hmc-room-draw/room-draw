@@ -1,4 +1,5 @@
 <%= form_with(model: pull, local: true) do |form| %>
+  <%= text_field_tag(:redirect_path, value=(@dorm.nil? ? nil : dorm_path(@dorm)), class: "hidden") %>
   <% if pull.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pull.errors.count, "error") %> prohibited this pull from being saved:</h2>
@@ -36,7 +37,8 @@
   <% end %>
   
   <%= field_set_tag 'Room Assignments' do %>
-  <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you. </br>If you do not want to pull in anyone else, please leave the remaining fields blank. </br></p>
+  <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you.</br></br>
+    <i>Note: Rooms that have an alphabetical number are represented with a decimal. (ie. 103A is 103.1, 103B is 103.2, etc...)</i></br></br></p>
 
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
