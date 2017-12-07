@@ -1,6 +1,39 @@
+DISCLAIMER: Not necessarily up to date with the readme on github, we’re not responsible for your merge conflicts!
+______________________________________________________________________________________________
+
 # README
 
-## Google OAuth login
+# Project Name and Description
+Harvey Mudd Room Draw
+
+Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "digital draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, digital draw was done using a Google Sheet. Our app improves digital draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
+
+## Architecture
+![screen shot 2017-12-07 at 3 57 31 pm](https://user-images.githubusercontent.com/19757585/33744707-6cb95df0-db67-11e7-95d3-29e2b00c31b8.png)
+
+### Prerequisites
+
+1. Install git.
+2. Install Ruby version 2.4.2 and Rails version 5.1.4.
+
+### Gems
+
+* [`delayed_job`](https://github.com/collectiveidea/delayed_job): It runs queued tasks in the backend. It is used for scheduling admin emails. 
+* [`rails_bootstrap_sortable`](https://github.com/DuroSoft/rails_bootstrap_sortable): The bootstrap_sortable plugin, packaged for ruby on rails.
+
+## Installation
+
+TODO: Describe the installation process.
+Instructions need to be such that a user can just copy/paste the commands to get things set up and running.
+
+1. Clone this repository: `git clone https://github.com/hmc-room-draw/room-draw.git`
+2. Run `bundle install`.
+3. Run `rails db:reset db:seed` to setup the database.
+4. If you want to send scheduled emails, run `bin/delayed_job start`.
+5. Run `rails s` to start the server.
+6. Navigate to `localhost:3000.`
+
+# Google OAuth login
 
 This app uses Google OAuth for login. You need secret keys in JSON format for
 the Google Apps API as well as our Google Service Account, both of which I have
@@ -12,7 +45,6 @@ the extant one cannot be redownloaded.
 `.env` is now free of private data, but I have left it in the `.gitignore`
 in case anyone still has keys in it.
 
--- Spencer
 
 ## A note on logging in
 
@@ -21,8 +53,6 @@ exists. Right now **you will need to manually create a user with your own email*
 via `rails console`; enter `User.create :first_name => "First", :last_name => "Last",
 :email => "your_email@g.hmc.edu", :is_admin => true`.
 This will let you access `/users/new` and create other users.
-
--- Spencer
 
 ## Form integration
 
@@ -50,11 +80,27 @@ TODO(Spencer): Write up how to get creds from Google Developer Console later.
 5. In `.env`, set `FORM_URL` to the URL of the form and `RESPONSES_URL` to the
   URL of the sheet.
 
--- Spencer
-
-
 ## Sending scheduled emails
 
 Run `bin/delayed_job start` if you want the ability to send scheduled emails.  Run `bin/delayed_job stop` afterwards to stop it.  If emails are not sending, you can enter `Delayed::Job.all` into the rails console to see emails in the queue.
 
--- Olivia and Jasmine
+## Functionality
+
+### Student functionality
+### Admin functionality
+
+## Known Problems
+
+TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem / name a file or a function where the problem lives.
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+
+
+
