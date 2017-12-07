@@ -1,5 +1,3 @@
-DISCLAIMER: Not necessarily up to date with the readme on github, we’re not responsible for your merge conflicts!
-______________________________________________________________________________________________
 
 # README
 
@@ -9,7 +7,8 @@ Harvey Mudd Room Draw
 Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "digital draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, digital draw was done using a Google Sheet. Our app improves digital draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
 
 ## Architecture
-![screen shot 2017-12-07 at 3 57 31 pm](https://user-images.githubusercontent.com/19757585/33744707-6cb95df0-db67-11e7-95d3-29e2b00c31b8.png)
+![screen shot 2017-12-07 at 3 58 53 pm](https://user-images.githubusercontent.com/19757585/33744729-92c222de-db67-11e7-8b00-452a7f8e6e74.png)
+
 
 ### Prerequisites
 
