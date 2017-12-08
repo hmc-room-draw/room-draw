@@ -16,10 +16,6 @@ We use model-view-controller Please see
 2. Install Ruby version 2.4.2 and Rails version 5.1.4.
 
 ## Installation
-
-TODO: Describe the installation process.
-Instructions need to be such that a user can just copy/paste the commands to get things set up and running.
-
 1. Clone this repository: `git clone https://github.com/hmc-room-draw/room-draw.git`
 2. Run `bundle install`.
 3. Run `rails db:reset db:seed` to setup the database.
