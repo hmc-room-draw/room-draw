@@ -24,8 +24,21 @@ Every year, Harvey Mudd College students select rooms for the following year thr
 
 ## Gems
 
+The following are some of the "non-standard" gems we used to support our app.
 * [`delayed_job`](https://github.com/collectiveidea/delayed_job): It runs queued tasks in the backend. It is used for scheduling admin emails. 
 * [`rails_bootstrap_sortable`](https://github.com/DuroSoft/rails_bootstrap_sortable): The bootstrap_sortable plugin, packaged for ruby on rails.
+* `daemons` is used to handle backend scripts.
+* `google_drive` is used to support CIS form integration as a Google Form.
+* `omniauth-google-oauth2` is used to support HMC Google login through Google Oauth.
+* [`pundit`](https://github.com/elabs/pundit) is used for user authorization policy. This ensures that only admins can see admin pages and perform certain actions such as uploading a roster or editing another person's pull.
+* `sqlite3` is used as the database for Active Record.
+* `sass-rails` version 5.0 was used to allow SCSS for stylesheets.
+* `uglifier` is used to compress JavaScript assets.
+* `bootstrap-sass` version 3.3.6 was used to support bootstrap.
+
+See the Gemfile for a full list of the Gems we used.
+
+
 
 ## Installation
 
