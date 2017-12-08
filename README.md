@@ -2,20 +2,36 @@
 # README
 
 ## Project Name and Description
-Harvey Mudd Digital Draw
+Harvey Mudd Room Draw
 
-Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "Digital Draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, Digital Draw was done using a Google Sheet. Our app improves Digital Draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
+Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "digital draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, digital draw was done using a Google Sheet. Our app improves digital draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
 
 ## Architecture
 
-We use model-view-controller Please see 
+* **Rooms** are grouped by **Suites** and **Dorms**. The latter two models have little content currently,
+  but may be used to add dorm-specific regulations and suite-specific restrictions in the future.
+* Accounts are split into **User** (holding credentials) and **Student** (holding data pertaining to room
+  draw participation). This allows for the existence of admins who are not students, e.g. the dean of housing.
+* **Pulls** group one or more **RoomAssignments** together as an atomic operation. **RoomAssignments**
+  map a student to a room, and may result from pulls, freshman placement, or preplacement.
+  
+![](architecture.png)
 
 ## Prerequisites
 
 1. Install git.
 2. Install Ruby version 2.4.2 and Rails version 5.1.4.
 
+## Gems
+
+* [`delayed_job`](https://github.com/collectiveidea/delayed_job): It runs queued tasks in the backend. It is used for scheduling admin emails. 
+* [`rails_bootstrap_sortable`](https://github.com/DuroSoft/rails_bootstrap_sortable): The bootstrap_sortable plugin, packaged for ruby on rails.
+
 ## Installation
+
+TODO: Describe the installation process.
+Instructions need to be such that a user can just copy/paste the commands to get things set up and running.
+
 1. Clone this repository: `git clone https://github.com/hmc-room-draw/room-draw.git`
 2. Run `bundle install`.
 3. Run `rails db:reset db:seed` to setup the database.
@@ -94,13 +110,13 @@ Run `bin/delayed_job start` if you want the ability to send scheduled emails.  R
 2. You will be directed to admin home page.
 3. On the homepage, you can create a room draw period.  A room draw period must exist at the current moment for students to pull rooms.
 4. Upload a roster of students in [this format.](https://github.com/hmc-room-draw/room-draw/files/1541002/sampleroomdrawdata.csv.zip)
-5. Download CSV files of students' final placements and a list of who did not participate by clicking the download buttons on the admin home page.
-6. Navigate the site using the menu bar at the top of the page.
-7. Create or edit individual students from the Student pages.
-8. To create Pulls for students, either click on the Pulls page in the navigation bar or on the Map page in the navigation bar.  To create a Pull from the map, click a room and click "Create Pull."
-9. To mark a room un-pullable, click on it on the Map and click "Mark Room Unpullable."
-10. To send a reminder email for students, click the "Send Emails" button in the navigation bar and fill out the email form.  If you select the current date, the email will be sent immediately.  If you select a future date, the email will be sent at the current time on that date.
-11. Edit an email before it has been sent by clicking on it in the "Emails" page.
+5. Navigate the site using the menu bar at the top of the page.
+6. Create or edit individual students from the Student pages.
+7. To create Pulls for students, either click on the Pulls page in the navigation bar or on the Map page in the navigation bar.  To create a Pull from the map, click a room and click "Create Pull."
+8. To mark a room un-pullable, click on it on the Map and click "Mark Room Unpullable."
+9. To send a reminder email for students, click the "Send Emails" button in the navigation bar and fill out the email form.  If you select the current date, the email will be sent immediately.  If you select a future date, the email will be sent at the current time on that date.
+10. Edit an email before it has been sent by clicking on it in the "Emails" page.
+Download CSV files of students' final placements and a list of who did not participate by clicking the download buttons on the admin home page.
 
 ## Known Problems
 
