@@ -63,7 +63,7 @@ between Google Docs and this app, which requires the following setup.
 
 Download `secrets.zip` from Slack for now.
 
-TODO(Spencer): Write up how to get creds from Google Developer Console later.
+These secrets can also be obtained and/or regenerated at [Google Developer Console](https://console.developers.google.com/apis/credentials).
 
 ### Configuration
 
