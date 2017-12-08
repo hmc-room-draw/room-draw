@@ -1,21 +1,21 @@
 
 # README
 
-# Project Name and Description
+## Project Name and Description
 Harvey Mudd Room Draw
 
 Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "digital draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, digital draw was done using a Google Sheet. Our app improves digital draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
 
 ## Architecture
-![screen shot 2017-12-07 at 3 58 53 pm](https://user-images.githubusercontent.com/19757585/33744729-92c222de-db67-11e7-8b00-452a7f8e6e74.png)
 
+We use model-view-controller Please see 
 
-### Prerequisites
+## Prerequisites
 
 1. Install git.
 2. Install Ruby version 2.4.2 and Rails version 5.1.4.
 
-### Gems
+## Gems
 
 * [`delayed_job`](https://github.com/collectiveidea/delayed_job): It runs queued tasks in the backend. It is used for scheduling admin emails. 
 * [`rails_bootstrap_sortable`](https://github.com/DuroSoft/rails_bootstrap_sortable): The bootstrap_sortable plugin, packaged for ruby on rails.
@@ -32,7 +32,7 @@ Instructions need to be such that a user can just copy/paste the commands to get
 5. Run `rails s` to start the server.
 6. Navigate to `localhost:3000.`
 
-# Google OAuth login
+### Google OAuth login
 
 This app uses Google OAuth for login. You need secret keys in JSON format for
 the Google Apps API as well as our Google Service Account, both of which I have
@@ -45,7 +45,7 @@ the extant one cannot be redownloaded.
 in case anyone still has keys in it.
 
 
-## A note on logging in
+### A note on logging in
 
 Users will only be allowed to login if a user with a corresponding email already
 exists. Right now **you will need to manually create a user with your own email**
@@ -53,7 +53,7 @@ via `rails console`; enter `User.create :first_name => "First", :last_name => "L
 :email => "your_email@g.hmc.edu", :is_admin => true`.
 This will let you access `/users/new` and create other users.
 
-## Form integration
+### Form integration
 
 This app now supports redirection to Google Forms, and can check the associated
 spreadsheet to see if a user has replied. Some coordination is necessary
@@ -79,7 +79,7 @@ TODO(Spencer): Write up how to get creds from Google Developer Console later.
 5. In `.env`, set `FORM_URL` to the URL of the form and `RESPONSES_URL` to the
   URL of the sheet.
 
-## Sending scheduled emails
+### Sending scheduled emails
 
 Run `bin/delayed_job start` if you want the ability to send scheduled emails.  Run `bin/delayed_job stop` afterwards to stop it.  If emails are not sending, you can enter `Delayed::Job.all` into the rails console to see emails in the queue.
 
@@ -87,6 +87,17 @@ Run `bin/delayed_job start` if you want the ability to send scheduled emails.  R
 
 ### Student functionality
 ### Admin functionality
+Log in as an admin (see the section "A Note on logging in").
+You will be directed to admin home page.
+On the homepage, you can create a room draw period.  A room draw period must exist at the current moment for students to pull rooms.
+Upload a roster of students in [this format.](https://github.com/hmc-room-draw/room-draw/files/1541002/sampleroomdrawdata.csv.zip)
+Navigate the site using the menu bar at the top of the page.
+Create or edit individual students from the Student pages.
+To create Pulls for students, either click on the Pulls page in the navigation bar or on the Map page in the navigation bar.  To create a Pull from the map, click a room and click "Create Pull."
+To mark a room un-pullable, click on it on the Map and click "Mark Room Unpullable."
+To send a reminder email for students, click the "Send Emails" button in the navigation bar and fill out the email form.  If you select the current date, the email will be sent immediately.  If you select a future date, the email will be sent at the current time on that date.
+Edit an email before it has been sent by clicking on it in the "Emails" page.
+Download CSV files of students' final placements and a list of who did not participate by clicking the download buttons on the admin home page.
 
 ## Known Problems
 
@@ -99,7 +110,3 @@ TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide ste
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
-
-
-
-
