@@ -37,7 +37,7 @@ Instructions need to be such that a user can just copy/paste the commands to get
 This app uses Google OAuth for login. You need secret keys in JSON format for
 the Google Apps API as well as our Google Service Account, both of which I have
 posted on Slack. The app expects them to appear as `secrets/client.json` and
-`secrets/service_account.json` respectively. Thee can also be obtained via the
+`secrets/service_account.json` respectively. These can also be obtained via the
 Google Developer Console, although the service account key must be regenerated;
 the extant one cannot be redownloaded.
 
@@ -86,6 +86,18 @@ Run `bin/delayed_job start` if you want the ability to send scheduled emails.  R
 ## Functionality
 
 ### Student functionality
+1. Log in with HMC gmail
+2. Fill out the Google CIS form to continue
+3. Upon submitting out the form, return to the main page of the digital draw where you will be directed to the dorm map page displaying dorms on Harvey Mudd’s campus
+4. You can choose a dorm to view by either clicking on the dorm in the map or clicking on “View Empty Rooms By Dorm” and selecting the dorm of your choice from that table.
+5. Within a dorm view, you can see each room color coded to its state relative to your pull number. Dorms are color coded to show if it’s vacant/bumpable, unpullable/unbumpable, and pulled by you 
+6. You can click on vacant/pullable rooms to begin a pull request form to pull the selected room
+7. When filling out the form, enter how many students you want to pull into the room with you.
+8. In the pull form, fill out your information as well as the information of the student(s) you are pulling in. 
+9. After submitting the form, the student can view that pull in their own pulls page.  This is navigable through the navigation bar on the top of the page
+10.To delete a pull that you are in, go to the pull page in the navigation bar. You will see a table with your name, the room you are pulled into, and a delete button. Press the delete button and a pop up will ask you to confirm the deletion.
+11.If you are bumped from a room by someone with a better draw number or class rank, you are emailed by the application that you have been bumped from said room
+
 ### Admin functionality
 1. Log in as an admin (see the section "A Note on logging in").
 2. You will be directed to admin home page.
@@ -104,7 +116,7 @@ Download CSV files of students' final placements and a list of who did not parti
 * Gives authentication errors occur at unpredictable intervals.  Try the action again.
 * Creating/editing Pulls from the Map does not redirect back to the map.
 * Deleting a User or Student does not delete all the information associated with them, potentially causing the app to crash.
-* The form student admins use to pull their own room looks different than the form a normal student uses.
+* The form admins use to pull a room looks different than the form a student uses.
 * Dorm pages sometimes need to be refreshed so they load correctly.
 
 ## Contributing
