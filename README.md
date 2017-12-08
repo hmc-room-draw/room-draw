@@ -94,9 +94,9 @@ Run `bin/delayed_job start` if you want the ability to send scheduled emails.  R
 6. You can click on vacant/pullable rooms to begin a pull request form to pull the selected room
 7. When filling out the form, enter how many students you want to pull into the room with you.
 8. In the pull form, fill out your information as well as the information of the student(s) you are pulling in. 
-9. After submitting the form, the student can view that pull in their own pulls page.  This is navigable through the navigation bar on the top of the page
-10.To delete a pull that you are in, go to the pull page in the navigation bar. You will see a table with your name, the room you are pulled into, and a delete button. Press the delete button and a pop up will ask you to confirm the deletion.
-11.If you are bumped from a room by someone with a better draw number or class rank, you are emailed by the application that you have been bumped from said room
+9. After submitting the form, the student can view that pull in their own pulls page.  This is navigable through the navigation bar on the top of the page.
+10. To delete a pull that you are in, go to the pull page in the navigation bar. You will see a table with your name, the room you are pulled into, and a delete button. Press the delete button and a pop up will ask you to confirm the deletion.<br />
+11. If you are bumped from a room by someone with a better draw number or class rank, you are emailed by the application that you have been bumped from said room
 
 ### Admin functionality
 1. Log in as an admin (see the section "A Note on logging in").
