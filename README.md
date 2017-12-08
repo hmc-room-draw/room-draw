@@ -2,9 +2,9 @@
 # README
 
 ## Project Name and Description
-Harvey Mudd Room Draw
+Harvey Mudd Digital Draw
 
-Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "digital draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, digital draw was done using a Google Sheet. Our app improves digital draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
+Every year, Harvey Mudd College students select rooms for the following year through a process called room draw.  The first stage is "Digital Draw," during which students indicate online which rooms they intend to select during the actual draw. Last year, Digital Draw was done using a Google Sheet. Our app improves Digital Draw by allowing students to quickly see on a dorm map which rooms are available and to choose where they intend to live.
 
 ## Architecture
 
