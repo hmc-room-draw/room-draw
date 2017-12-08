@@ -87,21 +87,25 @@ Run `bin/delayed_job start` if you want the ability to send scheduled emails.  R
 
 ### Student functionality
 ### Admin functionality
-Log in as an admin (see the section "A Note on logging in").
-You will be directed to admin home page.
-On the homepage, you can create a room draw period.  A room draw period must exist at the current moment for students to pull rooms.
-Upload a roster of students in [this format.](https://github.com/hmc-room-draw/room-draw/files/1541002/sampleroomdrawdata.csv.zip)
-Navigate the site using the menu bar at the top of the page.
-Create or edit individual students from the Student pages.
-To create Pulls for students, either click on the Pulls page in the navigation bar or on the Map page in the navigation bar.  To create a Pull from the map, click a room and click "Create Pull."
-To mark a room un-pullable, click on it on the Map and click "Mark Room Unpullable."
-To send a reminder email for students, click the "Send Emails" button in the navigation bar and fill out the email form.  If you select the current date, the email will be sent immediately.  If you select a future date, the email will be sent at the current time on that date.
-Edit an email before it has been sent by clicking on it in the "Emails" page.
+1. Log in as an admin (see the section "A Note on logging in").
+2. You will be directed to admin home page.
+3. On the homepage, you can create a room draw period.  A room draw period must exist at the current moment for students to pull rooms.
+4. Upload a roster of students in [this format.](https://github.com/hmc-room-draw/room-draw/files/1541002/sampleroomdrawdata.csv.zip)
+5. Navigate the site using the menu bar at the top of the page.
+6. Create or edit individual students from the Student pages.
+7. To create Pulls for students, either click on the Pulls page in the navigation bar or on the Map page in the navigation bar.  To create a Pull from the map, click a room and click "Create Pull."
+8. To mark a room un-pullable, click on it on the Map and click "Mark Room Unpullable."
+9. To send a reminder email for students, click the "Send Emails" button in the navigation bar and fill out the email form.  If you select the current date, the email will be sent immediately.  If you select a future date, the email will be sent at the current time on that date.
+10. Edit an email before it has been sent by clicking on it in the "Emails" page.
 Download CSV files of students' final placements and a list of who did not participate by clicking the download buttons on the admin home page.
 
 ## Known Problems
 
-TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem / name a file or a function where the problem lives.
+* Gives authentication errors occur at unpredictable intervals.  Try the action again.
+* Creating/editing Pulls from the Map does not redirect back to the map.
+* Deleting a User or Student does not delete all the information associated with them, potentially causing the app to crash.
+* The form student admins use to pull their own room looks different than the form a normal student uses.
+* Dorm pages sometimes need to be refreshed so they load correctly.
 
 ## Contributing
 
