@@ -15,11 +15,6 @@ We use model-view-controller Please see
 1. Install git.
 2. Install Ruby version 2.4.2 and Rails version 5.1.4.
 
-## Gems
-
-* [`delayed_job`](https://github.com/collectiveidea/delayed_job): It runs queued tasks in the backend. It is used for scheduling admin emails. 
-* [`rails_bootstrap_sortable`](https://github.com/DuroSoft/rails_bootstrap_sortable): The bootstrap_sortable plugin, packaged for ruby on rails.
-
 ## Installation
 
 TODO: Describe the installation process.
