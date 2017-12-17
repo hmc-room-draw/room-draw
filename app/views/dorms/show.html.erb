@@ -498,6 +498,7 @@ function layout(level){
           //get db info about room
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
+              console.log(room.info);
               room.info.clickable = true;
               
               //need to check if student_id is equal to current_user.student.id
@@ -526,6 +527,15 @@ function layout(level){
                   if (roomData[i] === undefined) {
                       break;
                   }
+              }
+              console.log(room.info.message);
+              if (room.info.message !== null) {
+                  console.log("success");
+                  room.popover({
+                    trigger: 'hover',
+                    title: curDorm[0].toUpperCase() + curDorm.slice(1) + " " + room.info.number,
+                    content: room.info.message,
+                  });
               }
               //check if your room draw number is lower or the roomo is not pulled at all
               if ((((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum)) && room.info.assignment_type === 2) || room.info.assignment_type === null) && !userInRoom) {
