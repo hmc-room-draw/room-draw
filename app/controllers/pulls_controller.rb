@@ -41,6 +41,7 @@ class PullsController < ApplicationController
   def create
     
     from_dorm = params[:from_dorm]
+    by_student = params[:student_id]
     @students = Student.all
     @dorms = Dorm.all
     @rooms = Room.all
@@ -52,7 +53,9 @@ class PullsController < ApplicationController
     if capacity_check
       redirect_back(fallback_location: root_path, notice: capacity_check) and return
     end
-
+    if not @pull.students.include?(by_student)
+      redirect_back(fallback_location: root_path, notice: "Can't pull! You must be part of the pull.") and return
+    end
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
@@ -211,7 +214,7 @@ class PullsController < ApplicationController
           if message
             message += "You need #{room_cap} people for #{dorm_name} #{room_name}, but you pulled #{room_list[key]} people. "
           else
-            message =  "You need to fullfill all of the rooms with as many people as the capacity. You need #{room_cap} people for #{dorm_name}#{room_name}, but you pulled #{room_list[key]} people. "
+            message =  "You need to fullfill all of the rooms with as many people as the capacity. You need #{room_cap} people for #{dorm_name} #{room_name}, but you pulled #{room_list[key]} people. "
           end
         end
       }

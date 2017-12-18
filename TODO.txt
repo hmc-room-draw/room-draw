@@ -1,0 +1,6 @@
+[DONE] Make sure there is no conflict when two people pull at the same time
+[DONE] Make popovers to display pull messages
+[DONE] Make sure students cannot create a pull if they are already in a room
+[DONE] Make sure students are part of any pull they create
+Send email when a pull is canceled by a participant, not just bumps
+Let any participant, admins delete pulls
