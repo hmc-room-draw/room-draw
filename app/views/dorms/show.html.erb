@@ -192,27 +192,39 @@
 
     <!-- Student Modal content -->
     <% if current_user.student != nil %>
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Pull request initiated</h2>
-        </div>
-        <div class="modal-body">
-        <p>You have begun a pull request for this room</p>
-          <p>The following form must be filled out in order to pull a room:</p>
-
-            <div class="popup-button" id="pull-form">
-            <b>Number of students in pull </b><i>(including yourself)</i>: <input id="num-students" type="text">
-            <button id="num-pull-student-button">Update</button>
-            <br><br>
-            <div id="actual-student-pull-form">
-              <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
-            </div>
+      <% if current_user.student.pull == nil %>
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Pull request initiated</h2>
           </div>
+          <div class="modal-body">
+          <p>You have begun a pull request for this room</p>
+            <p>The following form must be filled out in order to pull a room:</p>
 
-        </div>
-      </div>  <!-- End of modal content -->
+              <div class="popup-button" id="pull-form">
+              <b>Number of students in pull </b><i>(including yourself)</i>: <input id="num-students" type="text">
+              <button id="num-pull-student-button">Update</button>
+              <br><br>
+              <div id="actual-student-pull-form">
+                <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+              </div>
+            </div>
+
+          </div>
+        </div>  <!-- End of modal content -->
+      <% else %>
+          <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Pull request initiated</h2>
+          </div>
+          <div class="modal-body">
+          <p>You are already pulled into a room. Cancel your pull before choosing a new room.</p>
+        </div>  <!-- End of modal content -->
+      <% end %>
     <% else %>
       <!-- Modal content -->
       <div class="modal-content">
