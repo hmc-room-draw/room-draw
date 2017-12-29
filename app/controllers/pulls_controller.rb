@@ -75,17 +75,12 @@ class PullsController < ApplicationController
         cp.destroy
       end
     end
-    logger.debug "EMAILING \n\n\n\n\n\n"
-    logger.debug @pull
-    logger.debug @pull.students
     student_list = @pull.room_assignments.map { |ra| ra.student}
     for student in student_list
       # TODO: Update these for more detail later
       dorm = student.room_assignment.room.dorm.name
       room = student.room_assignment.room.number
       puller = "#{@pull.student.user.first_name} #{@pull.student.user.last_name}"
-      logger.debug(puller)
-      logger.debug "DEBUGGING\n\n\n\n\n"
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
       GeneralMailer.send_email(student.user, subject, content)

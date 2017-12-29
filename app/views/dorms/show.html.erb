@@ -508,12 +508,10 @@ function layout(level){
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
-                  console.log(roomData[i]);
                   if (roomData[i].user_id === userId) {
                       room.css({
                           background: 'rgb(217, 189, 4)',
                       });
-                      console.log("found student's room");
                       userInRoom = true;
                   }
                   if (roomData[i].pull_id !== null) {
