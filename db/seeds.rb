@@ -18,11 +18,14 @@ User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_
 User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
 User.create(first_name:"Stu4", last_name:"Dent4", email: "student4@hmc.edu", is_admin: false)
 User.create(first_name:"Stu5", last_name:"Dent5", email: "student5@hmc.edu", is_admin: false)
+User.create(first_name:"Andrew", last_name:"Test", email: "wander1796@gmail.com", is_admin: false)
+User.create(first_name:"Andrew", last_name:"Test2", email: "amatherbishop@gmail.com", is_admin: false)
 User.create(first_name:"Ad", last_name:"Min", email: "admin@hmc.edu", is_admin: true)
 User.create(first_name:"Ad1", last_name:"Min1", email: "admin1@hmc.edu", is_admin: true)
 User.create(first_name:"Ad2", last_name:"Min2", email: "admin2@hmc.edu", is_admin: true)
 User.create(first_name:"Ad3", last_name:"Min3", email: "admin3@hmc.edu", is_admin: true)
 User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
+User.create(first_name:"Andrew", last_name:"Bishop", email: "abishop@g.hmc.edu", is_admin: true)
 
 
 
@@ -34,6 +37,8 @@ Student.create(user_id: 3, class_rank: :sophomore, room_draw_number: 3, number_i
 Student.create(user_id: 4, class_rank: :senior, room_draw_number: 4, number_is_last: false)
 Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5, number_is_last: false)
 Student.create(user_id: 6, class_rank: :junior, room_draw_number: 7, number_is_last: false)
+Student.create(user_id: 7, class_rank: :junior, room_draw_number: 50, number_is_last: false)
+Student.create(user_id: 8, class_rank: :senior, room_draw_number: 6, number_is_last: false)
 
 
 

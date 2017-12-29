@@ -39,6 +39,11 @@ class Pull < ApplicationRecord
     not cnps.empty?
   end
 
+  def include_student
+    students = self.room_assignments.map{ |ra| ra.student}
+    return students.include?(self.student)
+  end
+
   private
     def validate_student
       errors.add(:student, "not in :students") if not students.include?(student)

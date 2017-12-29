@@ -14,7 +14,7 @@
 
   <div class="field">
     <%= form.label :student_id %>
-    <!-- TODO: We don't wanna display room_draw_numner.
+    <!-- TODO: We don't wanna display room_draw_number.
          So, we need to join the table of student and user and get the email address -->
     <%= current_user.email  %>
     <%= form.hidden_field :student_id, :value => current_user.student.id  %>

@@ -64,6 +64,8 @@ class PullsController < ApplicationController
       elsif @pull.has_conflicting_nonpulls
           # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
           redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
+      elsif not @pull.include_student
+          redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
       end
 
 
@@ -73,17 +75,21 @@ class PullsController < ApplicationController
         cp.destroy
       end
     end
-
-    @pull.students.each { |student|
+    logger.debug "EMAILING \n\n\n\n\n\n"
+    logger.debug @pull
+    logger.debug @pull.students
+    student_list = @pull.room_assignments.map { |ra| ra.student}
+    for student in student_list
       # TODO: Update these for more detail later
-      dorm = student.room_assignment.room.dorm
+      dorm = student.room_assignment.room.dorm.name
       room = student.room_assignment.room.number
       puller = "#{@pull.student.user.first_name} #{@pull.student.user.last_name}"
-
+      logger.debug(puller)
+      logger.debug "DEBUGGING\n\n\n\n\n"
       subject = "Pulled into #{dorm} #{room}"
       content = "You have been pulled into #{dorm} #{room} by #{puller}."
       GeneralMailer.send_email(student.user, subject, content)
-    }
+    end
 
     respond_to do |format|
       redirect_path = get_redirect_path(params, @pull)
@@ -139,7 +145,7 @@ class PullsController < ApplicationController
     pull.students.each { |student|
       # TODO: Update these for more detail later
       subject = "Pull bumped"
-      content = "Your pull has either been bumped or was deleted by an admin."
+      content = "Your pull has either been bumped or deleted."
       GeneralMailer.send_email(student.user, subject, content)
     }
   end
@@ -152,7 +158,7 @@ class PullsController < ApplicationController
     @pull.students.each { |student|
       # TODO: Update these for more detail later
       subject = "Pull bumped"
-      content = "Your pull has either been bumped or was deleted by an admin."
+      content = "Your pull has either been bumped or deleted."
       GeneralMailer.send_email(student.user, subject, content)
     }
 
@@ -177,7 +183,7 @@ class PullsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pull_params
-      params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id])
+      params.require(:pull).permit(:message, :student_id, :round, room_assignments_attributes: [:assignment_type, :student_id, :pull_id, :room_id, :user_id])
     end
 
 

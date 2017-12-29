@@ -498,7 +498,6 @@ function layout(level){
           //get db info about room
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
-              console.log(room.info);
               room.info.clickable = true;
               
               //need to check if student_id is equal to current_user.student.id
@@ -509,10 +508,12 @@ function layout(level){
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
-                  if (roomData[i].student_id === userId) {
+                  console.log(roomData[i]);
+                  if (roomData[i].user_id === userId) {
                       room.css({
                           background: 'rgb(217, 189, 4)',
                       });
+                      console.log("found student's room");
                       userInRoom = true;
                   }
                   if (roomData[i].pull_id !== null) {
@@ -528,9 +529,7 @@ function layout(level){
                       break;
                   }
               }
-              console.log(room.info.message);
               if (room.info.message !== null) {
-                  console.log("success");
                   room.popover({
                     trigger: 'hover',
                     title: curDorm[0].toUpperCase() + curDorm.slice(1) + " " + room.info.number,
