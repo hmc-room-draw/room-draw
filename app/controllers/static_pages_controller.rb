@@ -84,6 +84,9 @@ class StaticPagesController < ApplicationController
     user_csv = CSV.generate do |csv|
       csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
       Student.all.each do |student|
+        logger.debug "DEBUGGING \n\n\n\n\n\n"
+        logger.debug student.has_participated
+        logger.debug student.status
         if student.has_participated == false
           user = student.user
           csv << [user.first_name, user.last_name, student.class_rank, student.room_draw_number, user.email]
