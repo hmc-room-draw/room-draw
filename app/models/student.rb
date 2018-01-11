@@ -106,4 +106,17 @@ class Student < ApplicationRecord
       room_assignment.room.name
     end
   end
+
+  def format_rank
+    case class_rank
+    when :senior
+      "Senior"
+    when :junior
+      "Junior"
+    when :sophomore
+      "Sophomore"
+    when :super_senior
+      "Super-senior"
+    end
+  end
 end

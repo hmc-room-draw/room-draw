@@ -94,7 +94,9 @@
                 <% end %>
                 </td>
                 
-                <td>tbd</td>
+                <td>
+                <%= pull.student.class_rank%> <%= pull.round %>
+                </td>
                 <td><%= link_to 'Delete', pull, method: :delete, data: { confirm: 'Are you sure you want to delete your pull? You cannot undo this action.' } %></td>
               </tr>
             <% end %>

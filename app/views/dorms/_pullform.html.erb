@@ -31,7 +31,7 @@
     <% if current_user.student.class_rank == 'senior' %>
       <div class="field">
         <%= form.label :senior_round %>
-        <%= form.number_field :round, id: :pull_round %> 
+        <%= form.number_field :round, id: :round %> 
       </div>
     <% end %>
   <% end %>

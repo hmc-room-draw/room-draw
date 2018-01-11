@@ -505,6 +505,7 @@ function layout(level){
               
               //get names of students in room, possibly max of room draw numbers
               roomPullNum = null;
+              roomRankName = null;
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
@@ -517,6 +518,21 @@ function layout(level){
                   if (roomData[i].pull_id !== null) {
                       roomPullNum = roomData[i].room_draw_number;
                       roomRankNum = roomData[i].class_rank;
+                      switch(roomRankNum) {
+                        case 0:
+                          roomRankName = "Senior";
+                          break;
+                        case 1:
+                          roomRankName = "Super-senior";
+                          break;
+                        case 2:
+                          roomRankName = "Junior";
+                          break;
+                        case 3:
+                          roomRankName = "Sophomore";
+                          break;
+                      }
+
                   }
                   
                   if (roomData[i].first_name !== null) {
@@ -527,11 +543,13 @@ function layout(level){
                       break;
                   }
               }
-              if (room.info.message !== null) {
+              if (room.curNames[0] != null) {
+                  string = roomRankName + ' ' + roomPullNum + '\n';
+                  if (room.info.message !=null) {string+=room.info.message};
                   room.popover({
                     trigger: 'hover',
                     title: curDorm[0].toUpperCase() + curDorm.slice(1) + " " + room.info.number,
-                    content: room.info.message,
+                    content: string,
                   });
               }
               //check if your room draw number is lower or the roomo is not pulled at all
