@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
 	skip_before_action :check_draw_period, only: [:coming_soon]
+#This could fix issue with redirect on home page before people fill get there, but we need to reimplement form checking
+  skip_before_action :check_login, only: [:home]
   after_action :verify_authorized, only: [:downloadPlacements, :downloadNonParticipants]
   helper_method :pullable_rooms_number
 
@@ -97,6 +99,6 @@ class StaticPagesController < ApplicationController
       :type => 'text/csv',
       :filename => 'non_participants.csv',
       :disposition => 'attachment'
-	end
+	end    
 
 end

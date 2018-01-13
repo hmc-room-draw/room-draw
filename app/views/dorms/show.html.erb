@@ -111,12 +111,14 @@
     </div>
 </div>
   <div class="input-color">
-    <input type="text" value="vacant or bumpable" readonly></input>
-      <div class="color-box" style="background-color: rgb(102, 168, 255);"></div></br>
+    <input type="text" value="vacant" readonly></input>
+      <div class="color-box" style="background-color: rgb(0, 127, 163);"></div></br>
+    <input type="text" value="pullable" readonly></input>
+      <div class="color-box" style="background-color: rgb(183, 191, 16);"></div></br>
       <input type="text" value="not pullable or bumpable" readonly></input>
-      <div class="color-box" style="background-color: rgb(136, 138, 139);"></div></br>
+      <div class="color-box" style="background-color: rgb(91, 103, 112);"></div></br>
     <input type="text" value="room you are pulled into" readonly></input>
-      <div class="color-box" style="background-color: rgb(217, 189, 4);"></div></br>
+      <div class="color-box" style="background-color: rgb(234, 170, 0);"></div></br>
       
   </div>
   <p></br></p>
@@ -411,6 +413,7 @@ $(".alert-div").fadeOut(8000);
     var dorms_index = <%= @dorms_index %>;
 
 
+
 function layout(level){  
     for (var i = 0; i < dormElements.length; i++) {
         if (dormElements[i] !== undefined) {
@@ -511,13 +514,14 @@ function layout(level){
               while (curRoomNum === roomData[i].number) {
                   if (roomData[i].user_id === userId) {
                       room.css({
-                          background: 'rgb(217, 189, 4)',
+                          background: 'rgb(234, 170, 0)',
                       });
                       userInRoom = true;
                   }
                   if (roomData[i].pull_id !== null) {
                       roomPullNum = roomData[i].room_draw_number;
                       roomRankNum = roomData[i].class_rank;
+                      round = roomData[i].round;
                       switch(roomRankNum) {
                         case 0:
                           roomRankName = "Senior";
@@ -544,25 +548,32 @@ function layout(level){
                   }
               }
               if (room.curNames[0] != null) {
-                  string = roomRankName + ' ' + roomPullNum + '\n';
-                  if (room.info.message !=null) {string+=room.info.message};
+                  string = '<em> ' + roomRankName + ' ' + roomPullNum + ' ';
+                  if (roomRankNum < 2) {string+= "round " + round}
+                  if (room.info.message !=null) {string+="</em> <br>" + room.info.message};
                   room.popover({
                     trigger: 'hover',
+                    html: 'true',
                     title: curDorm[0].toUpperCase() + curDorm.slice(1) + " " + room.info.number,
                     content: string,
                   });
               }
               //check if your room draw number is lower or the roomo is not pulled at all
-              if ((((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum)) && room.info.assignment_type === 2) || room.info.assignment_type === null) && !userInRoom) {
+              if ((((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum)) && room.info.assignment_type === 2)) && !userInRoom) {
                   room.css({
-                      background: 'rgb(102, 168, 255)',
+                      background: 'rgb(183, 191, 16)',
                   });
+              }
+              else if(room.info.assignment_type === null) {
+                room.css({
+                    background: 'rgb(0, 127, 163)',
+                })
               }
               //room is pulled by someone with higher number
               else if(((((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && room.info.assignment_type === 2) || room.assignment_type !== 2) && !userInRoom) {
-                  room.info.clickable = false;
+                  room.info.clickable = true;
                   room.css({
-                      background: 'rgb(136, 138, 139)',
+                      background: 'rgb(91, 103, 112)',
                   });
                   if (room.info.assignment_type === 1) {
                       preplaced = true;
@@ -578,7 +589,7 @@ function layout(level){
           }//if no db info on room ie undefined in roomData then just say its open
           else {
               room.css({
-                  background: 'rgb(102, 168, 255)',
+                  background: 'rgb(0, 127, 163)',
               });
           }
           

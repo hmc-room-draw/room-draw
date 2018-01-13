@@ -43,7 +43,7 @@ class Student < ApplicationRecord
   end
 
   def senior?
-    class_rank == :senior or class_rank == :super_senior
+    class_rank == "senior" or class_rank == "super_senior"
   end
 
   def number_sort

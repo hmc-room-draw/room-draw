@@ -53,6 +53,10 @@ class PullsController < ApplicationController
       redirect_back(fallback_location: root_path, notice: capacity_check) and return
     end
 
+    if @pull.student.senior? and @pull.round === nil then
+      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling") and return
+    end
+
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
@@ -60,7 +64,7 @@ class PullsController < ApplicationController
     #      but some of them might not be necessary.
       if not cannot_override.empty?
         ids = cannot_override.map { |co| co.id }
-        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","}.") and return
+        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","} with higher priority.") and return
       elsif @pull.has_conflicting_nonpulls
           # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
           redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return

@@ -17,7 +17,12 @@ class Pull < ApplicationRecord
   #     Pull to be checked
   def can_override(other)
     outranks = self.student.outranks(other.student)
-
+    logger.debug "DEBUGGGING \n\n\n\n\n\n"
+    logger.debug outranks.to_s
+    logger.debug "self.round "
+    logger.debug self.round.to_s
+    logger.debug "other.round "
+    logger.debug other.round.to_s
     if (self.student.senior? and other.student.senior?) then
       (self.round == other.round and outranks) or (self.round < other.round)
     else
