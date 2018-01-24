@@ -171,7 +171,9 @@
           </div>
 
           <% if @student %>
-            <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
+            <% if @period %>
+              <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
+            <% end %>
             <div class="hidden" id="student-pull-form">
               <br>
                 <div class="popup-button" id="pull-form">
@@ -411,6 +413,7 @@ $(".alert-div").fadeOut(8000);
     var is_student = <%= @is_student %>;
     var room_ids = <%= @room_ids %>;
     var dorms_index = <%= @dorms_index %>;
+    var period = <%= @period %>;
 
 
 
@@ -584,6 +587,13 @@ function layout(level){
                       room.text('preplaced/ unavailable');
                   }
               }
+
+              // If not in draw period, don't let people click
+              if (!period) {
+                room.info.clickable = false;
+              }
+
+
               
               
           }//if no db info on room ie undefined in roomData then just say its open
