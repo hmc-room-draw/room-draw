@@ -21,7 +21,7 @@ class DormsController < ApplicationController
   end
 
   def pull_num_ajax
-    @students = Student.all
+    get_available_students()
     @rooms = Room.all
     @dorms = Dorm.all
     @adminPull = Pull.new
@@ -33,7 +33,7 @@ class DormsController < ApplicationController
   end
 
   def student_pull_ajax
-    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+    get_available_students()
     @rooms = @dorm.rooms
     @dorms = Dorm.all
     @pull = Pull.new
@@ -56,6 +56,8 @@ class DormsController < ApplicationController
       @is_student = !@student.nil?
     end
 
+    @period = current_draw_period()
+    puts "PERIOD", @period
     @rooms = @dorm.rooms
     @pull = Pull.new
     @adminPull = Pull.new
@@ -67,7 +69,7 @@ class DormsController < ApplicationController
     # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
-    @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+    get_available_students()
     @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
     @dorms_index = get_dorm_index()
 
@@ -212,6 +214,18 @@ class DormsController < ApplicationController
   end
 
   private
+    def current_draw_period
+      candidate = DrawPeriod.first
+      if candidate == nil
+        return false
+      end
+      return candidate.start_datetime < DateTime.now && candidate.end_datetime > DateTime.now
+    end
+
+    def get_available_students
+      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_dorm
       @dorm = Dorm.find(params[:id])

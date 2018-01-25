@@ -3,6 +3,7 @@
     <h1>You're Too Late!</h1>
     <p>Digital Draw ended on <strong><%= @end %></strong>.</p>
     <p>See ya next time!</p>
+    <%= link_to 'See Map', root_path %>
 <% else %>
     <h1>Coming Soon</h1>
     <% if @draw_period != nil %>
