@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def check_draw_period
     url = request.fullpath
     unless current_draw_period != nil then
-      unless current_user.is_admin then
+      unless current_user != nil && current_user.is_admin then
         unless url == "/" or url.start_with?("/dorm") #Let students see the map but nothing else
           redirect_to coming_soon_path
         end
