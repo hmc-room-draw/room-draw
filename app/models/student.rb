@@ -52,7 +52,8 @@ class Student < ApplicationRecord
 
   def number_sort
     # convert class rank to a number or it sorts as a string
-    [Student.class_ranks[class_rank], number_is_last ? 1 : 0, room_draw_number]
+    # also add leading zeros onto the room draw number so sorting as a string sorts correctly.
+    [Student.class_ranks[class_rank], number_is_last ? 1 : 0, room_draw_number.to_s.rjust(5, "0")]
   end
 
   def format_number
