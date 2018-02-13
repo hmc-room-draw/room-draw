@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125090245) do
+ActiveRecord::Schema.define(version: 20180213013044) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20171125090245) do
   create_table "students", force: :cascade do |t|
     t.integer "user_id"
     t.integer "class_rank"
-    t.integer "room_draw_number"
+    t.decimal "room_draw_number", precision: 5, scale: 1
     t.boolean "has_participated"
     t.boolean "has_completed_form"
     t.boolean "number_is_last"
