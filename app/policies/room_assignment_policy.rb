@@ -9,7 +9,7 @@ class RoomAssignmentPolicy < ApplicationPolicy
   end
 
   def new_from_pull?
-    true
+    @in_draw_period
   end
 
   def show?
