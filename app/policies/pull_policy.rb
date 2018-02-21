@@ -5,7 +5,7 @@ class PullPolicy < ApplicationPolicy
   end
 
   def new?
-    @in_draw_period
+    user.is_admin || @in_draw_period
   end
 
   def show?
@@ -13,7 +13,7 @@ class PullPolicy < ApplicationPolicy
   end
 
   def create?
-    @in_draw_period
+    user.is_admin || @in_draw_period
   end
 
   def update?
