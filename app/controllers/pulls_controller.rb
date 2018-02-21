@@ -68,7 +68,7 @@ class PullsController < ApplicationController
       elsif @pull.has_conflicting_nonpulls
           # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
           redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
-      elsif not @pull.include_student
+      elsif not @pull.include_student and not current_user.is_admin
           redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
       end
 
