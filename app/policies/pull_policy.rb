@@ -17,7 +17,7 @@ class PullPolicy < ApplicationPolicy
   end
 
   def update?
-    user.is_admin
+    false
   end
   
   def edit?
