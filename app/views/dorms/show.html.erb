@@ -79,6 +79,9 @@
   left: 20px;
   top: 30px;
 }
+.selected {
+  background-color: rgb(215, 66, 244) !important;
+}
 
 </style>
 
@@ -109,9 +112,9 @@
                 <% end %>
         </ul>
     </div>
-</div>
+</div style="margin-bottom: 20px;">
   <div class="input-color">
-    <input type="text" value="vacant" readonly></input>
+    <input type="text" value="vacant!!!" readonly></input>
       <div class="color-box" style="background-color: rgb(0, 127, 163);"></div></br>
     <input type="text" value="pullable" readonly></input>
       <div class="color-box" style="background-color: rgb(183, 191, 16);"></div></br>
@@ -119,7 +122,8 @@
       <div class="color-box" style="background-color: rgb(91, 103, 112);"></div></br>
     <input type="text" value="room you are pulled into" readonly></input>
       <div class="color-box" style="background-color: rgb(234, 170, 0);"></div></br>
-      
+    <input type="text" value="selected" readonly></input>
+      <div class="color-box selected" style="background-color: rgb(215, 66, 244);"></div></br>
   </div>
   <p></br></p>
 
@@ -232,6 +236,20 @@
   <% end %>
 
 </div>
+
+<!-- Buttons which let people actually initiate pull -->
+<% if @admin %>
+  <div class="dropdown">
+    <button>Dropdown button</button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item">YOLO</a>
+    </div>
+  </div>
+  <button> ADMIN BUTTON</button>
+<% else %>
+  <button>Create Pull</button>
+<% end %>
+
 
 
 <!-- get dorm floor maps -->
@@ -464,12 +482,13 @@ function layout(level){
     $(".map").css({
         display: 'none',
     });
+    var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
 
     //create dorm map 
     var fakeDorm = $('<div>').css({
         position: 'absolute',
         left: 90,
-        top: 250,
+        top: 300,
         width: 940,
         height: 940*ratio,
         'background-image': "url(" + map + ")",
@@ -632,64 +651,67 @@ function layout(level){
           
           room.on('click', {info: room.info}, function(event){
               if (admin || event.data.info.clickable) {
-                  if (event.data.info.clickable !== undefined) {
-                      //Hide all of the forms
-                      $(".toggle-form").addClass('hidden');
+                selectedRooms.push(event.data.info); //kangaroo
+                $(event.target).toggleClass("selected");
+                // event.target.classList.add("selected");
+          //         if (event.data.info.clickable !== undefined) {
+          //             //Hide all of the forms
+          //             $(".toggle-form").addClass('hidden');
 
-                      //show room info and populate form with room number
-                      var info = event.data.info;
-                      $('#room_number').val(info.number); //TODO: Check this is actually used.
-                      $('#unpullable-room-delete').val(info.number);
-                      $('#unpullable-room-num').val(info.number);
-                      $('#pull-student').addClass('hidden');
-                      index = get_room_index(info.number);
-                      $('.room-num-field').val(index);
+          //             //show room info and populate form with room number
+          //             var info = event.data.info;
+          //             $('#room_number').val(info.number); //TODO: Check this is actually used.
+          //             $('#unpullable-room-delete').val(info.number);
+          //             $('#unpullable-room-num').val(info.number);
+          //             $('#pull-student').addClass('hidden');
+          //             index = get_room_index(info.number);
+          //             $('.room-num-field').val(index);
 
-                      if (info.assignment_type != null) { // If there's currently a room assignment
-                        $('#create-pull').addClass('hidden');
-                        $('#mark-unpullable').addClass('hidden');
+          //             if (info.assignment_type != null) { // If there's currently a room assignment
+          //               $('#create-pull').addClass('hidden');
+          //               $('#mark-unpullable').addClass('hidden');
 
-                        // If there's also a pull, show additional options
-                        if (info.pull_id != null) {
-                          $('#mark-pullable').addClass('hidden');
-                          $('#edit-pull').removeClass('hidden');
-                          $('#delete-pull').removeClass('hidden');
-                          // Maybe show "Pull on your own number" button, depending on their #
-                          if (is_student && event.data.info.clickable) {
-                            $('#pull-student').removeClass('hidden');
-                          }
-                        } else {
-                          $('#mark-pullable').removeClass('hidden');
-                          $('#edit-pull').addClass('hidden');
-                          $('#delete-pull').addClass('hidden');
-                        }
+          //               // If there's also a pull, show additional options
+          //               if (info.pull_id != null) {
+          //                 $('#mark-pullable').addClass('hidden');
+          //                 $('#edit-pull').removeClass('hidden');
+          //                 $('#delete-pull').removeClass('hidden');
+          //                 // Maybe show "Pull on your own number" button, depending on their #
+          //                 if (is_student && event.data.info.clickable) {
+          //                   $('#pull-student').removeClass('hidden');
+          //                 }
+          //               } else {
+          //                 $('#mark-pullable').removeClass('hidden');
+          //                 $('#edit-pull').addClass('hidden');
+          //                 $('#delete-pull').addClass('hidden');
+          //               }
                         
-                      } else { // If there isn't an assignment type, theres no RoomAssignment
-                        //So there isn't any associated Pull either.
-                        $('#create-pull').removeClass('hidden');
-                        $('#mark-unpullable').removeClass('hidden');
-                        $('#edit-pull').addClass('hidden');
-                        $('#delete-pull').addClass('hidden');
-                        $('#mark-pullable').addClass('hidden');
-                        if (is_student) {
-                          $('#pull-student').removeClass('hidden');
-                        }
-                      }
-                      $('#room-num').html(info.number);
-                  }  
-              modal.style.display = "block";
-              fillingForm = true;
-              if (event.data.info.pull_id) {
-                url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
-                $.ajax({
-                  url: url,
-                  type: 'POST',
-                  dataType: 'script',
-                  success: function(data){
-                    eval(data);
-                  }
-                })
-              }
+          //             } else { // If there isn't an assignment type, theres no RoomAssignment
+          //               //So there isn't any associated Pull either.
+          //               $('#create-pull').removeClass('hidden');
+          //               $('#mark-unpullable').removeClass('hidden');
+          //               $('#edit-pull').addClass('hidden');
+          //               $('#delete-pull').addClass('hidden');
+          //               $('#mark-pullable').addClass('hidden');
+          //               if (is_student) {
+          //                 $('#pull-student').removeClass('hidden');
+          //               }
+          //             }
+          //             $('#room-num').html(info.number);
+          //         }  
+          //     modal.style.display = "block";
+          //     fillingForm = true;
+          //     if (event.data.info.pull_id) {
+          //       url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
+          //       $.ajax({
+          //         url: url,
+          //         type: 'POST',
+          //         dataType: 'script',
+          //         success: function(data){
+          //           eval(data);
+          //         }
+          //       })
+          //     }
           }
           });
         x++;
