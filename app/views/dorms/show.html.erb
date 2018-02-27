@@ -82,6 +82,15 @@
 .selected {
   background-color: rgb(215, 66, 244) !important;
 }
+#student-create-pull {
+  position: absolute;
+  margin-left: 270 !important;
+  top: 250 !important;
+  height: 34 !important;
+  width: 115 !important;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 5px;
+}
 
 </style>
 
@@ -114,7 +123,7 @@
     </div>
 </div style="margin-bottom: 20px;">
   <div class="input-color">
-    <input type="text" value="vacant!!!" readonly></input>
+    <input type="text" value="vacant" readonly></input>
       <div class="color-box" style="background-color: rgb(0, 127, 163);"></div></br>
     <input type="text" value="pullable" readonly></input>
       <div class="color-box" style="background-color: rgb(183, 191, 16);"></div></br>
@@ -240,14 +249,17 @@
 <!-- Buttons which let people actually initiate pull -->
 <% if @admin %>
   <div class="dropdown">
-    <button>Dropdown button</button>
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Selection Options
+  </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item">YOLO</a>
+      <a id="admin-create-pull" class="dropdown-item">Create Pull</a><br/>
+      <a id="admin-mark-unpullable" class="dropdown-item">Mark UnPullable</a><br/>
+      <a id="admin-mark-available" class="dropdown-item">Mark Available</a>
     </div>
   </div>
-  <button> ADMIN BUTTON</button>
 <% else %>
-  <button>Create Pull</button>
+  <button id="student-create-pull">Create Pull</button>
 <% end %>
 
 
@@ -276,6 +288,18 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 var index;
+var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
+
+var selectedToggle = function(data) {
+  var index = selectedRooms.indexOf(data);
+  if (index !== -1) {
+    selectedRooms.splice(index, 1); 
+  } else {
+    selectedRooms.push(data); 
+  }
+}
+
+
 span.onclick = function() {
     modal.style.display = "none";
 }
@@ -292,34 +316,17 @@ $("#create-pull").click(function() {
 $("#edit-pull").click(function() {
   $("#edit-pull-form").toggleClass("hidden");
 });
-$("#num-students-button").click(function() {
-  var numStudents = $("#num-students").val();
-  url = dormId + '/pull_num_ajax/' + numStudents + "/" + index
-  $.ajax({
-    url: url,
-    type: 'POST',
-    dataType: 'script',
-    success: function(data){
-      eval(data);
-    }
-  })
-});
-$("#num-pull-student-button").click(function() {
-  var numStudents = $("#num-students").val();
-  url = dormId + '/student_pull_ajax/' + numStudents + "/" + index
-  $.ajax({
-    url: url,
-    type: 'POST',
-    dataType: 'script',
-    success: function(data){
-      eval(data);
-    }
-  })
-});
 
-$("#num-admin-student-button").click(function() {
-  var numStudents = $("#admin-students").val();
-  url = dormId + '/student_pull_ajax/' + numStudents + "/" + index
+$("#student-create-pull").click(function() {
+
+  trimmed_selected = []
+  // Strip out unnecessary values
+  for (var room of selectedRooms) {
+    trimmed_selected.push([room.number, room.capacity])
+  }
+
+  url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected)
+  modal.style.display = "block";
   $.ajax({
     url: url,
     type: 'POST',
@@ -482,7 +489,6 @@ function layout(level){
     $(".map").css({
         display: 'none',
     });
-    var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
 
     //create dorm map 
     var fakeDorm = $('<div>').css({
@@ -650,69 +656,10 @@ function layout(level){
           });
           
           room.on('click', {info: room.info}, function(event){
-              if (admin || event.data.info.clickable) {
-                selectedRooms.push(event.data.info); //kangaroo
-                $(event.target).toggleClass("selected");
-                // event.target.classList.add("selected");
-          //         if (event.data.info.clickable !== undefined) {
-          //             //Hide all of the forms
-          //             $(".toggle-form").addClass('hidden');
-
-          //             //show room info and populate form with room number
-          //             var info = event.data.info;
-          //             $('#room_number').val(info.number); //TODO: Check this is actually used.
-          //             $('#unpullable-room-delete').val(info.number);
-          //             $('#unpullable-room-num').val(info.number);
-          //             $('#pull-student').addClass('hidden');
-          //             index = get_room_index(info.number);
-          //             $('.room-num-field').val(index);
-
-          //             if (info.assignment_type != null) { // If there's currently a room assignment
-          //               $('#create-pull').addClass('hidden');
-          //               $('#mark-unpullable').addClass('hidden');
-
-          //               // If there's also a pull, show additional options
-          //               if (info.pull_id != null) {
-          //                 $('#mark-pullable').addClass('hidden');
-          //                 $('#edit-pull').removeClass('hidden');
-          //                 $('#delete-pull').removeClass('hidden');
-          //                 // Maybe show "Pull on your own number" button, depending on their #
-          //                 if (is_student && event.data.info.clickable) {
-          //                   $('#pull-student').removeClass('hidden');
-          //                 }
-          //               } else {
-          //                 $('#mark-pullable').removeClass('hidden');
-          //                 $('#edit-pull').addClass('hidden');
-          //                 $('#delete-pull').addClass('hidden');
-          //               }
-                        
-          //             } else { // If there isn't an assignment type, theres no RoomAssignment
-          //               //So there isn't any associated Pull either.
-          //               $('#create-pull').removeClass('hidden');
-          //               $('#mark-unpullable').removeClass('hidden');
-          //               $('#edit-pull').addClass('hidden');
-          //               $('#delete-pull').addClass('hidden');
-          //               $('#mark-pullable').addClass('hidden');
-          //               if (is_student) {
-          //                 $('#pull-student').removeClass('hidden');
-          //               }
-          //             }
-          //             $('#room-num').html(info.number);
-          //         }  
-          //     modal.style.display = "block";
-          //     fillingForm = true;
-          //     if (event.data.info.pull_id) {
-          //       url = dormId + '/load_pull_ajax/' + event.data.info.pull_id
-          //       $.ajax({
-          //         url: url,
-          //         type: 'POST',
-          //         dataType: 'script',
-          //         success: function(data){
-          //           eval(data);
-          //         }
-          //       })
-          //     }
-          }
+            if (admin || event.data.info.clickable) {
+              selectedToggle(event.data.info); //kangaroo
+              $(event.target).toggleClass("selected");
+            }
           });
         x++;
     }

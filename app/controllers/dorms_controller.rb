@@ -1,6 +1,9 @@
+require 'rubygems'
+require 'json'
+
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax]
 
 
   # GET /dorms
@@ -13,32 +16,56 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
   end
 
-  def load_pull_ajax
-    @pull = Pull.find(params["pull_id"])
-    respond_to do |format|
-      format.js {render layout: false}
-    end
-  end
+  # def load_pull_ajax
+  #   @pull = Pull.find(params["pull_id"])
+  #   respond_to do |format|
+  #     format.js {render layout: false}
+  #   end
+  # end
 
-  def pull_num_ajax
-    get_available_students()
-    @rooms = Room.all
-    @dorms = Dorm.all
-    @adminPull = Pull.new
-    @room_index = params["room_index"]
-    params["pull_count"].to_i.times {@adminPull.room_assignments.build}
-    respond_to do |format|
-      format.js {render layout: false}
-    end
-  end
+  # def pull_num_ajax
+  #   get_available_students()
+  #   @rooms = Room.all
+  #   @dorms = Dorm.all
+  #   @adminPull = Pull.new
+  #   @room_index = params["room_index"]
+  #   params["pull_count"].to_i.times {@adminPull.room_assignments.build}
+  #   respond_to do |format|
+  #     format.js {render layout: false}
+  #   end
+  # end
 
-  def student_pull_ajax
+  # def student_pull_ajax
+  #   get_available_students()
+  #   @rooms = @dorm.rooms
+  #   @dorms = Dorm.all
+  #   @pull = Pull.new
+  #   @room_index = params["room_index"]
+  #   params["pull_count"].to_i.times {@pull.room_assignments.build}
+  #   respond_to do |format|
+  #     format.js {render layout: false}
+  #   end
+  # end
+
+  def create_pull_ajax
     get_available_students()
     @rooms = @dorm.rooms
     @dorms = Dorm.all
+    puts "WE GOT HERE!!!!"
+    puts params["selected_rooms"]
+    puts "AGAIN"
+    puts @dorm
     @pull = Pull.new
-    @room_index = params["room_index"]
-    params["pull_count"].to_i.times {@pull.room_assignments.build}
+    rooms_hopefully = JSON.parse(params["selected_rooms"])
+    length = rooms_hopefully.length
+    puts "LENGTH"
+    puts length
+    for element in rooms_hopefully
+      puts "DOING A THING"
+      puts element
+    end
+
+    length.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
