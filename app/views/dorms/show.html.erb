@@ -431,7 +431,7 @@ $(".alert-div").fadeOut(8000);
 
     var userDrawNum = <%= @curPullNum %>;
     var userRankNum = <%= @curRankNum %>;
-    var userId = <%= @userId %>;
+    var studentId = <%= @studentId %>;
     var mapLayout = <%= @json %>;
     var dormId = <%= @dorm.id %>;
     var admin = <%= @admin %>;
@@ -540,7 +540,7 @@ function layout(level){
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
-                  if (roomData[i].student_id === userId) {
+                  if (roomData[i].student_id === studentId) {
                       room.css({
                           background: 'rgb(234, 170, 0)',
                       });
