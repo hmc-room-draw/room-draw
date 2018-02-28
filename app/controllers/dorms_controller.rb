@@ -2,8 +2,8 @@ require 'rubygems'
 require 'json'
 
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax]
 
 
   # GET /dorms
@@ -17,6 +17,18 @@ class DormsController < ApplicationController
   end
 
   def create_pull_ajax
+    get_available_students()
+    @rooms = @dorm.rooms
+    @dorms = Dorm.all
+    @pull = Pull.new
+    selected_rooms = JSON.parse(params["selected_rooms"])
+    selected_rooms.length.times {@pull.room_assignments.build}
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+  def create_admin_pull_ajax
     get_available_students()
     @rooms = @dorm.rooms
     @dorms = Dorm.all
