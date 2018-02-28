@@ -82,14 +82,8 @@
 .selected {
   background-color: rgb(215, 66, 244) !important;
 }
-#student-create-pull {
-  position: absolute;
-  margin-left: 270 !important;
-  top: 250 !important;
-  height: 34 !important;
-  width: 115 !important;
-  border: 1px solid rgb(200, 200, 200);
-  border-radius: 5px;
+.hidden {
+  display: none;
 }
 
 </style>
@@ -112,15 +106,42 @@
   <p>
     <strong>Dorm:</strong> <%= @dorm.name %>
   </p>
-    <div class="dropdown" style="padding-right:700px">
-        <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-                <% @dorms.each do |dorm| %>
-                    <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
-                <% end %>
-        </ul>
+  <div class="dropdown" style="padding-right:700px">
+      <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= @dorm.name %> 
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <% @dorms.each do |dorm| %>
+            <li><%= link_to dorm.name, dorm, :"data-turbolinks" => false %></li>
+        <% end %>
+      </ul>
+  </div>
+  <!-- Buttons which let people actually initiate pull -->
+  <br/>
+  <% if @admin %>
+    <% if @student && @period %>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="pull-as-student">
+        <label class="form-check-label" for="pull-as-student">Pull as Student</label>
+      </div>
+    <% end %>
+    <div class="form-check" id="single-select-div">
+      <input class="form-check-input" type="checkbox" id="single-select">
+      <label class="form-check-label" for="single-select">Single Select (Default is Multiselect)</label>
     </div>
+    <div class="dropdown" id="admin-pull-options" style="display:none;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Selection Options
+    </button>
+      <div class="dropdown-menu">
+        <a id="admin-create-pull" class="dropdown-item">Create Pull</a><br/>
+        <a id="admin-mark-unpullable" class="dropdown-item">Mark UnPullable</a><br/>
+        <a id="admin-mark-available" class="dropdown-item">Mark Available</a>
+      </div>
+    </div>
+  <% end %>
+  <button id="student-create-pull"  style="display:none;">Create Pull</button>
+
 </div style="margin-bottom: 20px;">
   <div class="input-color">
     <input type="text" value="vacant" readonly></input>
@@ -137,131 +158,102 @@
   <p></br></p>
 
 
-
-<!--  Modal -->
-<div id="myModal" class="modal">
-
-  <% if @admin %>
-
-    <!-- Admin Modal -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>Admin Options: <%= @dorm.name.capitalize %> <div style="display: inline" id="room-num"></div></h2>
-      </div>
-      <div class="modal-body">
-        <div id="admin_buttons" class="collapse in">
-          
-          <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
-          <div class="hidden popup-button toggle-form" id="pull-form">
-            <b>Number of students in pull:</b><input id="num-students" type="text">
-            <button id="num-students-button">Update</button>
-            <br><br>
-            <div id="actual-pull-form">
-              <%= render 'pulls/adminForm', pull: @adminPull, locals: {redirect_path: dorm_path(@dorm)} %>
-            </div>
+<!-- Admin Modal -->
+<div id="admin-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Admin Options: <%= @dorm.name.capitalize %> <div style="display: inline" id="room-num"></div></h2>
+    </div>
+    <div class="modal-body">
+      <div id="admin_buttons" class="collapse in">
+        
+        <button id="create-pull" class="btn btn-primary btn-block popup-button">Create Pull</button>
+        <div class="hidden popup-button toggle-form" id="pull-form">
+          <b>Number of students in pull:</b><input id="num-students" type="text">
+          <button id="num-students-button">Update</button>
+          <br><br>
+          <div id="actual-pull-form">
+            <%= render 'pulls/adminForm', pull: @adminPull, locals: {redirect_path: dorm_path(@dorm)} %>
           </div>
+        </div>
 
-          <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
-          <div class="hidden popup-button toggle-form" id="edit-pull-form">
-            <div id="edit-form-div"></div>
-          </div>
+        <button id="edit-pull" class="btn btn-primary btn-block popup-button">Edit Pull</button>
+        <div class="hidden popup-button toggle-form" id="edit-pull-form">
+          <div id="edit-form-div"></div>
+        </div>
 
-          <div id="delete-pull">
-          </div>
+        <div id="delete-pull">
+        </div>
 
-          <!-- Unpullable Form -->
-          <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
-          <div class="hidden popup-button" id="unpullable-form">
-              <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
-          </div>
-          <div id="mark-pullable" class="popup-button toggle-form">
-            <%= form_with(method: "delete_mark") do %>
-              <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
-              <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
-              <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
-            <% end %>
-          </div>
-
-          <% if @student %>
-            <% if @period %>
-              <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
-            <% end %>
-            <div class="hidden" id="student-pull-form">
-              <br>
-                <div class="popup-button" id="pull-form">
-                  <b>Number of students in pull </b><i>(including yourself)</i>: <input id="admin-students" type="text">
-                <button id="num-admin-student-button">Update</button>
-                <br><br>
-                  <div id = 'actual-student-pull-form'>
-                    <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
-                  </div>
-                <br>
-              </div>
-            </div>
-          </div>
+        <!-- Unpullable Form -->
+        <button id="mark-unpullable" class="btn btn-primary btn-block popup-button toggle-form">Mark Room Unpullable</button>
+        <div class="hidden popup-button" id="unpullable-form">
+            <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
+        </div>
+        <div id="mark-pullable" class="popup-button toggle-form">
+          <%= form_with(method: "delete_mark") do %>
+            <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
+            <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
+            <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
           <% end %>
         </div>
       </div>
     </div>
-
-  <% else %>
-
-    <!-- Student Modal content -->
-    <% if current_user.student != nil %>
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Pull request initiated</h2>
-        </div>
-        <div class="modal-body">
-        <p>You have begun a pull request for this room</p>
-          <p>The following form must be filled out in order to pull a room:</p>
-
-            <div class="popup-button" id="pull-form">
-            <b>Number of students in pull </b><i>(including yourself)</i>: <input id="num-students" type="text">
-            <button id="num-pull-student-button">Update</button>
-            <br><br>
-            <div id="actual-student-pull-form">
-              <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
-            </div>
-          </div>
-
-        </div>
-      </div>  <!-- End of modal content -->
-    <% else %>
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Pull request initiated</h2>
-        </div>
-        <div class="modal-body">
-        <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
-
-      </div>  <!-- End of modal content -->
-    <% end %> 
-  <% end %>
-
+  </div>
 </div>
 
-<!-- Buttons which let people actually initiate pull -->
-<% if @admin %>
-  <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Selection Options
-  </button>
-    <div class="dropdown-menu">
-      <a id="admin-create-pull" class="dropdown-item">Create Pull</a><br/>
-      <a id="admin-mark-unpullable" class="dropdown-item">Mark UnPullable</a><br/>
-      <a id="admin-mark-available" class="dropdown-item">Mark Available</a>
+
+<div id="admin-pull-form-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Admin Pull request initiated</h2>
+    </div>
+    <div class="modal-body">
+      <p>You have begun a pull request for this room</p>
+      <p>The following form must be filled out in order to pull a room:</p>
+      <div id="actual-pull-form">
+        <%= render 'pulls/adminForm', pull: @adminPull, locals: {redirect_path: dorm_path(@dorm)} %>
+      </div>
     </div>
   </div>
-<% else %>
-  <button id="student-create-pull">Create Pull</button>
-<% end %>
+</div>
 
+<div id="pull-form-modal" class="modal">
+  <!-- Student Modal content -->
+  <% if current_user.student != nil %>
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Pull request initiated</h2>
+      </div>
+      <div class="modal-body">
+      <p>You have begun a pull request for this room</p>
+        <p>The following form must be filled out in order to pull a room:</p>
+
+          <div class="popup-button" id="pull-form">
+          <div id="actual-pull-form">
+            <%= render 'pullform', pull: @pull, locals: {redirect_path: dorm_path(@dorm)} %>
+          </div>
+        </div>
+
+      </div>
+    </div>  <!-- End of modal content -->
+  <% else %>
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Pull request initiated</h2>
+      </div>
+      <div class="modal-body">
+      <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
+
+    </div>  <!-- End of modal content -->
+  <% end %> 
+</div>
 
 
 <!-- get dorm floor maps -->
@@ -281,14 +273,15 @@
 $('.dropdown-toggle').dropdown();
 
 // Get the modal
-var modal = document.getElementById('myModal');
+var pullModal = document.getElementById('pull-form-modal');
+var adminPullModal = document.getElementById('admin-pull-form-modal');
+var adminModal = document.getElementById('admin-modal');
+
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-// When the user clicks on <span> (x), close the modal
 var index;
 var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
+var singleSelect = false;
 
 var selectedToggle = function(data) {
   var index = selectedRooms.indexOf(data);
@@ -297,12 +290,23 @@ var selectedToggle = function(data) {
   } else {
     selectedRooms.push(data); 
   }
+  // Only show the option to create a pull if a room is selected
+  if (selectedRooms.length > 0) {
+    $("#admin-pull-options").show();
+    $("#student-create-pull").show();
+  } else {
+    $("#admin-pull-options").hide();
+    $("#student-create-pull").hide();
+  }
 }
 
+$(".close").click(function() {
+  pullModal.style.display = "none";
+  adminPullModal.style.display = "none";
+  adminModal.style.display = "none";
+})
 
-span.onclick = function() {
-    modal.style.display = "none";
-}
+
 // Have the admin buttons toggle their respective divs
 $("#mark-unpullable").click(function() {
   $("#unpullable-form").toggleClass("hidden");
@@ -317,8 +321,46 @@ $("#edit-pull").click(function() {
   $("#edit-pull-form").toggleClass("hidden");
 });
 
-$("#student-create-pull").click(function() {
+$("#single-select").click(function() {
+  if ($(this).is(":checked")) {
+    // Hide admin options
+    singleSelect = true;
+    selectedRooms = [];
+    $(".room-cell").removeClass("selected");
+  } else {
+    // Reveal admin options
+    singleSelect = false;
+  }
+});
 
+$("#pull-as-student").click(function() {
+  if ($(this).is(":checked")) {
+    // Hide admin options
+    singleSelect = false;
+    selectedRooms = [];
+    $("#admin-pull-options").addClass("hidden");
+    $("#single-select-div").addClass("hidden");
+    $("#student-create-pull").removeClass("hidden");
+  } else {
+    // Reveal admin options
+    singleSelect = false;
+    $("#admin-pull-options").removeClass("hidden");
+    $("#single-select-div").removeClass("hidden");
+    $("#student-create-pull").addClass("hidden");
+  }
+})
+
+$("#student-create-pull").click(function() {
+  pullModal.style.display = "block";
+  openPullForm();
+});
+
+$("#admin-create-pull").click(function() {
+  adminPullModal.style.display = "block";
+  openPullForm();
+});
+
+var openPullForm = function() {
   trimmed_selected = []
   // Strip out unnecessary values
   for (var room of selectedRooms) {
@@ -326,7 +368,6 @@ $("#student-create-pull").click(function() {
   }
 
   url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected)
-  modal.style.display = "block";
   $.ajax({
     url: url,
     type: 'POST',
@@ -335,7 +376,7 @@ $("#student-create-pull").click(function() {
       eval(data);
     }
   })
-});
+}
 
 // Fade out error messages after a bit
 $(".alert-div").fadeOut(8000);
@@ -440,6 +481,11 @@ $(".alert-div").fadeOut(8000);
     var dorms_index = <%= @dorms_index %>;
     var period = <%= @period %>;
 
+    // Don't show student pull options by default to admins. #TODO
+    if (admin) {
+      $("#student-create-pull").addClass("hidden");
+    }
+
 
 
 function layout(level){  
@@ -494,7 +540,7 @@ function layout(level){
     var fakeDorm = $('<div>').css({
         position: 'absolute',
         left: 90,
-        top: 300,
+        top: 350,
         width: 940,
         height: 940*ratio,
         'background-image': "url(" + map + ")",
@@ -524,6 +570,9 @@ function layout(level){
               color: 'black',
               'font-size': '10px',
           }).appendTo(fakeDorm);
+          $(room).addClass("room-cell");
+
+
           dormElements.push(room);
           
           //get db info about room
@@ -655,44 +704,61 @@ function layout(level){
              }); 
           });
           
-          room.on('click', {info: room.info}, function(event){
-            if (admin || event.data.info.clickable) {
+          room.on('click', {info: room.info}, function(event) {
+             // If singleSelect is checked, open the normal admin form
+            if (singleSelect && admin) {
+              adminModal.style.display = "block";
+            }
+            // Highlight the selected room pink and add it to the list of selected rooms
+            else if (admin || event.data.info.clickable) {
               selectedToggle(event.data.info); //kangaroo
+              console.log('selected toggle');
               $(event.target).toggleClass("selected");
             }
+           
+            
+            
           });
         x++;
     }
 }
 
+//TODO: Figure out what this is for?
+window.onclick = function(event) {
+  if (event.target == pullModal) {
+    pullModal.style.display = "none";
+    fillingForm = false;
+    console.log("FIRST!!!");
+  }
+  if (event.target == adminModal) {
+    adminModal.style.display = "none";
+    fillingForm = false;
+    console.log("SECOND!!!");
+  }
+}
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            fillingForm = false;
-        }
-    }
+//TODO: figure out what this is
+window.onkeyup = function(event) {
+  if (event.keyCode == 27) {
+    adminModal.style.display = "none";
+    pullModal.style.display = "none";
+    fillingForm = false;
+    floorHold.css({
+        visibility: 'hidden',
+        'z-index': 0
+    });
+  }
+}
 
-    window.onkeyup = function(event) {
-      if (event.keyCode == 27) {
-        modal.style.display = "none";
-        fillingForm = false;
-        floorHold.css({
-            visibility: 'hidden',
-            'z-index': 0
-        });
-      }
+$(document).click(function(event) { 
+  if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+    if($('#floorHold').css("visibility") === 'visible') {
+      $('#floorHold').css({
+        visibility: 'hidden',
+        'z-index': 0
+      });
     }
-    
-    $(document).click(function(event) { 
-    if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
-        if($('#floorHold').css("visibility") === 'visible') {
-            $('#floorHold').css({
-                visibility: 'hidden',
-                'z-index': 0
-            });
-        }
-    }        
+  }        
 });
 
 // update info timer with refresh

@@ -16,56 +16,13 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
   end
 
-  # def load_pull_ajax
-  #   @pull = Pull.find(params["pull_id"])
-  #   respond_to do |format|
-  #     format.js {render layout: false}
-  #   end
-  # end
-
-  # def pull_num_ajax
-  #   get_available_students()
-  #   @rooms = Room.all
-  #   @dorms = Dorm.all
-  #   @adminPull = Pull.new
-  #   @room_index = params["room_index"]
-  #   params["pull_count"].to_i.times {@adminPull.room_assignments.build}
-  #   respond_to do |format|
-  #     format.js {render layout: false}
-  #   end
-  # end
-
-  # def student_pull_ajax
-  #   get_available_students()
-  #   @rooms = @dorm.rooms
-  #   @dorms = Dorm.all
-  #   @pull = Pull.new
-  #   @room_index = params["room_index"]
-  #   params["pull_count"].to_i.times {@pull.room_assignments.build}
-  #   respond_to do |format|
-  #     format.js {render layout: false}
-  #   end
-  # end
-
   def create_pull_ajax
     get_available_students()
     @rooms = @dorm.rooms
     @dorms = Dorm.all
-    puts "WE GOT HERE!!!!"
-    puts params["selected_rooms"]
-    puts "AGAIN"
-    puts @dorm
     @pull = Pull.new
-    rooms_hopefully = JSON.parse(params["selected_rooms"])
-    length = rooms_hopefully.length
-    puts "LENGTH"
-    puts length
-    for element in rooms_hopefully
-      puts "DOING A THING"
-      puts element
-    end
-
-    length.times {@pull.room_assignments.build}
+    selected_rooms = JSON.parse(params["selected_rooms"])
+    selected_rooms.length.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
