@@ -170,10 +170,8 @@
             <% end %>
           </div>
 
-          <% if @student %>
-            <% if @period %>
+          <% if @student && @period %>
               <button id="pull-student" class="btn btn-primary btn-block">Pull Room as a Student</button>
-            <% end %>
             <div class="hidden" id="student-pull-form">
               <br>
                 <div class="popup-button" id="pull-form">
