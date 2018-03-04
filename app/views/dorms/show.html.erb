@@ -172,17 +172,18 @@
   <% end %> 
 </div>
 
-
-<!-- get dorm floor maps -->
-<% if !@floor1.nil?  %>
-  <%= image_tag(@floor1, :id => "floor1", :class => "map") %> 
-<% end %>
-<% if !@floor2.nil?  %>
-  <%= image_tag(@floor2, :id => "floor2", :class => "map") %> 
-<% end %>
-<% if !@floor3.nil?  %>
-  <%= image_tag(@floor3, :id => "floor3", :class => "map") %> 
-<% end %>
+<div id="maps-source" style="display: none;">
+  <!-- get dorm floor maps -->
+  <% if !@floor1.nil?  %>
+    <%= image_tag(@floor1, :id => "floor1", :class => "map", :data => {:dims => @floor1dims}) %>
+  <% end %>
+  <% if !@floor2.nil?  %>
+    <%= image_tag(@floor2, :id => "floor2", :class => "map", :data => {:dims => @floor2dims}) %>
+  <% end %>
+  <% if !@floor3.nil?  %>
+    <%= image_tag(@floor3, :id => "floor3", :class => "map", :data => {:dims => @floor3dims}) %>
+  <% end %>
+</div>
 
 <script type="text/javascript">
   console.log("ORIG FILE");

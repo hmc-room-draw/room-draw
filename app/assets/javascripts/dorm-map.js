@@ -244,15 +244,13 @@ $(document).ready(function() {
 
     //create image tag to size map correctly
     var imgLev = level+1;
-    var img = document.getElementById('floor'+imgLev);  
+    var img = document.getElementById('floor'+imgLev);
     var map = $(img).attr("src");
-    var width = img.width;
-    var height = img.height;
+    var dims = JSON.parse($(img).attr("data-dims"));
+    console.log(dims);
+    var width = dims[0];
+    var height = dims[1];
     var ratio = height/width;
-    var w = 940; 
-    $(".map").css({
-        display: 'none',
-    });
 
     //create dorm map 
     var fakeDorm = $('<div>').css({
