@@ -10,11 +10,22 @@ $(document).ready(function() {
   var btn = document.getElementById("myBtn");
   var index;
   var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
+  // if (sessionStorage.getItem("selectedRooms")) {
+  //   console.log("got it!");
+  //   selectedRooms = JSON.parse(sessionStorage.getItem("selectedRooms"));
+  //   selectedRooms.forEach(function(room) {
+      
+  //     $("#room_" + room.number).addClass("selected");
+  //     console.log("GOT ONE!!!", "room_" + room.number);
+  //     console.log("THING", $("#room_" + room.number));
+  //   });
+  // }
   var singleSelect = false;
 
   var selectedToggle = function(data) {
     var index = selectedRooms.indexOf(data);
     if (index !== -1) {
+      console.log("SR", selectedRooms);
       selectedRooms.splice(index, 1); 
     } else {
       selectedRooms.push(data); 
@@ -29,10 +40,15 @@ $(document).ready(function() {
     }
   }
 
-  $(".close").click(function() {
+  var closeModals = function() {
     pullModal.style.display = "none";
     adminPullModal.style.display = "none";
     adminModal.style.display = "none";
+    fillingForm = false;
+  }
+
+  $(".close").click(function() {
+    closeModals();
   });
 
   // Have the admin buttons toggle their respective divs
@@ -206,6 +222,18 @@ $(document).ready(function() {
     $("#student-create-pull").addClass("hidden");
   }
 
+  // kangaroo
+  if (sessionStorage.getItem("selectedRooms")) {
+    console.log("got it!");
+    selectedRooms = JSON.parse(sessionStorage.getItem("selectedRooms"));
+    selectedRooms.forEach(function(room) {
+      
+      $("#room_" + room.number).addClass("selected");
+      console.log("GOT ONE!!!", "room_" + room.number);
+      console.log("THING", $("#room_" + room.number));
+    });
+  }
+
   function layout(level) {  
     for (var i = 0; i < dormElements.length; i++) {
         if (dormElements[i] !== undefined) {
@@ -289,6 +317,8 @@ $(document).ready(function() {
               'font-size': '10px',
           }).appendTo(fakeDorm);
           $(room).addClass("room-cell");
+          
+          // console.log("hopefully", roomData, room);
 
 
           dormElements.push(room);
@@ -297,6 +327,7 @@ $(document).ready(function() {
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
               room.info.clickable = true;
+              $(room).attr("id", "room_" + roomData[i].number);
               
               //need to check if student_id is equal to current_user.student.id
               //then you know if you are in room use bool in the while loop later
@@ -411,9 +442,9 @@ $(document).ready(function() {
           
           
           room.on('mouseenter', function(){
-             $(this).css({
-                 opacity: .5,
-             }); 
+            $(this).css({
+              opacity: .5,
+            }); 
           });
           
           room.on('mouseleave', function(){
@@ -430,6 +461,7 @@ $(document).ready(function() {
             // Highlight the selected room pink and add it to the list of selected rooms
             else if (admin || event.data.info.clickable) {
               selectedToggle(event.data.info);
+              console.log("HORRIBLE AND AWFUL.");
               $(event.target).toggleClass("selected");
             }
           });
@@ -437,26 +469,25 @@ $(document).ready(function() {
     }
 }
 
+//Close the popups when you click on the background.
+window.onclick = function(event) {
+  closeModals()
+}
+
 //TODO: Figure out what this is for?
 window.onclick = function(event) {
-  if (event.target == pullModal) {
-    pullModal.style.display = "none";
-    fillingForm = false;
-  }
-  if (event.target == adminModal) {
-    adminModal.style.display = "none";
-    fillingForm = false;
-  }
-  if (event.target == adminPullModal) {
-    adminPullModal.style.display = "none";
-    fillingForm = false;
+  target = event.target
+  if (event.target === pullModal | event.target === adminModal || event.target === adminPullModal) {
+    closeModals()
   }
 }
 
-//TODO: figure out what this is
+
 window.onkeyup = function(event) {
+  // When the user clicks the escape key, close the modals.
   if (event.keyCode == 27) {
     adminModal.style.display = "none";
+    adminPullModal.style.display = "none";
     pullModal.style.display = "none";
     fillingForm = false;
     floorHold.css({
@@ -479,16 +510,19 @@ $(document).click(function(event) {
 
 // update info timer with refresh
 setInterval(function(){
-    if (!fillingForm || modal.style.display === 'none') {
-        location.reload();
-    }
-}, 60000);
+  if (!fillingForm) {
+      // Store current selections in memory
+      console.log("setting")
+      sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
+      location.reload();
+      console.log("getting")
+  }
+}, 10000); //60000
 
 
 if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
     layout(0);
-}
-else {
+} else {
     layout(parseInt(sessionStorage.getItem("floorLevel")));
 }
 
