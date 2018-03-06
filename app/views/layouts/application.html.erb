@@ -8,10 +8,9 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   
-  <%= render partial: "layouts/nav" %>
-<!--   <p id="notice"><%= notice %></p>
- -->  <p id="alert"><%= alert %></p>
-  
-
-  <%= yield %>
+  <body class="controller-<%= controller_name %> action-<%= action_name %>">
+    <%= render partial: "layouts/nav" %>
+    <p id="alert"><%= alert %></p>
+	  <%= yield %>
+  </body>
 </html>

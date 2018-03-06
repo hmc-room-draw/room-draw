@@ -1,18 +1,16 @@
 
 <!-- CSS location: app/assets/stylesheets/dorms.scss -->
-<!-- JS location: app/assets/javascripts/dorm-map.js -->
 <div>
-  <%= javascript_include_tag "dorm-map", "data-turbolinks-track" => true %>
-<% flash.each do |key, value| %>
-  <div class="alert-div alert alert-<%= key %>"><%= value %></div>
-<% end %>
+  <% flash.each do |key, value| %>
+    <div class="alert-div alert alert-<%= key %>"><%= value %></div>
+  <% end %>
 
   <p>
     <% if current_user.is_admin? %>
       <%= link_to 'Edit', edit_dorm_path(@dorm) %> |
       <%= link_to 'Go Back', dorms_path %>
     <% end %>
-    </br>
+    <br>
   </p>
 </div>
 
@@ -45,8 +43,8 @@
     </div>
     <div class="dropdown" id="admin-pull-options" style="display:none;">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Selection Options
-    </button>
+        Selection Options
+      </button>
       <div class="dropdown-menu">
         <a id="admin-create-pull" class="dropdown-item">Create Pull</a><br/>
         <a id="admin-mark-unpullable" class="dropdown-item">Mark Unpullable</a><br/>
@@ -55,8 +53,9 @@
     </div>
   <% end %>
   <button id="student-create-pull"  style="display:none;">Create Pull</button>
+</div>
 
-</div style="margin-bottom: 20px;">
+<div style="margin-bottom: 20px;">
   <div class="input-color">
     <input type="text" value="vacant" readonly></input>
       <div class="color-box" style="background-color: rgb(0, 127, 163);"></div></br>
@@ -69,7 +68,9 @@
     <input type="text" value="selected" readonly></input>
       <div class="color-box selected" style="background-color: rgb(215, 66, 244);"></div></br>
   </div>
-  <p></br></p>
+</div>
+
+<br>
 
 
 <!-- Admin Modal -->
@@ -162,24 +163,23 @@
         <h2>Pull request initiated</h2>
       </div>
       <div class="modal-body">
-      <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
-
+        <p>You are not a student and cannot create a pull. Please contact admin if you think this is a mistake.</p>
+      </div>
     </div>  <!-- End of modal content -->
   <% end %> 
 </div>
 
-
-<!-- get dorm floor maps -->
-<% if !@floor1.nil?  %>
-  <%= image_tag(@floor1, :id => "floor1", :class => "map") %> 
-<% end %>
-<% if !@floor2.nil?  %>
-  <%= image_tag(@floor2, :id => "floor2", :class => "map") %> 
-<% end %>
-<% if !@floor3.nil?  %>
-  <%= image_tag(@floor3, :id => "floor3", :class => "map") %> 
-<% end %>
-
+<div id="maps-source" style="display: none;">
+  <!-- get dorm floor maps -->
+  <% if !@floor1.nil?  %>
+    <%= image_tag(@floor1, :id => "floor1", :class => "map", :data => {:dims => @floor1dims}) %>
+  <% end %>
+  <% if !@floor2.nil?  %>
+    <%= image_tag(@floor2, :id => "floor2", :class => "map", :data => {:dims => @floor2dims}) %>
+  <% end %>
+  <% if !@floor3.nil?  %>
+    <%= image_tag(@floor3, :id => "floor3", :class => "map", :data => {:dims => @floor3dims}) %>
+  <% end %>
 </div>
 
 <script type="text/javascript">

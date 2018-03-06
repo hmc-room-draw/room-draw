@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(".controller-dorms.action-show").ready(function() {
   $('.dropdown-toggle').dropdown();
 
   // Get the modal
@@ -272,15 +272,13 @@ $(document).ready(function() {
 
     //create image tag to size map correctly
     var imgLev = level+1;
-    var img = document.getElementById('floor'+imgLev);  
+    var img = document.getElementById('floor'+imgLev);
     var map = $(img).attr("src");
-    var width = img.width;
-    var height = img.height;
+    var dims = JSON.parse($(img).attr("data-dims"));
+    console.log(dims);
+    var width = dims[0];
+    var height = dims[1];
     var ratio = height/width;
-    var w = 940; 
-    $(".map").css({
-        display: 'none',
-    });
 
     //create dorm map 
     var fakeDorm = $('<div>').css({
@@ -469,11 +467,6 @@ $(document).ready(function() {
     }
 }
 
-//Close the popups when you click on the background.
-window.onclick = function(event) {
-  closeModals()
-}
-
 //TODO: Figure out what this is for?
 window.onclick = function(event) {
   target = event.target
@@ -510,7 +503,7 @@ $(document).click(function(event) {
 
 // update info timer with refresh
 setInterval(function(){
-  if (!fillingForm) {
+  if (!fillingForm || modal.style.display === 'none') {
       // Store current selections in memory
       console.log("setting")
       sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
@@ -525,6 +518,7 @@ if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("cur
 } else {
     layout(parseInt(sessionStorage.getItem("floorLevel")));
 }
+
 
 })
 

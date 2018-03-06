@@ -22,7 +22,9 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
     @pull = Pull.new
     selected_rooms = JSON.parse(params["selected_rooms"])
-    selected_rooms.length.times {@pull.room_assignments.build}
+    puts "ROOMS!!!!"
+    puts selected_rooms
+    #selected_rooms.length.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -48,21 +50,15 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
-      @student = dorm_id = Student.find_by user: current_user
-      @is_student = !@student.nil?
+      @student = current_user.student
+      @is_student = current_user.student.nil?
     end
 
     @period = current_draw_period()
     puts "PERIOD", @period
     @rooms = @dorm.rooms
     @pull = Pull.new
-    @adminPull = Pull.new
     1.times {@pull.room_assignments.build}
-    1.times {@adminPull.room_assignments.build}
-    #TODO: Get only the necessary information
-    # @students = Student.all
-    @users = User.all
-    # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
     get_available_students()
@@ -125,7 +121,19 @@ class DormsController < ApplicationController
         @floor1 = "west1.png"
         @floor2 = "west2.png"
     end 
-      
+
+    # get dimensions - https://stackoverflow.com/a/2450931/1294423
+    # (only works for PNGs)
+    if !@floor1.nil?
+      @floor1dims = IO.read('app/assets/images/'+@floor1)[0x10..0x18].unpack('NN')
+    end
+    if !@floor2.nil?
+      @floor2dims = IO.read('app/assets/images/'+@floor2)[0x10..0x18].unpack('NN')
+    end
+    if !@floor3.nil?
+      @floor3dims = IO.read('app/assets/images/'+@floor3)[0x10..0x18].unpack('NN')
+    end
+
     @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*, pulls.*")
       .joins(:rooms)
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")

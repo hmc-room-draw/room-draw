@@ -12,6 +12,26 @@
     </div>
   <% end %>
 
+  <%= field_set_tag 'Room Assignments' do %>
+  <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you.</br></br>
+    <i>Note: Rooms that have an alphabetical number are represented with a decimal. (ie. 103A is 103.1, 103B is 103.2, etc...)</i></br></br></p>
+		
+    <%= form.fields_for :room_assignments do |room_assignment| %>
+      <div>
+        <%= room_assignment.label :student_id %>
+        <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
+      </div>
+      <div>
+        <%= room_assignment.label :room_id %>
+        <%= room_assignment.collection_select :room_id, @rooms, :id, :number, id: :room_assignment_room_id, :include_blank => true %>
+      </div>
+          </br>
+      <div>
+        <%= room_assignment.hidden_field :assignment_type, :value => 'pulled' %>
+      </div>
+    <% end %>
+  <% end %> 
+
   <div class="field">
     <%= form.label :student_id %>
     <!-- TODO: We don't wanna display room_draw_number.
@@ -35,29 +55,8 @@
       </div>
     <% end %>
   <% end %>
-  
-  <%= field_set_tag 'Room Assignments' do %>
-  <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you.</br></br>
-    <i>Note: Rooms that have an alphabetical number are represented with a decimal. (ie. 103A is 103.1, 103B is 103.2, etc...)</i></br></br></p>
 
-    <%= form.fields_for :room_assignments do |room_assignment| %>
-      <div>
-        <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
-      </div>
-      <div>
-        <%= room_assignment.label :room_id %>
-        <%= room_assignment.collection_select :room_id, @rooms, :id, :number, id: :room_assignment_room_id, :include_blank => true %>
-      </div>
-          </br>
-      <div>
-        <%= room_assignment.hidden_field :assignment_type, :value => 'pulled' %>
-      </div>
-      
-    <% end %>
-  <% end %> 
-
-<input type="hidden" name="from_dorm" value=<%=@dorm.id %>>
+	<input type="hidden" name="from_dorm" value=<%=@dorm.id %>>
 
   <div class="actions">
     <%= form.submit %>
