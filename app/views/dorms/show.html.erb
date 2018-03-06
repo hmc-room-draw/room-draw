@@ -191,13 +191,13 @@
   var dormId = <%= @dorm.id %>;
   var admin = <%= @admin %>;
   var is_student = <%= @is_student %>;
-  var room_ids = <%= @room_ids %>;
-  var dorms_index = <%= @dorms_index %>;
   var period = <%= @period %>; 
 
   var level1 =  <%= @level1 %>;
   var level2 = <%= @level2 %>;
   var level3 = <%= @level3 %>;
+  
+  var curDorm = "<%= @dorm.name.downcase %>";
 </script>
 
 

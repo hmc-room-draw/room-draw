@@ -62,14 +62,11 @@ class DormsController < ApplicationController
 
     @period = current_draw_period()
     puts "PERIOD", @period
-    @rooms = @dorm.rooms
     @pull = Pull.new
     1.times {@pull.room_assignments.build}
     @dorms = Dorm.all
     #join tables
     get_available_students()
-    @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
-    @dorms_index = get_dorm_index()
 
     if current_user
       if !current_user.student.nil?
@@ -152,7 +149,7 @@ class DormsController < ApplicationController
               "users.first_name, users.last_name, users.email, " \
               "pulls.message, pulls.round, " \
               "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
-    
+
     @level1 = roomData
     .where("floor = ?", 1)
     .sort_by {|x| x.number}
@@ -239,7 +236,11 @@ class DormsController < ApplicationController
     end
 
     def get_available_students
-      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+      @students = Student.joins(:user)
+          .joins("LEFT OUTER JOIN room_assignments ON students.id = room_assignments.student_id")
+          .where("room_assignments.student_id IS NULL AND students.has_completed_form='t'")
+          .select("users.first_name, users.last_name, users.email, students.*")
+          .order("email ASC")
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -255,18 +256,6 @@ class DormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pull
       @pull = Pull.find(params[:id])
-    end
-
-    # Count how many rooms are before this room out of all Rooms
-    # This function helps us populate the adming Pulls form with the correct data
-    def get_dorm_index
-      count = 1
-      Dorm.all.each do |d|
-        if d == @dorm
-          return count
-        end
-        count += d.rooms.count
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
