@@ -22,7 +22,9 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
     @pull = Pull.new
     selected_rooms = JSON.parse(params["selected_rooms"])
-    selected_rooms.length.times {@pull.room_assignments.build}
+    puts "ROOMS!!!!"
+    puts selected_rooms
+    #selected_rooms.length.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -48,21 +50,15 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
-      @student = dorm_id = Student.find_by user: current_user
-      @is_student = !@student.nil?
+      @student = current_user.student
+      @is_student = current_user.student.nil?
     end
 
     @period = current_draw_period()
     puts "PERIOD", @period
     @rooms = @dorm.rooms
     @pull = Pull.new
-    @adminPull = Pull.new
     1.times {@pull.room_assignments.build}
-    1.times {@adminPull.room_assignments.build}
-    #TODO: Get only the necessary information
-    # @students = Student.all
-    @users = User.all
-    # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
     get_available_students()

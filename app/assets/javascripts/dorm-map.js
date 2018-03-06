@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(".controller-dorms.action-show").ready(function() {
   $('.dropdown-toggle').dropdown();
 
   // Get the modal
@@ -433,63 +433,62 @@ $(document).ready(function() {
           });
         x++;
     }
-}
+	}
 
-//TODO: Figure out what this is for?
-window.onclick = function(event) {
-  if (event.target == pullModal) {
-    pullModal.style.display = "none";
-    fillingForm = false;
-  }
-  if (event.target == adminModal) {
-    adminModal.style.display = "none";
-    fillingForm = false;
-  }
-  if (event.target == adminPullModal) {
-    adminPullModal.style.display = "none";
-    fillingForm = false;
-  }
-}
+	//TODO: Figure out what this is for?
+	window.onclick = function(event) {
+		if (event.target == pullModal) {
+			pullModal.style.display = "none";
+			fillingForm = false;
+		}
+		if (event.target == adminModal) {
+			adminModal.style.display = "none";
+			fillingForm = false;
+		}
+		if (event.target == adminPullModal) {
+			adminPullModal.style.display = "none";
+			fillingForm = false;
+		}
+	}
 
-//TODO: figure out what this is
-window.onkeyup = function(event) {
-  if (event.keyCode == 27) {
-    adminModal.style.display = "none";
-    pullModal.style.display = "none";
-    fillingForm = false;
-    floorHold.css({
-        visibility: 'hidden',
-        'z-index': 0
-    });
-  }
-}
+	//TODO: figure out what this is
+	window.onkeyup = function(event) {
+		if (event.keyCode == 27) {
+			adminModal.style.display = "none";
+			pullModal.style.display = "none";
+			fillingForm = false;
+			floorHold.css({
+					visibility: 'hidden',
+					'z-index': 0
+			});
+		}
+	}
 
-$(document).click(function(event) { 
-  if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
-    if($('#floorHold').css("visibility") === 'visible') {
-      $('#floorHold').css({
-        visibility: 'hidden',
-        'z-index': 0
-      });
-    }
-  }        
-});
+	$(document).click(function(event) { 
+		if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+			if($('#floorHold').css("visibility") === 'visible') {
+				$('#floorHold').css({
+					visibility: 'hidden',
+					'z-index': 0
+				});
+			}
+		}        
+	});
 
-// update info timer with refresh
-setInterval(function(){
-    if (!fillingForm || modal.style.display === 'none') {
-        location.reload();
-    }
-}, 60000);
+	// update info timer with refresh
+	setInterval(function(){
+		if (!fillingForm || modal.style.display === 'none') {
+			location.reload();
+		}
+	}, 60000);
 
 
-if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
-    layout(0);
-}
-else {
-    layout(parseInt(sessionStorage.getItem("floorLevel")));
-}
-
+	if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
+		layout(0);
+	}
+	else {
+		layout(parseInt(sessionStorage.getItem("floorLevel")));
+	}
 })
 
 
