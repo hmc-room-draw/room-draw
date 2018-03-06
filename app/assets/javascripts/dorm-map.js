@@ -66,6 +66,7 @@ $(".controller-dorms.action-show").ready(function() {
       // Hide admin options
       singleSelect = false;
       selectedRooms = [];
+      $(".room-cell").removeClass("selected");
       $("#admin-pull-options").addClass("hidden");
       $("#single-select-div").addClass("hidden");
       $("#student-create-pull").removeClass("hidden");
@@ -79,20 +80,18 @@ $(".controller-dorms.action-show").ready(function() {
   })
 
   $("#student-create-pull").click(function() {
-    pullModal.style.display = "block";
-    openPullForm(false);
+    openPullForm(false, pullModal);
   });
 
   $("#admin-create-pull").click(function() {
-    adminPullModal.style.display = "block";
-    openPullForm(true);
+    openPullForm(true, adminPullModal);
   });
 
-  var openPullForm = function(isAdmin) {
+  var openPullForm = function(isAdmin, modalToShow) {
     trimmed_selected = []
     // Strip out unnecessary values
     for (var room of selectedRooms) {
-      trimmed_selected.push([room.number, room.capacity])
+      trimmed_selected.push([room.number, room.capacity, room.id])
     }
 
     var url;
@@ -107,6 +106,7 @@ $(".controller-dorms.action-show").ready(function() {
       dataType: 'script',
       success: function(data){
         eval(data);
+        modalToShow.style.display = "block";
       }
     })
   }

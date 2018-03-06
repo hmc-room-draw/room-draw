@@ -16,14 +16,23 @@
   <p> Please fill out the following fields with <b><i>your email and the room you want to pull</i></b>, as well as the emails and rooms of other students you want to pull with you.</br></br>
     <i>Note: Rooms that have an alphabetical number are represented with a decimal. (ie. 103A is 103.1, 103B is 103.2, etc...)</i></br></br></p>
 		
+		<% room = 0 %>
+		<% student = -1 %>
     <%= form.fields_for :room_assignments do |room_assignment| %>
+    	<% student += 1 %>
+    	<% if student >= @selected_rooms[room][1] %>
+    		<% room += 1 %>
+    		<% student = 0 %>
+    	<% end %>
+    	<% if student == 0 %>
+    		<p><b>Room</b>: <%= @selected_rooms[room][0] %></p>
+    	<% end %>
+    	
+    	<%= room_assignment.hidden_field :room_id, :value => @selected_rooms[room][2] %>
+    	
       <div>
         <%= room_assignment.label :student_id %>
         <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
-      </div>
-      <div>
-        <%= room_assignment.label :room_id %>
-        <%= room_assignment.collection_select :room_id, @rooms, :id, :number, id: :room_assignment_room_id, :include_blank => true %>
       </div>
           </br>
       <div>
@@ -56,7 +65,7 @@
     <% end %>
   <% end %>
 
-	<input type="hidden" name="from_dorm" value=<%=@dorm.id %>>
+	<input type="hidden" name="from_dorm" value="<%=@dorm.id %>">
 
   <div class="actions">
     <%= form.submit %>
