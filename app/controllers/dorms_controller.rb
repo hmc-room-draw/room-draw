@@ -60,8 +60,7 @@ class DormsController < ApplicationController
       @is_student = current_user.student.nil?
     end
 
-    @period = current_draw_period()
-    puts "PERIOD", @period
+    @period = current_draw_period ? true : false
     @pull = Pull.new
     1.times {@pull.room_assignments.build}
     @dorms = Dorm.all
@@ -227,13 +226,6 @@ class DormsController < ApplicationController
   end
 
   private
-    def current_draw_period
-      candidate = DrawPeriod.first
-      if candidate == nil
-        return false
-      end
-      return candidate.start_datetime < DateTime.now && candidate.end_datetime > DateTime.now
-    end
 
     def get_available_students
       @students = Student.joins(:user)

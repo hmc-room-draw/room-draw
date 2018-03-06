@@ -1,11 +1,25 @@
 require './lib/google_api/drive.rb'
 
+# Wrapper class for the user object - used for Pundit authentication.
+class UserContext
+  attr_reader :user, :in_draw_period
+
+  def initialize(user, in_draw_period)
+    @user = user
+    @in_draw_period = in_draw_period
+  end
+end
+
 class ApplicationController < ActionController::Base
   include Pundit
   include ApplicationHelper
   protect_from_forgery with: :exception
-  before_action :check_login, :check_form, :check_draw_period
+  before_action :check_login, :check_form
   helper_method :current_user, :current_draw_period
+
+  def pundit_user
+    UserContext.new(current_user, current_draw_period)
+  end
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
@@ -43,17 +57,6 @@ class ApplicationController < ActionController::Base
           else
             redirect_to Rails.application.config.form_url
           end
-        end
-      end
-    end
-  end
-
-  def check_draw_period
-    url = request.fullpath
-    unless current_draw_period != nil then
-      unless current_user != nil && current_user.is_admin then
-        unless url == "/" or url.start_with?("/dorm") #Let students see the map but nothing else
-          redirect_to coming_soon_path
         end
       end
     end
