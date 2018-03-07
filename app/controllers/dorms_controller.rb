@@ -2,8 +2,8 @@ require 'rubygems'
 require 'json'
 
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :get_data]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :get_data]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :get_data, :create_admin_multi_pull_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :get_data, :create_admin_multi_pull_ajax]
 
 
   # GET /dorms
@@ -48,6 +48,7 @@ class DormsController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def get_data
     roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
@@ -85,6 +86,19 @@ class DormsController < ApplicationController
 
     get_available_students()
 
+=======
+  def create_admin_multi_pull_ajax
+    get_available_students()
+    @rooms = @dorm.rooms
+    @dorms = Dorm.all
+    @pull = Pull.new
+    @selected_rooms = JSON.parse(params["selected_rooms"])
+    total_capacity = 0
+    @selected_rooms.each do |room_data|
+      total_capacity += room_data[1]
+    end
+    total_capacity.times {@pull.room_assignments.build}
+>>>>>>> b3ba23ca78e271fb05454ff93e9a0889b613da68
     respond_to do |format|
       format.js {render layout: false}
     end
