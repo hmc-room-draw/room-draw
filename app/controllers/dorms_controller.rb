@@ -48,7 +48,6 @@ class DormsController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
   def get_data
     roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
@@ -86,7 +85,12 @@ class DormsController < ApplicationController
 
     get_available_students()
 
-=======
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+
   def create_admin_multi_pull_ajax
     get_available_students()
     @rooms = @dorm.rooms
@@ -98,7 +102,6 @@ class DormsController < ApplicationController
       total_capacity += room_data[1]
     end
     total_capacity.times {@pull.room_assignments.build}
->>>>>>> b3ba23ca78e271fb05454ff93e9a0889b613da68
     respond_to do |format|
       format.js {render layout: false}
     end
