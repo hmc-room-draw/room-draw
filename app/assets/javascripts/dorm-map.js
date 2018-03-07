@@ -96,7 +96,7 @@ $(".controller-dorms.action-show").ready(function() {
 
     var url;
     if (isAdmin) {
-      url = dormId + '/create_admin_pull_ajax/' + JSON.stringify(trimmed_selected);
+      url = dormId + '/create_admin_multi_pull_ajax/' + JSON.stringify(trimmed_selected);
     } else {
       url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected);
     }
