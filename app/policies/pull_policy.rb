@@ -5,7 +5,7 @@ class PullPolicy < ApplicationPolicy
   end
 
   def new?
-    true
+    user.is_admin || @in_draw_period
   end
 
   def show?
@@ -13,7 +13,7 @@ class PullPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    user.is_admin || @in_draw_period
   end
 
   def update?
@@ -25,6 +25,6 @@ class PullPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.is_admin || record.students.include?(user.student)
+    user.is_admin || (record.students.include?(user.student) && @in_draw_period)
   end
 end

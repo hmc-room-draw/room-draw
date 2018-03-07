@@ -21,10 +21,12 @@ class DormsController < ApplicationController
     @rooms = @dorm.rooms
     @dorms = Dorm.all
     @pull = Pull.new
-    selected_rooms = JSON.parse(params["selected_rooms"])
-    puts "ROOMS!!!!"
-    puts selected_rooms
-    #selected_rooms.length.times {@pull.room_assignments.build}
+    @selected_rooms = JSON.parse(params["selected_rooms"])
+    total_capacity = 0
+    @selected_rooms.each do |room_data|
+      total_capacity += room_data[1]
+    end
+    total_capacity.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -35,8 +37,12 @@ class DormsController < ApplicationController
     @rooms = @dorm.rooms
     @dorms = Dorm.all
     @pull = Pull.new
-    selected_rooms = JSON.parse(params["selected_rooms"])
-    selected_rooms.length.times {@pull.room_assignments.build}
+    @selected_rooms = JSON.parse(params["selected_rooms"])
+    total_capacity = 0
+    @selected_rooms.each do |room_data|
+      total_capacity += room_data[1]
+    end
+    total_capacity.times {@pull.room_assignments.build}
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -87,16 +93,12 @@ class DormsController < ApplicationController
       @is_student = current_user.student.nil?
     end
 
-    @period = current_draw_period()
-    puts "PERIOD", @period
-    @rooms = @dorm.rooms
+    @period = current_draw_period ? true : false
     @pull = Pull.new
     1.times {@pull.room_assignments.build}
     @dorms = Dorm.all
     #join tables
     get_available_students()
-    @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
-    @dorms_index = get_dorm_index()
 
     if current_user
       if !current_user.student.nil?
@@ -167,26 +169,32 @@ class DormsController < ApplicationController
       @floor3dims = IO.read('app/assets/images/'+@floor3)[0x10..0x18].unpack('NN')
     end
 
-    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*, pulls.*")
-      .joins(:rooms)
+    roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
       .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
       .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
-      .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
-    
-    @level1 = @testDorm
+      .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
+      .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
+      .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
+              "room_assignments.assignment_type, room_assignments.description, " \
+              "students.class_rank, students.room_draw_number, " \
+              "users.first_name, users.last_name, users.email, " \
+              "pulls.message, pulls.round, " \
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
+
+    @level1 = roomData
     .where("floor = ?", 1)
     .sort_by {|x| x.number}
     .to_json
     .html_safe 
      
-    @level2 = @testDorm
+    @level2 = roomData
     .where("floor = ?", 2)
     .sort_by {|x| x.number}
     .to_json
     .html_safe 
      
-    @level3 = @testDorm
+    @level3 = roomData
     .where("floor = ?", 3)
     .sort_by {|x| x.number}
     .to_json
@@ -251,16 +259,13 @@ class DormsController < ApplicationController
   end
 
   private
-    def current_draw_period
-      candidate = DrawPeriod.first
-      if candidate == nil
-        return false
-      end
-      return candidate.start_datetime < DateTime.now && candidate.end_datetime > DateTime.now
-    end
 
     def get_available_students
-      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+      @students = Student.joins(:user)
+          .joins("LEFT OUTER JOIN room_assignments ON students.id = room_assignments.student_id")
+          .where("room_assignments.student_id IS NULL AND students.has_completed_form='t'")
+          .select("users.first_name, users.last_name, users.email, students.*")
+          .order("email ASC")
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -276,18 +281,6 @@ class DormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pull
       @pull = Pull.find(params[:id])
-    end
-
-    # Count how many rooms are before this room out of all Rooms
-    # This function helps us populate the adming Pulls form with the correct data
-    def get_dorm_index
-      count = 1
-      Dorm.all.each do |d|
-        if d == @dorm
-          return count
-        end
-        count += d.rooms.count
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

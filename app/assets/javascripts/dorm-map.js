@@ -71,6 +71,7 @@ $(".controller-dorms.action-show").ready(function() {
       // Hide admin options
       singleSelect = false;
       selectedRooms = [];
+      $(".room-cell").removeClass("selected");
       $("#admin-pull-options").addClass("hidden");
       $("#single-select-div").addClass("hidden");
       $("#student-create-pull").removeClass("hidden");
@@ -84,20 +85,18 @@ $(".controller-dorms.action-show").ready(function() {
   })
 
   $("#student-create-pull").click(function() {
-    pullModal.style.display = "block";
-    openPullForm(false);
+    openPullForm(false, pullModal);
   });
 
   $("#admin-create-pull").click(function() {
-    adminPullModal.style.display = "block";
-    openPullForm(true);
+    openPullForm(true, adminPullModal);
   });
 
-  var openPullForm = function(isAdmin) {
+  var openPullForm = function(isAdmin, modalToShow) {
     trimmed_selected = []
     // Strip out unnecessary values
     for (var room of selectedRooms) {
-      trimmed_selected.push([room.number, room.capacity])
+      trimmed_selected.push([room.number, room.capacity, room.id])
     }
 
     var url;
@@ -112,13 +111,13 @@ $(".controller-dorms.action-show").ready(function() {
       dataType: 'script',
       success: function(data){
         eval(data);
+        modalToShow.style.display = "block";
       }
     })
   }
 
   // Fade out error messages after a bit
   $(".alert-div").fadeOut(8000);
-  var curDorm = "<%= @dorm.name.downcase %>";
   var fillingForm = false;
   var dormElements = [];
 
@@ -217,7 +216,7 @@ $(".controller-dorms.action-show").ready(function() {
             dormElements[i].remove();
         }
     }
-    sessionStorage.setItem("curDorm", "<%= @dorm.name.downcase %>");
+    sessionStorage.setItem("curDorm", curDorm);
     dormElements = [];
     //get dorm room data
     var roomData; 
@@ -269,10 +268,6 @@ $(".controller-dorms.action-show").ready(function() {
     }).appendTo('body');
     dormElements.push(fakeDorm);
 
-    function get_room_index(x) {
-      return dorms_index + room_ids.indexOf(x);
-    }
-
     //get keys so that you can traverse js by index
     var keysbyindex = Object.keys(floor);
     while (x < keysbyindex.length) {
@@ -314,8 +309,8 @@ $(".controller-dorms.action-show").ready(function() {
                       userInRoom = true;
                   }
                   if (roomData[i].pull_id !== null) {
-                      roomPullNum = roomData[i].room_draw_number;
-                      roomRankNum = roomData[i].class_rank;
+                      roomPullNum = roomData[i].pull_number;
+                      roomRankNum = roomData[i].pull_rank;
                       round = roomData[i].round;
                       switch(roomRankNum) {
                         case 0:

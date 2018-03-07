@@ -7,6 +7,7 @@ class PullsController < ApplicationController
   def index
     authorize Pull
     @pulls = Pull.all.order(created_at: :desc)
+    @period = current_draw_period
   end
 
   # GET /pulls/1
