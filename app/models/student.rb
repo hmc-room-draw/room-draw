@@ -89,8 +89,7 @@ class Student < ApplicationRecord
   end
 
   def student_name_and_number
-    user = self.user
-    format_number + " " + user.first_name + " " + user.last_name
+    student_name + " (" + format_number + ")"
   end
 
   def student_name

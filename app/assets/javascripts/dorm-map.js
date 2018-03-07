@@ -106,6 +106,7 @@ $(".controller-dorms.action-show").ready(function() {
       dataType: 'script',
       success: function(data){
         eval(data);
+        if(!isAdmin) hideInvalidStudentIds();
         modalToShow.style.display = "block";
       }
     })
@@ -484,6 +485,36 @@ $(".controller-dorms.action-show").ready(function() {
 	else {
 		layout(parseInt(sessionStorage.getItem("floorLevel")));
 	}
+	
+	var hideInvalidStudentIds = function() {
+		validIds = new Set();
+		$(".room_assignment_student_id").each(function() {
+			validIds.add(this.value);
+		});
+		
+		firstValidOption = null;
+		$("#student_id_select > option").each(function(index, item) {
+			sel = $(item);
+			if(validIds.has(this.value)) {
+				if(firstValidOption == null) firstValidOption = this.value;
+				sel.removeAttr('hidden');
+				sel.removeAttr("disabled");
+			} else {
+				sel.removeAttr("selected");
+				sel.attr("hidden","hidden");
+				sel.attr("disabled","disabled");
+			}
+		});
+		// if the selected option is invalid, change it
+		if (!validIds.has($("#student_id_select").val())) {
+			$("#student_id_select").val(firstValidOption);
+		}
+	}
+	
+	
+	$("#pull-form-modal").on("change", ".room_assignment_student_id", function(e){
+		hideInvalidStudentIds();
+	});
 })
 
 
