@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # post 'dorms/:id/student_pull_ajax/:pull_count/:room_index', to: 'dorms#student_pull_ajax'
   post 'dorms/:id/create_pull_ajax/:selected_rooms', to: 'dorms#create_pull_ajax'
   post 'dorms/:id/create_admin_pull_ajax/:selected_rooms', to: 'dorms#create_admin_pull_ajax'
-  post 'dorms/get_data', to: 'dorms#get_data'
+  post 'dorms/:id/get_data', to: 'dorms#get_data'
 
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
