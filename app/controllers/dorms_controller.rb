@@ -3,7 +3,7 @@ require 'json'
 
 class DormsController < ApplicationController
   before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :get_data]
 
 
   # GET /dorms
@@ -37,6 +37,39 @@ class DormsController < ApplicationController
     @pull = Pull.new
     selected_rooms = JSON.parse(params["selected_rooms"])
     selected_rooms.length.times {@pull.room_assignments.build}
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+  def get_data
+    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*, pulls.*")
+      .joins(:rooms)
+      .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
+      .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
+      .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+      .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
+
+    @level1 = @testDorm
+      .where("floor = ?", 1)
+      .sort_by {|x| x.number}
+      .to_json
+      .html_safe 
+     
+    @level2 = @testDorm
+      .where("floor = ?", 2)
+      .sort_by {|x| x.number}
+      .to_json
+      .html_safe 
+     
+    @level3 = @testDorm
+      .where("floor = ?", 3)
+      .sort_by {|x| x.number}
+      .to_json
+      .html_safe  
+
+    get_available_students()
+
     respond_to do |format|
       format.js {render layout: false}
     end
