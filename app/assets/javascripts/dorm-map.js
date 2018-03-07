@@ -90,7 +90,8 @@ $(".controller-dorms.action-show").ready(function() {
   var openPullForm = function(isAdmin, modalToShow) {
     trimmed_selected = []
     // Strip out unnecessary values
-    for (var room of selectedRooms) {
+    for (var i = 0; i < selectedRooms.length; i++) {
+      var room = selectedRooms[i];
       trimmed_selected.push([room.number, room.capacity, room.id])
     }
 
