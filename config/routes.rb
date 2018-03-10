@@ -16,9 +16,9 @@ Rails.application.routes.draw do
   post 'pulls/new', to: 'pulls#new'
 
   # Ajax for pull forms
-  post 'dorms/:id/create_pull_ajax/:selected_rooms', to: 'dorms#create_pull_ajax'
-  post 'dorms/:id/create_admin_pull_ajax/:selected_rooms', to: 'dorms#create_admin_pull_ajax'
-  post 'dorms/:id/create_admin_multi_pull_ajax/:selected_rooms', to: 'dorms#create_admin_multi_pull_ajax'
+  post 'dorms/:id/create_pull_ajax/:selected_rooms', to: 'dorms#create_pull_ajax', :constraints => { :selected_rooms => /[^\/]+/ }
+  post 'dorms/:id/create_admin_pull_ajax/:selected_rooms', to: 'dorms#create_admin_pull_ajax', :constraints => { :selected_rooms => /[^\/]+/ }
+  post 'dorms/:id/create_admin_multi_pull_ajax/:selected_rooms', to: 'dorms#create_admin_multi_pull_ajax', :constraints => { :selected_rooms => /[^\/]+/ }
 
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
