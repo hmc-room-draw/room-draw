@@ -482,28 +482,28 @@ $(".controller-dorms.action-show").ready(function() {
     if (!fillingForm || modal.style.display === 'none') {
         // Store current selections in memory
         sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
-        console.log("repeating");
-        $.ajax({
-          url: dormId + '/get_data',
-          type: 'POST',
-          dataType: 'script',
-          success: function(data){
-            console.log("DATA", data);
-            levels = JSON.parse(data);
-            level1 = levels.level1;
-            level2 = levels.level2;
-            level3 = levels.level3;
-            console.log("LEVELS", level3);
+        // console.log("repeating");
+      //   $.ajax({
+      //     url: dormId + '/get_data',
+      //     type: 'POST',
+      //     dataType: 'script',
+      //     success: function(data){
+      //       // console.log("DATA", data);
+      //       levels = JSON.parse(data);
+      //       level1 = levels.level1;
+      //       level2 = levels.level2;
+      //       level3 = levels.level3;
+      //       // console.log("LEVELS", level3);
 
-            // setLevels();
-            if (sessionStorage.getItem("floorLevel") === null) {
-              layout(0);
-            } else {
-              layout(parseInt(sessionStorage.getItem("floorLevel")));
-            }
-            reselect();
-        }
-      })
+      //       // setLevels();
+      //       if (sessionStorage.getItem("floorLevel") === null) {
+      //         layout(0);
+      //       } else {
+      //         layout(parseInt(sessionStorage.getItem("floorLevel")));
+      //       }
+      //       reselect();
+      //   }
+      // })
     }
   }, 10000);
 

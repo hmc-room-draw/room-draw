@@ -79,9 +79,9 @@ class DormsController < ApplicationController
     .sort_by {|x| x.number}
     .to_json
 
-    puts "L1", @level1
-    puts "L2", @level2
-    puts "L3", @level3 
+    # puts "L1", @level1
+    # puts "L2", @level2
+    # puts "L3", @level3 
 
     get_available_students()
 
