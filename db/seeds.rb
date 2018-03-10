@@ -232,30 +232,31 @@ Room.create(floor: 2, capacity: 4, number: '257', dorm_id: 2)
 
 ############## YOU CAN ADD PULLS LIKE THIS ##############
 
-@student1 = Student.find(1)
-@room1 = Room.find(1)
+# Un-comment these lines if you'd like the starting DB to have some pulls.
+# @student1 = Student.find(1)
+# @room1 = Room.find(1)
 
-@pull1 = Pull.new
-@pull1.student_id = @student1.id
-@pull1.room_assignments.build(
-	student_id: @student1.id, 
-	room_id: @room1.id, 
-	assignment_type: :pulled)
+# @pull1 = Pull.new
+# @pull1.student_id = @student1.id
+# @pull1.room_assignments.build(
+# 	student_id: @student1.id, 
+# 	room_id: @room1.id, 
+# 	assignment_type: :pulled)
 
-@pull1.save
+# @pull1.save
 
 
-@student2 = Student.find(2)
-@room2 = Room.find(2)
+# @student2 = Student.find(2)
+# @room2 = Room.find(2)
 
-@pull2 = Pull.new
-@pull2.student_id = @student2.id
-@pull2.room_assignments.build(
-	student_id: @student2.id, 
-	room_id: @room2.id, 
-	assignment_type: :pulled)
+# @pull2 = Pull.new
+# @pull2.student_id = @student2.id
+# @pull2.room_assignments.build(
+# 	student_id: @student2.id, 
+# 	room_id: @room2.id, 
+# 	assignment_type: :pulled)
 
-@pull2.save
+# @pull2.save
 
 # #Drinkward
 
