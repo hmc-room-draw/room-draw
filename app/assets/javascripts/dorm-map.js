@@ -248,7 +248,6 @@ $(".controller-dorms.action-show").ready(function() {
     var img = document.getElementById('floor'+imgLev);
     var map = $(img).attr("src");
     var dims = JSON.parse($(img).attr("data-dims"));
-    console.log(dims);
     var width = dims[0];
     var height = dims[1];
     var ratio = height/width;
@@ -368,7 +367,7 @@ $(".controller-dorms.action-show").ready(function() {
                   if (room.info.assignment_type === 1) {
                       preplaced = true;
                       room.info.clickable = false;
-                      room.text('freshman');
+                      room.text('frosh');
                   }
                   else if (room.info.assignment_type !== 2) {
                       preplaced = true;

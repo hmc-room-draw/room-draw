@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
+  post 'create_frosh', to: 'static_pages#create_frosh'
 
   # Google OAuth
   get 'auth/:provider/callback', to: 'sessions#create'
