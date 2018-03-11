@@ -21,6 +21,19 @@
   Curie,Marie,mcurie@g.hmc.edu,senior,3,East,106,preplaced</p>
   <%= form_tag import_users_path, multipart: true do %>
     <%= file_field_tag :file %>
+    <br>
+    <%= submit_tag "Upload" %>
+  <% end %>
+</div> 
+
+<div>
+  <h4>Place Frosh</h4>
+  <p> <b> Please upload a csv file in format as follows (header line followed by example student line): </b> 
+  <br>Dorm, Room<br> 
+  EA, 112</p>
+  <%= form_tag({action: "create_frosh"}, multipart: true) do %>
+    <%= file_field_tag :file %>
+    <br>
     <%= submit_tag "Upload" %>
   <% end %>
 </div> 
@@ -41,3 +54,6 @@
     <p style="color: gray">Last scheduled by <b><i><%= lastUpdater(@draw_period) %></i></b>.</p>
   <% end %>
 </div>
+<script>
+  $(".alert").fadeOut(8000);
+</script>

@@ -236,10 +236,8 @@ $(".controller-dorms.action-show").ready(function() {
             
     }
     var room, val;
-    //image map path
-    // var map = mapLayout.assets[level];
+
     //speciifc floor layout coordinates
-    var floor = mapLayout.floors[level+1];
     var i = 0;
     var x = 0;
     var roomPullNum;
@@ -249,13 +247,21 @@ $(".controller-dorms.action-show").ready(function() {
     var preplaced;
 
     //create image tag to size map correctly
-    var imgLev = level+1;
-    var img = document.getElementById('floor'+imgLev);
-    var map = $(img).attr("src");
-    var dims = JSON.parse($(img).attr("data-dims"));
+    var imgLev = level + 1;
+    var img = document.getElementById('floor' + imgLev);
+    var dims;
+    try {
+      dims = JSON.parse($(img).attr("data-dims"));
+    } catch(e) {
+      img = document.getElementById('floor' + 1);
+      dims = JSON.parse($(img).attr("data-dims"));
+      level = 0;
+    }
     var width = dims[0];
     var height = dims[1];
-    var ratio = height/width;
+    var ratio = height / width;
+    var floor = mapLayout.floors[level + 1];
+    var map = $(img).attr("src");
 
     //create dorm map 
     var fakeDorm = $('<div>').css({
@@ -370,7 +376,7 @@ $(".controller-dorms.action-show").ready(function() {
                   if (room.info.assignment_type === 1) {
                       preplaced = true;
                       room.info.clickable = false;
-                      room.text('freshman');
+                      room.text('frosh');
                   }
                   else if (room.info.assignment_type !== 2) {
                       preplaced = true;
