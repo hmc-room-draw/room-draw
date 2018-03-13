@@ -10,7 +10,9 @@
   
   <body class="controller-<%= controller_name %> action-<%= action_name %>">
     <%= render partial: "layouts/nav" %>
-    <p id="alert"><%= alert %></p>
-	  <%= yield %>
+    <div style="margin-left: 15px">
+      <p id="alert"><%= alert %></p>
+  	  <%= yield %>
+    </div>
   </body>
 </html>
