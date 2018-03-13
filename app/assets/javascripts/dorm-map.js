@@ -428,6 +428,30 @@ $(".controller-dorms.action-show").ready(function() {
           room.on('click', {info: room.info}, function(event) {
              // If singleSelect is checked, open the normal admin form
             if (singleSelect && admin) {
+              var info = event.data.info;
+              console.log("INFO", info);
+              // If there's currently a pull, only show the "Edit/Delete pull options"
+              if (info.pull_number != null) {
+                $('#create-pull').addClass('hidden');
+                $('#edit-pull').removeClass('hidden');
+                $('#delete-pull').removeClass('hidden');
+                $('#mark-unpullable').addClass('hidden');
+                $('#mark-pullable').addClass('hidden');
+              } else if (info.assignment_type != null) {
+                // If there's currently a room assignment, only show the "Mark Pullable" option
+                $('#create-pull').addClass('hidden');
+                $('#edit-pull').addClass('hidden');
+                $('#delete-pull').addClass('hidden');
+                $('#mark-unpullable').addClass('hidden');
+                $('#mark-pullable').removeClass('hidden');
+              } else {
+                // Otherwise, show the "Create Pull" and "Mark Unpullable" options
+                $('#create-pull').removeClass('hidden');
+                $('#edit-pull').addClass('hidden');
+                $('#delete-pull').addClass('hidden');
+                $('#mark-unpullable').removeClass('hidden');
+                $('#mark-pullable').addClass('hidden');
+              }
               adminModal.style.display = "block";
             }
             // Highlight the selected room pink and add it to the list of selected rooms
@@ -485,31 +509,28 @@ $(".controller-dorms.action-show").ready(function() {
 
   // update info timer with refresh
   setInterval(function(){
-    if (!fillingForm || modal.style.display === 'none') {
+    url_list = window.location.href.split("/");
+    if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
         // Store current selections in memory
         sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
-        // console.log("repeating");
-      //   $.ajax({
-      //     url: dormId + '/get_data',
-      //     type: 'POST',
-      //     dataType: 'script',
-      //     success: function(data){
-      //       // console.log("DATA", data);
-      //       levels = JSON.parse(data);
-      //       level1 = levels.level1;
-      //       level2 = levels.level2;
-      //       level3 = levels.level3;
-      //       // console.log("LEVELS", level3);
+        $.ajax({
+          url: dormId + '/get_data',
+          type: 'POST',
+          dataType: 'script',
+          success: function(data){
+            levels = JSON.parse(data);
+            level1 = levels.level1;
+            level2 = levels.level2;
+            level3 = levels.level3;
 
-      //       // setLevels();
-      //       if (sessionStorage.getItem("floorLevel") === null) {
-      //         layout(0);
-      //       } else {
-      //         layout(parseInt(sessionStorage.getItem("floorLevel")));
-      //       }
-      //       reselect();
-      //   }
-      // })
+            if (sessionStorage.getItem("floorLevel") === null) {
+              layout(0);
+            } else {
+              layout(parseInt(sessionStorage.getItem("floorLevel")));
+            }
+            reselect();
+        }
+      })
     }
   }, 10000);
 

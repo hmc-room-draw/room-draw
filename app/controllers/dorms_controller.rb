@@ -49,6 +49,7 @@ class DormsController < ApplicationController
   end
 
   def get_data
+    puts "DATA!!!!!!!!!!!!!!!!!!!!!!!!!"
     roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
       .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")

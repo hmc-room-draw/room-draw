@@ -98,7 +98,12 @@
           <div id="edit-form-div"></div>
         </div>
 
-        <div id="delete-pull">
+        <div id="delete-pull" class="popup-button toggle-form">
+          <%= form_with(method: "delete_mark") do %>
+            <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
+            <%= text_field_tag(:room, value="", :id=>"unpullable-room-delete", class: "hidden") %>
+            <%= submit_tag("DELETE PULL DOESNT WORK YET", class: "btn btn-primary btn-block") %>
+          <% end %>
         </div>
 
         <!-- Unpullable Form -->
