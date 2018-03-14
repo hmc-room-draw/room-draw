@@ -49,7 +49,7 @@ class DormsController < ApplicationController
   end
 
   def get_data
-    puts "DATA!!!!!!!!!!!!!!!!!!!!!!!!!"
+
     roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
       .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
@@ -57,12 +57,11 @@ class DormsController < ApplicationController
       .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
       .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
       .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
-              "room_assignments.assignment_type, room_assignments.description, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
               "students.class_rank, students.room_draw_number, " \
               "users.first_name, users.last_name, users.email, " \
-              "pulls.message, pulls.round, " \
+              "pulls.message, pulls.round," \
               "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
-
     @level1 = roomData
     .where("floor = ?", 1)
     .sort_by {|x| x.number}
@@ -79,10 +78,6 @@ class DormsController < ApplicationController
     .where("floor = ?", 3)
     .sort_by {|x| x.number}
     .to_json
-
-    # puts "L1", @level1
-    # puts "L2", @level2
-    # puts "L3", @level3 
 
     get_available_students()
 
@@ -203,7 +198,7 @@ class DormsController < ApplicationController
       .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
       .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
       .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
-              "room_assignments.assignment_type, room_assignments.description, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
               "students.class_rank, students.room_draw_number, " \
               "users.first_name, users.last_name, users.email, " \
               "pulls.message, pulls.round, " \
