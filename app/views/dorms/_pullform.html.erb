@@ -32,7 +32,11 @@
 
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :student_name_and_number, {id: :room_assignment_student_id, :selected => current_user.student.id.to_s}, {:class => "room_assignment_student_id"} %>
+        <% if not current_user.student.nil? %>
+          <%= room_assignment.collection_select :student_id, @students, :id, :student_name_and_number, {id: :room_assignment_student_id, :selected => current_user.student.id.to_s}, {:class => "room_assignment_student_id"} %>
+        <% else %>
+          <%= room_assignment.collection_select :student_id, @students, :id, :student_name_and_number, {id: :room_assignment_student_id}, {:class => "room_assignment_student_id"} %>
+        <% end %>
       </div>
 
       <div>
@@ -43,8 +47,12 @@
 
   <div class="field">
     <%= form.label :student_id, 'Pull as ' %>
-    <%= form.collection_select :student_id, @students, :id, :format_number, {:selected => current_user.student.id.to_s}, {:id => "student_id_select"} %>
-    <%= form.hidden_field :student_id, :value => current_user.student.id  %>
+    <% if not current_user.student.nil? %>
+      <%= form.collection_select :student_id, @students, :id, :format_number, {:selected => current_user.student.id.to_s}, {:id => "student_id_select"} %>
+      <%= form.hidden_field :student_id, :value => current_user.student.id  %>
+    <% else %>
+      <%= form.collection_select :student_id, @students, :id, :format_number, {:id => "student_id_select"} %>
+    <% end %>
   </div>
 
 	<div class="field">

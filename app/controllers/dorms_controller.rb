@@ -2,8 +2,8 @@ require 'rubygems'
 require 'json'
 
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :create_admin_multi_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :create_admin_pull_ajax, :create_admin_multi_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :get_data]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :get_data]
 
 
   # GET /dorms
@@ -32,33 +32,39 @@ class DormsController < ApplicationController
     end
   end
 
-  def create_admin_pull_ajax
-    get_available_students()
-    @rooms = @dorm.rooms
-    @dorms = Dorm.all
-    @pull = Pull.new
-    @selected_rooms = JSON.parse(params["selected_rooms"])
-    total_capacity = 0
-    @selected_rooms.each do |room_data|
-      total_capacity += room_data[1]
-    end
-    total_capacity.times {@pull.room_assignments.build}
-    respond_to do |format|
-      format.js {render layout: false}
-    end
-  end
+  def get_data
 
-  def create_admin_multi_pull_ajax
+    roomData = @dorm.rooms
+      .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
+      .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
+      .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+      .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
+      .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
+      .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
+              "students.class_rank, students.room_draw_number, students.id as student_id," \
+              "users.first_name, users.last_name, users.email, " \
+              "pulls.message, pulls.round," \
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
+    @level1 = roomData
+    .where("floor = ?", 1)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level2 = roomData
+    .where("floor = ?", 2)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level3 = roomData
+    .where("floor = ?", 3)
+    .sort_by {|x| x.number}
+    .to_json
+
     get_available_students()
-    @rooms = @dorm.rooms
-    @dorms = Dorm.all
-    @pull = Pull.new
-    @selected_rooms = JSON.parse(params["selected_rooms"])
-    total_capacity = 0
-    @selected_rooms.each do |room_data|
-      total_capacity += room_data[1]
-    end
-    total_capacity.times {@pull.room_assignments.build}
+
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -159,8 +165,8 @@ class DormsController < ApplicationController
       .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
       .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
       .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
-              "room_assignments.assignment_type, room_assignments.description, " \
-              "students.class_rank, students.room_draw_number, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
+              "students.class_rank, students.room_draw_number, students.id as student_id, " \
               "users.first_name, users.last_name, users.email, " \
               "pulls.message, pulls.round, " \
               "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")

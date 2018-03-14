@@ -10,7 +10,6 @@ $(".controller-dorms.action-show").ready(function() {
   var btn = document.getElementById("myBtn");
   var index;
   var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
-  var singleSelect = false;
 
   var selectedToggle = function(data) {
     var index = selectedRooms.indexOf(data);
@@ -29,52 +28,27 @@ $(".controller-dorms.action-show").ready(function() {
     }
   }
 
-  $(".close").click(function() {
+  var closeModals = function() {
     pullModal.style.display = "none";
     adminPullModal.style.display = "none";
     adminModal.style.display = "none";
-  });
+    fillingForm = false;
+  }
 
-  // Have the admin buttons toggle their respective divs
-  $("#mark-unpullable").click(function() {
-    $("#unpullable-form").toggleClass("hidden");
-  });
-  $("#pull-student").click(function() {
-    $("#student-pull-form").toggleClass("hidden");
-  });
-  $("#create-pull").click(function() {
-    $("#pull-form").toggleClass("hidden");
-  });
-  $("#edit-pull").click(function() {
-    $("#edit-pull-form").toggleClass("hidden");
-  });
-
-  $("#single-select").click(function() {
-    if ($(this).is(":checked")) {
-      // Hide admin options
-      singleSelect = true;
-      selectedRooms = [];
-      $(".room-cell").removeClass("selected");
-    } else {
-      // Reveal admin options
-      singleSelect = false;
-    }
+  $(".close").click(function() {
+    closeModals();
   });
 
   $("#pull-as-student").click(function() {
     if ($(this).is(":checked")) {
       // Hide admin options
-      singleSelect = false;
       selectedRooms = [];
       $(".room-cell").removeClass("selected");
       $("#admin-pull-options").addClass("hidden");
-      $("#single-select-div").addClass("hidden");
       $("#student-create-pull").removeClass("hidden");
     } else {
       // Reveal admin options
-      singleSelect = false;
       $("#admin-pull-options").removeClass("hidden");
-      $("#single-select-div").removeClass("hidden");
       $("#student-create-pull").addClass("hidden");
     }
   })
@@ -87,6 +61,29 @@ $(".controller-dorms.action-show").ready(function() {
     openPullForm(true, adminPullModal);
   });
 
+  $("#admin-mark-unpullable").click(function() {
+    trimmed_selected = []
+    // Strip out unnecessary values
+    for (var i = 0; i < selectedRooms.length; i++) {
+      var room = selectedRooms[i];
+      trimmed_selected.push({room_num: room.number, pull_id: room.pull_id});
+    }
+    $('#unpullable-room-num').val(JSON.stringify(trimmed_selected));
+    adminModal.style.display = "block";
+  });
+
+  $("#admin-mark-available").click(function() {
+    trimmed_selected = []
+    // Strip out unnecessary values
+    for (var i = 0; i < selectedRooms.length; i++) {
+      var room = selectedRooms[i];
+      trimmed_selected.push({room_num: room.number, pull_id: room.pull_id});
+    }
+    $('#mark-available-room').val(JSON.stringify(trimmed_selected)); // previously unpullable-room-num
+  });
+
+    
+
   var openPullForm = function(isAdmin, modalToShow) {
     trimmed_selected = []
     // Strip out unnecessary values
@@ -95,12 +92,7 @@ $(".controller-dorms.action-show").ready(function() {
       trimmed_selected.push([room.number, room.capacity, room.id])
     }
 
-    var url;
-    if (isAdmin) {
-      url = dormId + '/create_admin_multi_pull_ajax/' + JSON.stringify(trimmed_selected);
-    } else {
-      url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected);
-    }
+    var url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected);
     $.ajax({
       url: url,
       type: 'POST',
@@ -207,7 +199,7 @@ $(".controller-dorms.action-show").ready(function() {
     $("#student-create-pull").addClass("hidden");
   }
 
-  function layout(level) {  
+  function layout(level) {
     for (var i = 0; i < dormElements.length; i++) {
         if (dormElements[i] !== undefined) {
             dormElements[i].remove();
@@ -216,7 +208,7 @@ $(".controller-dorms.action-show").ready(function() {
     sessionStorage.setItem("curDorm", curDorm);
     dormElements = [];
     //get dorm room data
-    var roomData; 
+    var roomData = [];
     switch (level) {
         case 0:
             roomData = level1;
@@ -230,6 +222,13 @@ $(".controller-dorms.action-show").ready(function() {
         default:
             
     }
+
+    // If the roomdata doesn't exit (b/c we go from L3 on one dorm to a dorm w/o 3 levels),
+    // then go down to L1
+    if (roomData.length == 0) {
+      roomData = level1;
+    }
+    
     var room, val;
 
     //speciifc floor layout coordinates
@@ -297,9 +296,7 @@ $(".controller-dorms.action-show").ready(function() {
           if (roomData[i] !== undefined) {
               room.info = roomData[i];
               room.info.clickable = true;
-              
-              //need to check if student_id is equal to current_user.student.id
-              //then you know if you are in room use bool in the while loop later
+              $(room).attr("id", "room_" + roomData[i].number);
               
               //get names of students in room, possibly max of room draw numbers
               roomPullNum = null;
@@ -378,7 +375,12 @@ $(".controller-dorms.action-show").ready(function() {
                   else if (room.info.assignment_type !== 2) {
                       preplaced = true;
                       room.info.clickable = false;
-                      room.text('preplaced/ unavailable');
+                      if (room.info.description) {
+                        room.text(room.info.description);
+                      } else {
+                        room.text('preplaced/ unavailable');
+                      }
+                      
                   }
               }
 
@@ -411,9 +413,9 @@ $(".controller-dorms.action-show").ready(function() {
           
           
           room.on('mouseenter', function(){
-             $(this).css({
-                 opacity: .5,
-             }); 
+            $(this).css({
+              opacity: .5,
+            }); 
           });
           
           room.on('mouseleave', function(){
@@ -423,66 +425,85 @@ $(".controller-dorms.action-show").ready(function() {
           });
           
           room.on('click', {info: room.info}, function(event) {
-             // If singleSelect is checked, open the normal admin form
-            if (singleSelect && admin) {
-              adminModal.style.display = "block";
-            }
             // Highlight the selected room pink and add it to the list of selected rooms
-            else if (admin || event.data.info.clickable) {
+            if (admin || event.data.info.clickable) {
               selectedToggle(event.data.info);
               $(event.target).toggleClass("selected");
             }
           });
         x++;
     }
-	}
+  }
 
-	//TODO: Figure out what this is for?
-	window.onclick = function(event) {
-		if (event.target == pullModal) {
-			pullModal.style.display = "none";
-			fillingForm = false;
-		}
-		if (event.target == adminModal) {
-			adminModal.style.display = "none";
-			fillingForm = false;
-		}
-		if (event.target == adminPullModal) {
-			adminPullModal.style.display = "none";
-			fillingForm = false;
-		}
-	}
+  var reselect = function() {
+    if (sessionStorage.getItem("selectedRooms")) {
+      selectedRooms = JSON.parse(sessionStorage.getItem("selectedRooms"));
+      selectedRooms.forEach(function(room) {
+        $("#room_" + room.number).addClass("selected");
+      });
+    }
+  }
 
-	//TODO: figure out what this is
-	window.onkeyup = function(event) {
-		if (event.keyCode == 27) {
-			adminModal.style.display = "none";
-			pullModal.style.display = "none";
-			fillingForm = false;
-			floorHold.css({
-					visibility: 'hidden',
-					'z-index': 0
-			});
-		}
-	}
+  //TODO: Figure out what this is for?
+  window.onclick = function(event) {
+    target = event.target
+    if (event.target === pullModal | event.target === adminModal || event.target === adminPullModal) {
+      closeModals()
+    }
+  }
 
-	$(document).click(function(event) { 
-		if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
-			if($('#floorHold').css("visibility") === 'visible') {
-				$('#floorHold').css({
-					visibility: 'hidden',
-					'z-index': 0
-				});
-			}
-		}        
-	});
 
-	// update info timer with refresh
-	setInterval(function(){
-		if (!fillingForm || modal.style.display === 'none') {
-			location.reload();
-		}
-	}, 60000);
+  window.onkeyup = function(event) {
+    // When the user clicks the escape key, close the modals.
+    if (event.keyCode == 27) {
+      adminModal.style.display = "none";
+      adminPullModal.style.display = "none";
+      pullModal.style.display = "none";
+      fillingForm = false;
+      floorHold.css({
+          visibility: 'hidden',
+          'z-index': 0
+      });
+    }
+  }
+
+  $(document).click(function(event) { 
+    if(!$(event.target).closest('#floorHold').length && !$(event.target).closest('#floorSelect').length) {
+      if($('#floorHold').css("visibility") === 'visible') {
+        $('#floorHold').css({
+          visibility: 'hidden',
+          'z-index': 0
+        });
+      }
+    }        
+  });
+
+  // update info timer with refresh
+  setInterval(function(){
+    url_list = window.location.href.split("/");
+    if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
+        // Store current selections in memory
+        sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
+        $.ajax({
+          url: dormId + '/get_data',
+          type: 'POST',
+          dataType: 'script',
+          success: function(data){
+            levels = JSON.parse(data);
+            level1 = levels[0];
+            level2 = levels[1];
+            level3 = levels[2];
+
+            if (sessionStorage.getItem("floorLevel") === null) {
+              layout(0);
+            } else {
+              layout(parseInt(sessionStorage.getItem("floorLevel")));
+            }
+            reselect();
+        }
+      })
+    }
+  }, 60000);
 
 
 	if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
