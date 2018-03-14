@@ -55,11 +55,11 @@ class PullsController < ApplicationController
     end
 
     if @pull.student.senior? and @pull.round === nil then
-      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling") and return
+      flash[:danger] = "Please specify in which round you are pulling"
+      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling.") and return
     end
 
     cps = @pull.get_conflicting_pulls
-    puts "found conflicting pull!!!!!!!", cps[0].id, "done"
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
     #TODO: I made some escapes to avoid problems that call this method from different places
@@ -100,23 +100,9 @@ class PullsController < ApplicationController
     end
 
     respond_to do |format|
-      puts "REDIRECTING"
       redirect_path = get_redirect_path(params, @pull)
-      puts redirect_path, "done"
       if @pull.save
-        puts  "SAVED!"
         format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
-
-        
-        # if from_dorm
-        #   puts "FROM DORM MAP", from_dorm, "done"
-        #   # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
-        #   format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
-        # else
-        #   puts "OTHER PAGE"
-        #   format.html { redirect_to @pull, notice: "Pull was successfully created." }
-        #   format.json { render :show, status: :created, location: @pull }
-        # end
 
       else
         if from_dorm
@@ -170,8 +156,6 @@ class PullsController < ApplicationController
   # DELETE /pulls/1.json
   def destroy
     authorize @pull
-    puts "DESTROY!!!"
-    puts RoomAssignment.count
 
     @pull.students.each { |student|
       # TODO: Update these for more detail later
@@ -182,7 +166,6 @@ class PullsController < ApplicationController
 
 
     @pull.destroy
-    puts "AGAIN COUNTING", RoomAssignment.count
     respond_to do |format|
       redirect_path = get_redirect_path(params, pulls_url)
       format.html { redirect_to redirect_path, notice: "Pull was successfully destroyed." }

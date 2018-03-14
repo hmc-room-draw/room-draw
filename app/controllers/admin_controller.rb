@@ -31,7 +31,7 @@ class AdminController < ApplicationController
       @marked_room.room_id = room
       @marked_room.description = params[:description]
       @marked_room.save
-      if @marked_room.errors 
+      if @marked_room.errors.count > 0
         flash[:danger] = @marked_room.errors.full_messages
         return
       end
@@ -54,13 +54,18 @@ class AdminController < ApplicationController
       if room_data["pull_id"]
         pull = Pull.find_by(id: room_data["pull_id"])
         if not pull.nil?
+          pull.students.each { |student|
+            subject = "Pull bumped"
+            content = "Your pull has been bumped by an admin."
+            GeneralMailer.send_email(student.user, subject, content)
+          }
           pull.destroy
         end
       end
       room = get_room(params[:dorm], room_data["room_num"])
 
       # Delete all rooms with this room_id
-      RoomAssignment.where(room_id: room_data["room_num"]).destroy_all
+      RoomAssignment.where(room_id: room).destroy_all
     end
     flash[:success] = "Rooms successfully deleted."
   end

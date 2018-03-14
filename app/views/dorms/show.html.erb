@@ -37,21 +37,16 @@
         <label class="form-check-label" for="pull-as-student">Pull as Student</label>
       </div>
     <% end %>
-    <div class="form-check" id="single-select-div">
-      <input class="form-check-input" type="checkbox" id="single-select">
-      <label class="form-check-label" for="single-select">Single Select (Default is Multiselect)</label>
-    </div>
     <div id="admin-pull-options" style="display:none;">
       <button id="admin-create-pull" class="btn btn-primary">Create Pull</button>
       <button id="admin-mark-unpullable" class="btn btn-warning">Mark Unpullable</button>
-
-      <%= form_with(method: "delete_all", data: { confirm: 'Are you sure?' } ) do %>
+      <%= form_for("/admin/map", method: "delete_mark", data: { confirm: 'Are you sure?' } ) do |f| %>
+        <%= text_field_tag(:redirect_path, value=(@dorm.nil? ? nil : dorm_path(@dorm)), class: "hidden") %>
         <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
         <%= text_field_tag(:room, value="", :id=>"mark-available-room", class: "hidden") %>
         <%= submit_tag("Delete RoomAssignments/Pulls", class: "btn btn-info", :id =>"admin-mark-available") %>
       <% end %>
 
-      <!-- <button id="admin-mark-available" class="btn btn-info">Delete RoomAssignments/Pulls</button> -->
     </div>
   <% end %>
   <button id="student-create-pull"  style="display:none;">Create Pull</button>
@@ -63,7 +58,7 @@
       <div class="color-box" style="background-color: rgb(0, 127, 163);"></div></br>
     <input type="text" value="pullable" readonly></input>
       <div class="color-box" style="background-color: rgb(183, 191, 16);"></div></br>
-      <input type="text" value="not pullable or bumpable" readonly></input>
+    <input type="text" value="not pullable or bumpable" readonly></input>
       <div class="color-box" style="background-color: rgb(91, 103, 112);"></div></br>
     <input type="text" value="room you are pulled into" readonly></input>
       <div class="color-box" style="background-color: rgb(234, 170, 0);"></div></br>
@@ -87,13 +82,6 @@
       <div class="popup-button" id="unpullable-form">
           <%= render "admin/unpullable_form", :dorm => @dorm.name, locals: {dorm_name: @dorm.name} %>
       </div>
-<!--       <div id="mark-pullable" class="popup-button toggle-form">
-        <%= form_with(method: "edit_mark") do %>
-          <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %>
-          <%= text_field_tag(:room, value="", :id=>"mark-pullable-room", class: "hidden") %>
-          <%= submit_tag("Mark Room Pullable", class: "btn btn-primary btn-block") %>
-        <% end %>
-      </div> -->
     </div>
   </div>
 </div>

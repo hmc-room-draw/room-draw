@@ -78,7 +78,6 @@ class RoomAssignmentsController < ApplicationController
   # DELETE /room_assignments/1
   # DELETE /room_assignments/1.json
   def destroy
-    puts "GETTING RID OF DESTROYING!!!"
     authorize @room_assignment
     @room_assignment.destroy
     respond_to do |format|

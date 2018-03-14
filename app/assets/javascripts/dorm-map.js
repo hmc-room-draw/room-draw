@@ -10,7 +10,6 @@ $(".controller-dorms.action-show").ready(function() {
   var btn = document.getElementById("myBtn");
   var index;
   var selectedRooms = []; // Holds list of rooms which have been selected for a pull.
-  var singleSelect = false;
 
   var selectedToggle = function(data) {
     var index = selectedRooms.indexOf(data);
@@ -43,17 +42,13 @@ $(".controller-dorms.action-show").ready(function() {
   $("#pull-as-student").click(function() {
     if ($(this).is(":checked")) {
       // Hide admin options
-      singleSelect = false;
       selectedRooms = [];
       $(".room-cell").removeClass("selected");
       $("#admin-pull-options").addClass("hidden");
-      $("#single-select-div").addClass("hidden");
       $("#student-create-pull").removeClass("hidden");
     } else {
       // Reveal admin options
-      singleSelect = false;
       $("#admin-pull-options").removeClass("hidden");
-      $("#single-select-div").removeClass("hidden");
       $("#student-create-pull").addClass("hidden");
     }
   })
@@ -97,12 +92,7 @@ $(".controller-dorms.action-show").ready(function() {
       trimmed_selected.push([room.number, room.capacity, room.id])
     }
 
-    var url;
-    if (isAdmin) {
-      url = dormId + '/create_admin_multi_pull_ajax/' + JSON.stringify(trimmed_selected);
-    } else {
-      url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected);
-    }
+    var url = dormId + '/create_pull_ajax/' + JSON.stringify(trimmed_selected);
     $.ajax({
       url: url,
       type: 'POST',
@@ -513,7 +503,7 @@ $(".controller-dorms.action-show").ready(function() {
         }
       })
     }
-  }, 600000);
+  }, 60000);
 
 
 	if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
