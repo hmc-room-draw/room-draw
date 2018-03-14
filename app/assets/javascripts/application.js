@@ -17,4 +17,5 @@
 //= require bootstrap-sortable
 //= require rails-ujs
 //= require turbolinks
+//= require jquery-readyselector
 //= require_tree .

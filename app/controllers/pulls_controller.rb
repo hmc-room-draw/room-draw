@@ -55,7 +55,8 @@ class PullsController < ApplicationController
     end
 
     if @pull.student.senior? and @pull.round === nil then
-      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling") and return
+      flash[:danger] = "Please specify in which round you are pulling"
+      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling.") and return
     end
 
     cps = @pull.get_conflicting_pulls
@@ -101,13 +102,7 @@ class PullsController < ApplicationController
     respond_to do |format|
       redirect_path = get_redirect_path(params, @pull)
       if @pull.save
-        if from_dorm
-          # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
-          format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
-        else
-          format.html { redirect_to @pull, notice: "Pull was successfully created." }
-          format.json { render :show, status: :created, location: @pull }
-        end
+        format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
 
       else
         if from_dorm

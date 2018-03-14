@@ -15,16 +15,16 @@ Rails.application.routes.draw do
 
   post 'pulls/new', to: 'pulls#new'
 
-  # Ajax for student form
-  post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
-  post 'dorms/:id/student_pull_ajax/:pull_count/:room_index', to: 'dorms#student_pull_ajax'
+  # Ajax for pull forms
+  post 'dorms/:id/create_pull_ajax/:selected_rooms', to: 'dorms#create_pull_ajax', :constraints => { :selected_rooms => /[^\/]+/ }
+  post 'dorms/:id/get_data', to: 'dorms#get_data'
 
   # Admin Room Assignments form
   post 'dorms/:id', to: 'admin#edit_mark'
 
   # Dorm map page
-  post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
-  post 'dorms/:id/pull_num_ajax/:pull_count/:room_index', to: 'dorms#pull_num_ajax'
+  # post 'dorms/:id/load_pull_ajax/:pull_id', to: 'dorms#load_pull_ajax'
+  # post 'dorms/:id/pull_num_ajax/:pull_count/:room_index', to: 'dorms#pull_num_ajax'
   get 'dorms/:id', to: 'dorms#show'
 
   # Pulls
@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   post 'admin/uploadRoster', to: 'static_pages#uploadRoster'
   post 'admin/downloadNonParticipants', to: 'static_pages#downloadNonParticipants'
   post 'admin/downloadPlacements', to: 'static_pages#downloadPlacements'
+  post 'create_frosh', to: 'static_pages#create_frosh'
 
   # Google OAuth
   get 'auth/:provider/callback', to: 'sessions#create'

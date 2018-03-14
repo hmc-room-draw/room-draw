@@ -13,7 +13,7 @@ Every year, Harvey Mudd College students select rooms for the following year thr
 * Accounts are split into **User** (holding credentials) and **Student** (holding data pertaining to room
   draw participation). This allows for the existence of admins who are not students, e.g. the dean of housing.
 * **Pulls** group one or more **RoomAssignments** together as an atomic operation. **RoomAssignments**
-  map a student to a room, and may result from pulls, freshman placement, or preplacement.
+  map a student to a room, and may result from pulls, frosh placement, or preplacement.
   
 ![](architecture.png)
 
