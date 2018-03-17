@@ -45,7 +45,7 @@ class DormsController < ApplicationController
               "students.class_rank, students.room_draw_number, students.id as student_id," \
               "users.first_name, users.last_name, users.email, " \
               "pulls.message, pulls.round," \
-              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number, pulling_students.number_is_last as is_last")
     @level1 = roomData
     .where("floor = ?", 1)
     .sort_by {|x| x.number}
@@ -91,16 +91,19 @@ class DormsController < ApplicationController
 
     if current_user
       if !current_user.student.nil?
-        @curPullNum = current_user.student.room_draw_number    
+        @curPullNum = current_user.student.room_draw_number
+        @isLast = current_user.student.number_is_last 
         @curRankNum = Student.class_ranks[current_user.student.class_rank]
         @studentId = current_user.student.id
       else 
         @curRankNum = 0
+        @isLast = 0
         @curPullNum = 0
         @studentId = -1
       end
     else 
       @curRankNum = 0
+      @isLast = 0
       @curPullNum = 0
       @studentId = -1
     end
@@ -166,10 +169,10 @@ class DormsController < ApplicationController
       .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
       .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
               "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
-              "students.class_rank, students.room_draw_number, students.id as student_id, " \
+              "students.class_rank, students.room_draw_number, students.id as student_id," \
               "users.first_name, users.last_name, users.email, " \
               "pulls.message, pulls.round, " \
-              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number")
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number, pulling_students.number_is_last as is_last")
 
     @level1 = roomData
     .where("floor = ?", 1)

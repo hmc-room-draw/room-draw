@@ -47,6 +47,8 @@ class PullsController < ApplicationController
     @rooms = Room.all
 
     @pull = Pull.new(pull_params)
+    puts "PULL PARAMS", pull_params, "done"
+    puts "NUM", @pull.student.room_draw_number, "done"
     authorize @pull
 
     capacity_check = validate_room_cap
@@ -57,6 +59,9 @@ class PullsController < ApplicationController
     if @pull.student.senior? and @pull.round === nil then
       flash[:danger] = "Please specify in which round you are pulling"
       redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling.") and return
+    elsif @pull.student.senior? and not @pull.round === 1 and not @pull.round === 2 then
+      flash[:danger] = "Senior round must be 1 or 2."
+      redirect_back(fallback_location: root_path, notice: "Senior round must be 1 or 2.") and return
     end
 
     cps = @pull.get_conflicting_pulls
@@ -66,11 +71,14 @@ class PullsController < ApplicationController
     #      but some of them might not be necessary.
       if not cannot_override.empty?
         ids = cannot_override.map { |co| co.id }
-        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","} with higher priority.") and return
+        flash[:danger] = "Can't pull! Conflicts with a pull with higher priority."
+        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with a pull with higher priority.") and return
       elsif @pull.has_conflicting_nonpulls
           # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
+          flash[:danger] = "Can't pull! Conflicts with preplacements or frosh."
           redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
       elsif not @pull.include_student and not current_user.is_admin
+          flash[:danger] = "Can't pull! You must be included in the pull."
           redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
       end
 

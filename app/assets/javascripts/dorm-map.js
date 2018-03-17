@@ -301,6 +301,7 @@ $(".controller-dorms.action-show").ready(function() {
               //get names of students in room, possibly max of room draw numbers
               roomPullNum = null;
               roomRankName = null;
+              roomIsLast = false;
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
@@ -313,6 +314,7 @@ $(".controller-dorms.action-show").ready(function() {
                   if (roomData[i].pull_id !== null) {
                       roomPullNum = roomData[i].pull_number;
                       roomRankNum = roomData[i].pull_rank;
+                      roomIsLast = roomData[i].is_last
                       round = roomData[i].round;
                       switch(roomRankNum) {
                         case 0:
@@ -341,6 +343,9 @@ $(".controller-dorms.action-show").ready(function() {
               }
               if (room.curNames[0] != null) {
                   string = '<em> ' + roomRankName + ' ' + roomPullNum + ' ';
+                  if (roomIsLast === "t") {
+                    string = '<em> ' + roomRankName + ' Last ' + roomPullNum + ' ';
+                  }
                   if (roomRankNum < 2) {string+= "round " + round}
                   if (room.info.message !=null) {string+="</em> <br>" + room.info.message};
                   room.popover({
@@ -350,8 +355,13 @@ $(".controller-dorms.action-show").ready(function() {
                     content: string,
                   });
               }
-              //check if your room draw number is lower or the roomo is not pulled at all
-              if ((((roomRankNum > userRankNum || (roomRankNum === userRankNum && userDrawNum < roomPullNum)) && room.info.assignment_type === 2)) && !userInRoom) {
+              //check if your room draw number is lower or the room is not pulled at all
+              if ((((roomRankNum > userRankNum || 
+                    (roomRankNum === userRankNum && roomIsLast === "t" && !userIsLast) ||
+                    (roomRankNum === userRankNum && roomIsLast === "t" && userIsLast && userDrawNum < roomPullNum) ||
+                    (roomRankNum === userRankNum && roomIsLast !== "t" && !userIsLast && userDrawNum < roomPullNum)
+                   )
+                 && room.info.assignment_type === 2)) && !userInRoom) {
                   room.css({
                       background: 'rgb(183, 191, 16)',
                   });
@@ -480,7 +490,6 @@ $(".controller-dorms.action-show").ready(function() {
 
   // update info timer with refresh
   setInterval(function(){
-    console.log("RELOAD");
     url_list = window.location.href.split("/");
     if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
         // Store current selections in memory
@@ -504,7 +513,7 @@ $(".controller-dorms.action-show").ready(function() {
         }
       })
     }
-  }, 60000);
+  }, 6000);
 
 
 	if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {

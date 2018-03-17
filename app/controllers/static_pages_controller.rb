@@ -86,9 +86,9 @@ class StaticPagesController < ApplicationController
       csv << ["Last Name", "First Name", "Class Rank", "Room Draw Number", "Email"]
       Student.all.each do |student|
         logger.debug "DEBUGGING \n\n\n\n\n\n"
-        logger.debug student.has_participated
+        logger.debug student.has_completed_form
         logger.debug student.status
-        if student.has_participated == false
+        if student.has_completed_form == false
           user = student.user
           csv << [user.first_name, user.last_name, student.class_rank, student.room_draw_number, user.email]
         end
