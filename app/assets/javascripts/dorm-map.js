@@ -480,6 +480,7 @@ $(".controller-dorms.action-show").ready(function() {
 
   // update info timer with refresh
   setInterval(function(){
+    console.log("RELOAD");
     url_list = window.location.href.split("/");
     if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
         // Store current selections in memory

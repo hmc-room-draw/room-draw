@@ -16,7 +16,9 @@
     <br>
     <%= f.text_field :description, class: 'message', :required => true, :placeholder => 'Message'%>
     <br>
-    <%= f.date_select :sendDate %>
+    <div class="hidden">
+      <%= f.date_select :sendDate %>
+    </div>
     <div>
       <h3>Select email recipients by status</h3>
       <div class="field">
@@ -41,7 +43,7 @@
       </div>
     </div>
     <br>
-    <%= f.submit "Save Email"%>
+    <%= f.submit "Send Email"%>
   <% end %>
 
 

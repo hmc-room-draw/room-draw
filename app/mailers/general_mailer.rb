@@ -1,7 +1,8 @@
 class GeneralMailer < ApplicationMailer
   def self.schedule_reminder_email(sendDate, emailId)
     diffD = (sendDate - Date.today).to_i
-    GeneralMailer.delay(queue:"reminder", run_at: diffD.days.from_now).scheduled_email(emailId)
+   # self.delay(queue:"reminder", run_at: diffD.days.from_now).scheduled_email(emailId)
+   self.scheduled_email(emailId) 
   end
 
   def self.send_email(user, subject, content)
@@ -9,7 +10,7 @@ class GeneralMailer < ApplicationMailer
     ActionMailer::Base.mail(to: user.email, from: 'from@example.com', subject: subject, body: content).deliver
   end
 
-  def scheduled_email(emailId)
+  def self.scheduled_email(emailId)
     email = Email.find emailId
     if email
       Student.all.each do |student|
