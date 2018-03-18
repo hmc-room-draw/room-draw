@@ -262,6 +262,7 @@ $(".controller-dorms.action-show").ready(function() {
         position: 'absolute',
         left: 90,
         top: 350,
+        'margin-bottom': 50,
         width: 940,
         height: 940*ratio,
         'background-image': "url(" + map + ")",
@@ -489,31 +490,31 @@ $(".controller-dorms.action-show").ready(function() {
   });
 
   // update info timer with refresh
-  setInterval(function(){
-    url_list = window.location.href.split("/");
-    if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
-        // Store current selections in memory
-        sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
-        $.ajax({
-          url: dormId + '/get_data',
-          type: 'POST',
-          dataType: 'script',
-          success: function(data){
-            levels = JSON.parse(data);
-            level1 = levels[0];
-            level2 = levels[1];
-            level3 = levels[2];
+  // setInterval(function(){
+  //   url_list = window.location.href.split("/");
+  //   if ((!fillingForm || modal.style.display === 'none') && (url_list[url_list.length-1] == dormId && url_list[url_list.length-2] == "dorms")) {
+  //       // Store current selections in memory
+  //       sessionStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
+  //       $.ajax({
+  //         url: dormId + '/get_data',
+  //         type: 'POST',
+  //         dataType: 'script',
+  //         success: function(data){
+  //           levels = JSON.parse(data);
+  //           level1 = levels[0];
+  //           level2 = levels[1];
+  //           level3 = levels[2];
 
-            if (sessionStorage.getItem("floorLevel") === null) {
-              layout(0);
-            } else {
-              layout(parseInt(sessionStorage.getItem("floorLevel")));
-            }
-            reselect();
-        }
-      })
-    }
-  }, 6000);
+  //           if (sessionStorage.getItem("floorLevel") === null) {
+  //             layout(0);
+  //           } else {
+  //             layout(parseInt(sessionStorage.getItem("floorLevel")));
+  //           }
+  //           reselect();
+  //       }
+  //     })
+  //   }
+  // }, 6000);
 
 
 	if (sessionStorage.getItem("floorLevel") === null || sessionStorage.getItem("curDorm") === null || sessionStorage.getItem("curDorm") !== curDorm) {
