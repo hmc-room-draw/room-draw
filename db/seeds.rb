@@ -225,9 +225,9 @@ Room.create(floor: 2, capacity: 2, number: '252', dorm_id: 2)
 Room.create(floor: 2, capacity: 2, number: '253', dorm_id: 2)
 Room.create(floor: 2, capacity: 2, number: '254', dorm_id: 2)
 Room.create(floor: 2, capacity: 2, number: '255', dorm_id: 2)
-Room.create(floor: 2, capacity: 3, number: '256', dorm_id: 2)
+Room.create(floor: 2, capacity: 4, number: '256', dorm_id: 2)###FIIX!!!
 Room.create(floor: 2, capacity: 4, number: '257', dorm_id: 2)
-
+#Room.create(floor: 2, capacity: 4, number: '258', dorm_id: 2)
 
 
 ############## YOU CAN ADD PULLS LIKE THIS ##############

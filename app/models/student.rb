@@ -101,7 +101,7 @@ class Student < ApplicationRecord
   def format_status
     case status
     when :never_logged_in
-      "Never logged in"
+      "Never filled out form"
     when :never_pulled_room
       "Never pulled room"
     when :formerly_in_room
