@@ -92,7 +92,7 @@ class DormsController < ApplicationController
     if current_user
       if !current_user.student.nil?
         @curPullNum = current_user.student.room_draw_number
-        @isLast = current_user.student.number_is_last 
+        @isLast = current_user.student.number_is_last ? true : false
         @curRankNum = Student.class_ranks[current_user.student.class_rank]
         @studentId = current_user.student.id
       else 
