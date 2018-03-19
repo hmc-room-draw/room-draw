@@ -67,20 +67,28 @@ class PullsController < ApplicationController
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
+    # Check for uniqueness
+    if not @pull.check_unique
+      flash[:danger] = "Can't pull! Each person can only be in a room once."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Each person can only be in a room once.") and return
+    end
+
     #TODO: I made some escapes to avoid problems that call this method from different places
     #      but some of them might not be necessary.
-      if not cannot_override.empty?
-        ids = cannot_override.map { |co| co.id }
-        flash[:danger] = "Can't pull! Conflicts with a pull with higher priority."
-        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with a pull with higher priority.") and return
-      elsif @pull.has_conflicting_nonpulls
-          # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
-          flash[:danger] = "Can't pull! Conflicts with preplacements or frosh."
-          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
-      elsif not @pull.include_student and not current_user.is_admin
-          flash[:danger] = "Can't pull! You must be included in the pull."
-          redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
-      end
+    if not cannot_override.empty?
+      ids = cannot_override.map { |co| co.id }
+      flash[:danger] = "Can't pull! Conflicts with a pull with higher priority."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with a pull with higher priority.") and return
+    elsif @pull.has_conflicting_nonpulls
+      flash[:danger] = "Can't pull! Conflicts with preplacements or frosh."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
+    elsif not @pull.include_student
+      flash[:danger] = "Can't pull! You can only pull on the number of someone included in the pull."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! You can only pull on the number of someone included in the pull.") and return
+    elsif not @pull.include_specific_student(current_user) and not current_user.is_admin
+      flash[:danger] = "Can't pull! You must be included in the pull."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
+    end
 
 
     if not cps.empty? 
