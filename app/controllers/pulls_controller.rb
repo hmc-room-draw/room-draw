@@ -47,8 +47,6 @@ class PullsController < ApplicationController
     @rooms = Room.all
 
     @pull = Pull.new(pull_params)
-    puts "PULL PARAMS", pull_params, "done"
-    puts "NUM", @pull.student.room_draw_number, "done"
     authorize @pull
 
     capacity_check = validate_room_cap
