@@ -106,7 +106,8 @@ class PullsController < ApplicationController
       GeneralMailer.send_email(student.user, subject, content)
 
       f = File.open("record.csv", "a")
-      f.write("#{puller}, #{student.user.first_name} #{student.user.last_name}, #{dorm}, #{room}\n")
+      t = Time.now
+      f.write("#{puller}, #{student.user.first_name} #{student.user.last_name}, #{dorm}, #{room}, "+ t.to_s+ "\n")
       f.close
 
       student.has_participated = true
