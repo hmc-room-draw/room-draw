@@ -199,6 +199,37 @@ $(".controller-dorms.action-show").ready(function() {
     $("#student-create-pull").addClass("hidden");
   }
 
+  // checks if person 1 has a better number than person 2
+  function betterNum(rank1, rank2, round1, round2, last1, last2, num1, num2) {
+    if (rank1 > rank2) {
+      return false;
+    }
+    if (rank2 > rank1) {
+      return true;
+    }
+    // If you're at this point, they have the same rank.
+    // Seniors
+    if (rank1 === 0) {
+      if (round2 > round1) {
+        return true;
+      }
+      if (round1 > round2) {
+        return false;
+      }
+    }
+    // If you're at this point, they have the same round (or aren't seniors)
+    if (last1 && !last2) {
+      return false;
+    }
+    if (last2 && !last1) {
+      return true;
+    }
+    // At this point, they have the same "last" status
+    return num1 < num2;
+    
+  }
+
+
   function layout(level) {
     for (var i = 0; i < dormElements.length; i++) {
         if (dormElements[i] !== undefined) {
@@ -303,6 +334,7 @@ $(".controller-dorms.action-show").ready(function() {
               roomPullNum = null;
               roomRankName = null;
               roomIsLast = false;
+              roomRound = null;
               room.curNames = [];
               curRoomNum = roomData[i].number;
               while (curRoomNum === roomData[i].number) {
@@ -316,6 +348,7 @@ $(".controller-dorms.action-show").ready(function() {
                       roomPullNum = roomData[i].pull_number;
                       roomRankNum = roomData[i].pull_rank;
                       roomIsLast = roomData[i].is_last
+                      roomRound = roomData[i].round
                       round = roomData[i].round;
                       switch(roomRankNum) {
                         case 0:
@@ -356,45 +389,55 @@ $(".controller-dorms.action-show").ready(function() {
                     content: string,
                   });
               }
-              //check if your room draw number is lower or the room is not pulled at all
-              if ((((roomRankNum > userRankNum || 
-                    (roomRankNum === userRankNum && roomIsLast === "t" && !userIsLast) ||
-                    (roomRankNum === userRankNum && roomIsLast === "t" && userIsLast && userDrawNum < roomPullNum) ||
-                    (roomRankNum === userRankNum && roomIsLast !== "t" && !userIsLast && userDrawNum < roomPullNum)
-                   )
-                 && room.info.assignment_type === 2)) && !userInRoom) {
+              if (!userInRoom) {
+                // Room is empty
+                if(room.info.assignment_type === null) {
                   room.css({
-                      background: 'rgb(183, 191, 16)',
-                  });
-              }
-              else if(room.info.assignment_type === null) {
-                room.css({
-                    background: 'rgb(0, 127, 163)',
-                })
-              }
-              //room is pulled by someone with higher number
-              else if(((((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && room.info.assignment_type === 2) || room.assignment_type !== 2) && !userInRoom) {
-                  room.info.clickable = true;
+                      background: 'rgb(0, 127, 163)',
+                  })
+                }
+                // Frosh room
+                else if (room.info.assignment_type === 1) {
+                  preplaced = true;
+                  room.info.clickable = false;
+                  room.text('frosh');
                   room.css({
                       background: 'rgb(91, 103, 112)',
+                  }); 
+                }
+                // Preplaced room
+                else if (room.info.assignment_type && room.info.assignment_type !== 2) {
+                  preplaced = true;
+                  room.info.clickable = false;
+                  if (room.info.description) {
+                    room.text(room.info.description);
+                  } else {
+                    room.text('preplaced/ unavailable');
+                  } 
+                  room.css({
+                      background: 'rgb(91, 103, 112)',
+                  }); 
+                }
+                // User has a better num on any round
+                else if (betterNum(userRankNum, roomRankNum, 2, roomRound, userIsLast, roomIsLast === "t", userDrawNum, roomPullNum)) {
+                  // Mark pullable on any round
+                  room.css({
+                    background: 'rgb(183, 191, 16)',
                   });
-                  if (room.info.assignment_type === 1) {
-                      preplaced = true;
-                      room.info.clickable = false;
-                      room.text('frosh');
-                  }
-                  else if (room.info.assignment_type !== 2) {
-                      preplaced = true;
-                      room.info.clickable = false;
-                      if (room.info.description) {
-                        room.text(room.info.description);
-                      } else {
-                        room.text('preplaced/ unavailable');
-                      }
-                      
-                  }
+                } 
+                // User has a better num on round 1
+                else if (betterNum(userRankNum, roomRankNum, 1, roomRound, userIsLast, roomIsLast === "t", userDrawNum, roomPullNum)) { 
+                  room.css({
+                    background: 'rgb(149, 66, 244)',
+                  });
+                }
+                //room is pulled by someone with higher number
+                else {
+                  room.css({
+                      background: 'rgb(91, 103, 112)',
+                  }); 
               }
-
+            }
               // If not in draw period, don't let people click
               if (!period) {
                 room.info.clickable = false;
