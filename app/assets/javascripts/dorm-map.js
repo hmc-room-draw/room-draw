@@ -406,7 +406,7 @@ $(".controller-dorms.action-show").ready(function() {
                   }); 
                 }
                 // Preplaced room
-                else if (room.info.assignment_type && room.info.assignment_type !== 2) {
+                else if (room.info.assignment_type !== null && room.info.assignment_type !== 2) {
                   preplaced = true;
                   room.info.clickable = false;
                   if (room.info.description) {
