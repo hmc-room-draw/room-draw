@@ -1,7 +1,7 @@
 <%= form_for("/admin/map", method: "add_mark") do |f| %>
   <%= text_field_tag(:room, value="", :id=>"unpullable-room-num", class: "hidden") %><br/>
   <%= text_field_tag(:dorm, value=@dorm.name, class: "hidden") %><br/>
-  <%= radio_button_tag(:mark_type, "freshman", true) %>
+  <%= radio_button_tag(:mark_type, "frosh", true) %>
   <%= label_tag(:preplaced_frosh, "Frosh") %><br/>
   <%= radio_button_tag(:mark_type, "unavailable") %>
   <%= label_tag(:preplaced_offline, "Offline") %><br/>

@@ -51,12 +51,6 @@ class ApplicationController < ActionController::Base
         if email_in_spreadsheet?(ss_key, current_user.email) then
           @current_student.has_completed_form = true
           @current_student.save!
-        else
-          if current_user.is_admin
-            flash[:alert] = 'Don\'t forget to fill out the form!'
-          else
-            redirect_to Rails.application.config.form_url
-          end
         end
       end
     end

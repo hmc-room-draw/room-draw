@@ -49,6 +49,16 @@ class Pull < ApplicationRecord
     return students.include?(self.student)
   end
 
+  def include_specific_student(user)
+    students = self.room_assignments.map{ |ra| ra.student}
+    return user.student.nil? || students.include?(user.student)
+  end
+
+  def check_unique
+    students = self.room_assignments.map{ |ra| ra.student}
+    return students.uniq.length == students.length
+  end
+
   private
     def validate_student
       errors.add(:student, "not in :students") if not students.include?(student)

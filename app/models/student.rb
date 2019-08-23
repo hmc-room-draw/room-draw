@@ -21,7 +21,7 @@ class Student < ApplicationRecord
 
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
-  validates :room_draw_number, presence: true, uniqueness: true
+  validates :room_draw_number, presence: true
   validates_each :room_draw_number do |record, attr, value|
     record.errors.add(attr, 'must be integer or .5') if (value*2) % 1 != 0
     record.errors.add(attr, 'must be nonnegative') if value < 0
@@ -89,8 +89,7 @@ class Student < ApplicationRecord
   end
 
   def student_name_and_number
-    user = self.user
-    format_number + " " + user.first_name + " " + user.last_name
+    student_name + " (" + format_number + ")"
   end
 
   def student_name
@@ -102,7 +101,7 @@ class Student < ApplicationRecord
   def format_status
     case status
     when :never_logged_in
-      "Never logged in"
+      "Never filled out form"
     when :never_pulled_room
       "Never pulled room"
     when :formerly_in_room

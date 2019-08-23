@@ -13,7 +13,7 @@ Rails.application.configure do
     :address => "smtp.gmail.com",
     :port => 587,
     :authentication => :plain,
-    :user_name => "roomdrawtest@gmail.com",
-    :password => "roomdrawtest2017"
+    :user_name => "hmcroomdraw2018@gmail.com",
+    :password => "hmcroomdraw"
   }
 end

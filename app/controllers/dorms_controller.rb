@@ -1,6 +1,9 @@
+require 'rubygems'
+require 'json'
+
 class DormsController < ApplicationController
-  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
-  after_action :verify_authorized, except: [:index, :load_pull_ajax, :pull_num_ajax, :student_pull_ajax]
+  before_action :set_dorm, only: [:show, :edit, :update, :destroy, :load_pull_ajax, :create_pull_ajax, :get_data]
+  after_action :verify_authorized, except: [:index, :load_pull_ajax, :create_pull_ajax, :get_data]
 
 
   # GET /dorms
@@ -13,32 +16,55 @@ class DormsController < ApplicationController
     @dorms = Dorm.all
   end
 
-  def load_pull_ajax
-    @pull = Pull.find(params["pull_id"])
-    respond_to do |format|
-      format.js {render layout: false}
-    end
-  end
-
-  def pull_num_ajax
-    get_available_students()
-    @rooms = Room.all
-    @dorms = Dorm.all
-    @adminPull = Pull.new
-    @room_index = params["room_index"]
-    params["pull_count"].to_i.times {@adminPull.room_assignments.build}
-    respond_to do |format|
-      format.js {render layout: false}
-    end
-  end
-
-  def student_pull_ajax
+  def create_pull_ajax
     get_available_students()
     @rooms = @dorm.rooms
     @dorms = Dorm.all
     @pull = Pull.new
-    @room_index = params["room_index"]
-    params["pull_count"].to_i.times {@pull.room_assignments.build}
+    @selected_rooms = JSON.parse(params["selected_rooms"])
+    total_capacity = 0
+    @selected_rooms.each do |room_data|
+      total_capacity += room_data[1]
+    end
+    total_capacity.times {@pull.room_assignments.build}
+    respond_to do |format|
+      format.js {render layout: false}
+    end
+  end
+
+  def get_data
+
+    roomData = @dorm.rooms
+      .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
+      .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
+      .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
+      .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
+      .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
+      .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
+              "students.class_rank, students.room_draw_number, students.id as student_id," \
+              "users.first_name, users.last_name, users.email, " \
+              "pulls.message, pulls.round," \
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number, pulling_students.number_is_last as is_last")
+    @level1 = roomData
+    .where("floor = ?", 1)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level2 = roomData
+    .where("floor = ?", 2)
+    .sort_by {|x| x.number}
+    .to_json
+    .html_safe 
+     
+    @level3 = roomData
+    .where("floor = ?", 3)
+    .sort_by {|x| x.number}
+    .to_json
+
+    get_available_students()
+
     respond_to do |format|
       format.js {render layout: false}
     end
@@ -52,38 +78,32 @@ class DormsController < ApplicationController
     # Render one form or the other depending on whether the peron's an admin
     if current_user
       @admin = current_user.is_admin?
-      @student = dorm_id = Student.find_by user: current_user
-      @is_student = !@student.nil?
+      @student = current_user.student
+      @is_student = current_user.student.nil?
     end
 
     @period = current_draw_period ? true : false
-    @rooms = @dorm.rooms
     @pull = Pull.new
-    @adminPull = Pull.new
     1.times {@pull.room_assignments.build}
-    1.times {@adminPull.room_assignments.build}
-    #TODO: Get only the necessary information
-    # @students = Student.all
-    @users = User.all
-    # @rooms = Room.all
     @dorms = Dorm.all
     #join tables
     get_available_students()
-    @room_ids = @rooms.map{|r| r.number}.to_json.html_safe
-    @dorms_index = get_dorm_index()
 
     if current_user
       if !current_user.student.nil?
-        @curPullNum = current_user.student.room_draw_number    
+        @curPullNum = current_user.student.room_draw_number
+        @isLast = current_user.student.number_is_last ? true : false
         @curRankNum = Student.class_ranks[current_user.student.class_rank]
         @studentId = current_user.student.id
       else 
         @curRankNum = 0
+        @isLast = 0
         @curPullNum = 0
         @studentId = -1
       end
     else 
       @curRankNum = 0
+      @isLast = 0
       @curPullNum = 0
       @studentId = -1
     end
@@ -128,27 +148,45 @@ class DormsController < ApplicationController
         @floor1 = "west1.png"
         @floor2 = "west2.png"
     end 
-      
-    @testDorm = Dorm.where({id: params[:id]}).select("rooms.*, room_assignments.*, students.*, users.*, pulls.*")
-      .joins(:rooms)
+
+    # get dimensions - https://stackoverflow.com/a/2450931/1294423
+    # (only works for PNGs)
+    if !@floor1.nil?
+      @floor1dims = IO.read('app/assets/images/'+@floor1)[0x10..0x18].unpack('NN')
+    end
+    if !@floor2.nil?
+      @floor2dims = IO.read('app/assets/images/'+@floor2)[0x10..0x18].unpack('NN')
+    end
+    if !@floor3.nil?
+      @floor3dims = IO.read('app/assets/images/'+@floor3)[0x10..0x18].unpack('NN')
+    end
+
+    roomData = @dorm.rooms
       .joins("LEFT OUTER JOIN room_assignments ON room_assignments.room_id = rooms.id")
       .joins("LEFT OUTER JOIN students ON students.id = room_assignments.student_id")
       .joins("LEFT OUTER JOIN users ON users.id = students.user_id")
-      .joins("LEFT OUTER JOIN pulls ON students.id = pulls.student_id")
-    
-    @level1 = @testDorm
+      .joins("LEFT OUTER JOIN pulls ON pulls.id = room_assignments.pull_id")
+      .joins("LEFT OUTER JOIN students pulling_students ON pulling_students.id = pulls.student_id")
+      .select("rooms.id, rooms.floor, rooms.number, rooms.capacity, " \
+              "room_assignments.assignment_type, room_assignments.description, room_assignments.pull_id," \
+              "students.class_rank, students.room_draw_number, students.id as student_id," \
+              "users.first_name, users.last_name, users.email, " \
+              "pulls.message, pulls.round, " \
+              "pulling_students.class_rank as pull_rank, pulling_students.room_draw_number as pull_number, pulling_students.number_is_last as is_last")
+
+    @level1 = roomData
     .where("floor = ?", 1)
     .sort_by {|x| x.number}
     .to_json
     .html_safe 
      
-    @level2 = @testDorm
+    @level2 = roomData
     .where("floor = ?", 2)
     .sort_by {|x| x.number}
     .to_json
     .html_safe 
      
-    @level3 = @testDorm
+    @level3 = roomData
     .where("floor = ?", 3)
     .sort_by {|x| x.number}
     .to_json
@@ -215,7 +253,11 @@ class DormsController < ApplicationController
   private
 
     def get_available_students
-      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+      @students = Student.joins(:user)
+          .joins("LEFT OUTER JOIN room_assignments ON students.id = room_assignments.student_id")
+          .where("room_assignments.student_id IS NULL AND students.has_completed_form='t'")
+          .select("users.first_name, users.last_name, users.email, students.*")
+          .order("email ASC")
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -231,18 +273,6 @@ class DormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pull
       @pull = Pull.find(params[:id])
-    end
-
-    # Count how many rooms are before this room out of all Rooms
-    # This function helps us populate the adming Pulls form with the correct data
-    def get_dorm_index
-      count = 1
-      Dorm.all.each do |d|
-        if d == @dorm
-          return count
-        end
-        count += d.rooms.count
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

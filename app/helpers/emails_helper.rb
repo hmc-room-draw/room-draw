@@ -2,7 +2,7 @@ module EmailsHelper
   def recipients(email)
     @recipients = ""
     if email.send_to_never_logged_in
-      @recipients += "Never logged in<br>"
+      @recipients += "Never filled out form.<br>"
     end
     if email.send_to_never_pulled_room
       @recipients += "Never pulled room<br>"

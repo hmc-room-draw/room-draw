@@ -55,23 +55,38 @@ class PullsController < ApplicationController
     end
 
     if @pull.student.senior? and @pull.round === nil then
-      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling") and return
+      flash[:danger] = "Please specify in which round you are pulling"
+      redirect_back(fallback_location: root_path, notice: "Please specify in which round you are pulling.") and return
+    elsif @pull.student.senior? and not @pull.round === 1 and not @pull.round === 2 then
+      flash[:danger] = "Senior round must be 1 or 2."
+      redirect_back(fallback_location: root_path, notice: "Senior round must be 1 or 2.") and return
     end
 
     cps = @pull.get_conflicting_pulls
     cannot_override = cps.select { |cp| not @pull.can_override(cp) }
 
+    # Check for uniqueness
+    if not @pull.check_unique
+      flash[:danger] = "Can't pull! Each person can only be in a room once."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Each person can only be in a room once.") and return
+    end
+
     #TODO: I made some escapes to avoid problems that call this method from different places
     #      but some of them might not be necessary.
-      if not cannot_override.empty?
-        ids = cannot_override.map { |co| co.id }
-        redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with pulls #{ids * ","} with higher priority.") and return
-      elsif @pull.has_conflicting_nonpulls
-          # format.html { redirect_to  controller: "dorm", action: "show", id: from_dorm,notice: "Can't pull! Conflicts with preplacements or frosh." }# and return
-          redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
-      elsif not @pull.include_student and not current_user.is_admin
-          redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
-      end
+    if not cannot_override.empty?
+      ids = cannot_override.map { |co| co.id }
+      flash[:danger] = "Can't pull! Conflicts with a pull with higher priority."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with a pull with higher priority.") and return
+    elsif @pull.has_conflicting_nonpulls
+      flash[:danger] = "Can't pull! Conflicts with preplacements or frosh."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! Conflicts with preplacements or frosh.") and return
+    elsif not @pull.include_student
+      flash[:danger] = "Can't pull! You can only pull on the number of someone included in the pull."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! You can only pull on the number of someone included in the pull.") and return
+    elsif not @pull.include_specific_student(current_user) and not current_user.is_admin
+      flash[:danger] = "Can't pull! You must be included in the pull."
+      redirect_back(fallback_location: root_path, notice: "Can't pull! You must be included in the pull.") and return
+    end
 
 
     if not cps.empty? 
@@ -91,7 +106,8 @@ class PullsController < ApplicationController
       GeneralMailer.send_email(student.user, subject, content)
 
       f = File.open("record.csv", "a")
-      f.write("#{puller}, #{student.user.first_name} #{student.user.last_name}, #{dorm}, #{room}\n")
+      t = Time.now
+      f.write("#{puller}, #{student.user.first_name} #{student.user.last_name}, #{dorm}, #{room}, "+ t.to_s+ "\n")
       f.close
 
       student.has_participated = true
@@ -101,13 +117,7 @@ class PullsController < ApplicationController
     respond_to do |format|
       redirect_path = get_redirect_path(params, @pull)
       if @pull.save
-        if from_dorm
-          # format.html{redirect_to({controller: "dorm", action: "show", id: from_dorm}, notice: "Pull was successfully created." )}
-          format.html{redirect_back(fallback_location: root_path, notice: "Pull was successfully created.")}
-        else
-          format.html { redirect_to @pull, notice: "Pull was successfully created." }
-          format.json { render :show, status: :created, location: @pull }
-        end
+        format.html { redirect_to redirect_path, notice: "Pull was successfully updated." }
 
       else
         if from_dorm
