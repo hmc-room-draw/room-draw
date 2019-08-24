@@ -8,10 +8,10 @@ if student.round == in_dorm
 end
 
 #whitelisting and blacklisting for Anonymized Pre-Placements (pg. 6)
-if Anonymized_Pre-Placement in pull.suite
-    if A_P-P.whitelist == true && student not in A_P-P.whitelist
+if Anonymized_Pre-Placement in lockpull.suite
+    if A_P-P.whitelist == true && lockpull.student not in A_P-P.whitelist
         don't allow pull
-    elseif A_P-P.whitelist == true && student in A_P-P.blacklist
+    elseif A_P-P.whitelist == true && lockpull.student in A_P-P.blacklist
         don't allow pull
     else
         allow pull
