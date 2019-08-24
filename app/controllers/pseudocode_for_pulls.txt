@@ -146,17 +146,18 @@ if student.study_abroad == true
         if room.student.study_abroad == pull.student.study_abroad
             allow pull
         else
-            send confimation email to room.student
-            confirmation = false
-            while confirmation == false
-                if all users agree
-                    confimration = true
-                else
-                    sleep 60 sec 
-                end
+            don't allow pull #10.2 pg. 10
+    else
+        send confimation email to room.student
+        confirmation = false
+        while confirmation == false
+            if all users agree
+                confimration = true
+            else
+                sleep 60 sec 
             end
-            allow pull
         end
+        allow pull
     end
 end
 
