@@ -17,3 +17,75 @@ if Anonymized_Pre-Placement in lockpull.suite
         allow pull
     end
 end
+
+#emotional support animals
+if student.esa == true
+    if pull.dorm == sontag
+        don't allow pull
+    elseif (pull.dorm == north || east || west || atwood || linde) && (pull.floor == 2)
+        don't allow pull
+    elseif pull.dorm == drinkward && pull.floor == 3
+        don't allow pull
+    elseif pull.dorm == case && pull == northeast #which is where??
+        don't allow pull
+    else
+        allow pull
+    end
+end
+
+#frosh bumping here we go bois
+if prefrosh in pull.room 
+    if pull.dorm == north || east || west 
+        if pull.room in suite
+            if no suite has 2 vacant rooms in pull.hallway
+                don't allow pull
+            else
+                highlight suites
+                ask user to select a suite to bump frosh
+                allow pull
+            end
+        else
+            if no hallway.room is vacant
+                don't allow pull
+            else
+                highlight rooms
+                ask user to select a room to bump frosh
+                allow pull
+            end
+        end
+    elseif pull.dorm == south
+        #i think this needs clarification. Does the whole suite need to be bumped?
+    elseif pull.dorm == atwood
+        if pull.floor contains double.vacancy >= 1 #not efficency or column double
+            highlight valid rooms
+            ask user for selection
+            for students in suite
+                send confirmation email 
+            end
+            confirmation = false
+            while confirmation == false
+                if all users agree
+                    confimration = true
+                else
+                    sleep 60 sec 
+                end
+            end
+            allow pull 
+        else
+            don't allow pull
+        end
+    elseif pull.dorm == case
+        if room.vacancy > 0 in pull.corridor
+            highlight valid rooms
+            ask user to select a room
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.dorm == drinkward
+        if pull.room in O 
+            if O contains room.type==pull.type && room.vacancy>0
+                highlight valid rooms
+                ask user to select room
+                
+
