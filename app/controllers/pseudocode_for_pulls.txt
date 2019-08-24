@@ -1,6 +1,11 @@
 #matching indorm pulls with the dorm they said they would pull into
+    # Note: Current GUI asks seniors to input their indorm number instead of
+    # keeping it as data specific to the student, so in theory as long as no
+    # one does stupid stuff, they should all pull in dorm into valid dorms
+    # I do still like this check though, just think it's a lower priority
+    #   -Athena
 if student.round == in_dorm
-    if student.dormchoice != pull.dorm 
+    if student.indormchoice != pull.dorm 
         don't allow pull
     else
         allow pull
@@ -8,18 +13,23 @@ if student.round == in_dorm
 end
 
 #whitelisting and blacklisting for Anonymized Pre-Placements (pg. 6)
+    # Also super low priority, imo. Given the rarity of A_P-P, I think it'll
+    # just be easier for us/marco to check this as admins - Athena
 if Anonymized_Pre-Placement in lockpull.suite
     if A_P-P.whitelist == true && lockpull.student not in A_P-P.whitelist
         don't allow pull
-    elseif A_P-P.whitelist == true && lockpull.student in A_P-P.blacklist
+    elseif A_P-P.blacklist == true && lockpull.student in A_P-P.blacklist
         don't allow pull
     else
         allow pull
     end
 end
 
-#emotional support animals
-if student.esa == true
+#emotional support animals // replacing emotional support animals with pets
+    # ESA requests go through the accomodations office, but small animals I 
+    # are allowed without notifying anyone? We should ask Marco before
+    # implementing this - Athena
+if student.pets == true
     if pull.dorm == sontag
         don't allow pull
     elseif (pull.dorm == north || east || west || atwood || linde) && (pull.floor == 2)
@@ -38,7 +48,17 @@ if prefrosh in pull.room
     if pull.room in suite && pre-placed reslife staff in suite
         don't allow pull
     elseif pull.dorm == north || east || west 
+        if no suite has 2 vacant rooms in pull.hallway
+            don't allow pull
+        else
+            highlight suites
+            ask user to select a suite to bump frosh
+            allow pull
+        end
+    elseif pull.dorm == south
         if pull.room in suite
+            check for empty equal size suite
+        else # will be hallway double, same rules as north/east/west
             if no suite has 2 vacant rooms in pull.hallway
                 don't allow pull
             else
@@ -46,23 +66,12 @@ if prefrosh in pull.room
                 ask user to select a suite to bump frosh
                 allow pull
             end
-        else
-            if no hallway.room is vacant
-                don't allow pull
-            else
-                highlight rooms
-                ask user to select a room to bump frosh
-                allow pull
-            end
-        end
-    elseif pull.dorm == south
-        #i think this needs clarification. Does the whole suite need to be bumped?
     elseif pull.dorm == atwood
         if pull.floor contains double.vacancy >= 1 #not efficency or column double
             highlight valid rooms
             ask user for selection
             for students in suite
-                send confirmation email 
+                send confirmation email # I think an email is too slow - Athena
             end
             confirmation = false
             while confirmation == false
@@ -78,7 +87,7 @@ if prefrosh in pull.room
         end
     elseif pull.dorm == case
         if room.vacancy > 0 in pull.corridor
-            highlight valid rooms
+            highlight valid rooms # same capacity rooms
             ask user to select a room
             allow pull
         else
@@ -98,7 +107,7 @@ if prefrosh in pull.room
                 highlight valid rooms
                 ask user for selection
                 for students in suite
-                    send confirmation email 
+                    send confirmation email # see comment in atwood
                 end
                 confirmation = false
                 while confirmation == false
