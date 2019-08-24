@@ -135,3 +135,28 @@ if prefrosh in pull.room
     end
 end
 
+#study abroad
+if student.study_abroad == true
+    if student.study_abroad.semester == fall
+        show(rooms.students.study_abroad.spring)
+    elseif student.study_abroad.semester == spring
+        show(rooms.students.study_abroad.fall)
+    end
+    if pull.room contains student.study_abroad
+        if room.student.study_abroad == pull.student.study_abroad
+            allow pull
+        else
+            send confimation email to room.student
+            confirmation = false
+            while confirmation == false
+                if all users agree
+                    confimration = true
+                else
+                    sleep 60 sec 
+                end
+            end
+            allow pull
+        end
+    end
+end
+
