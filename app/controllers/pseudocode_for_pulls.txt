@@ -29,6 +29,9 @@ end
     # ESA requests go through the accomodations office, but small animals I 
     # are allowed without notifying anyone? We should ask Marco before
     # implementing this - Athena
+    # I have no idea. ESA is just the language that the regulations use, but 
+    # I imagine that pets is a better word here because the point is no uncaged
+    # animals. --Ben
 if student.pets == true
     if pull.dorm == sontag
         don't allow pull
@@ -170,3 +173,40 @@ if student.study_abroad == true
     end
 end
 
+###DORM SPECIFIC RULES###
+#I think all the frosh bumping stuff can be implemented below
+#also I gave up adding [students_pulled].length requirements because
+#they should always go in the code without saying
+
+if pull.dorm == north || east || west
+    if pull.room.size == single
+        if pull.size == 2 && [students_pulled].length == 2 && rooms in 1 suite
+            allow pull
+        elseif pull.size == 1
+            allow pull
+        else
+            don't allow pull
+        end
+    else #double
+        if pull.size == 1 && [students_pulled].length == 2
+            allow pull
+        elseif pull.rooms in 1 suite
+            if user.number is 2nd highest in [students_pulled] && [students_pulled].length == 4
+                allow pull
+            else
+                don't allow pull
+            end
+        else
+            don't allow pull
+    end
+elseif pull.dorm == south
+    if room in backhall
+        if pull.size == 2 && rooms in 1 suite
+            allow pull
+        elseif pull.size == 1
+            allow pull
+        else
+            don't allow pull
+        end
+    else #suite
+        if 
