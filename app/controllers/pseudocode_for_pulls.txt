@@ -1,0 +1,8 @@
+if student.round == in_dorm
+    if student.dormchoice != pull.dorm 
+        don't allow pull
+    else
+        allow pull
+    end
+end
+
