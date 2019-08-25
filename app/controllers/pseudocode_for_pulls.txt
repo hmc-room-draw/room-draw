@@ -175,38 +175,179 @@ end
 
 ###DORM SPECIFIC RULES###
 #I think all the frosh bumping stuff can be implemented below
-#also I gave up adding [students_pulled].length requirements because
-#they should always go in the code without saying
 
 if pull.dorm == north || east || west
-    if pull.room.size == single
-        if pull.size == 2 && [students_pulled].length == 2 && rooms in 1 suite
-            allow pull
-        elseif pull.size == 1
-            allow pull
-        else
-            don't allow pull
-        end
-    else #double
-        if pull.size == 1 && [students_pulled].length == 2
-            allow pull
-        elseif pull.rooms in 1 suite
-            if user.number is 2nd highest in [students_pulled] && [students_pulled].length == 4
+    if room.size == 1
+        if pull.size == 2
+            if [pull.rooms] in 1 suite 
                 allow pull
             else
                 don't allow pull
             end
+        elseif pull.size == 1
+            allow pull #this is assuming we change the regulations. If we don't, then this will be don't allow, along with below similar code
         else
             don't allow pull
+        end
+    else #double(s)
+        if pull.size == 1 && pull.students.size == 2 #in general, we should always check that the student pull size makes sense
+            allow pull
+        elseif pull.size == 2 && pull.students.size == 4 && pull.rooms.size == 2 && pull.rooms in 1 suite && pull.student.number == [pull.students.number][1]
+            allow pull
+        else
+            don't allow pull
+        end
     end
 elseif pull.dorm == south
-    if room in backhall
-        if pull.size == 2 && rooms in 1 suite
+    if pull.room in backhall_rooms
+        if pull.size == 1
             allow pull
-        elseif pull.size == 1
+        elseif pull.size == 2 && pull.rooms in 1 suite
             allow pull
         else
             don't allow pull
         end
     else #suite
-        if 
+        if pull.suite.size == 3
+            if pull.size == 1 && pull.suite.vacant_rooms == 1 #last room
+                don't allow pull #must be a lock pull, but we can look at changing it
+            elseif pull.size < 4 #double check to make sure people can't pull infinite rooms anywhere in the code
+                allow pull
+            else
+                don't allow pull
+            end
+        else #4-person
+            if pull.size < 3
+                allow pull
+            else
+                don't allow pull
+            end
+        end
+    end
+elseif pull.dorm == atwood
+    if pull.room.size == 1
+        if pull.size == 2 && pull.rooms in 1 suite
+            allow pull
+        elseif pull.size == 1
+            allow pull #again, assuming we change the regulations
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2
+        if pull.size == 1 && pull.students.length == 2
+            allow pull
+        elseif pull.size == 2 && pull.rooms are adjacent column doubles && pull.students.length == 4 && pull.number == pull.students.number[1]
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 3 && pull.students.length == 3 && pull.size == 1
+        allow pull
+    else
+        don't allow pull
+    end
+elseif pull.dorm == case
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.rooms in 1 L 
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2
+        if pull.size == 1 && pull.students.size == 2
+            allow pull
+        elseif pull.size == 2 && pull.rooms in 1 L && pull.students.length == 4 && pull.number == pull.students.number[1]
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 3 && pull.student.size == 3
+        allow pull
+    elseif pull.room.size == 4 && pull.student.size == 4 && pull.size == 1
+        allow pull #btw there's a weird lock pull here in the regulations that I'm ignoring, we should review it
+    else
+        don't allow pull
+    end
+elseif pull.dorm == linde
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+            allow pull
+        else
+            don't allow pull
+        end
+    else #double
+        if pull.size == 1 && pull.students.length == 2
+            allow pull
+        else
+            don't allow pull
+        end
+    end #that was easy
+elseif pull.dorm == sontag
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+            allow pull 
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2 && pull.students.length == 2 && pull.size == 1
+        allow pull
+    else
+        don't allow pull
+    end #also easy
+elseif pull.dorm == drinkward 
+    if pull.room in suite
+        if pull.room.size == 1
+            if pull.size == 1
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+                allow pull
+            else
+                don't allow pull
+            end
+        elseif pull.room.size == 2 && pull.students.length == 2
+            allow pull
+        elseif pull.room.size == 3 && pull.students.length == 3
+            allow pull
+        else
+            don't allow pull
+        end
+    else #O 
+        if pull.room.size == 1
+            if pull.size == 1
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 2 && pull.dorms in 1 O 
+                allow pull
+            else
+                don't allow pull
+            end
+        elseif pull.room.size == 2 #OH BOI pretty sure this is wrong, since doubles don't exist here anymore
+            if pull.size == 1 && pull.students.size == 2
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 4 && pull.number == pull.students.number[1] && pull.rooms in 1 O 
+                allow pull
+            else
+                don't allow pull
+            end
+        else
+    end
+else #platt i guess
+    don't allow pull
+end
+
+#LOCK PULLING#
+*pull occurs*
+if pull.room in suite && pull.suite.vacant_rooms==1 #it may not be a suite necessarily but whatever
+    print("You can lock pull! Select the person you'd like to lock pull, but beware anyone in the suite can object to this later.")
+end
+
+
+
+
+    
+        
