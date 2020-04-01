@@ -1,0 +1,353 @@
+#matching indorm pulls with the dorm they said they would pull into
+    # Note: Current GUI asks seniors to input their indorm number instead of
+    # keeping it as data specific to the student, so in theory as long as no
+    # one does stupid stuff, they should all pull in dorm into valid dorms
+    # I do still like this check though, just think it's a lower priority
+    #   -Athena
+if student.round == in_dorm
+    if student.indormchoice != pull.dorm 
+        don't allow pull
+    else
+        allow pull
+    end
+end
+
+#whitelisting and blacklisting for Anonymized Pre-Placements (pg. 6)
+    # Also super low priority, imo. Given the rarity of A_P-P, I think it'll
+    # just be easier for us/marco to check this as admins - Athena
+if Anonymized_Pre-Placement in lockpull.suite
+    if A_P-P.whitelist == true && lockpull.student not in A_P-P.whitelist
+        don't allow pull
+    elseif A_P-P.blacklist == true && lockpull.student in A_P-P.blacklist
+        don't allow pull
+    else
+        allow pull
+    end
+end
+
+#emotional support animals // replacing emotional support animals with pets
+    # ESA requests go through the accomodations office, but small animals I 
+    # are allowed without notifying anyone? We should ask Marco before
+    # implementing this - Athena
+    # I have no idea. ESA is just the language that the regulations use, but 
+    # I imagine that pets is a better word here because the point is no uncaged
+    # animals. --Ben
+if student.pets == true
+    if pull.dorm == sontag
+        don't allow pull
+    elseif (pull.dorm == north || east || west || atwood || linde) && (pull.floor == 2)
+        don't allow pull
+    elseif pull.dorm == drinkward && pull.floor == 3
+        don't allow pull
+    elseif pull.dorm == case && pull == northeast #which is where??
+        don't allow pull
+    else
+        allow pull
+    end
+end
+
+#frosh bumping here we go bois
+if prefrosh in pull.room 
+    if pull.room in suite && pre-placed reslife staff in suite
+        don't allow pull
+    elseif pull.dorm == north || east || west 
+        if no suite has 2 vacant rooms in pull.hallway
+            don't allow pull
+        else
+            highlight suites
+            ask user to select a suite to bump frosh
+            allow pull
+        end
+    elseif pull.dorm == south
+        if pull.room in suite
+            check for empty equal size suite
+        else # will be hallway double, same rules as north/east/west
+            if no suite has 2 vacant rooms in pull.hallway
+                don't allow pull
+            else
+                highlight suites
+                ask user to select a suite to bump frosh
+                allow pull
+            end
+    elseif pull.dorm == atwood
+        if pull.floor contains double.vacancy >= 1 #not efficency or column double
+            highlight valid rooms
+            ask user for selection
+            for students in suite
+                send confirmation email # I think an email is too slow - Athena
+            end
+            confirmation = false
+            while confirmation == false
+                if all users agree
+                    confimration = true
+                else
+                    sleep 60 sec 
+                end
+            end
+            allow pull 
+        else
+            don't allow pull
+        end
+    elseif pull.dorm == case
+        if room.vacancy > 0 in pull.corridor
+            highlight valid rooms # same capacity rooms
+            ask user to select a room
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.dorm == drinkward
+        if pull.room in pull.O 
+            if pull.O contains room.type==pull.type && room.vacancy>0
+                highlight valid rooms
+                ask user to select room
+                allow pull
+            else
+                don't allow pull
+            end
+        else
+            if pull.floor contains suite.vacancy > 0 && suite.type == pull.suite.type 
+                highlight valid rooms
+                ask user for selection
+                for students in suite
+                    send confirmation email # see comment in atwood
+                end
+                confirmation = false
+                while confirmation == false
+                    if all users agree
+                        confimration = true
+                    else
+                        sleep 60 sec 
+                    end
+                end
+                allow pull 
+            else
+                don't allow pull
+            end
+        end
+    else #linde and sontag
+        if pull.floor contains suite.vacancy > 0 && suite.type == pull.suite.type 
+            highlight valid rooms
+            ask user for selection
+            for students in suite
+                send confirmation email 
+            end
+            confirmation = false
+            while confirmation == false
+                if all users agree
+                    confimration = true
+                else
+                    sleep 60 sec 
+                end
+            end
+            allow pull 
+        else
+            don't allow pull
+        end
+    end
+end
+
+#study abroad
+if student.study_abroad == true
+    if student.study_abroad.semester == fall
+        show(rooms.students.study_abroad.spring)
+    elseif student.study_abroad.semester == spring
+        show(rooms.students.study_abroad.fall)
+    end
+    if pull.room contains student.study_abroad
+        if room.student.study_abroad == pull.student.study_abroad
+            allow pull
+        else
+            don't allow pull #10.2 pg. 10
+    else
+        send confimation email to room.student
+        confirmation = false
+        while confirmation == false
+            if all users agree
+                confimration = true
+            else
+                sleep 60 sec 
+            end
+        end
+        allow pull
+    end
+end
+
+###DORM SPECIFIC RULES###
+#I think all the frosh bumping stuff can be implemented below
+
+if pull.dorm == north || east || west
+    if room.size == 1
+        if pull.size == 2
+            if [pull.rooms] in 1 suite 
+                allow pull
+            else
+                don't allow pull
+            end
+        elseif pull.size == 1
+            allow pull #this is assuming we change the regulations. If we don't, then this will be don't allow, along with below similar code
+        else
+            don't allow pull
+        end
+    else #double(s)
+        if pull.size == 1 && pull.students.size == 2 #in general, we should always check that the student pull size makes sense
+            allow pull
+        elseif pull.size == 2 && pull.students.size == 4 && pull.rooms.size == 2 && pull.rooms in 1 suite && pull.student.number == [pull.students.number][1]
+            allow pull
+        else
+            don't allow pull
+        end
+    end
+elseif pull.dorm == south
+    if pull.room in backhall_rooms
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.rooms in 1 suite
+            allow pull
+        else
+            don't allow pull
+        end
+    else #suite
+        if pull.suite.size == 3
+            if pull.size == 1 && pull.suite.vacant_rooms == 1 #last room
+                don't allow pull #must be a lock pull, but we can look at changing it
+            elseif pull.size < 4 #double check to make sure people can't pull infinite rooms anywhere in the code
+                allow pull
+            else
+                don't allow pull
+            end
+        else #4-person
+            if pull.size < 3
+                allow pull
+            else
+                don't allow pull
+            end
+        end
+    end
+elseif pull.dorm == atwood
+    if pull.room.size == 1
+        if pull.size == 2 && pull.rooms in 1 suite
+            allow pull
+        elseif pull.size == 1
+            allow pull #again, assuming we change the regulations
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2
+        if pull.size == 1 && pull.students.length == 2
+            allow pull
+        elseif pull.size == 2 && pull.rooms are adjacent column doubles && pull.students.length == 4 && pull.number == pull.students.number[1]
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 3 && pull.students.length == 3 && pull.size == 1
+        allow pull
+    else
+        don't allow pull
+    end
+elseif pull.dorm == case
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.rooms in 1 L 
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2
+        if pull.size == 1 && pull.students.size == 2
+            allow pull
+        elseif pull.size == 2 && pull.rooms in 1 L && pull.students.length == 4 && pull.number == pull.students.number[1]
+            allow pull
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 3 && pull.student.size == 3
+        allow pull
+    elseif pull.room.size == 4 && pull.student.size == 4 && pull.size == 1
+        allow pull #btw there's a weird lock pull here in the regulations that I'm ignoring, we should review it
+    else
+        don't allow pull
+    end
+elseif pull.dorm == linde
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+            allow pull
+        else
+            don't allow pull
+        end
+    else #double
+        if pull.size == 1 && pull.students.length == 2
+            allow pull
+        else
+            don't allow pull
+        end
+    end #that was easy
+elseif pull.dorm == sontag
+    if pull.room.size == 1
+        if pull.size == 1
+            allow pull
+        elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+            allow pull 
+        else
+            don't allow pull
+        end
+    elseif pull.room.size == 2 && pull.students.length == 2 && pull.size == 1
+        allow pull
+    else
+        don't allow pull
+    end #also easy
+elseif pull.dorm == drinkward 
+    if pull.room in suite
+        if pull.room.size == 1
+            if pull.size == 1
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 2 && pull.rooms in 1 suite
+                allow pull
+            else
+                don't allow pull
+            end
+        elseif pull.room.size == 2 && pull.students.length == 2
+            allow pull
+        elseif pull.room.size == 3 && pull.students.length == 3
+            allow pull
+        else
+            don't allow pull
+        end
+    else #O 
+        if pull.room.size == 1
+            if pull.size == 1
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 2 && pull.dorms in 1 O 
+                allow pull
+            else
+                don't allow pull
+            end
+        elseif pull.room.size == 2 #OH BOI pretty sure this is wrong, since doubles don't exist here anymore
+            if pull.size == 1 && pull.students.size == 2
+                allow pull
+            elseif pull.size == 2 && pull.students.length == 4 && pull.number == pull.students.number[1] && pull.rooms in 1 O 
+                allow pull
+            else
+                don't allow pull
+            end
+        else
+    end
+else #platt i guess
+    don't allow pull
+end
+
+#LOCK PULLING#
+*pull occurs*
+if pull.room in suite && pull.suite.vacant_rooms==1 #it may not be a suite necessarily but whatever
+    print("You can lock pull! Select the person you'd like to lock pull, but beware anyone in the suite can object to this later.")
+end
+
+
+
+
+    
+        

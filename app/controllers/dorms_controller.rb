@@ -89,15 +89,15 @@ class DormsController < ApplicationController
     end
     
     case @dorm.name.downcase
-      when 'case'
-        @json = JSON.parse(File.read('app/assets/jsons/case.json')).to_json.html_safe
-        @floor1 = "case1.png"
-        @floor2 = "case2.png"
       when 'atwood'
         @json = JSON.parse(File.read('app/assets/jsons/atwood.json')).to_json.html_safe
         @floor1 = "atwood1.png"
         @floor2 = "atwood2.png"
         @floor3 = "atwood3.png"
+      when 'case'
+        @json = JSON.parse(File.read('app/assets/jsons/case.json')).to_json.html_safe
+        @floor1 = "case1.png"
+        @floor2 = "case2.png"
       when 'drinkward'
         @json = JSON.parse(File.read('app/assets/jsons/drinkward.json')).to_json.html_safe
         @floor1 = "drinkward1.png"
