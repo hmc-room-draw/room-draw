@@ -9,9 +9,6 @@ responses_url = ENV['RESPONSES_URL']
 # https://docs.google.com/spreadsheets/d/1i0lcWJqCu9Jk6VPb3xvrJnNkMtw__hne9WrN6O8gDq4/
 KEY_REGEX = /.+\/d\/(.+)\/.*/
 
-match = KEY_REGEX.match(responses_url)
-raise "Malformed response spreadsheet URL `#{responses_url}`. Expected format https://docs.google.com/spreadsheets/d/<KEY>/..." unless match
-
 key = match[1]
 Rails.application.config.responses_spreadsheet_key = key
 
