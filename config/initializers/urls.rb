@@ -1,6 +1,6 @@
 require './lib/google_api/drive.rb'
-=begin
-form_url = ENV['FORM_URL']
+
+form_url = ENV['https://docs.google.com/spreadsheets/d/1i0lcWJqCu9Jk6VPb3xvrJnNkMtw__hne9WrN6O8gDq4/']
 Rails.application.config.form_url = form_url
 
 responses_url = ENV['RESPONSES_URL']
@@ -21,4 +21,4 @@ begin
    email = GoogleDriveApi.service_account_email
    raise "Failed to access form with key `#{key}`. Please ensure the form is shared with `#{email}`."
  end
-=end
+
