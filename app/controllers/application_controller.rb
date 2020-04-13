@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     end
   end
-
+=begin
   def check_form
     if current_user  
       @current_student = current_user.student
@@ -71,3 +71,4 @@ class ApplicationController < ActionController::Base
       replies.any? {|row| row[email_idx] == email}
     end
 end
+=end
