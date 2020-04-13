@@ -1,9 +1,9 @@
 require './lib/google_api/drive.rb'
 
-form_url = ENV['https://docs.google.com/spreadsheets/d/1i0lcWJqCu9Jk6VPb3xvrJnNkMtw__hne9WrN6O8gDq4/']
+form_url = ENV['FORM_URL']
 Rails.application.config.form_url = form_url
 
-responses_url = ENV['RESPONSES_URL']
+responses_url = ENV['https://docs.google.com/spreadsheets/d/1i0lcWJqCu9Jk6VPb3xvrJnNkMtw__hne9WrN6O8gDq4/']
 
 # Extracts the document key from a form URL formatted like:
 # https://docs.google.com/spreadsheets/d/1i0lcWJqCu9Jk6VPb3xvrJnNkMtw__hne9WrN6O8gDq4/
