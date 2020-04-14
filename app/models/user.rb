@@ -63,7 +63,7 @@ class User < ApplicationRecord
           student = user.first.student
           if student.nil?
             student_hash["has_participated"] = false
-            student_hash["has_completed_form"] = false
+            student_hash["has_completed_form"] = true
           else
             student_hash["has_participated"] = user.first.student.has_participated
             student_hash["has_completed_form"] = user.first.student.has_completed_form
@@ -71,7 +71,7 @@ class User < ApplicationRecord
           user.first.update_attributes(user_hash)
         else
           student_hash["has_participated"] = false
-          student_hash["has_completed_form"] = false
+          student_hash["has_completed_form"] = true
           user_hash["is_admin"] = false
           
           User.create!(user_hash)
