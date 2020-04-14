@@ -215,7 +215,7 @@ class DormsController < ApplicationController
   private
 
     def get_available_students
-      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order("email ASC").select{ |s| not s.room_assignment and s.has_completed_form }
+      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order(":by_last_name").select{ |s| not s.room_assignment and s.has_completed_form }
     end
 
     # Use callbacks to share common setup or constraints between actions.
