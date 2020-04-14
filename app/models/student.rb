@@ -22,12 +22,10 @@ class Student < ApplicationRecord
   scope :by_last_name, -> { joins(:user).order('users.last_name') }
   validates :class_rank, presence: true
   validates :room_draw_number, presence: true, uniqueness: true
-=begin
   validates_each :room_draw_number do |record, attr, value|
     record.errors.add(attr, 'must be integer or .5') if (value*2) % 1 != 0
     record.errors.add(attr, 'must be nonnegative') if value < 0
   end
-=end
   validates :user_id, uniqueness: true
 
   # student A outranks student B means A can bump B
