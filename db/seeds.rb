@@ -12,19 +12,19 @@
 
 #Users
 
-User.create(first_name:"Stu", last_name:"Dent", email: "student@hmc.edu", is_admin: false)
-User.create(first_name:"Stu1", last_name:"Dent1", email: "student1@hmc.edu", is_admin: false)
-User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_admin: false)
-User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
-User.create(first_name:"Stu4", last_name:"Dent4", email: "student4@hmc.edu", is_admin: false)
-User.create(first_name:"Stu5", last_name:"Dent5", email: "student5@hmc.edu", is_admin: false)
-User.create(first_name:"Andrew", last_name:"Test", email: "wander1796@gmail.com", is_admin: false)
-User.create(first_name:"Andrew", last_name:"Test2", email: "amatherbishop@gmail.com", is_admin: false)
+#User.create(first_name:"Stu", last_name:"Dent", email: "student@hmc.edu", is_admin: false)
+#User.create(first_name:"Stu1", last_name:"Dent1", email: "student1@hmc.edu", is_admin: false)
+#User.create(first_name:"Stu2", last_name:"Dent2", email: "student2@hmc.edu", is_admin: false)
+#User.create(first_name:"Stu3", last_name:"Dent3", email: "student3@hmc.edu", is_admin: false)
+#User.create(first_name:"Stu4", last_name:"Dent4", email: "student4@hmc.edu", is_admin: false)
+#User.create(first_name:"Stu5", last_name:"Dent5", email: "student5@hmc.edu", is_admin: false)
+#User.create(first_name:"Andrew", last_name:"Test", email: "wander1796@gmail.com", is_admin: false)
+#User.create(first_name:"Andrew", last_name:"Test2", email: "amatherbishop@gmail.com", is_admin: false)
 User.create(first_name:"Ben", last_name:"Khoury", email: "bkhoury@g.hmc.edu", is_admin: true)
 User.create(first_name:"Thuy-Linh", last_name:"Le", email: "thle@g.hmc.edu", is_admin: true)
 User.create(first_name:"Athena", last_name:"Li", email: "ali@g.hmc.edu", is_admin: true)
 User.create(first_name:"Mia", last_name:"Taylor", email: "mtaylor@g.hmc.edu", is_admin: true)
-User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
+#User.create(first_name:"Ad4", last_name:"Min4", email: "admin4@hmc.edu", is_admin: true)
 User.create(first_name:"Andrew", last_name:"Bishop", email: "abishop@g.hmc.edu", is_admin: true)
 
 
