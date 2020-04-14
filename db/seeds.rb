@@ -231,7 +231,7 @@ Room.create(floor: 2, capacity: 4, number: '257', dorm_id: 2)
 
 
 ############## YOU CAN ADD PULLS LIKE THIS ##############
-
+=begin
 @student1 = Student.find(1)
 @room1 = Room.find(1)
 
@@ -256,7 +256,7 @@ Room.create(floor: 2, capacity: 4, number: '257', dorm_id: 2)
 	assignment_type: :pulled)
 
 @pull2.save
-
+=end
 # #Drinkward
 
 Suite.create(name: 'A', dorm_id: 3)
