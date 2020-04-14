@@ -6,7 +6,7 @@ class GeneralMailer < ApplicationMailer
 
   def self.send_email(user, subject, content)
     @user = user
-    ActionMailer::Base.mail(to: user.email, from: 'from@example.com', subject: subject, body: content).deliver
+    #ActionMailer::Base.mail(to: user.email, from: 'from@example.com', subject: subject, body: content).deliver
   end
 
   def scheduled_email(emailId)
