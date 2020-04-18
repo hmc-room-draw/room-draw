@@ -576,6 +576,7 @@ function layout(level){
                 room.css({
                    background: 'rgb(200, 0, 0)',
                 })
+                room.text('frosh');
              }
               //room is pulled by someone with higher number
               else if(((((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && room.info.assignment_type === 2) || room.assignment_type !== 2) && !userInRoom) {
