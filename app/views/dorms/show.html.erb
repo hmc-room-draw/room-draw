@@ -119,6 +119,8 @@
       <div class="color-box" style="background-color: rgb(91, 103, 112);"></div></br>
     <input type="text" value="room you are pulled into" readonly></input>
       <div class="color-box" style="background-color: rgb(234, 170, 0);"></div></br>
+    <input type="text" value="frosh" readonly></input>
+      <div class="color-box" style="background-color: rgb(200, 0, 0);"></div></br>
       
   </div>
   <p></br></p>
@@ -570,6 +572,11 @@ function layout(level){
                     background: 'rgb(0, 127, 163)',
                 })
               }
+             else if(room.assignment_type === 1) {
+                room.css({
+                   background: 'rgb(200, 0, 0)',
+                })
+             }
               //room is pulled by someone with higher number
               else if(((((userDrawNum > roomPullNum && roomRankNum === userRankNum) || userRankNum > roomRankNum) && room.info.assignment_type === 2) || room.assignment_type !== 2) && !userInRoom) {
                   room.info.clickable = true;
