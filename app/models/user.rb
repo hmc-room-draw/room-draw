@@ -53,7 +53,8 @@ class User < ApplicationRecord
 
         room_hash = {"dorm" => full_hash["dorm"],
           "room" => full_hash["room"],
-          "preplaced" => full_hash["preplaced"]}
+          "preplaced" => full_hash["preplaced"]},
+          "frosh" => full_hash["frosh"]}
 
         user = User.where(email: user_hash["email"])
 
