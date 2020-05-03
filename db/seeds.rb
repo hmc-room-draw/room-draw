@@ -775,4 +775,5 @@ Room.create(floor: 2, capacity: 1, number: '208.1', dorm_id: 7)
 Room.create(floor: 2, capacity: 1, number: '209.1', dorm_id: 7)
 Room.create(floor: 2, capacity: 2, number: '209.4', dorm_id: 7)
 Room.create(floor: 2, capacity: 1, number: '210.1', dorm_id: 7)
-Room.create(floor: 2, capacity: 2, number: '210.4', dorm_id: 7)
+Room.create(floor: 2, capacity: 2, number: '210.4', dorm_id: 7, room_assignments: RoomAssignment.create(assignment_type: 1))
+
