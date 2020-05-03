@@ -53,8 +53,7 @@ class User < ApplicationRecord
 
         room_hash = {"dorm" => full_hash["dorm"],
           "room" => full_hash["room"],
-          "preplaced" => full_hash["preplaced"]},
-          "frosh" => full_hash["frosh"]}
+          "preplaced" => full_hash["preplaced"]}
 
         user = User.where(email: user_hash["email"])
 
@@ -108,6 +107,37 @@ class User < ApplicationRecord
           # Make the RoomAssignment for the preplaced student
           RoomAssignment.create!(:room_id => room_id, :assignment_type => "preplaced")
         end
+        
+        if room_hash["preplaced"] == "frosh"
+
+          room_id = get_room(room_hash["dorm"], room_hash["room"])
+
+          # Look for existing room assignments for the room
+          roomAssignments = RoomAssignment.where(room_id: room_id)
+
+          # If a room assignment exists, delete it!
+          if roomAssignments.count != 0
+            # Delete a pull associated if one exists
+            if not roomAssignments.first.pull_id.nil?
+              pull = Pull.find(id: roomAssignments.first.pull_id)
+              pull.students.each { |student|
+                subject = "Pull bumped"
+                content = "Your pull has been bumped by an admin."
+                GeneralMailer.send_email(student.user, subject, content)
+              }
+              pull.destroy
+            # Else delete all room assignments associated with the room
+            else
+              roomAssignments.each do |assignment|
+                assignment.destroy()
+              end
+            end
+          end
+          
+          # Make the RoomAssignment for the preplaced student
+          RoomAssignment.create!(:room_id => room_id, :assignment_type => "frosh")
+        end
+
 
       end # end CSV.foreach
     end
