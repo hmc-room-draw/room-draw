@@ -135,7 +135,7 @@ class User < ApplicationRecord
           end
           
           # Make the RoomAssignment for the preplaced student
-          RoomAssignment.create!(:room_id => room_id, :assignment_type => "frosh")
+          RoomAssignment.create!(:room_id => room_id, :assignment_type => "freshman")
         end
 
 
