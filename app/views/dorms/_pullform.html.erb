@@ -43,7 +43,7 @@
     <%= form.fields_for :room_assignments do |room_assignment| %>
       <div>
         <%= room_assignment.label :student_id %>
-        <%= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
+        <%#= room_assignment.collection_select :student_id, @students, :id, :student_name, id: :room_assignment_student_id, :include_blank => true %>
       </div>
       <div>
         <%= room_assignment.label :room_id %>
