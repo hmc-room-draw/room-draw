@@ -216,7 +216,7 @@ class DormsController < ApplicationController
 
     def get_available_students
       # avoid using the slow .select{ |s| not s.room_assignment and s.has_completed_form }
-      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order(":by_first_name").select('has_completed_form == true').select('EXISTS(SELECT "room_assignments".* FROM "room_assignments" WHERE "room_assignments"."student_id" = user_id)')
+      @students = Student.joins(:user).select('users.first_name, users.last_name, users.email, students.*').order(":by_first_name").select('has_completed_form == t').select('has_participated == t')
     end
 
     # Use callbacks to share common setup or constraints between actions.
