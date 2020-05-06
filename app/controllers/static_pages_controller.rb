@@ -35,7 +35,9 @@ class StaticPagesController < ApplicationController
 	def pullable_rooms_number (dorm)
 	  if current_user
         if current_user.student
-          @drawable_students = Student.where('room_draw_number > ?',current_user.student.room_draw_number).select { |s| s.pull }
+          # don't be slow
+          # @drawable_students = Student.where('room_draw_number > ?',current_user.student.room_draw_number)
+          @drawable_students = Student.where('room_draw_number = 1',current_user.student.room_draw_number).select{|s| s.pull}
           room_id_array = []
           for s in @drawable_students
             for ra in s.pull.room_assignments
