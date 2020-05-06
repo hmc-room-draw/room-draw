@@ -108,7 +108,7 @@ class User < ApplicationRecord
           RoomAssignment.create!(:room_id => room_id, :assignment_type => "preplaced")
         end
         
-        if room_hash["preplaced"] == ""
+        if room_hash["preplaced"] == "pulled"
 
           room_id = get_room(room_hash["dorm"], room_hash["room"])
 
