@@ -34,7 +34,7 @@ User.create(first_name:"Mia", last_name:"Taylor", email: "mtaylor@g.hmc.edu", is
 
 
 #Students
-
+=begin
 Student.create(user_id: 1, class_rank: :junior, room_draw_number: 1, number_is_last: false)
 Student.create(user_id: 2, class_rank: :sophomore, room_draw_number: 2, number_is_last: false)
 Student.create(user_id: 3, class_rank: :sophomore, room_draw_number: 3, number_is_last: false)
@@ -43,7 +43,7 @@ Student.create(user_id: 5, class_rank: :senior, room_draw_number: 5, number_is_l
 Student.create(user_id: 6, class_rank: :junior, room_draw_number: 7, number_is_last: false)
 Student.create(user_id: 7, class_rank: :senior, room_draw_number: 50, number_is_last: false)
 Student.create(user_id: 8, class_rank: :senior, room_draw_number: 6, number_is_last: false)
-
+=end
 
 
 #Dorms
