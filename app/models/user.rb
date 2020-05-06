@@ -135,7 +135,14 @@ class User < ApplicationRecord
           end
           
           # Make the RoomAssignment for the preplaced student
-          RoomAssignment.create!(:room_id => room_id, :assignment_type => "pulled")
+          pull = Pull.new
+          pull.student_id = student.id
+          pull.room_assignments.build(
+            student_id: student.id, 
+            room_id: get_room(room_hash["dorm"], room_hash["room"]), 
+            assignment_type: :pulled)
+
+          pull.save
         end
         
         if room_hash["preplaced"] == "frosh"
